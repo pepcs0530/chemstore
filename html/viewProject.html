@@ -1,0 +1,31 @@
+<!DOCTYPE>
+<html>
+    <meta charset="utf-8">
+    <head>
+        <title>
+            โปรเจคนักศึกษา
+        </title>
+    </head>
+    
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="../js/angular.min.js"></script>
+    <script src="../js/projectController.js" type="text/javascript"></script>
+    <body ng-app="chemstore" ng-controller="projectController">
+        <caption><H3>โปรเจคนักศึกษา</H3></caption>
+        Controller:{{index}}
+        <table width="100%" border="1">
+            <tr>
+                <th bgcolor = 66CCCC width="20%" >ชื่อโปรเจค</th>
+                <th bgcolor = 66CCCC width="10%">งบประมาณ</th>
+                <th bgcolor = 66CCCC width="5%">อาจารย์ที่ปรึกษา</th>
+                <th bgcolor = 66CCCC width="10%">อธิบาย</th>
+            </tr>
+            <tr ng-repeat="showdata in listProject">
+                <td>{{showdata.cp_name}}</td>
+                <td>{{showdata.cp_budget}}</td>
+                <td>{{showdata.ca_tname}}{{showdata.ca_fname}}</td>
+                <td>{{showdata.cp_desc}}</td>
+            </tr>
+        </table> 
+    </body>
+</html>

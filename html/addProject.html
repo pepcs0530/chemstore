@@ -1,0 +1,49 @@
+<!DOCTYPE>
+<html>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <head>
+        <title>
+            เพิ่มโปรเจค
+        </title>
+    </head>
+    
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="../js/angular.min.js"></script>
+    <script src="../js/projectController.js" type="text/javascript"></script>
+    <body  ng-app="chemstore" ng-controller="projectController">    
+        
+        <caption><H3>เพิ่มโปรเจค</H3></caption>
+        <table width="100%" border="0"  id="here">
+            <tr>
+                <td align="right"><label for="acctyp">อาจารย์ :</label></td>
+                <td>
+                    <select ng-model="teacher" ng-options="lt.ca_fname for lt in listTeacher">
+                          <option value="">เลือกอาจารย์...</option>
+                    </select> {{teacher.ca_cat_fk}}
+                </td>
+            </tr>
+            <tr>
+                <td align="right"><label for="cp_name">ชื่อโปรเจค :</label></td>
+                <td><input ng-model="cp_name" type="text" class="" id="form-cp_name" /></td>
+            </tr>
+            <tr>
+                <td align="right"><label for="cp_budget">งบประมาณ :</label></td>
+                <td><input ng-model="cp_budget" type="text" class="" id="form-cp_budget" /></td>
+            </tr>
+            <tr>
+                <td align="right"><label for="cp_desc">รายละเอียด :</label></td>
+                <td><textarea ng-model="cp_desc" id="form-cp_desc" rows="4" cols="50"></textarea></td>
+            </tr>
+            <tr>
+                <td >
+                    
+                </td>
+                <td>
+                    <input type="button" ng-click="createProject()" name="createProject" value="เพิ่ม" />
+                    <input type="button" ng-click="cancleProject()" name="cancleProject" value="ยกเลิก" />
+                </td>
+            </tr>
+        </table>
+    </body>
+</html>

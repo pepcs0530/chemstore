@@ -1,0 +1,77 @@
+<!DOCTYPE>
+<html>
+    <meta charset="utf-8">
+    <head>
+        <title>
+            เบิกสารเคมี
+        </title>
+    </head>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="../js/angular.min.js"></script>
+    <script src="../js/recieptController.js" type="text/javascript"></script>
+    <body  ng-app="chemstore" ng-controller="recieptController">
+        <caption><H3>เบิกสารเคมี</H3></caption>
+        Controller:{{index}} <br>
+        ค้นหา<input type="text" ng-model="searchThis"> <br>
+        <input type="button" ng-click="deleteRecord()" value="previous">
+        <select ng-init="searchRange = options[0]" 
+                ng-model="searchRange" 
+                ng-options="option.name for option in options">
+        </select>
+    <input type="button" ng-click="addRecord()" value="next"><br>
+        <table width="100%" border="1">
+            <tr>
+                <th bgcolor = 66CCCC width="20%" >ชื่อสารเคมี</th>
+                <th bgcolor = 66CCCC width="10%">Cas no.</th>
+                <th bgcolor = 66CCCC width="5%">สถานะ</th>
+                <th bgcolor = 66CCCC width="10%">ปริมาณ</th>
+                <th bgcolor = 66CCCC width="10%">อาคาร</th>
+                <th bgcolor = 66CCCC width="5%">ห้อง</th>
+                <th bgcolor = 66CCCC width="5%">ราคา/หน่วย</th>
+                <th bgcolor = 66CCCC width="5%">เกรด</th>
+                <th bgcolor = 66CCCC width="10%">ผู้ผลิต</th>
+                <th bgcolor = 66CCCC >operation</th>
+            </tr>
+            <tr ng-repeat="showdata in listChem | filter : searchThis | limitTo : searchRange.value : begin">
+                <td>{{showdata.cc_name}}</td>
+                <td>{{showdata.cc_casNo}}</td>
+                <td>{{showdata.cc_state}}</td>
+                <td>{{showdata.cc_quantity}}</td>
+                <td>{{showdata.cl_name}}</td>
+                <td>{{showdata.cc_room}}</td>
+                <td>{{showdata.cc_price}}/{{showdata.cu_name_abb}}</td>
+                <td>{{showdata.cc_grade}}</td>
+                <td>{{showdata.cc_producer}}</td>
+                <td><input type="button" value="add" ng-click="addtCart(showdata)"></td>
+            </tr>
+        </table>   
+        
+        <caption><H3>สารเคมีที่เบิก</H3></caption>
+        <select  
+                ng-model="selectedProject" 
+                ng-options="option.cp_name for option in listProject">
+        </select>
+        <form>
+            <table border="1">
+                <tr>
+                    <th bgcolor = 66CCCC width="20%" >ชื่อสารเคมี</th>
+                    <th bgcolor = 66CCCC width="10%">Cas no.</th>
+                    <th bgcolor = 66CCCC width="5%">สถานะ</th>
+                    <th bgcolor = 66CCCC width="10%">ปริมาณ</th>
+                    <th bgcolor = 66CCCC width="5%">ราคา/หน่วย</th>
+                    <th bgcolor = 66CCCC >operation</th>
+                </tr>
+                <tr ng-repeat="showdata in cartlist">
+                    <td>{{showdata.cc_name}}</td>
+                    <td>{{showdata.cc_casNo}}</td>
+                    <td>{{showdata.cc_state}}</td>
+                    <td>{{showdata.cc_quantity}}</td>
+                    <td>{{showdata.cc_price}}/{{showdata.cu_name_abb}}</td>
+                    <td><input type="text" ng-model="cartlist[$index].volumeRequest" ><input type="button" value="delete" ng-click="deleteCart($index)"></td>
+                </tr>
+            </table>
+            <input type="submit" value="ยืนยันการยืม" ng-click="createRequest()">
+        </form>
+    </body>
+</html>

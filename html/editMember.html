@@ -1,0 +1,79 @@
+<!DOCTYPE>
+<html>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <head>
+        <title>
+            แก้ไขข้อมูลผู้ใช้งาน
+        </title>
+    </head>
+    
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="../js/angular.min.js"></script>
+    <script src="../js/memberController.js" type="text/javascript"></script>
+    <body  ng-app="chemstore" ng-controller="membersCtrl" ng-init="checked=true; dis=true; btng1=true; btng2=true; btng3=true; fix=true" >    
+        
+        <caption><H3>แก้ไขข้อมูลผู้ใช้งาน</H3></caption>
+        <table width="100%" border="0"  id="here">
+            <tr ng-model="checked">
+                <td align="right"><label for="code">รหัส :</label></td>
+                <td><input ng-model="code" type="text" class="" id="form-code" ng-disabled="fix"/></td>
+            </tr>
+            <tr ng-show="checked">
+                <td align="right"><label for="tname">คำนำหน้า :</label></td>
+                <td><input ng-model="tname" type="text" class="" id="form-tname" ng-disabled="dis"/></td>
+            </tr>
+            <tr ng-show="checked">
+                <td align="right"><label for="fname">ชื่อ :</label></td>
+                <td><input ng-model="fname" type="text" class="" id="form-fname" ng-disabled="dis"/></td>
+            </tr>
+            <tr ng-show="checked">
+                <td align="right"><label for="lname">นามสกุล :</label></td>
+                <td><input ng-model="lname" type="text" class="" id="form-lname" ng-disabled="dis"/></td>
+            </tr>
+            <tr ng-show="checked">
+                <td align="right"><label for="tel">เบอร์โทร :</label></td>
+                <td><input ng-model="tel" type="text" class="" id="form-tel" ng-disabled="dis"/></td>
+            </tr>
+            <tr ng-show="!checked">
+                <td align="right"><label for="user">username :</label></td>
+                <td><input ng-model="user" type="text" class="" id="form-user" ng-disabled="fix"/></td>
+            </tr>
+            <tr ng-show="!checked">
+                <td align="right"><label for="pass">password :</label></td>
+                <td><input ng-model="pass" type="password" class="" id="form-pass" ng-disabled="dis"/></td>
+            </tr>
+            <tr ng-show="!checked">
+                <td align="right"><label for="new_pass">new-password :</label></td>
+                <td><input ng-model="new_pass" type="password" class="" id="form-new-pass" ng-disabled="dis"/></td>
+            </tr>
+            <tr ng-show="!checked">
+                <td align="right"><label for="re_new_pass">re new-password :</label></td>
+                <td><input ng-model="re_new_pass" type="password" class="" id="form-re-new-pass" ng-disabled="dis"/></td>
+            </tr>
+            <tr>
+                <td >
+                    
+                </td>
+                <td>
+                    <div ng-show="btng1">
+                        <input type="button" ng-click="confirmMember()" name="confirmMember" value="แก้ไขข้อมูล" />
+                        <input type="button" ng-click="changePassMember()" name="changePassMember" value="เปลี่ยนรหัสผ่าน" />
+                    </div >
+                    <div ng-show="!btng2">
+                        <input type="button" ng-click="updateMember()" name="updateMember" value="ตกลง" />
+                        <input type="button" ng-click="cancleMember()" name="cancleMember" value="ยกเลิก" />
+                    </div>
+                    <div ng-show="!btng3">
+                        <input type="button" ng-click="updatePassMember()" name="updatePassMember" value="ตกลง" />
+                        <input type="button" ng-click="cancleMember()" name="cancleMember" value="ยกเลิก" />
+                    </div>
+                    
+                    
+                    
+                </td>
+            </tr>
+        </table>
+        
+    </body>
+</html>
