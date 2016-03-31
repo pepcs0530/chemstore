@@ -31,7 +31,7 @@ angular.module('chemstore', []).controller('projectController', function($scope,
         $http.post("../php/insert_project.php",{
             'teacher_pk' : $scope.teacher.ca_cat_fk,
             'name' : $scope.cp_name, 
-            'budget' : $scope.cp_budget, 
+            'budget' : $scope.cp_budget,
             'desc' : $scope.cp_desc
             }).success(function (data, status, headers, config) {
                 console.log(data);
@@ -44,24 +44,5 @@ angular.module('chemstore', []).controller('projectController', function($scope,
     //  ยกเลิก
     $scope.cancleProject = function(){
         window.location.href="../html/addProject.html";
-    }
-    
-    //    เลือกประเภทผู้ใช้ที่เป็น teacher
-//    $http({
-//        method  :   'POST',
-//        url     :   '../php/select_teacher.php',
-//        data    : { teacher_pk : 2}
-//    }).then(function(response) {
-//        $scope.listTeacher = response.data;
-//        console.log($scope.listTeacher);
-//    });
-    
-//    $http.post("../php/select_teacher.php",{
-//        'teacher_pk' : $scope.teacher_pk
-//        }).success(function (data, status, headers, config) {
-//            console.log(data);
-//            alert(data);
-//        }); 
-    
-    
+    }    
 });
