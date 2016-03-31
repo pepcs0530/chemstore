@@ -70,6 +70,7 @@
 
             <div id="section">
                 <!--Content-->
+                <p>...........</p>
                 <p>hello world</p>
                 <p>hello world</p>
                 <p>hello world</p>
@@ -80,8 +81,7 @@
                 <p>hello world</p>
                 <p>hello world</p>
                 <p>hello world</p>
-                <p>hello world</p>
-                <p>hello world</p>
+                <p>...........</p>
             </div> 
 <?php
         }elseif($_SESSION['ses_status'] == "teacher"){
