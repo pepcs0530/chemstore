@@ -1,17 +1,13 @@
 <html>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-<head>
-  <title>Login</title>
-</head>
-
-<body>
-    <form action="../php/check_login.php" method="post" >
-    <div id="">
-        Username : <input type="text" name="username" size="20" /><br />
-        Password : <input type="password" name="password" size="20" /><br />
-        <input type="submit" value=" Log in " /><input type="reset" value=" Clear " />
-    </div>
-    </form>
-</body>
+    <head>
+      <title>Login</title>
+    </head>
+    <script src="../js/angular.min.js"></script>
+    <script src="../js/loginController.js"></script>
+    <body ng-app="chemstore" ng-controller="loginController">
+            Username : <input type="text" size="20" ng-model="login.username"/><br />
+            Password : <input type="password" size="20" ng-model="login.password"/><br />
+            <input type="submit" value="Log in" ng-click="createLogin()"/><input type="reset" value="Clear" />
+    </body>
 </html>

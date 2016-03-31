@@ -5,11 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 <head>
   <title></title>
-    <script src="../js/angular.min.js"></script>
 </head>
+    <script src="../js/angular.min.js"></script>
+    <script src="../js/menuController.js"></script>
 
-<body>
+<body ng-app="chemstore" ng-controller="menuController">
   <ul>
+      username :{{session}}
     <li><a href="inboundChem.html" target="right">นำเข้าสารเคมี</a></li>
 
     <li><a href="viewReciept.html" target="right">เบิกสารเคมี</a></li>
