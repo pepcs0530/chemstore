@@ -15,8 +15,7 @@
         #nav {
             line-height:30px;
             background-color:#eeeeee;
-            height:300px;
-            width:100px;
+            width:200px;
             float:left;
             padding:5px;	      
         }
@@ -44,8 +43,11 @@
         //$ses_userid = $_SESSION['ses_userid'];             //สร้าง session สำหรับเก็บค่า ID
         //$ses_username = $_SESSION['ses_username'];        //สร้าง session สำหรับเก็บค่า username
     
-        //if($ses_userid <> session_id() or $ses_username ==""){
-        if($_SESSION['ses_userid'] <> $_SESSION['ses_userid'] or $_SESSION['ses_username'] ==""){
+        $ses_userid = (isset($_SESSION['ses_userid'])) ? $_SESSION['ses_userid'] : '';
+        $ses_username = (isset($_SESSION['ses_username'])) ? $_SESSION['ses_username'] : '';
+    
+        if($ses_userid <> session_id() or $ses_username ==""){
+        //if($_SESSION['ses_userid'] <> $_SESSION['ses_userid'] or $_SESSION['ses_username'] ==""){
             echo "Please Login to system<br />";
             //exit();
 ?>
@@ -59,7 +61,7 @@
                 <?php include('../html/login.html');?>
             </div>
 <?php
-        }elseif($_SESSION[ses_status] == "manager"){
+        }elseif($_SESSION['ses_status'] == "manager"){
 ?>
             <div id="nav">
                 <!--Menu-->
@@ -68,10 +70,21 @@
 
             <div id="section">
                 <!--Content-->
-                <?php include('');?>
+                <p>hello world</p>
+                <p>hello world</p>
+                <p>hello world</p>
+                <p>hello world</p>
+                <p>hello world</p>
+                <p>hello world</p>
+                <p>hello world</p>
+                <p>hello world</p>
+                <p>hello world</p>
+                <p>hello world</p>
+                <p>hello world</p>
+                <p>hello world</p>
             </div> 
 <?php
-        }elseif($_SESSION[ses_status] == "teacher"){
+        }elseif($_SESSION['ses_status'] == "teacher"){
 ?>
             <div id="nav">
                 <!--Menu-->
@@ -83,7 +96,7 @@
                 <?php include('');?>
             </div> 
 <?php
-        }elseif($_SESSION[ses_status] == "operator"){
+        }elseif($_SESSION['ses_status'] == "operator"){
 ?>
             <div id="nav">
                 <!--Menu-->

@@ -35,7 +35,7 @@
             //echo "<meta http-equiv='refresh' content='0;URL=../html/menu_manager.html'>";
             //echo '<meta HTTP-EQUIV="REFRESH" CONTENT="2; URL=javascript:window.open('../html/menu_manager.html','left');">';
             //ส่งค่าจากหน้านี้ไปหน้า index_admin.php
-            echo '<meta http-equiv="REFRESH" content="2 ; url=../html/menu_manager.html" target="left">';
+            echo '<meta http-equiv="REFRESH" content="0 ; url=../php/index.php" >';
             echo "waiting manager..............................";
         }elseif($data['ca_cat_fk']==2){                       //ตรวจสอบสถานะของผู้ใช้งานว่าเป็น teacher
             echo "Hi Welcome Back teacher<br />"; 
