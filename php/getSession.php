@@ -1,4 +1,6 @@
 <?php
-    session_start();   
-    echo $_SESSION["name"];
+    session_start(); 
+    //(isset($_SESSION['name'])) ? $_SESSION['name'] : ''
+    //echo $_SESSION["name"];
+    echo (isset($_SESSION['name'])) ? $_SESSION['name'] : '';
 ?>

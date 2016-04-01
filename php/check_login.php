@@ -42,6 +42,7 @@
             $_SESSION['ses_userid'] = session_id();                      //สร้าง session สำหรับให้ User นำไปใช้งาน
             $_SESSION['ses_username'] = $username;
             $_SESSION['ses_status'] = "teacher";
+            echo '<meta http-equiv="REFRESH" content="0 ; url=../php/index.php" >';
             //echo "<meta http-equiv='refresh' content='1;URL=index_teacher.php'>";
             //ส่งค่าจากหน้านี้ไปหน้า index_teacher.php
             echo "<br /> Waiting teacher..............................";
