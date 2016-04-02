@@ -6,14 +6,17 @@
 <head>
   <title></title>
     <script src="../js/angular.min.js"></script>
+    <script src="../js/menuController.js"></script>
 </head>
 
-<body>
+<body ng-app="chemstore" ng-controller="menuController">
   <ul>
+      username :{{session}}<br/>type :{{type}}
+      
     <li>จัดการคำร้องขอ
           <ul>
             <li>
-                <a href="../html/requestChem.html" >คำร้องขอสารเคมี</a>
+                <a href="../html/requestChem.html" target="right">คำร้องขอสารเคมี</a>
               </li>
           </ul>
       </li>  

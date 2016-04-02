@@ -124,7 +124,7 @@ angular.module('chemstore', [])
         $http({
             method  :   'POST',
             url     :   '../php/select_account_where.php',
-            data    : { ca_code: "x001"}, 
+            data    : { ca_user: "manager"}, 
             headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
                     }
         ).then(function(response) {

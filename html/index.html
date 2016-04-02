@@ -4,13 +4,14 @@
 <head>
   <title></title>
     <script src="../js/angular.min.js"></script>
+    <script src="../js/loginController.js"></script>
 </head>
 
-<frameset rows="20%,50%" frameborder="1">
+<frameset rows="20%,50%" frameborder="1" ng-app="chemstore" ng-controller="loginController" ng-init="checkSession()">
   <frame name="top" src="header.html" scrolling="no" />
 
   <frameset cols="20%,*">
-    <frame name="left" src="menu.html" />
+    <frame name="left" src="" />
     <frame name="right" src="" />
   </frameset>
 </frameset>

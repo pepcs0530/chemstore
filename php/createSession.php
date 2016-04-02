@@ -21,5 +21,6 @@
     if($data[0][0] == $password)
     {
         $_SESSION["name"] = $username;
+        $_SESSION["type"] = $data[0]['ca_cat_fk'];
     }
 ?>

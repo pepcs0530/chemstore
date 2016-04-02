@@ -5,10 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 <head>
   <title></title>
+    <script src="../js/angular.min.js"></script>
+    <script src="../js/menuController.js"></script>
 </head>
 
-<body>
+<body ng-app="chemstore" ng-controller="menuController">
     <h3>menu_operator</h3>
+    username :{{session}}<br/>type :{{type}}<br/>
     <a href="../php/logout.php" target="right">ออกจากระบบ</a>
 </body>
 </html>

@@ -6,8 +6,10 @@
     <script src="../js/angular.min.js"></script>
     <script src="../js/loginController.js"></script>
     <body ng-app="chemstore" ng-controller="loginController">
+        <form method="post">
             Username : <input type="text" size="20" ng-model="login.username"/><br />
             Password : <input type="password" size="20" ng-model="login.password"/><br />
             <input type="submit" value="Log in" ng-click="createLogin()"/><input type="reset" value="Clear" />
+        </form>
     </body>
 </html>
