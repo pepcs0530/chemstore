@@ -1,18 +1,75 @@
-<html>
-    <meta charset="UTF-8">
+<!DOCTYPE>
+<html ng-app="chemstore">
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    
 <head>
   <title></title>
-    <script src="../js/angular.min.js"></script>
-    <script src="../js/loginController.js"></script>
 </head>
 
-<frameset rows="20%,50%" frameborder="1" ng-app="chemstore" ng-controller="loginController" ng-init="checkSession()">
-  <frame name="top" src="header.html" scrolling="no" />
+  <script src="../js/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script src="../js/angular-route.min.js"></script>
+  <script src="../js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="../css/bootstrap.min.css">
+  
 
-  <frameset cols="20%,*">
-    <frame name="left" src="" />
-    <frame name="right" src="" />
-  </frameset>
-</frameset>
+  <!-- Controllers -->
+  <script src="../js/menuController.js"></script>
+<body>
+  <script src="../js/inboundChemController.js" ></script>
+  <script src="../js/submitRequestController.js"></script>
+  <!--script-->
+  <script src="../js/routing.js"></script>
+  <!--script-->
+  <!-- Controllers -->
+  <nav class="navbar navbar-default">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#/requestChem">คลังสารเคมี</a>
+      </div>
+      <ul class="nav navbar-nav">
+        <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" >จัดการคำร้องขอ<span class="caret"></span></a>
+            <ul class="dropdown-menu" >
+              <li><a href="#/requestChem">คำร้องขอสารเคมี</a></li>
+            </ul>
+        </li>  
+        <li><a href="#/inboundChem" >นำเข้าสารเคมี</a></li>
+
+        <li><a href="#/viewReciept" >เบิกสารเคมี</a></li>
+
+        <li><a href="#/sold" >ขายคืน</a></li>
+            
+        <li><a href="#/viewProject" >โปรเจคนักศึกษา</a></li>
+          
+        <li><a href="#/transfer" >ย้ายคลัง</a></li>
+
+        <li><a href="#/adjust" >แก้ไขข้อมูลสารเคมี</a></li>
+
+        <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" >ประวัติรายการ<span class="caret"></span></a>
+          <ul class="dropdown-menu" >
+            <li><a href="#/importlog"  >ประวัติการนำเข้า</a></li>
+            <li><a href="#/withdrawlog"  >ประวัติการเบิกสาร</a></li>
+            <li><a href="#/salelog"  >ประวัติการขายคืน</a></li>
+          </ul>
+        </li>
+
+        <li><a href="#/viewStock" >คลังสารเคมี</a></li>
+
+        <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" >ระบบ<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="#/addMember" >เพิ่มผุ้ใช้งาน</a></li>
+            <li><a href="#/editMember" >แก้ไขข้อมูลผู้ใช้งาน</a></li>
+            <li><a href="#/addProject">เพิ่มโปรเจค</a></li>
+          </ul>
+        </li>
+
+        <li><a href="../php/logout.php">ออกจากระบบ</a></li>
+      </ul>
+      </div>
+    </nav>
+
+  <div ng-view=""></div>
+</body>
 </html>
+
