@@ -1,15 +1,16 @@
-<html>
-    <meta charset="UTF-8">
-    <head>
-      <title>Login</title>
-    </head>
-    <script src="../js/angular.min.js"></script>
-    <script src="../js/loginController.js"></script>
-    <body ng-app="chemstore" ng-controller="loginController">
-        <form method="post">
-            Username : <input type="text" size="20" ng-model="login.username"/><br />
-            Password : <input type="password" size="20" ng-model="login.password"/><br />
-            <input type="submit" value="Log in" ng-click="createLogin()"/><input type="reset" value="Clear" />
+<body ng-controller="loginController">
+    <div class="container" class="col-md-5">
+        <form  role="form" method="post" >
+            <div class="form-group">
+                <label for="user">Username : </label>
+                <input class="form-control" type="text" size="20" ng-model="login.username"/><br />
+            </div>
+            <div class="form-group">
+                <label for="pwd">Password : </label>
+                <input class="form-control" type="password" size="20" ng-model="login.password"/><br />
+            </div>
+            <input class="btn btn-default" type="submit" value="Log in" ng-click="createLogin()"/>
+            <input class="btn btn-default" type="reset" value="Clear" />
         </form>
-    </body>
-</html>
+    </div>
+</body>

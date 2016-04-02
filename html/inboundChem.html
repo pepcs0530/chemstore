@@ -1,5 +1,5 @@
-    <div class ="container">
-        <div ng-controller= "inboundChemController" ng-init="inbound=true; new=true">    
+    <div ng-controller= "inboundChemController" ng-init="inbound=true; new=true">
+        <div class ="container">    
         <!--     เพิ่มสารใหม่       -->
             <div ng-show="inbound">
                 <caption><H3>นำเข้าสารเคมี</H3></caption>
@@ -43,11 +43,11 @@
             <form>
                 <table class="table table-bordered">
                     <tr>
-                        <th bgcolor = 66CCCC width="20%" >ชื่อสารเคมี</th>
-                        <th bgcolor = 66CCCC width="10%">Cas no.</th>
-                        <th bgcolor = 66CCCC width="20%">ปริมาณ</th>
-                        <th bgcolor = 66CCCC width="20%">หน่วย</th>
-                        <th bgcolor = 66CCCC >ยกเลิก</th>
+                        <th>ชื่อสารเคมี</th>
+                        <th>Cas no.</th>
+                        <th>ปริมาณ</th>
+                        <th>หน่วย</th>
+                        <th>ยกเลิก</th>
                     </tr>
                     <tr ng-repeat="showdata in cartlist">
                         <td>{{showdata.cc_name}}</td>

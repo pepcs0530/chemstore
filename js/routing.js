@@ -1,5 +1,4 @@
-'use strict';
-angular.module('chemstore', ['ngRoute','ngResource'] ).config(['$routeProvider',
+angular.module('chemstore', ['ngRoute'] ).config(['$routeProvider',
 	function($routeProvider) {
       $routeProvider
           .when(
@@ -72,7 +71,12 @@ angular.module('chemstore', ['ngRoute','ngResource'] ).config(['$routeProvider',
             '/addProject',{
                 templateUrl: 'addProject.html',
                 controller: 'projectController'
-            }  
+            } 
+           ).when(
+            '/login',{
+                templateUrl: 'login.html',
+                controller: 'loginController'
+            }   
           ).otherwise({
               redirectTo: '/requestChem'
       	  });

@@ -1,4 +1,4 @@
-angular.module('chemstore', ['inboundChemController']).controller('inboundChemController', function($scope,$http) {
+angular.module('chemstore', []).controller('inboundChemController', function($scope,$http) {
 
     //  เพิ่มสารเคมี
     $scope.addChem = function(){

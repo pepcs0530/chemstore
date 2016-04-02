@@ -6,23 +6,22 @@
 <head>
   <title></title>
 </head>
-
   <script src="../js/angular.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
   <script src="../js/angular-route.min.js"></script>
   <script src="../js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="../css/bootstrap.min.css">
   
+<body>
 
   <!-- Controllers -->
-  <script src="../js/menuController.js"></script>
-<body>
-  <script src="../js/inboundChemController.js" ></script>
-  <script src="../js/submitRequestController.js"></script>
+  <script src="../js/controller/menuController.js"></script>
+  <script src="../js/controller/inboundChemController.js" ></script>
+  <script src="../js/controller/submitRequestController.js"></script>
+  <script src="../js/controller/loginController.js"></script>
   <!--script-->
   <script src="../js/routing.js"></script>
   <!--script-->
-  <!-- Controllers -->
   <nav class="navbar navbar-default">
     <div class="container-fluid">
       <div class="navbar-header">
@@ -63,13 +62,14 @@
             <li><a href="#/addProject">เพิ่มโปรเจค</a></li>
           </ul>
         </li>
-
-        <li><a href="../php/logout.php">ออกจากระบบ</a></li>
+        <li><a href="#/login">เข้าสู่ระบบ</a></li>
+        <li><a href="../php/logout.php" ng-if = "false">ออกจากระบบ</a></li>
       </ul>
       </div>
     </nav>
 
-  <div ng-view=""></div>
+  <div ng-view="">
+  </div>
 </body>
 </html>
 

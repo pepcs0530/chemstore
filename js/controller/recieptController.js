@@ -1,4 +1,3 @@
-'use strict';
 angular.module('chemstore', []).controller('recieptController', function($scope,$http) {
     $scope.index = "recieptController";
     $scope.begin = 0;
