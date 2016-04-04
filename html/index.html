@@ -1,5 +1,5 @@
 <!DOCTYPE>
-<html ng-app="chemstore">
+<html ng-app="chemstore" >
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
@@ -15,6 +15,7 @@
 <body>
 
   <!-- Controllers -->
+<<<<<<< HEAD
   <script src="../js/controller/menuController.js"></script>
   <script src="../js/controller/inboundChemController.js" ></script>
   <script src="../js/controller/submitRequestController.js"></script>
@@ -22,10 +23,27 @@
   <!--script-->
   <script src="../js/routing.js"></script>
   <!--script-->
+=======
+    
+    
+    <script src="../js/menuController.js"></script>
+    <script src="../js/loginController.js"></script>
+<body ng-controller="loginController" ng-init="checkSession()">
+    
+    <script src="../js/categoryController.js"></script>
+    <script src="../js/inboundChemController.js" ></script>
+    <script src="../js/submitRequestController.js"></script>
+    
+    <script src="../js/routing.js"></script>
+    <!--script-->
+    
+    <!--script-->
+    <!-- Controllers -->
+>>>>>>> origin/master
   <nav class="navbar navbar-default">
     <div class="container-fluid">
       <div class="navbar-header">
-        <a class="navbar-brand" href="#/requestChem">คลังสารเคมี</a>
+        <a class="navbar-brand" href="#/viewStock">คลังสารเคมี</a>
       </div>
       <ul class="nav navbar-nav">
         <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" >จัดการคำร้องขอ<span class="caret"></span></a>
@@ -66,6 +84,11 @@
         <li><a href="../php/logout.php" ng-if = "false">ออกจากระบบ</a></li>
       </ul>
       </div>
+    </nav>
+    {{type}}
+    <!--    ไม่ได้ login    -->
+    <nav class="navbar navbar-default" ng-show="type != null">
+    
     </nav>
 
   <div ng-view="">

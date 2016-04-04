@@ -1,4 +1,4 @@
-angular.module('myApp', [])
+angular.module('chemstore',[])
     .controller('namesCtrl', function($scope,$http) {
         $http({
             method  :   'GET',

@@ -10,8 +10,10 @@
 
     <script src="../js/angular.min.js"></script>
     <script src="../js/categoryController.js" type="text/javascript"></script>
-    <body  ng-app="myApp" ng-controller="namesCtrl">    
-        ค้นหารายการ <select ng-model="selectData" ng-options="option.cl_name for option in listLocation" ng-change="getdata()"></select>
+    <body  ng-app="chemstore" ng-controller="namesCtrl">    
+        ค้นหารายการ <select ng-model="selectData" ng-options="option.cl_name for option in listLocation" ng-change="getdata()">
+        <option value="">เลือกคลัง...</option>
+        </select>
         <input type="text" ng-model="searchThis" placeholder="ใส่คำที่คุณต้องการค้นหา">
         <caption><H3>รายชื่อสารเคมี</H3></caption>
         <table width="100%" border="1"  id="here">
