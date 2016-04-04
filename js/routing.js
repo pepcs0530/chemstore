@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-angular.module('chemstore', ['ngRoute'] ).config(['$routeProvider',
-=======
 angular.module('chemstore', ['ngRoute'])
 
 //  Login   ============================================================================================================
@@ -807,7 +804,7 @@ angular.module('chemstore', ['ngRoute'])
 
 //  route  ============================================================================================================
     .config(['$routeProvider',
->>>>>>> origin/master
+
 	function($routeProvider) {
       $routeProvider
           .when(
