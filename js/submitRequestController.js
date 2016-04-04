@@ -7,7 +7,8 @@ angular.module('chemstore', [])
             $scope.listReciept = response.data;
             console.log($scope.listReciept);
         });
-        $scope.showmodel = function () {
-            alert("ดูข้อมูล");
+        $scope.showPopup = function () {
+            alert("ดูข้อมูล...");
+            window.open( "../html/showRequestLoc.html", "myWindow",  "status = 1, height = 500, width = 1000, resizable = 0" );
         }
     });
