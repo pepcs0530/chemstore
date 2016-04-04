@@ -66,6 +66,7 @@ angular.module('chemstore', [])
     }
     
     $scope.checkSession = function () {
+        alert("Test");
         //-------------------------------------------------------------
             $http({
                 method  :   'GET',
