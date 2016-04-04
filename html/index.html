@@ -12,33 +12,23 @@
   <script src="../js/bootstrap.min.js"></script>
   <link rel="stylesheet" href="../css/bootstrap.min.css">
   
-<body>
-
-  <!-- Controllers -->
-  <script src="../js/controller/menuController.js"></script>
-  <script src="../js/controller/inboundChemController.js" ></script>
-  <script src="../js/controller/submitRequestController.js"></script>
-  <script src="../js/controller/loginController.js"></script>
-  <!--script-->
-  <script src="../js/routing.js"></script>
-  <!--script-->
+<body ng-controller="loginController" ng-init="checkSession(); checked=true; dis=true; btng1=true; btng2=true; btng3=true; fix=true">
+type : {{type}}
+<!-- Controllers -->
+    <script src="../js/controller/menuController.js"></script>
+    <script src="../js/controller/categoryController.js"></script>
+    <script src="../js/controller/editmemberCtrl.js"></script>
+    <script src="../js/controller/inboundChemController.js" ></script>
+    <script src="../js/controller/submitRequestController.js"></script>
+    <script src="../js/controller/loginController.js"></script>
+<!-- Controllers -->
     
-    
-    <script src="../js/menuController.js"></script>
-    <script src="../js/loginController.js"></script>
-<body ng-controller="loginController" ng-init="checkSession()">
-    
-    <script src="../js/categoryController.js"></script>
-    <script src="../js/inboundChemController.js" ></script>
-    <script src="../js/submitRequestController.js"></script>
-    
+<!--script-->
     <script src="../js/routing.js"></script>
-    <!--script-->
-    
-    <!--script-->
-    <!-- Controllers -->
+<!--script-->
 
-  <nav class="navbar navbar-default">
+    <!--    login by manager    -->
+  <nav class="navbar navbar-default" ng-show="type == 1">
     <div class="container-fluid">
       <div class="navbar-header">
         <a class="navbar-brand" href="#/viewStock">คลังสารเคมี</a>
@@ -78,15 +68,32 @@
             <li><a href="#/addProject">เพิ่มโปรเจค</a></li>
           </ul>
         </li>
-        <li><a href="#/login">เข้าสู่ระบบ</a></li>
-        <li><a href="../php/logout.php" ng-if = "false">ออกจากระบบ</a></li>
+        <li><a href="../php/logout.php" >ออกจากระบบ</a></li>
       </ul>
       </div>
     </nav>
-    {{type}}
-    <!--    ไม่ได้ login    -->
-    <nav class="navbar navbar-default" ng-show="type != null">
     
+    <!--    ไม่ได้ login    -->
+    <nav class="navbar navbar-default" ng-show="type == ''">
+      <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#/news">ข่าวสาร</a>
+            <a class="navbar-brand" href="#/viewStock">คลังสารเคมี</a>
+        </div>
+        
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav navbar-right">
+            <form class="navbar-form navbar-left" role="search" ng-controller="loginController" method="post">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Username" ng-model="login.username">
+                    <input type="password" class="form-control" placeholder="Password" ng-model="login.password">
+                </div>
+                <input class="btn btn-default" type="submit" value="Log in" ng-click="createLogin()"/>
+                <input class="btn btn-default" type="reset" value="Clear" />
+            </form>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
     </nav>
 
   <div ng-view="">

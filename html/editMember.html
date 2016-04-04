@@ -9,9 +9,9 @@
     </head>
     
     <script src="../js/angular.min.js"></script>
-    <script src="../js/editmemberCtrl.js" type="text/javascript"></script>
+    <script src="../js/controller/editmemberCtrl.js" type="text/javascript"></script>
     <body  ng-app="chemstore" ng-controller="editmembersCtrl" ng-init="checked=true; dis=true; btng1=true; btng2=true; btng3=true; fix=true" >    
-        
+        checked:{{checked}} | dis:{{dis}} | btng1:{{btng1}} | btng2:{{btng2}} | btng3:{{btng3}} | fix:{{fix}}
         <caption><H3>แก้ไขข้อมูลผู้ใช้งาน</H3></caption>
         <table width="100%" border="0"  id="here">
             <tr ng-model="checked">

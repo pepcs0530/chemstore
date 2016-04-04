@@ -32,10 +32,11 @@ angular.module('chemstore', ['ngRoute'])
                     //  login by manager
                     if($scope.type == 1){
                         alert('เข้าสู่ระบบโดย : '+$scope.session);
-                        javascript:top.frames['left'].location = '../html/menu_manager.html';
+                        //javascript:top.frames['left'].location = '../html/menu_manager.html';
 
-                        javascript:top.frames['right'].location = '../html/requestChem.html';
+                        //javascript:top.frames['right'].location = '../html/requestChem.html';
                         //return true;
+                        window.location.href="../html/index.html";
                     }else if($scope.type == 2){
                         alert('เข้าสู่ระบบโดย : '+$scope.session);
                         javascript:top.frames['left'].location = '../html/menu_teacher.html';
@@ -68,7 +69,6 @@ angular.module('chemstore', ['ngRoute'])
     }
     
     $scope.checkSession = function () {
-        alert("Test");
         //-------------------------------------------------------------
             $http({
                 method  :   'GET',
@@ -718,7 +718,15 @@ angular.module('chemstore', ['ngRoute'])
         
         //  ยกเลิก
         $scope.cancleMember = function(){
-            window.location.href="../html/editMember.html";
+            //window.location.href="../html/index.html";
+            //window.location.href = "#/editMember";
+            //location.reload(true);
+            $scope.checked = true; 
+            $scope.dis = true; 
+            $scope.btng1 = true; 
+            $scope.btng2 = true; 
+            $scope.btng3 = true; 
+            $scope.fix = true;
         }
         
         //    เลือกผู้ใช้
