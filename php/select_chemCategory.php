@@ -11,14 +11,14 @@
     
     $findthis = $_POST['cl_name'];
     if($findthis == "ดูทั้งหมด") {
-        $sql = "SELECT cc_pk, cc_name, cc_casNo, cc_state, cc_quantity, cl_name, cc_room, cc_price,  cu_name_abb, cc_grade, cc_producer ".
+        $sql = "SELECT cc_pk, cc_code, cc_name, cc_type, cc_casNo, cc_state, cc_quantity, cc_volume, cc_packing, cl_pk, cl_name, cc_room, cc_price, cu_pk, cu_name_abb, cc_grade, cc_expDt, cc_producer, cc_desc ".
                            "FROM chem_category ".
                            "INNER JOIN chem_unit ".
                            "ON cc_unit_fk = cu_pk ".
                            "INNER JOIN  chem_location ".
                            "ON cc_location_fk = cl_pk";
     }else{
-        $sql = "SELECT cc_pk, cc_name, cc_casNo, cc_state, cc_quantity, cl_name, cc_room, cc_price,  cu_name_abb, cc_grade, cc_producer ".
+        $sql = "SELECT cc_pk, cc_code, cc_name, cc_type, cc_casNo, cc_state, cc_quantity, cc_volume, cc_packing, cl_pk, cl_name, cc_room, cc_price, cu_pk, cu_name_abb, cc_grade, cc_expDt, cc_producer, cc_desc ".
                            "FROM chem_category ".
                            "INNER JOIN chem_unit ".
                            "ON cc_unit_fk = cu_pk ".

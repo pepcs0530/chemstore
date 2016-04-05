@@ -49,7 +49,7 @@ type : {{type}}
           
         <li><a href="#/transfer" >ย้ายคลัง</a></li>
 
-        <li><a href="#/adjust" >แก้ไขข้อมูลสารเคมี</a></li>
+        <li><a href="#/editChem" >แก้ไขข้อมูลสารเคมี</a></li>
 
         <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" >ประวัติรายการ<span class="caret"></span></a>
           <ul class="dropdown-menu" >
@@ -77,8 +77,9 @@ type : {{type}}
     <nav class="navbar navbar-default" ng-show="type == ''">
       <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand" href="#/news">ข่าวสาร</a>
+            <a class="navbar-brand" href="#/">หน้าแรก</a>
             <a class="navbar-brand" href="#/viewStock">คลังสารเคมี</a>
+            <a class="navbar-brand" href="#/contact">ติดต่อเรา</a>
         </div>
         
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -95,8 +96,8 @@ type : {{type}}
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->
     </nav>
-
   <div ng-view="">
+      
   </div>
 </body>
 </html>

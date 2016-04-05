@@ -39,27 +39,31 @@ angular.module('chemstore', ['ngRoute'])
                         window.location.href="../html/index.html";
                     }else if($scope.type == 2){
                         alert('เข้าสู่ระบบโดย : '+$scope.session);
-                        javascript:top.frames['left'].location = '../html/menu_teacher.html';
+                        //javascript:top.frames['left'].location = '../html/menu_teacher.html';
 
-                        javascript:top.frames['right'].location = '../html/requestChem.html';
+                        //javascript:top.frames['right'].location = '../html/requestChem.html';
                         //return true;
+                        window.location.href="../html/index.html";
                     }else if($scope.type == 3){
                         alert('เข้าสู่ระบบโดย : '+$scope.session);
-                        javascript:top.frames['left'].location = '../html/menu_operator.html';
+                        //javascript:top.frames['left'].location = '../html/menu_operator.html';
 
-                        javascript:top.frames['right'].location = '../html/requestChem.html';
+                        //javascript:top.frames['right'].location = '../html/requestChem.html';
                         //return true;
+                        window.location.href="../html/index.html";
                     }else if($scope.type == 4){
                         alert('เข้าสู่ระบบโดย : '+$scope.session);
-                        javascript:top.frames['left'].location = '../html/menu_scientist.html';
+                        //javascript:top.frames['left'].location = '../html/menu_scientist.html';
 
-                        javascript:top.frames['right'].location = '../html/requestChem.html';
+                        //javascript:top.frames['right'].location = '../html/requestChem.html';
                         //return true;
+                        window.location.href="../html/index.html";
                     }else{
                         alert('username หรือ password ไม่ถูกต้อง');
-                        javascript:top.frames['left'].location = '../html/menu_index.html';
+                        //javascript:top.frames['left'].location = '../html/menu_index.html';
 
-                        javascript:top.frames['right'].location = '../html/login.html';
+                        //javascript:top.frames['right'].location = '../html/login.html';
+                        //window.location.href="../html/index.html";
                     }
                 });
 
@@ -171,7 +175,9 @@ angular.module('chemstore', ['ngRoute'])
 
         $scope.cancleChem = function(){
             //  กดปุ่มยกเลิก
-            window.location.href="../html/inboundChem.html";
+            //window.location.href="../html/inboundChem.html";
+            $scope.new = true;
+            $scope.inbound = true;
         }
 
         //  ยืนยันเพิ่มสาร
@@ -810,12 +816,125 @@ angular.module('chemstore', ['ngRoute'])
         
     })
 
+//  แก้ไขข้อมูลสารเคมี  =======================================================================================================
+    .controller('editChemController', function($scope,$http, $filter) {
+    
+        //  ปุ่ม prev
+        $scope.deleteRecord = function () {
+            if(parseInt($scope.begin) - parseInt($scope.searchRange.value) < 0)
+                $scope.begin = 0;
+            else
+                $scope.begin = parseInt($scope.begin) - parseInt($scope.searchRange.value);
+        }
+
+        //  ปุ่ม next
+        $scope.addRecord = function () {
+            if(parseInt($scope.begin) + parseInt($scope.searchRange.value) < $scope.listChem.length)
+                    $scope.begin = parseInt($scope.begin) + parseInt($scope.searchRange.value);
+        }
+        
+        $scope.begin = 0;
+        $scope.cartlist = [];
+        //  จำนวนแสดง
+        $scope.options = [{
+            name: '5',
+            value: 5
+        },{
+            name: '10',
+            value: 10
+        }, {
+            name: '20',
+            value: 20
+        }, {
+            name: '50',
+            value: 50
+        }, {
+            name: '100',
+            value: 100
+        }];
+    
+        // แสดงโปรเจค
+        $http({
+            method  :   'GET',
+            url     :   '../php/select_chemProject.php'
+            }).then(function(response) {
+                $scope.listProject = response.data;
+        });
+
+        //  แสดงสารเคมี
+        $http({
+            method  : 'POST',
+            url     : '../php/select_chemCategory.php',
+            data    : {cl_name: "ดูทั้งหมด"}, //forms user object
+            headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
+            }).then(function(response) {
+                $scope.listChem = response.data;
+                console.log($scope.listChem);
+        })
+
+        //  แสดงสถานที่
+        $http({
+            method  : 'POST',
+            url     : '../php/select_chemLocation.php',
+            headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
+            }).then(function(response) {
+                $scope.listLoc = response.data;
+                console.log($scope.listLoc);
+        })
+
+        //  แสดงหน่วย
+        $http({
+            method  : 'POST',
+            url     : '../php/select_chemUnit.php',
+            headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
+            }).then(function(response) {
+                $scope.listUnit = response.data;
+                console.log($scope.listUnit);
+        })
+        
+        //  เลือกสารเคมีที่จะแก้ไข
+        $scope.addCart = function (selectedData) {
+            alert(selectedData);
+            $scope.cc_name = selectedData.cc_name;
+            $scope.cc_type = selectedData.cc_type;
+            $scope.cc_code = selectedData.cc_code;
+            $scope.cc_casNo = selectedData.cc_casNo;
+            $scope.cc_state = selectedData.cc_state;
+            $scope.cc_volume = selectedData.cc_volume;
+            $scope.cc_unit_fk = selectedData.cu_pk;
+            $scope.cc_quantity = selectedData.cc_quantity;
+            $scope.cc_packing = selectedData.cc_packing;
+            $scope.cc_location_fk = selectedData.cl_pk;
+            $scope.cc_room = selectedData.cc_room;
+            $scope.cc_price = selectedData.cc_price;
+            $scope.cc_grade = selectedData.cc_grade;
+            $scope.cc_expDt = new Date(selectedData.cc_expDt);
+            $scope.cc_producer = selectedData.cc_producer;
+            $scope.cc_desc = selectedData.cc_desc;
+        }
+        
+        //  ยืนยันสารเคมีที่จะแก้ไข
+        $scope.updateChem = function (selectedData) {
+            alert("แก้ไขข้อมูลเรียบร้อย");
+
+        }
+    })
+
 //  route  ============================================================================================================
     .config(['$routeProvider',
 
 	function($routeProvider) {
       $routeProvider
           .when(
+            '/',{
+                templateUrl: '../html/news.html',
+                controller: 'loginController'
+          }
+          ).when(
+            '/contact',{
+                templateUrl: '../html/contact.html'
+          }
+          ).when(
             '/requestChem',{
                 templateUrl: '../html/requestChem.html', 
                 controller:  'submitRequestController'
@@ -828,7 +947,7 @@ angular.module('chemstore', ['ngRoute'])
             }
           ).when(
             '/viewReciept',{
-                templateUrl: 'viewReciept.html',
+                templateUrl: '../html/viewReciept.html',
                 controller: 'recieptController'
             }
           ).when(
@@ -847,9 +966,9 @@ angular.module('chemstore', ['ngRoute'])
                 controller: 'transferController'
             } 
           ).when(
-            '/adjust',{
-                templateUrl: 'adjust.html',
-                controller: 'adjustController'
+            '/editChem',{
+                templateUrl: '../html/editChem.html',
+                controller: 'editChemController'
             } 
           ).when(
             '/importlog',{
@@ -892,7 +1011,7 @@ angular.module('chemstore', ['ngRoute'])
                 controller: 'loginController'
             }   
           ).otherwise({
-              redirectTo: '/'
+                redirectTo: '/'
       	  });
       	  
 }]);
