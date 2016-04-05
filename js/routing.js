@@ -894,7 +894,6 @@ angular.module('chemstore', ['ngRoute'])
         
         //  เลือกสารเคมีที่จะแก้ไข
         $scope.addCart = function (selectedData) {
-            alert(selectedData);
             $scope.cc_name = selectedData.cc_name;
             $scope.cc_type = selectedData.cc_type;
             $scope.cc_code = selectedData.cc_code;
