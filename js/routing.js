@@ -453,7 +453,6 @@ angular.module('chemstore', ['ngRoute'])
     }
     
     $scope.deleteCart = function(deletedIndex) {
-        console.log(deletedIndex);
         $scope.cartlist.splice(deletedIndex,1);
     }    
     
