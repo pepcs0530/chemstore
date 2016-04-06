@@ -94,7 +94,10 @@
                     <td><input type="button" value="delete" ng-click="deleteCart($index)"></td>
                 </tr>
             </table>
-            <input type="submit" value="ยืนยันการยืม" ng-click="createRequest()">
+            งบในโปรเจคที่เหลือ:{{selectedProject.cp_budget}}<br>
+            ค่าใช้จ่ายทั้งหมด:{{total}}<br>
+            ยอดคงเหลือ:{{selectedProject.cp_budget-total}}
+            <br><input type="submit" value="ยืนยันการยืม" ng-click="createRequest()">
         </form>
     </body>
 </html>

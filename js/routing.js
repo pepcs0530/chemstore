@@ -458,6 +458,7 @@ angular.module('chemstore', ['ngRoute'])
     }    
     
     $scope.pricecal = function(index){
+         $scope.total = 0;
         //อัลกอแปลงหน่วย
         if($scope.cartlist[index].cu_name_abb == "kg"){
             if($scope.cartlist[index].unitRequest == "kg"){
@@ -470,7 +471,7 @@ angular.module('chemstore', ['ngRoute'])
                 $scope.cartlist[index].totalprice = $scope.cartlist[index].volumeRequest/1000*$scope.cartlist[index].cc_price
             }
             else
-                $scope.cartlist[index].totalprice = "หน่วยคนละหมวดไม่สามารถคำนวนได้";
+                $scope.cartlist[index].totalprice = 0;
         }
         else if($scope.cartlist[index].cu_name_abb == "g"){
             if($scope.cartlist[index].unitRequest == "kg"){
@@ -483,7 +484,7 @@ angular.module('chemstore', ['ngRoute'])
                 $scope.cartlist[index].totalprice = $scope.cartlist[index].volumeRequest*$scope.cartlist[index].cc_price
             }
             else
-                $scope.cartlist[index].totalprice = "หน่วยคนละหมวดไม่สามารถคำนวนได้";
+                $scope.cartlist[index].totalprice = 0;
         }
         else if($scope.cartlist[index].cu_name_abb == "mg"){
             if($scope.cartlist[index].unitRequest == "kg"){
@@ -496,7 +497,7 @@ angular.module('chemstore', ['ngRoute'])
                 $scope.cartlist[index].totalprice = $scope.cartlist[index].volumeRequest*1000*$scope.cartlist[index].cc_price
             }
             else
-                $scope.cartlist[index].totalprice = "หน่วยคนละหมวดไม่สามารถคำนวนได้";
+                $scope.cartlist[index].totalprice = 0;
         }
         else if($scope.cartlist[index].cu_name_abb == "l"){
             if($scope.cartlist[index].unitRequest == "l"){
@@ -506,7 +507,7 @@ angular.module('chemstore', ['ngRoute'])
                 $scope.cartlist[index].totalprice = $scope.cartlist[index].volumeRequest/1000*$scope.cartlist[index].cc_price;
             }
             else
-                $scope.cartlist[index].totalprice = "หน่วยคนละหมวดไม่สามารถคำนวนได้";
+                $scope.cartlist[index].totalprice = 0;
         }
         else if($scope.cartlist[index].cu_name_abb == "ml"){
             if($scope.cartlist[index].unitRequest == "l"){
@@ -516,8 +517,11 @@ angular.module('chemstore', ['ngRoute'])
                 $scope.cartlist[index].totalprice = $scope.cartlist[index].volumeRequest*$scope.cartlist[index].cc_price;
             }
             else
-                $scope.cartlist[index].totalprice = "หน่วยคนละหมวดไม่สามารถคำนวนได้";
+                $scope.cartlist[index].totalprice = 0;
         }
+        angular.forEach($scope.cartlist, function(value, key){  
+            $scope.total = $scope.total + value.totalprice;
+        });
     }
     
     $scope.createRequest = function(){
