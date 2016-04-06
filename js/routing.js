@@ -457,6 +457,69 @@ angular.module('chemstore', ['ngRoute'])
         $scope.cartlist.splice(deletedIndex,1);
     }    
     
+    $scope.pricecal = function(index){
+        //อัลกอแปลงหน่วย
+        if($scope.cartlist[index].cu_name_abb == "kg"){
+            if($scope.cartlist[index].unitRequest == "kg"){
+                $scope.cartlist[index].totalprice = $scope.cartlist[index].volumeRequest*$scope.cartlist[index].cc_price;
+            }
+            else if($scope.cartlist[index].unitRequest == "mg"){
+                $scope.cartlist[index].totalprice = $scope.cartlist[index].volumeRequest/1000/1000*$scope.cartlist[index].cc_price;
+            }
+            else if($scope.cartlist[index].unitRequest == "g"){
+                $scope.cartlist[index].totalprice = $scope.cartlist[index].volumeRequest/1000*$scope.cartlist[index].cc_price
+            }
+            else
+                $scope.cartlist[index].totalprice = "หน่วยคนละหมวดไม่สามารถคำนวนได้";
+        }
+        else if($scope.cartlist[index].cu_name_abb == "g"){
+            if($scope.cartlist[index].unitRequest == "kg"){
+                $scope.cartlist[index].totalprice = $scope.cartlist[index].volumeRequest*1000*$scope.cartlist[index].cc_price;
+            }
+            else if($scope.cartlist[index].unitRequest == "mg"){
+                $scope.cartlist[index].totalprice = $scope.cartlist[index].volumeRequest/1000*$scope.cartlist[index].cc_price;
+            }
+            else if($scope.cartlist[index].unitRequest == "g"){
+                $scope.cartlist[index].totalprice = $scope.cartlist[index].volumeRequest*$scope.cartlist[index].cc_price
+            }
+            else
+                $scope.cartlist[index].totalprice = "หน่วยคนละหมวดไม่สามารถคำนวนได้";
+        }
+        else if($scope.cartlist[index].cu_name_abb == "mg"){
+            if($scope.cartlist[index].unitRequest == "kg"){
+                $scope.cartlist[index].totalprice = $scope.cartlist[index].volumeRequest*1000*1000*$scope.cartlist[index].cc_price;
+            }
+            else if($scope.cartlist[index].unitRequest == "mg"){
+                $scope.cartlist[index].totalprice = $scope.cartlist[index].volumeRequest*$scope.cartlist[index].cc_price;
+            }
+            else if($scope.cartlist[index].unitRequest == "g"){
+                $scope.cartlist[index].totalprice = $scope.cartlist[index].volumeRequest*1000*$scope.cartlist[index].cc_price
+            }
+            else
+                $scope.cartlist[index].totalprice = "หน่วยคนละหมวดไม่สามารถคำนวนได้";
+        }
+        else if($scope.cartlist[index].cu_name_abb == "l"){
+            if($scope.cartlist[index].unitRequest == "l"){
+                $scope.cartlist[index].totalprice = $scope.cartlist[index].volumeRequest*$scope.cartlist[index].cc_price;
+            }
+            else if($scope.cartlist[index].unitRequest == "ml"){
+                $scope.cartlist[index].totalprice = $scope.cartlist[index].volumeRequest/1000*$scope.cartlist[index].cc_price;
+            }
+            else
+                $scope.cartlist[index].totalprice = "หน่วยคนละหมวดไม่สามารถคำนวนได้";
+        }
+        else if($scope.cartlist[index].cu_name_abb == "ml"){
+            if($scope.cartlist[index].unitRequest == "l"){
+                $scope.cartlist[index].totalprice = $scope.cartlist[index].volumeRequest*1000*$scope.cartlist[index].cc_price;
+            }
+            else if($scope.cartlist[index].unitRequest == "ml"){
+                $scope.cartlist[index].totalprice = $scope.cartlist[index].volumeRequest*$scope.cartlist[index].cc_price;
+            }
+            else
+                $scope.cartlist[index].totalprice = "หน่วยคนละหมวดไม่สามารถคำนวนได้";
+        }
+    }
+    
     $scope.createRequest = function(){
         $scope.cantRequest = 0;
         

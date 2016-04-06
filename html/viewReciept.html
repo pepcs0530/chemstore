@@ -59,7 +59,10 @@
                     <th bgcolor = 66CCCC width="5%">สถานะ</th>
                     <th bgcolor = 66CCCC width="10%">ปริมาณ</th>
                     <th bgcolor = 66CCCC width="5%">ราคา/หน่วย</th>
-                    <th bgcolor = 66CCCC >operation</th>
+                    <th bgcolor = 66CCCC width="5%">จำนวนที่ต้องการ</th>
+                    <th bgcolor = 66CCCC width="5%">หน่วย</th>
+                    <th bgcolor = 66CCCC width="5"%>ค่าใช้จ่าย</th>
+                    <th bgcolor = 66CCCC width="5"%>operation</th>
                 </tr>
                 <tr ng-repeat="showdata in cartlist">
                     <td>{{showdata.cc_name}}</td>
@@ -67,7 +70,28 @@
                     <td>{{showdata.cc_state}}</td>
                     <td>{{showdata.cc_quantity}}</td>
                     <td>{{showdata.cc_price}}/{{showdata.cu_name_abb}}</td>
-                    <td><input type="text" ng-model="cartlist[$index].volumeRequest" ><input type="button" value="delete" ng-click="deleteCart($index)"></td>
+                    <td><input type="text" ng-change="pricecal($index)" ng-model="cartlist[$index].volumeRequest" ></td>
+                    <td>
+                        <select ng-model="cartlist[$index].unitRequest" ng-change="pricecal($index)">
+                            <option value="kg">
+                                kg
+                            </option>
+                            <option value="mg">
+                                mg
+                            </option>
+                            <option value="g">
+                                g
+                            </option>
+                            <option value="l">
+                                l
+                            </option>
+                            <option value="ml">
+                                ml
+                            </option>    
+                        </select>
+                    </td>
+                    <td>{{showdata.totalprice}}</td>
+                    <td><input type="button" value="delete" ng-click="deleteCart($index)"></td>
                 </tr>
             </table>
             <input type="submit" value="ยืนยันการยืม" ng-click="createRequest()">
