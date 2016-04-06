@@ -526,27 +526,113 @@ angular.module('chemstore', ['ngRoute'])
     
     $scope.createRequest = function(){
         $scope.cantRequest = 0;
+        //ตรวจสอบความถูกต้อง
         
-        angular.forEach($scope.cartlist, function(value, key){            
-            if(isNaN(parseInt(value.volumeRequest))){
-                alert("กรุณาระบุจำนวนสาร: "+value.cc_name+" ให้ถูกต้อง");
-                $scope.cantRequest = -1;
-            }
-            else if (parseInt(value.volumeRequest) > parseInt(value.cc_quantity))
-            {
-                alert(value.cc_name+" ปริมาณเหลือไม่พอทำการยืม");
-                $scope.cantRequest = -1;
-            }
-        });
-        
-        
-        if($scope.cantRequest == 0 && $scope.cartlist.length != 0){
-            if($scope.selectedProject === undefined || $scope.selectedProject === null)
-                {
-                    alert("กรุณาเลือกโปรเจค");      
+        if($scope.cartlist.length == 0){
+            alert("ไม่มีรายการสินค้า");
+            $scope.cantRequest = -1;
+        }
+        else{
+            angular.forEach($scope.cartlist, function(value, key){     
+                if(isNaN(parseInt(value.volumeRequest))){
+                    alert("กรุณาระบุจำนวนสาร: "+value.cc_name+" ให้ถูกต้อง");
+                    $scope.cantRequest = -1;
                 }
+                else if (parseInt(value.volumeRequest) > parseInt(value.cc_quantity))
+                {
+                    alert(value.cc_name+" ปริมาณเหลือไม่พอทำการยืม");
+                    $scope.cantRequest = -1;
+                }
+                //ตรวจสอบหน่วย
+                
+                if(value.cu_name_abb == "kg"){
+                    if(value.unitRequest == "kg"){
+                        value.volumeRequest = value.volumeRequest;
+                    }
+                    else if(value.unitRequest == "mg"){
+                        value.volumeRequest = value.volumeRequest/1000/1000;
+                    }
+                    else if(value.unitRequest == "g"){
+                        value.volumeRequest = value.volumeRequest/1000;
+                    }
+                    else{
+                        alert("หน่วยของสาร "+value.cc_name+" ที่ทำการยืมไม่ถูกต้อง");
+                        $scope.cantRequest = -1;
+                    }
+                }
+                else if($scope.cartlist[index].cu_name_abb == "g" ){
+                    if(value.unitRequest == "kg"){
+                        value.volumeRequest = value.volumeRequest/1000;
+                    }
+                    else if(value.unitRequest == "mg"){
+                        value.volumeRequest = value.volumeRequest*1000;
+                    }
+                    else if(value.unitRequest == "g"){
+                        value.volumeRequest = value.volumeRequest;
+                    }
+                    else{
+                        alert("หน่วยของสาร "+value.cc_name+" ที่ทำการยืมไม่ถูกต้อง");
+                        $scope.cantRequest = -1;
+                    }
+                }
+                else if($scope.cartlist[index].cu_name_abb == "mg" ){
+                  if(value.unitRequest == "kg"){
+                        value.volumeRequest = value.volumeRequest*1000*1000;
+                    }
+                    else if(value.unitRequest == "mg"){
+                        value.volumeRequest = value.volumeRequest;
+                    }
+                    else if(value.unitRequest == "g"){
+                        value.volumeRequest = value.volumeRequest*1000;
+                    }
+                    else{
+                        alert("หน่วยของสาร "+value.cc_name+" ที่ทำการยืมไม่ถูกต้อง");
+                        $scope.cantRequest = -1;
+                    }
+                }
+                else if($scope.cartlist[index].cu_name_abb == "l"){
+                    if(value.unitRequest == "l"){
+                        value.volumeRequest = value.volumeRequest;
+                    }
+                    else if(value.unitRequest == "ml"){
+                        value.volumeRequest = value.volumeRequest*1000;
+                    }
+                    else{
+                        alert("หน่วยของสาร "+value.cc_name+" ที่ทำการยืมไม่ถูกต้อง");
+                        $scope.cantRequest = -1;
+                    }
+                }
+                else if($scope.cartlist[index].cu_name_abb == "ml"){
+                    if(value.unitRequest == "l"){
+                        value.volumeRequest = value.volumeRequest/1000;
+                    }
+                    else if(value.unitRequest == "ml"){
+                        value.volumeRequest = value.volumeRequest;
+                    }
+                    else{
+                        alert("หน่วยของสาร "+value.cc_name+" ที่ทำการยืมไม่ถูกต้อง");
+                        $scope.cantRequest = -1;
+                    }
+                }
+            });
+            if($scope.selectedProject == undefined || $scope.selectedProject == null)
+            {
+                alert("กรุณาเลือกโปรเจค");     
+                $scope.cantRequest = -1;
+            }
             else{
-                $http({
+                if($scope.selectedProject.cp_budget-$scope.total < 0){
+                    alert("ยอดเงินคงเหลือในโปรเจคไม่เพียงพอ");
+                    $scope.cantRequest = -1;
+                }
+            }
+        }
+        
+        if($scope.cantRequest == -1){
+            alert("ดำเนินการยืมไม่สำเร็จ");
+        }
+        else{
+            $http({
                 method  : 'POST',
                 url     : '../php/insert_reciept.php',
                 data    : { cr_no: "NO.ทดสอบดึง", cr_cp_fk: $scope.selectedProject.cp_pk}, 
@@ -560,7 +646,7 @@ angular.module('chemstore', ['ngRoute'])
                                 data    : { crd_cr_fk: response.data[0].cr_pk,
                                             crd_cc_fk: value.cc_pk,
                                             crd_amt: value.volumeRequest,
-                                            crd_price: value.cc_price,
+                                            crd_price: value.volumeRequest*value.cc_price,
                                             crd_unit: value.cu_name_abb}, 
                                 headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
                             }).then(function(response) {
@@ -569,13 +655,8 @@ angular.module('chemstore', ['ngRoute'])
                         }); 
                     })
                 alert("ดำเนินการเพิ่มรายการเรียบร้อย");
-            }
-            
-        }else{
-            alert("ดำเนินการยืมไม่สำเร็จ");
         }
-    }
-    
+    }  
 })
 
 //  project  ============================================================================================================
