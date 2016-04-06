@@ -463,12 +463,15 @@ angular.module('chemstore', ['ngRoute'])
         if($scope.cartlist[index].cu_name_abb == "kg"){
             if($scope.cartlist[index].unitRequest == "kg"){
                 $scope.cartlist[index].totalprice = $scope.cartlist[index].volumeRequest*$scope.cartlist[index].cc_price;
+                $scope.cartlist[index].exvolumeRequest = $scope.cartlist[index].volumeRequest;
             }
             else if($scope.cartlist[index].unitRequest == "mg"){
                 $scope.cartlist[index].totalprice = $scope.cartlist[index].volumeRequest/1000/1000*$scope.cartlist[index].cc_price;
+                $scope.cartlist[index].exvolumeRequest = $scope.cartlist[index].volumeRequest/1000/1000;
             }
             else if($scope.cartlist[index].unitRequest == "g"){
-                $scope.cartlist[index].totalprice = $scope.cartlist[index].volumeRequest/1000*$scope.cartlist[index].cc_price
+                $scope.cartlist[index].totalprice = $scope.cartlist[index].volumeRequest/1000*$scope.cartlist[index].cc_price;
+                $scope.cartlist[index].exvolumeRequest = $scope.cartlist[index].volumeRequest/1000;
             }
             else
                 $scope.cartlist[index].totalprice = 0;
@@ -476,12 +479,15 @@ angular.module('chemstore', ['ngRoute'])
         else if($scope.cartlist[index].cu_name_abb == "g"){
             if($scope.cartlist[index].unitRequest == "kg"){
                 $scope.cartlist[index].totalprice = $scope.cartlist[index].volumeRequest*1000*$scope.cartlist[index].cc_price;
+                $scope.cartlist[index].exvolumeRequest = $scope.cartlist[index].volumeRequest*1000;
             }
             else if($scope.cartlist[index].unitRequest == "mg"){
                 $scope.cartlist[index].totalprice = $scope.cartlist[index].volumeRequest/1000*$scope.cartlist[index].cc_price;
+                $scope.cartlist[index].exvolumeRequest = $scope.cartlist[index].volumeRequest/1000;
             }
             else if($scope.cartlist[index].unitRequest == "g"){
-                $scope.cartlist[index].totalprice = $scope.cartlist[index].volumeRequest*$scope.cartlist[index].cc_price
+                $scope.cartlist[index].totalprice = $scope.cartlist[index].volumeRequest*$scope.cartlist[index].cc_price;
+                $scope.cartlist[index].exvolumeRequest = $scope.cartlist[index].volumeRequest;
             }
             else
                 $scope.cartlist[index].totalprice = 0;
@@ -489,12 +495,15 @@ angular.module('chemstore', ['ngRoute'])
         else if($scope.cartlist[index].cu_name_abb == "mg"){
             if($scope.cartlist[index].unitRequest == "kg"){
                 $scope.cartlist[index].totalprice = $scope.cartlist[index].volumeRequest*1000*1000*$scope.cartlist[index].cc_price;
+                $scope.cartlist[index].exvolumeRequest = $scope.cartlist[index].volumeRequest*1000*1000;
             }
             else if($scope.cartlist[index].unitRequest == "mg"){
                 $scope.cartlist[index].totalprice = $scope.cartlist[index].volumeRequest*$scope.cartlist[index].cc_price;
+                $scope.cartlist[index].exvolumeRequest = $scope.cartlist[index].volumeRequest;
             }
             else if($scope.cartlist[index].unitRequest == "g"){
-                $scope.cartlist[index].totalprice = $scope.cartlist[index].volumeRequest*1000*$scope.cartlist[index].cc_price
+                $scope.cartlist[index].totalprice = $scope.cartlist[index].volumeRequest*1000*$scope.cartlist[index].cc_price;
+                $scope.cartlist[index].exvolumeRequest = $scope.cartlist[index].volumeRequest*1000;
             }
             else
                 $scope.cartlist[index].totalprice = 0;
@@ -505,6 +514,7 @@ angular.module('chemstore', ['ngRoute'])
             }
             else if($scope.cartlist[index].unitRequest == "ml"){
                 $scope.cartlist[index].totalprice = $scope.cartlist[index].volumeRequest/1000*$scope.cartlist[index].cc_price;
+                $scope.cartlist[index].exvolumeRequest = $scope.cartlist[index].volumeRequest/1000;
             }
             else
                 $scope.cartlist[index].totalprice = 0;
@@ -512,9 +522,11 @@ angular.module('chemstore', ['ngRoute'])
         else if($scope.cartlist[index].cu_name_abb == "ml"){
             if($scope.cartlist[index].unitRequest == "l"){
                 $scope.cartlist[index].totalprice = $scope.cartlist[index].volumeRequest*1000*$scope.cartlist[index].cc_price;
+                $scope.cartlist[index].exvolumeRequest = $scope.cartlist[index].volumeRequest*1000;
             }
             else if($scope.cartlist[index].unitRequest == "ml"){
                 $scope.cartlist[index].totalprice = $scope.cartlist[index].volumeRequest*$scope.cartlist[index].cc_price;
+                $scope.cartlist[index].exvolumeRequest = $scope.cartlist[index].volumeRequest;
             }
             else
                 $scope.cartlist[index].totalprice = 0;
@@ -538,83 +550,27 @@ angular.module('chemstore', ['ngRoute'])
                     alert("กรุณาระบุจำนวนสาร: "+value.cc_name+" ให้ถูกต้อง");
                     $scope.cantRequest = -1;
                 }
-                else if (parseInt(value.volumeRequest) > parseInt(value.cc_quantity))
-                {
-                    alert(value.cc_name+" ปริมาณเหลือไม่พอทำการยืม");
+                else if(value.exvolumeRequest > value.volumeRequest){
+                    alert("สาร "+value.cc_name+" มีปริมาณไม่เพียงพอ");
                     $scope.cantRequest = -1;
-                }
-                //ตรวจสอบหน่วย
-                
-                if(value.cu_name_abb == "kg"){
-                    if(value.unitRequest == "kg"){
-                        value.volumeRequest = value.volumeRequest;
+                }else {
+                    //ตรวจสอบหน่วย
+                    if(value.cu_name_abb == "kg" || value.cu_name_abb == "g" || value.cu_name_abb == "mg"){
+                        if(value.unitRequest == "l" || value.unitRequest == "ml"){
+                            alert("หน่วยของสาร "+value.cc_name+" ที่ทำการยืมไม่ถูกต้อง");
+                            $scope.cantRequest = -1;
+                        }
                     }
-                    else if(value.unitRequest == "mg"){
-                        value.volumeRequest = value.volumeRequest/1000/1000;
-                    }
-                    else if(value.unitRequest == "g"){
-                        value.volumeRequest = value.volumeRequest/1000;
-                    }
-                    else{
-                        alert("หน่วยของสาร "+value.cc_name+" ที่ทำการยืมไม่ถูกต้อง");
-                        $scope.cantRequest = -1;
-                    }
-                }
-                else if($scope.cartlist[index].cu_name_abb == "g" ){
-                    if(value.unitRequest == "kg"){
-                        value.volumeRequest = value.volumeRequest/1000;
-                    }
-                    else if(value.unitRequest == "mg"){
-                        value.volumeRequest = value.volumeRequest*1000;
-                    }
-                    else if(value.unitRequest == "g"){
-                        value.volumeRequest = value.volumeRequest;
-                    }
-                    else{
-                        alert("หน่วยของสาร "+value.cc_name+" ที่ทำการยืมไม่ถูกต้อง");
-                        $scope.cantRequest = -1;
-                    }
-                }
-                else if($scope.cartlist[index].cu_name_abb == "mg" ){
-                  if(value.unitRequest == "kg"){
-                        value.volumeRequest = value.volumeRequest*1000*1000;
-                    }
-                    else if(value.unitRequest == "mg"){
-                        value.volumeRequest = value.volumeRequest;
-                    }
-                    else if(value.unitRequest == "g"){
-                        value.volumeRequest = value.volumeRequest*1000;
-                    }
-                    else{
-                        alert("หน่วยของสาร "+value.cc_name+" ที่ทำการยืมไม่ถูกต้อง");
-                        $scope.cantRequest = -1;
-                    }
-                }
-                else if($scope.cartlist[index].cu_name_abb == "l"){
-                    if(value.unitRequest == "l"){
-                        value.volumeRequest = value.volumeRequest;
-                    }
-                    else if(value.unitRequest == "ml"){
-                        value.volumeRequest = value.volumeRequest*1000;
-                    }
-                    else{
-                        alert("หน่วยของสาร "+value.cc_name+" ที่ทำการยืมไม่ถูกต้อง");
-                        $scope.cantRequest = -1;
-                    }
-                }
-                else if($scope.cartlist[index].cu_name_abb == "ml"){
-                    if(value.unitRequest == "l"){
-                        value.volumeRequest = value.volumeRequest/1000;
-                    }
-                    else if(value.unitRequest == "ml"){
-                        value.volumeRequest = value.volumeRequest;
-                    }
-                    else{
-                        alert("หน่วยของสาร "+value.cc_name+" ที่ทำการยืมไม่ถูกต้อง");
-                        $scope.cantRequest = -1;
+                    else
+                    {
+                        if(value.cu_name_abb == "kg" || value.cu_name_abb == "g" || value.cu_name_abb == "mg"){
+                            alert("หน่วยของสาร "+value.cc_name+" ที่ทำการยืมไม่ถูกต้อง");
+                            $scope.cantRequest = -1;
+                        }
                     }
                 }
             });
+            
             if($scope.selectedProject == undefined || $scope.selectedProject == null)
             {
                 alert("กรุณาเลือกโปรเจค");     
@@ -645,8 +601,8 @@ angular.module('chemstore', ['ngRoute'])
                                 url     : '../php/insert_recieptDetail.php',
                                 data    : { crd_cr_fk: response.data[0].cr_pk,
                                             crd_cc_fk: value.cc_pk,
-                                            crd_amt: value.volumeRequest,
-                                            crd_price: value.volumeRequest*value.cc_price,
+                                            crd_amt: value.exvolumeRequest,
+                                            crd_price: value.totalprice,
                                             crd_unit: value.cu_name_abb}, 
                                 headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
                             }).then(function(response) {
