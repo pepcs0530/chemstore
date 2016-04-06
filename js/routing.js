@@ -2,8 +2,6 @@ angular.module('chemstore', ['ngRoute'])
 
 //  Login   ============================================================================================================
 .controller('loginController', function($scope,$http) {
-      
-    
     $scope.createLogin = function () {
         console.log($scope.login);    
         $http({
@@ -90,31 +88,32 @@ angular.module('chemstore', ['ngRoute'])
                     
                     //  login by manager
                     if($scope.type == 1){
-                        alert('บัญชี '+$scope.session+' กำลังใช้งาน');
+                        //alert('บัญชี '+$scope.session+' กำลังใช้งาน');
 //                        javascript:top.frames['left'].location = '../html/menu_manager.html';
 
 //                        javascript:top.frames['right'].location = '../html/requestChem.html';
                         //return true;
                     }else if($scope.type == 2){
-                        alert('บัญชี '+$scope.session+' กำลังใช้งาน');
+                        //alert('บัญชี '+$scope.session+' กำลังใช้งาน');
 //                        javascript:top.frames['left'].location = '../html/menu_teacher.html';
 
 //                        javascript:top.frames['right'].location = '../html/requestChem.html';
                         //return true;
                     }else if($scope.type == 3){
-                        alert('บัญชี '+$scope.session+' กำลังใช้งาน');
+                        //alert('บัญชี '+$scope.session+' กำลังใช้งาน');
 //                        javascript:top.frames['left'].location = '../html/menu_operator.html';
 
 //                        javascript:top.frames['right'].location = '../html/requestChem.html';
                         //return true;
                     }else if($scope.type == 4){
-                        alert('บัญชี '+$scope.session+' กำลังใช้งาน');
+                        //alert('บัญชี '+$scope.session+' กำลังใช้งาน');
 //                        javascript:top.frames['left'].location = '../html/menu_scientist.html';
 
 //                        javascript:top.frames['right'].location = '../html/requestChem.html';
                         //return true;
-                    }else{
-                        alert('กรุณาเข้าสู่ระบบ');
+                    }
+                    else{
+                        //alert('กรุณาเข้าสู่ระบบ');
 //                        javascript:top.frames['left'].location = '../html/menu_index.html';
 
 //                        javascript:top.frames['right'].location = '../html/login.html';
@@ -155,11 +154,16 @@ angular.module('chemstore', ['ngRoute'])
             url     :   '../php/select_chemReceipt.php'
         }).then(function(response) {
             $scope.listReciept = response.data;
-            console.log($scope.listReciept);
         });
-        $scope.showPopup = function () {
-            alert("ดูข้อมูล...");
-            window.open( "../html/showRequestLoc.html", "myWindow",  "status = 1, height = 500, width = 1000, resizable = 0" );
+        $scope.showPopup = function (getdata) {
+            $http({
+            method  :   'POST',
+            url     :   '../php/select_chemdetail.php',
+            data    :   {crd_cr_fk: getdata}
+            }).then(function(response) {
+            $scope.chemdetail = response.data;
+                console.log($scope.chemdetail);
+            });
         }
     })
 
