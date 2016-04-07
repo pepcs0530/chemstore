@@ -224,6 +224,7 @@ angular.module('chemstore', ['ngRoute'])
 
                 alert("ดำเนินการเพิ่มเรียบร้อย");
                 //window.location.href="../html/inboundChem.html";
+                location.reload();
             })   
 
         }
@@ -377,7 +378,8 @@ angular.module('chemstore', ['ngRoute'])
                             }); 
     //                    })
                     alert("ดำเนินการนำเข้าเรียบร้อย");
-                    window.location.href="../html/inboundChem.html";
+                    //window.location.href="../html/inboundChem.html";
+                    location.reload();
       //          }
 
             }else{
@@ -654,13 +656,15 @@ angular.module('chemstore', ['ngRoute'])
                     console.log(data);
 
                     alert("เพิ่มโปรเจคเรียบร้อย");
-                    window.location.href="../html/addProject.html";
+                    //window.location.href="../html/addProject.html";
+                    location.reload();
                 });
         }
 
         //  ยกเลิก
         $scope.cancleProject = function(){
-            window.location.href="../html/addProject.html";
+            //window.location.href="../html/addProject.html";
+            location.reload();
         }    
     }) 
 
@@ -708,7 +712,8 @@ angular.module('chemstore', ['ngRoute'])
                 
         //  ยกเลิก
         $scope.cancleMember = function(){
-            window.location.href="../html/editMember.html";
+            //window.location.href="../html/editMember.html";
+            location.reload();
         }
     })
 
@@ -782,6 +787,7 @@ angular.module('chemstore', ['ngRoute'])
                     console.log(data);
 
                     alert("เพิ่มสมาชิกเรียบร้อย");
+                    location.reload();
 
                     // clear modal content
                     //$scope.clearMember();
@@ -880,7 +886,8 @@ angular.module('chemstore', ['ngRoute'])
                     console.log(data);
 
                     alert("แก้ไขสมาชิกเรียบร้อย");
-                    window.location.href="../html/editMember.html";
+                    //window.location.href="../html/editMember.html";
+                    location.reload();
 
                     // clear modal content
                     //$scope.clearMember();
@@ -910,7 +917,8 @@ angular.module('chemstore', ['ngRoute'])
                                 console.log(data);
 
                                 alert("แก้ไขรหัสผ่านเรียบร้อย");
-                                window.location.href="../html/editMember.html";
+                                //window.location.href="../html/editMember.html";
+                                location.reload();
                             });                             
                         
                     }
@@ -1001,6 +1009,7 @@ angular.module('chemstore', ['ngRoute'])
         
         //  เลือกสารเคมีที่จะแก้ไข
         $scope.addCart = function (selectedData) {
+            $scope.cc_pk = selectedData.cc_pk;
             $scope.cc_name = selectedData.cc_name;
             $scope.cc_type = selectedData.cc_type;
             $scope.cc_code = selectedData.cc_code;
@@ -1020,8 +1029,34 @@ angular.module('chemstore', ['ngRoute'])
         }
         
         //  ยืนยันสารเคมีที่จะแก้ไข
-        $scope.updateChem = function (selectedData) {
-            alert("แก้ไขข้อมูลเรียบร้อย");
+        $scope.updateChem = function () {
+            //alert("แก้ไขข้อมูลเรียบร้อย");
+            $http.post("../php/update_chem.php",{
+                
+                'cc_pk' : $scope.cc_pk,
+                'cc_code' : $scope.cc_code,
+                'cc_name' : $scope.cc_name,
+                'cc_type' : $scope.cc_type,
+                'cc_casNo' : $scope.cc_casNo,
+                'cc_state' : $scope.cc_state,
+                'cc_volume' : $scope.cc_volume,
+                'cc_unit_fk' : $scope.cc_unit_fk,
+                'cc_quantity' : $scope.cc_quantity,
+                'cc_packing' : $scope.cc_packing,
+                'cc_location_fk' : $scope.cc_location_fk,
+                'cc_room' : $scope.cc_room,
+                'cc_price' : $scope.cc_price,
+                'cc_grade' : $scope.cc_grade,
+                'cc_expDt' : $scope.cc_expDt,
+                'cc_producer' : $scope.cc_producer,
+                'cc_desc' : $scope.cc_desc,
+                
+                }).success(function (data, status, headers, config) {
+                    console.log(data);
+
+                    alert("แก้ไขข้อมูลเรียบร้อย");
+                    location.reload();
+                });
 
         }
     })
