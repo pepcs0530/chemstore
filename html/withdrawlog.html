@@ -1,0 +1,61 @@
+<div class ="container" ng-controller= "withdrawlogController">
+    <caption><H3>ประวัติการเบิกสาร</H3></caption>
+        <table class= " table table-bordered" >
+            <tr>
+                <th>วันที่-เวลา</th>
+                <th>เลขที่ใบเบิก</th>
+                <th>บัญชีผู้ใช้</th>
+                <th>โปรเจค</th>
+                <th>รายละเอียด</th>
+            </tr>
+            <tr ng-repeat="showdata in listReciept">
+<!--                <td>{{showdata.cr_crtDt | date : 'DD-MM-YYYYThh:mm:ssTZD'}}</td>ng-bind="date | date:'MM/dd/yyyy'"-->
+                <td>{{showdata.cr_crtDt | Datetime }} </td>
+                <td>{{showdata.cr_no}}</td>
+                <td>{{showdata.ca_tname+" "+showdata.ca_fname+" "+showdata.ca_lname}}</td>
+                <td>{{showdata.cp_name}}</td>
+                <td><input type="button" value="แสดง" ng-click="addCart(showdata)" data-toggle="modal" data-target="#myModal"></td>
+            </tr>
+        </table> 
+    
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">รายละเอียดใบเบิกสาร</h4>
+              </div>
+              <div class="modal-body">
+                <table class= "table-bordered">
+                    <tr>
+                        <th>ชื่อสารเคมี</th>
+                        <th>ประเภทสารเคมี</th>
+                        <th>Cas no.</th>
+                        <th>สถานะ</th>
+                        <th>จำนวนที่เบิก</th>
+                        <th>หน่วย</th>
+                        <th>ห้อง</th>
+                        <th>เกรด</th>
+                        <th>วันหมดอายุ</th>
+                    </tr>
+                    <tr ng-repeat="showdata2 in listRecieptDetail">
+                        <td>{{showdata2.cc_name}}</td>
+                        <td>{{showdata2.cc_type}}</td>
+                        <td>{{showdata2.cc_casNo}}</td>
+                        <td>{{showdata2.cc_state}}</td>
+                        <td>{{showdata2.crd_amt}}</td>
+                        <td>{{showdata2.crd_unit}}</td>
+                        <td>{{showdata2.cc_room}}</td>
+                        <td>{{showdata2.cc_grade}}</td>
+                        <td>{{showdata2.cc_expDt | Date}}</td>
+                    </tr>
+                </table> 
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
+              </div>
+            </div>
+          </div>
+        </div>
+</div>

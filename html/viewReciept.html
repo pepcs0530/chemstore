@@ -47,7 +47,8 @@
         </table>   
         
         <caption><H3>สารเคมีที่เบิก</H3></caption>
-        <select  
+        เลขที่ใบเบิก : <input type="text" ng-model="cr_no"><br>
+        เลือกโปรเจค : <select  
                 ng-model="selectedProject" 
                 ng-options="option.cp_name for option in listProject">
         </select>

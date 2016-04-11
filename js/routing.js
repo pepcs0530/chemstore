@@ -1,4 +1,30 @@
 angular.module('chemstore', ['ngRoute','ui.bootstrap'])
+//  เซ็ต FORMAT Date & Datetime ============================================================================================================
+    .filter('Date', function($filter){
+         return function(input)
+         {
+          if(input == null || input == "0000-00-00 00:00:00"){ return ""; } 
+
+          var _date = $filter('date')(new Date(input),
+                                      'dd/MM/yyyy');
+
+          return _date.toUpperCase();
+
+         };
+    })
+
+    .filter('Datetime', function($filter){
+         return function(input)
+         {
+          if(input == null || input == "0000-00-00 00:00:00"){ return ""; } 
+
+          var _date = $filter('date')(new Date(input),
+                                      'dd/MM/yyyy - HH:mm:ss');
+
+          return _date.toUpperCase();
+
+         };
+    })
 
 //  Login   ============================================================================================================
 .controller('loginController', function($scope,$http,$timeout) {
@@ -609,7 +635,9 @@ angular.module('chemstore', ['ngRoute','ui.bootstrap'])
             $http({
                 method  : 'POST',
                 url     : '../php/insert_reciept.php',
-                data    : { cr_no: "NO.ทดสอบดึง", cr_cp_fk: $scope.selectedProject.cp_pk}, 
+                data    : { 
+                    cr_no : $scope.cr_no, 
+                    cr_cp_fk : $scope.selectedProject.cp_pk}, 
                 headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
                     }).then(function(response) {                
 
@@ -1165,6 +1193,33 @@ angular.module('chemstore', ['ngRoute','ui.bootstrap'])
 
         }
     })
+
+//  ประวัติการเบิกสาร  ============================================================================================================
+    .controller('withdrawlogController', function($scope,$http) {
+        //  แสดงใบเบิกสาร
+        $http({
+            method  :   'GET',
+            url     :   '../php/select_withdraw.php'
+        }).then(function(response) {
+            $scope.listReciept = response.data;
+        });
+    
+        $scope.addCart = function (selectedData) {
+            $scope.crd_cr_pk = selectedData.cr_pk;
+            
+            //  แสดงใบเบิกสาร
+            $http({
+                method  :   'POST',
+                url     :   '../php/select_withdrawDetail.php',
+                data    :   {
+                    'crd_cr_pk' : $scope.crd_cr_pk
+                }
+            }).then(function(response) {
+                $scope.listRecieptDetail = response.data;
+            });
+        }
+    })
+
 
 //  route  ============================================================================================================
     .config(['$routeProvider',
