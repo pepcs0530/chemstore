@@ -1078,6 +1078,94 @@ angular.module('chemstore', ['ngRoute','ui.bootstrap'])
         }
     })
 
+//  ย้ายคลัง  ============================================================================================================
+    .controller('transferChemController', function($scope,$http, $filter) {     
+        //  ปุ่ม prev
+        $scope.deleteRecord = function () {
+            if(parseInt($scope.begin) - parseInt($scope.searchRange.value) < 0)
+                $scope.begin = 0;
+            else
+                $scope.begin = parseInt($scope.begin) - parseInt($scope.searchRange.value);
+        }
+
+        //  ปุ่ม next
+        $scope.addRecord = function () {
+            if(parseInt($scope.begin) + parseInt($scope.searchRange.value) < $scope.listChem.length)
+                    $scope.begin = parseInt($scope.begin) + parseInt($scope.searchRange.value);
+        }
+        
+        $scope.begin = 0;
+        $scope.cartlist = [];
+        //  จำนวนแสดง
+        $scope.options = [{
+            name: '5',
+            value: 5
+        },{
+            name: '10',
+            value: 10
+        }, {
+            name: '20',
+            value: 20
+        }, {
+            name: '50',
+            value: 50
+        }, {
+            name: '100',
+            value: 100
+        }];
+    
+        //  แสดงสารเคมี
+        $http({
+            method  : 'POST',
+            url     : '../php/select_chemCategory.php',
+            data    : {cl_name: "ดูทั้งหมด"}, //forms user object
+            headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
+            }).then(function(response) {
+                $scope.listChem = response.data;
+                console.log($scope.listChem);
+        })
+        
+        //  แสดงสถานที่
+        $http({
+            method  : 'POST',
+            url     : '../php/select_chemLocation.php',
+            headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
+            }).then(function(response) {
+                $scope.listLoc = response.data;
+                console.log($scope.listLoc);
+        })
+        
+        //  เลือกสารเคมีที่จะแก้ไข
+        $scope.addCart = function (selectedData) {
+            $scope.cc_pk = selectedData.cc_pk;
+            $scope.cc_name = selectedData.cc_name;
+            $scope.cc_type = selectedData.cc_type;
+            $scope.cc_code = selectedData.cc_code;
+            $scope.cc_casNo = selectedData.cc_casNo;
+            $scope.cc_loc_name = selectedData.cl_name;
+            $scope.cc_location_fk = selectedData.cl_pk;
+            $scope.cc_desc = selectedData.cc_desc;
+        }
+        
+        //  ยืนยันย้ายคลังสารเคมี
+        $scope.updateTransfLocChem = function () {
+            //alert("แก้ไขข้อมูลเรียบร้อย");
+            $http.post("../php/update_transferLocChem.php",{
+                
+                'cc_pk' : $scope.cc_pk,
+                'cc_location_fk' : $scope.cc_location_fk,
+                'cc_desc' : $scope.cc_desc,
+                
+                }).success(function (data, status, headers, config) {
+                    console.log(data);
+
+                    alert("แก้ไขข้อมูลเรียบร้อย");
+                    location.reload();
+                });
+
+        }
+    })
+
 //  route  ============================================================================================================
     .config(['$routeProvider',
 
@@ -1121,7 +1209,7 @@ angular.module('chemstore', ['ngRoute','ui.bootstrap'])
           ).when(
             '/transfer',{
                 templateUrl: '../html/transfer.html',
-                controller: 'transferController'
+                controller: 'transferChemController'
             } 
           ).when(
             '/editChem',{
