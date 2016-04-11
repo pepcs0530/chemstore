@@ -1,7 +1,7 @@
-angular.module('chemstore', ['ngRoute'])
+angular.module('chemstore', ['ngRoute','ui.bootstrap'])
 
 //  Login   ============================================================================================================
-.controller('loginController', function($scope,$http) {
+.controller('loginController', function($scope,$http,$timeout) {
     $scope.createLogin = function () {
         console.log($scope.login);    
         $http({
@@ -123,6 +123,23 @@ angular.module('chemstore', ['ngRoute'])
             });
             //-------------------------------------------------------------
     }
+    
+    
+        $scope.myInterval = 3000;
+        $scope.slides = [
+        {
+          image: '../img/slide1.jpg'
+        },
+        {
+          image: '../img/slide2.jpg'
+        },
+        {
+          image: '../img/slide3.jpg'
+        },
+        {
+          image: '../img/slide4.jpg'
+        }
+        ];
     
     })
 
@@ -852,7 +869,7 @@ angular.module('chemstore', ['ngRoute'])
         $http({
             method  :   'POST',
             url     :   '../php/select_account_where.php',
-            data    : { ca_user: "manager"}, 
+            data    : { ca_user: $scope.session}, 
             headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
                     }
         ).then(function(response) {

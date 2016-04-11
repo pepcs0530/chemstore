@@ -1,3 +1,29 @@
 <div class="container" ng-controller="loginController" ng-show="type == '' ">
     <h3>ข่าว-ประชาสัมพันธ์...</h3>
+    
+    <style>
+        
+        #slides_control > div{
+          height: 200px;
+        }
+        img{
+          margin:auto;
+          width: 80%;
+        }
+        #slides_control {
+        }
+    </style>
+    <div ng-controller="loginController" id="slides_control">
+        <div>
+          <carousel interval="myInterval">
+            <slide ng-repeat="slide in slides" active="slide.active">
+              <img ng-src="{{slide.image}}">
+              <div class="carousel-caption">
+<!--                <h4>Slide {{$index+1}}</h4>-->
+              </div>
+            </slide>
+          </carousel>
+        </div>
+    </div>
 </div>
+
