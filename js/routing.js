@@ -417,7 +417,16 @@ angular.module('chemstore', ['ngRoute','ui.bootstrap'])
                                     headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
                                 }).then(function(response) {
                                     console.log(response);
-                                })    
+                                    
+                                    
+                                })  
+                                
+                                //  เพิ่มประวัติการนำเข้าสาร
+                                $http.post("../php/insert_import.php",{
+                                    cc_pk : value.cc_pk
+                                }).success(function (data, status, headers, config) {
+                                    console.log(data);
+                                })
                             }); 
     //                    })
                     alert("ดำเนินการนำเข้าเรียบร้อย");
@@ -1192,6 +1201,17 @@ angular.module('chemstore', ['ngRoute','ui.bootstrap'])
                 });
 
         }
+    })
+
+//  ประวัติการนำเข้าสาร  ============================================================================================================
+    .controller('importlogController', function($scope,$http) {
+        //  แสดงใบเบิกสาร
+        $http({
+            method  :   'GET',
+            url     :   '../php/select_import.php'
+        }).then(function(response) {
+            $scope.listImport = response.data;
+        });
     })
 
 //  ประวัติการเบิกสาร  ============================================================================================================

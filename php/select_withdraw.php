@@ -7,7 +7,8 @@
             "INNER JOIN `chem_project` ".
             "ON `cr_cp_fk` = `cp_pk` ".
             "INNER JOIN `chem_account` ".
-            "ON cp_teach_fk = `ca_pk` ";
+            "ON cp_teach_fk = `ca_pk` ".
+            "ORDER BY `cr_crtDt` DESC";
 
 
     $query = mysql_query($sql);

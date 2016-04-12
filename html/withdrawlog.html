@@ -39,16 +39,16 @@
                         <th>เกรด</th>
                         <th>วันหมดอายุ</th>
                     </tr>
-                    <tr ng-repeat="showdata2 in listRecieptDetail">
-                        <td>{{showdata2.cc_name}}</td>
-                        <td>{{showdata2.cc_type}}</td>
-                        <td>{{showdata2.cc_casNo}}</td>
-                        <td>{{showdata2.cc_state}}</td>
-                        <td>{{showdata2.crd_amt}}</td>
-                        <td>{{showdata2.crd_unit}}</td>
-                        <td>{{showdata2.cc_room}}</td>
-                        <td>{{showdata2.cc_grade}}</td>
-                        <td>{{showdata2.cc_expDt | Date}}</td>
+                    <tr ng-repeat="showdata in listRecieptDetail">
+                        <td>{{showdata.cc_name}}</td>
+                        <td>{{showdata.cc_type}}</td>
+                        <td>{{showdata.cc_casNo}}</td>
+                        <td>{{showdata.cc_state}}</td>
+                        <td>{{showdata.crd_amt}}</td>
+                        <td>{{showdata.crd_unit}}</td>
+                        <td>{{showdata.cc_room}}</td>
+                        <td>{{showdata.cc_grade}}</td>
+                        <td>{{showdata.cc_expDt | Date}}</td>
                     </tr>
                 </table> 
               </div>

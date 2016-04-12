@@ -1,0 +1,29 @@
+<div class ="container" ng-controller= "importlogController">
+    <caption><H3>ประวัติการนำเข้าสาร</H3></caption>
+        <table class= " table table-bordered" >
+            <tr>
+                <th>วันที่-เวลา</th>
+                <th>ชื่อสารเคมี</th>
+                <th>Cas no.</th>
+                <th>สถานะ</th>
+                <th>จำนวนที่นำเข้า</th>
+                <th>หน่วย</th>
+                <th>เกรด</th>
+                <th>คลัง</th>
+                <th>ห้อง</th>
+            </tr>
+            <tr ng-repeat="showdata in listImport">
+                <td>{{showdata.cil_crtDt | Datetime}}</td>
+                <td>{{showdata.cc_name}}</td>
+                <td>{{showdata.cc_casNo}}</td>
+                <td>{{showdata.cc_state}}</td>
+                <td>{{showdata.cc_quantity}}</td>
+                <td>{{showdata.cu_name_abb}}</td>
+                <td>{{showdata.cc_grade}}</td>
+                <td>{{showdata.cl_name}}</td>
+                <td>{{showdata.cc_room}}</td>
+            </tr>
+        </table> 
+    
+        
+</div>
