@@ -30,15 +30,14 @@ type : {{type}}
   <!--    login by manager    -->
     <nav class="navbar navbar-default" ng-show="type == 1">
     <div class="container-fluid">
-      <div class="navbar-header">
-        <a class="navbar-brand" href="#/viewStock">คลังสารเคมี</a>
-      </div>
       <ul class="nav navbar-nav">
+          <li><a class="navbar-brand" href="#/viewStock">คลังสารเคมี</a></li>
         <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" >จัดการคำร้องขอ<span class="caret"></span></a>
             <ul class="dropdown-menu" >
               <li><a href="#/requestChem">คำร้องขอสารเคมี</a></li>
             </ul>
-        </li>  
+        </li>
+
         <li><a href="#/inboundChem" >นำเข้าสารเคมี</a></li>
 
         <li><a href="#/viewReciept" >เบิกสารเคมี</a></li>
@@ -165,7 +164,7 @@ type : {{type}}
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->
     </nav>
-  <div ng-view=""></div>
+<div ng-view></div>
     
 </body>
 </html>

@@ -11,8 +11,6 @@
         INNER JOIN `chem_location`
         ON `cc_location_fk`=`cl_pk`
         ORDER BY `cil_pk` DESC";
-
-
     $query = mysql_query($sql);
     $data=array();
     while($row = mysql_fetch_array ($query))

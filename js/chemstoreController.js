@@ -184,7 +184,6 @@ chemstore.controller('loginController', function($scope,$http,$timeout) {
             headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
             }).then(function(response) {
                 $scope.listChem = response.data;
-                console.log($scope.listChem);
         })
 
         //  แสดงสถานที่
@@ -204,7 +203,6 @@ chemstore.controller('loginController', function($scope,$http,$timeout) {
             headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
             }).then(function(response) {
                 $scope.listUnit = response.data;
-                console.log($scope.listUnit);
         })
 
         //  ปุ่ม prev
@@ -240,7 +238,6 @@ chemstore.controller('loginController', function($scope,$http,$timeout) {
 
         //  ลดออกจากตะกร้า
         $scope.deleteCart = function(deletedIndex) {
-            console.log(deletedIndex);
             $scope.cartlist.splice(deletedIndex,1);
         }
 
@@ -292,15 +289,13 @@ chemstore.controller('loginController', function($scope,$http,$timeout) {
                                     }, 
                                     headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
                                 }).then(function(response) {
-                                    console.log(response);
-                                    
-                                    
+                                    console.log(response);     
                                 })  
                                 
                                 //  เพิ่มประวัติการนำเข้าสาร
                                 $http.post("../php/insert_import.php",{
                                     cc_pk : value.cc_pk
-                                }).success(function (data, status, headers, config) {
+                                }).success(function (data) {
                                     console.log(data);
                                 })
                             }); 
@@ -574,7 +569,6 @@ chemstore.controller('loginController', function($scope,$http,$timeout) {
             $scope.addProject = "";
         }    
     }) 
-
 
 //  member  ============================================================================================================
     .controller('membersController', function($scope,$http) {

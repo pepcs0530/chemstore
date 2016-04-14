@@ -20,7 +20,4 @@ $sql = "UPDATE chem_category SET
     else{
        die ("Error : ".mysql_error());
     }
-
-
-
 ?>
