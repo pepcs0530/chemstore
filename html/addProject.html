@@ -9,9 +9,7 @@
             <tr>
                 <td align="right"><label for="acctyp">อาจารย์ :</label></td>
                 <td>
-                    <select ng-model="addProject.teacher" ng-options="lt.ca_fname for lt in listTeacher">
-                          <option value="">เลือกอาจารย์...</option>
-                    </select> {{addProject.teacher.ca_pk}}
+                    <input type="text" ng-model="addProject.teacher" ng-disabled="true"/>
                 </td>
             </tr>
             <tr>

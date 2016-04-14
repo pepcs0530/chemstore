@@ -87,6 +87,7 @@ chemstore.controller('loginController', function($scope,$http,$timeout) {
         }
     
         $scope.addRecord = function () {
+            console.log(parseInt($scope.begin) + parseInt($scope.searchRange.value) < $scope.listChem.length);
             if(parseInt($scope.begin) + parseInt($scope.searchRange.value) < $scope.listChem.length)
                     $scope.begin = parseInt($scope.begin) + parseInt($scope.searchRange.value);
         }
@@ -432,20 +433,55 @@ chemstore.controller('loginController', function($scope,$http,$timeout) {
     }  
 })
 
+// edit project  ============================================================================================================
+    .controller('editprojectCtrl', function($scope,$http) {
+        //    เลือกประเภทผู้ใช้ที่เป็น teacher
+        //    สร้างโปรเจค
+        $scope.addProject = {teacher : $scope.session,
+                             teacher_pk : $scope.key}
+        
+        $scope.createProject = function(){
+            $http({
+                method  : 'POST',
+                url     : '../php/insert_project.php',
+                data    : {teacher_pk: $scope.addProject.teacher_pk,
+                           name: $scope.addProject.cp_name,
+                           budget: $scope.addProject.cp_budget,
+                           desc: $scope.addProject.cp_desc}, //forms user object
+                headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
+            }).then(function(data) {
+                console.log(data);
+                alert("เพิ่มโปรเจคเรียบร้อย");
+                $scope.addProject = {teacher : $scope.session,
+                                     teacher_pk : $scope.key}
+            });
+        }
+        //  ยกเลิก
+        $scope.cancleProject = function(){
+            $scope.addProject = "";
+        }    
+    }) 
+
 //  project  ============================================================================================================
     .controller('projectController', function($scope,$http) {
         //    เลือกประเภทผู้ใช้ที่เป็น teacher
+        //    สร้างโปรเจค
+        $scope.addProject = {teacher : $scope.session,
+                             teacher_pk : $scope.key}
         $http({
-            method  :   'GET',
-            url     :   '../php/select_teacher.php'
-        }).then(function(response) {
-            $scope.listTeacher = response.data;
-        });
-
-        //  สร้างโปรเจค
+        method  : 'POST',
+        url     : '../php/select_chemProject.php',
+        data    : { 
+            $teacher_pk : $scope.addProject.teacher_pk}, 
+            headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
+        }).then(function(response) {                
+            $scope.listProject = response.data;
+        })
+        
+    
         $scope.createProject = function(){
-            $http.post("../php/insert_project.php",{
-                'teacher_pk' : $scope.addProject.teacher.ca_pk,
+            $http.post("../php/select_chemProject.php",{
+                'teacher_pk' : $scope.addProject.teacher.teacher_pk,
                 'name' : $scope.addProject.cp_name, 
                 'budget' : $scope.addProject.cp_budget,
                 'desc' : $scope.addProject.cp_desc
@@ -470,6 +506,8 @@ chemstore.controller('loginController', function($scope,$http,$timeout) {
         }).then(function(response) {
             $scope.listAcountType = response.data;
         });
+    
+        $scope.addMember = {acctyp : "4"}
         //     ล้างค่า
         $scope.clearMember = function(){
             $scope.addMember = "";
@@ -485,8 +523,9 @@ chemstore.controller('loginController', function($scope,$http,$timeout) {
                 'fname' : $scope.addMember.fname,
                 'lname' : $scope.addMember.lname,
                 'tel' : $scope.addMember.tel,
-                'acctyp' : $scope.addMember.acctyp.cat_pk
+                'acctyp' : $scope.addMember.acctyp
             }).success(function (data) {
+                console.log(data);
                     alert("เพิ่มสมาชิกเรียบร้อย");
                     $scope.addMember = "";
                 });

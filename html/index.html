@@ -40,11 +40,7 @@ type : {{type}}
 
         <li><a href="#/inboundChem" >นำเข้าสารเคมี</a></li>
 
-        <li><a href="#/viewReciept" >เบิกสารเคมี</a></li>
-
         <li><a href="#/sold" >ขายคืน</a></li>
-            
-        <li><a href="#/viewProject" >โปรเจคนักศึกษา</a></li>
           
         <li><a href="#/transfer" >ย้ายคลัง</a></li>
 
@@ -62,7 +58,6 @@ type : {{type}}
           <ul class="dropdown-menu">
             <li><a href="#/addMember" >เพิ่มผุ้ใช้งาน</a></li>
             <li><a href="#/editMember" >แก้ไขข้อมูลผู้ใช้งาน</a></li>
-            <li><a href="#/addProject">เพิ่มโปรเจค</a></li>
           </ul>
         </li>
         <li><a href="../php/logout.php" >ออกจากระบบ</a></li>
@@ -81,10 +76,15 @@ type : {{type}}
 
             <li><a href="#/viewReciept" >เบิกสารเคมี</a></li>
 
-            <li><a href="#/increaseChem" >ขอสารเคมีเพิ่ม</a></li>
-
             <li><a href="#/otherRequest" >ส่งคำร้องอื่นๆ</a></li>
-
+              
+            <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" >จัดการโปรเจค<span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="#/viewProject" >โปรเจคนักศึกษา</a></li>
+                <li><a href="#/addProject">เพิ่มโปรเจค</a></li>
+              </ul>
+            </li>
+              
             <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" >ประวัติรายการ<span class="caret"></span></a>
               <ul class="dropdown-menu" >
                 <li><a href="#/withdrawlog"  >ประวัติการเบิกสาร</a></li>

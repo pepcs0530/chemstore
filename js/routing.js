@@ -80,7 +80,7 @@
           ).when(
             '/addProject',{
                 templateUrl: '../html/addProject.html',
-                controller: 'projectController'
+                controller: 'editprojectCtrl'
             } 
            ).when(
             '/login',{

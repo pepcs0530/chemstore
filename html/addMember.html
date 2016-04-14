@@ -36,8 +36,8 @@
             <tr>
                 <td align="right"><label for="acctyp">ประเภท :</label></td>
                 <td>
-                    <select ng-model="addMember.acctyp" ng-options="option.cat_name for option in listAcountType" ng-change="showValue()">
-                        <option value="">เลือกประเภท...</option>
+                    <select ng-model="addMember.acctyp" >
+                        <option ng-repeat="lu in listAcountType" value="{{lu.cat_pk}}" >{{lu.cat_name}}</option>
                     </select>
                 </td>
             </tr>
