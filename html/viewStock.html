@@ -1,8 +1,15 @@
 <body  ng-app="chemstore" ng-controller="categoryController">    
-    ค้นหารายการ <select ng-model="selectData" ng-options="option.cl_name for option in listLocation" ng-change="getdata()">
-    <option value="">เลือกคลัง...</option>
+
+    <select  ng-model="selectData" ng-change="getdata()">
+        <option ng-repeat="lu in listLocation" value="{{lu.cl_name}}" >{{lu.cl_name}}</option>
     </select>
-    <input type="text" ng-model="searchThis" placeholder="ใส่คำที่คุณต้องการค้นหา">
+    <input type="text" ng-model="searchThis" placeholder="ใส่คำที่คุณต้องการค้นหา"> <br>
+    <input type="button" ng-click="deleteRecord()" value="previous">
+    <select ng-init="searchRange = options[2]" 
+            ng-model="searchRange" 
+            ng-options="option.name for option in options">
+    </select>
+    <input type="button" ng-click="addRecord()" value="next"><br>
     <caption><H3>รายชื่อสารเคมี</H3></caption>
     <table width="100%" border="1"  id="here">
         <tr>
@@ -16,7 +23,7 @@
             <th bgcolor = 66CCCC width="5%">เกรด</th>
             <th bgcolor = 66CCCC width="10%">ผู้ผลิต</th>
         </tr>
-        <tr ng-repeat="showdata in chemList | filter : searchThis ">
+        <tr ng-repeat="showdata in listChem | filter : searchThis | filter : selectData | limitTo : searchRange.value : begin">
             <td>{{showdata.cc_name}}</td>
             <td>{{showdata.cc_casNo}}</td>
             <td>{{showdata.cc_state}}</td>

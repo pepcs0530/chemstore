@@ -65,7 +65,7 @@
           ).when(
             '/viewStock',{
                 templateUrl: '../html/viewStock.html',
-                controller: 'namesCtrl'
+                controller: 'categoryController'
             }  
           ).when(
             '/addMember',{
