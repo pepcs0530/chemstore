@@ -3,7 +3,7 @@
     include 'connect.php';
     $findthis = $_POST['teacher_pk'];
 
-    $sql = "SELECT * FROM chem_receipt ORDER BY cr_crtDt AND cr_status = 'wait'";
+    $sql = "SELECT * FROM chem_receipt ORDER BY cr_crtDt";
     $query = mysql_query($sql);
     $data=array();
 
