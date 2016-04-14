@@ -3,7 +3,6 @@ $_POST = json_decode(file_get_contents("php://input"), true);
 include 'connect.php';
 
 $pk = $_POST['pk'];
-$user = $_POST['user'];
 $pass = $_POST['pass'];
 
 $sql = "UPDATE chem_account SET 

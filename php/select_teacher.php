@@ -1,9 +1,8 @@
 <?php
     $_POST = json_decode(file_get_contents('php://input'), true);
     include 'connect.php';
-    $findthis = $_POST['teacher_pk'];
 
-    $sql = "SELECT * FROM chem_account WHERE ca_cat_fk = '".$findthis."'";
+    $sql = "SELECT * FROM chem_account WHERE ca_cat_fk = 2";
     $query = mysql_query($sql);
     $data=array();
 
