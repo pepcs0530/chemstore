@@ -4,40 +4,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     
 <head>
-  <title></title>
-    
-    
+  <title>chemstore</title>
 </head>
-    <script src="../js/angular.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-    <script src="../js/angular-route.min.js"></script>
+    <script type="text/javascript" src="../js/lib/angular.min.js"></script>
+    <script type="text/javascript" src="../js/lib/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="../js/lib/angular-route.min.js"></script>
     
-    <script src="../js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../js/lib/bootstrap.min.js"></script>
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     
-    <script src="../js/angular-simple-slideshow.js"></script>
+    <script type="text/javascript" src="../js/lib/angular-simple-slideshow.js"></script>
     <link rel="stylesheet" href="../css/angular-simple-slideshow.css">
-
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.10.0/ui-bootstrap-tpls.min.js"></script>
     
-  
+    <script type="text/javascript" src="../js/lib/ui-bootstrap-tpls.min.js"></script>
+    
 <body ng-controller="loginController" ng-init="checkSession(); checked=true; dis=true; btng1=true; btng2=true; btng3=true; fix=true">
 type : {{type}}
-<!-- Controllers -->
-    <script src="../js/controller/menuController.js"></script>
-    <script src="../js/controller/categoryController.js"></script>
-    <script src="../js/controller/editmemberCtrl.js"></script>
-    <script src="../js/controller/inboundChemController.js" ></script>
-    <script src="../js/controller/submitRequestController.js"></script>
-    <script src="../js/controller/loginController.js"></script>
-<!-- Controllers -->
-    
 <!--script-->
+    <script src="../js/chemstoreApp.js"></script>
     <script src="../js/routing.js"></script>
+    <script src="../js/chemstoreController.js"></script>
+    <script src="../js/chemstoreFliter.js"></script>
 <!--script-->
 
   <!--    login by manager    -->
-  <nav class="navbar navbar-default" ng-show="type == 1">
+    <nav class="navbar navbar-default" ng-show="type == 1">
     <div class="container-fluid">
       <div class="navbar-header">
         <a class="navbar-brand" href="#/viewStock">คลังสารเคมี</a>
