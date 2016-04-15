@@ -23,7 +23,7 @@
         $_SESSION["type"] = $data[0]['ca_cat_fk'];
         echo "true";
     }else{
-        echo "flase";
+        echo "false";
     }
         
 ?>
