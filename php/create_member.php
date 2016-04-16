@@ -26,12 +26,6 @@ $sql = "INSERT INTO chem_account (
 
 $result = mysql_query($sql);
 
-if($result){
-    echo $result;
-}
-else{
-    die ("Error : ".mysql_error());
-}
-
+die ("Error : ".mysql_error());
 
 ?>

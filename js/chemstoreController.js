@@ -508,11 +508,11 @@ chemstore.controller('loginController', function($scope,$http,$timeout) {
         });
     
         $scope.addMember = {
-            acctyp : "1"
+            acctyp : "4"
         }
         //     ล้างค่า
         $scope.clearMember = function(){
-            $scope.addMember = "";
+            $scope.addMember = {acctyp : "4"}
         }
         
         //      เพิ่มสมาชิก
@@ -528,14 +528,12 @@ chemstore.controller('loginController', function($scope,$http,$timeout) {
                 'acctyp' : $scope.addMember.acctyp
             }).success(function (data) {
                 console.log(data);
-                if(data == "Error : Duplicate entry '"+$scope.addMember.user+"' for key 'ca_user_unq'"){
+                if(data.substring(data.length-55,data.length-38) == "Error : Duplicate"){
                     alert("มี username นี้อยู่ในระบบแล้ว");
                 }else{
                     alert("เพิ่มสมาชิกเรียบร้อย"); 
-                    $scope.addMember = "";
+                    $scope.addMember = {acctyp : "4"};
                 }
-                    
-                    
             });
         }
     })
