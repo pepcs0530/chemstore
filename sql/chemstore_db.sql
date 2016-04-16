@@ -35,9 +35,10 @@ CREATE TABLE `chem_account` (
   `ca_credit` double DEFAULT NULL COMMENT 'เครดิต',
   `ca_cat_fk` int(11) DEFAULT NULL COMMENT 'FK ประเภทบัญชี',
   PRIMARY KEY (`ca_pk`),
+  UNIQUE KEY `ca_user_unq` (`ca_user`),
   KEY `ca_cat_fk` (`ca_cat_fk`),
   CONSTRAINT `ca_cat_fk` FOREIGN KEY (`ca_cat_fk`) REFERENCES `chem_account_type` (`cat_pk`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 /*Data for the table `chem_account` */
 
