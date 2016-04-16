@@ -508,8 +508,6 @@ chemstore.controller('loginController', function($scope,$http,$timeout) {
         });
     
         $scope.addMember = {
-            user : " ",
-            pass : "",
             acctyp : "1"
         }
         //     ล้างค่า
