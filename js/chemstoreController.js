@@ -507,7 +507,11 @@ chemstore.controller('loginController', function($scope,$http,$timeout) {
             $scope.listAcountType = response.data;
         });
     
-        $scope.addMember = {acctyp : "4"}
+        $scope.addMember = {
+            user : " ",
+            pass : "",
+            acctyp : "1"
+        }
         //     ล้างค่า
         $scope.clearMember = function(){
             $scope.addMember = "";
@@ -528,7 +532,7 @@ chemstore.controller('loginController', function($scope,$http,$timeout) {
                 console.log(data);
                     alert("เพิ่มสมาชิกเรียบร้อย");
                     $scope.addMember = "";
-                });
+            });
         }
     })
 
