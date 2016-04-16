@@ -87,6 +87,11 @@
                 templateUrl: 'login.html',
                 controller: 'loginCtrl'
             }   
+          ).when(
+            '/statusRequestChem',{
+                templateUrl: 'statusRequestChem.html',
+                controller: 'teacherRequestCtrl'
+            }   
           ).otherwise({
                 redirectTo: '/'
       	  }); 

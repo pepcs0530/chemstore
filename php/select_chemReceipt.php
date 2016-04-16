@@ -1,9 +1,19 @@
 <?php
     $_POST = json_decode(file_get_contents('php://input'), true);
     include 'connect.php';
-    $findthis = $_POST['teacher_pk'];
+    $findthis = $_POST['findthis'];    
 
-    $sql = "SELECT * FROM chem_receipt ORDER BY cr_crtDt";
+    if($findthis == "ดูทั้งหมด") {
+    
+        $sql = "SELECT * FROM chem_receipt ORDER BY cr_crtDt";
+        
+    }else{
+
+        $sql = "SELECT * FROM `chem_receipt` WHERE `cr_no` LIKE 'NO.".$findthis."%'";
+    }
+    
+
+    
     $query = mysql_query($sql);
     $data=array();
 
