@@ -17,15 +17,14 @@
     <link rel="stylesheet" href="../css/angular-simple-slideshow.css">
     
     <script type="text/javascript" src="../js/lib/ui-bootstrap-tpls.min.js"></script>
-    
-<body ng-controller="loginController" ng-init="checkSession(); checked=true; dis=true; btng1=true; btng2=true; btng3=true; fix=true">
-type : {{type}}
-<!--script-->
+  
     <script src="../js/chemstoreApp.js"></script>
     <script src="../js/routing.js"></script>
     <script src="../js/chemstoreController.js"></script>
     <script src="../js/chemstoreFliter.js"></script>
-<!--script-->
+    
+<body ng-controller="loginCtrl" ng-init="checkSession(); checked=true; dis=true; btng1=true; btng2=true; btng3=true; fix=true">
+type : {{type}}
 
   <!--    login by manager    -->
     <nav class="navbar navbar-default" ng-show="type == 1">
@@ -39,6 +38,8 @@ type : {{type}}
               <li><a href="#/requestEtc">คำร้องขออื่นๆ</a></li>
             </ul>
         </li>
+          
+        <li><a href="#/viewReciept" >เบิกสารเคมี</a></li>
 
         <li><a href="#/inboundChem" >นำเข้าสารเคมี</a></li>
 
@@ -154,7 +155,7 @@ type : {{type}}
         
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav navbar-right">
-            <form class="navbar-form navbar-left" role="search" ng-controller="loginController" method="post">
+            <form class="navbar-form navbar-left" role="search" method="post">
                 <div class="form-group">
                     <input type="text" class="form-control" placeholder="Username" ng-model="login.username">
                     <input type="password" class="form-control" placeholder="Password" ng-model="login.password">

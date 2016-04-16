@@ -2,7 +2,7 @@
 <html>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <body  ng-app="chemstore" ng-controller="projectController">    
+    <body  ng-app="chemstore" ng-controller="addProjectCtrl">    
 
         <caption><H3>เพิ่มโปรเจค</H3></caption>
         <table width="100%" border="0"  id="here">
@@ -17,8 +17,8 @@
                 <td><input ng-model="addProject.cp_name" type="text" class="" id="form-cp_name" /></td>
             </tr>
             <tr>
-                <td align="right"><label for="cp_budget">งบประมาณ :</label></td>
-                <td><input ng-model="addProject.cp_budget" type="text" class="" id="form-cp_budget" /></td>
+                <td align="right"><label for="cp_budget">งบประมาณ :</label></td> 
+                <td><input ng-model="addProject.cp_budget" type="text" class="" id="form-cp_budget" />&nbsp;งบที่คงเหลืออยู่{{listAcountData[0].ca_credit-addProject.cp_budget}}</td>
             </tr>
             <tr>
                 <td align="right"><label for="cp_desc">รายละเอียด :</label></td>

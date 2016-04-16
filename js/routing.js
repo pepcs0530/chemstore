@@ -5,7 +5,7 @@
           .when(
             '/',{
                 templateUrl: '../html/news.html',
-                controller: 'loginController'
+                controller: 'loginCtrl'
           }
           ).when(
             '/contact',{
@@ -14,63 +14,63 @@
           ).when(
             '/requestChem',{
                 templateUrl: '../html/requestChem.html', 
-                controller:  'submitRequestController'
+                controller:  'submitRequestCtrl'
           }
           ).when(
             '/inboundChem',{
                 templateUrl: '../html/inboundChem.html',
-                controller:  'inboundChemController'
+                controller:  'inboundChemCtrl'
 
             }
           ).when(
             '/viewReciept',{
                 templateUrl: '../html/viewReciept.html',
-                controller: 'recieptController'
+                controller: 'recieptCtrl'
             }
           ).when(
             '/sold',{
                 templateUrl: '../html/sold.html',
-                controller: 'soldController'
+                controller: 'soldCtrl'
             }
           ).when(
             '/viewProject',{
                 templateUrl: '../html/viewProject.html',
-                controller: 'projectController'
+                controller: 'projectCtrl'
             } 
           ).when(
             '/transfer',{
                 templateUrl: '../html/transfer.html',
-                controller: 'transferChemController'
+                controller: 'transferChemCtrl'
             } 
           ).when(
             '/editChem',{
                 templateUrl: '../html/editChem.html',
-                controller: 'editChemController'
+                controller: 'editChemCtrl'
             } 
           ).when(
             '/importlog',{
                 templateUrl: '../html/importlog.html',
-                controller: 'importlogController'
+                controller: 'importlogCtrl'
             }
           ).when(
             '/withdrawlog',{
                 templateUrl: '../html/withdrawlog.html',
-                controller: 'withdrawlogController'
+                controller: 'withdrawlogCtrl'
            } 
           ).when(
             '/salelog',{
                 templateUrl: '../html/salelog.html',
-                controller: 'salelogController'
+                controller: 'salelogCtrl'
             }  
           ).when(
             '/viewStock',{
                 templateUrl: '../html/viewStock.html',
-                controller: 'categoryController'
+                controller: 'categoryCtrl'
             }  
           ).when(
             '/addMember',{
                 templateUrl: '../html/addMember.html',
-                controller: 'membersController'
+                controller: 'membersCtrl'
             }  
           ).when(
             '/editMember',{
@@ -80,12 +80,12 @@
           ).when(
             '/addProject',{
                 templateUrl: '../html/addProject.html',
-                controller: 'editprojectCtrl'
+                controller: 'addProjectCtrl'
             } 
            ).when(
             '/login',{
                 templateUrl: 'login.html',
-                controller: 'loginController'
+                controller: 'loginCtrl'
             }   
           ).otherwise({
                 redirectTo: '/'
