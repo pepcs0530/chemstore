@@ -525,10 +525,14 @@ chemstore.controller('loginController', function($scope,$http,$timeout) {
                 'tel' : $scope.addMember.tel,
                 'acctyp' : $scope.addMember.acctyp
             }).success(function (data) {
-                console.log(data);
+                
+                if(data.substring(0,17) == "Error : Duplicate"){
+                    alert("username ซ้ำกับในระบบ");   
+                }else{
                     alert("เพิ่มสมาชิกเรียบร้อย");
-                    $scope.addMember = "";
-                });
+                    $scope.addMember = "";    
+                }
+            });
         }
     })
 
