@@ -878,7 +878,15 @@ chemstore.controller('loginCtrl', function($scope,$http,$timeout) {
             data    :   {findthis: $scope.key}
         }).then(function(response) {
             $scope.ListReciept = response.data;
-            console.log($scope.ListReciept);
         });
+        $scope.showPopup = function (getdata) {
+            $http({
+            method  :   'POST',
+            url     :   '../php/select_chemdetail.php',
+            data    :   {crd_cr_fk: getdata}
+        }).then(function(response) {
+            $scope.chemdetail = response.data;
+        });
+        }
     })
 
