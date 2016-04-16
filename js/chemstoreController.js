@@ -528,8 +528,14 @@ chemstore.controller('loginController', function($scope,$http,$timeout) {
                 'acctyp' : $scope.addMember.acctyp
             }).success(function (data) {
                 console.log(data);
-                    alert("เพิ่มสมาชิกเรียบร้อย");
+                if(data == "Error : Duplicate entry '"+$scope.addMember.user+"' for key 'ca_user_unq'"){
+                    alert("มี username นี้อยู่ในระบบแล้ว");
+                }else{
+                    alert("เพิ่มสมาชิกเรียบร้อย"); 
                     $scope.addMember = "";
+                }
+                    
+                    
             });
         }
     })
