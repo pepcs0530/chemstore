@@ -1,4 +1,4 @@
-<div class="container" ng-controller="loginController" ng-show="type == '' ">
+<div class="container" ng-controller="loginCtrl" ng-show="type == '' ">
     <h3>ข่าว-ประชาสัมพันธ์...</h3>
     
     <style>
@@ -13,7 +13,7 @@
         #slides_control {
         }
     </style>
-    <div ng-controller="loginController" id="slides_control">
+    <div ng-controller="loginCtrl" id="slides_control">
         <div>
           <carousel interval="myInterval">
             <slide ng-repeat="slide in slides" active="slide.active">
