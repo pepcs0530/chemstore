@@ -895,3 +895,41 @@ chemstore.controller('loginCtrl', function($scope,$http,$timeout) {
         }
     })
 
+//  คำร้องขออื่นๆ  ============================================================================================================
+    .controller('requestOtherCtrl', function($scope,$http) {
+
+        //  สร้างคำร้องอื่นๆ
+        $scope.createRequestOther = function(){
+            $http({
+                method  : 'POST',
+                url     : '../php/insert_requestOther.php',
+                data    : {
+                            cro_desc : $scope.cro_desc,
+                            cro_ca_fk : $scope.key
+                }, 
+                headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
+            }).then(function(data) {
+                console.log(data);
+                alert("ส่งคำร้องอื่นๆ เรียบร้อย");
+                $scope.cro_desc = "";
+            });
+        }
+        
+        //  ยกเลิก
+        $scope.cancleRequestOther = function(){
+            $scope.cro_desc = "";
+        }  
+        
+        //  แสดงคำร้องอื่นๆ ทั้งหมด
+        $scope.showPopup = function () {
+            $http({
+            method  :   'POST',
+            url     :   '../php/select_requestOther.php',
+            data    :   { 
+                    findthis: $scope.key
+                }
+            }).then(function(response) {
+                $scope.ListRequestOther = response.data;
+            });
+        }
+    })

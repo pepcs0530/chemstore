@@ -19,3 +19,9 @@ chemstore.filter('Date', function($filter){
         return _date.toUpperCase();
     };
 })
+
+    .filter('confirmFilter', function() {
+   return function(input) {
+     return input == '0' ? "<FONT COLOR=red>รอการยืนยัน</FONT>" : "<FONT COLOR=green>ยืนยันเรียบร้อย</FONT>";
+   }
+})

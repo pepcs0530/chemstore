@@ -92,6 +92,11 @@
                 templateUrl: 'statusRequestChem.html',
                 controller: 'teacherRequestCtrl'
             }   
+          ).when(
+            '/requestOther',{
+                templateUrl: 'requestOther.html',
+                controller: 'requestOtherCtrl'
+            }   
           ).otherwise({
                 redirectTo: '/'
       	  }); 
