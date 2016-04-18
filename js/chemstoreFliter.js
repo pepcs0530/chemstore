@@ -20,8 +20,11 @@ chemstore.filter('Date', function($filter){
     };
 })
 
-    .filter('confirmFilter', function() {
+    .filter('confirmFilter', function($sce) {
    return function(input) {
-     return input == '0' ? "<FONT COLOR=red>รอการยืนยัน</FONT>" : "<FONT COLOR=green>ยืนยันเรียบร้อย</FONT>";
+       if(input == '0')
+            return $sce.trustAsHtml("<FONT COLOR=red>รอการยืนยัน</FONT>");
+       else
+            return $sce.trustAsHtml("<FONT COLOR=green>ยืนยันเรียบร้อย</FONT>");
    }
 })
