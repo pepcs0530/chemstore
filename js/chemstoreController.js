@@ -846,10 +846,15 @@ chemstore.controller('loginCtrl', function($scope,$http,$timeout) {
 
 //  ประวัติการเบิกสาร  ============================================================================================================
     .controller('withdrawlogCtrl', function($scope,$http) {
-        //  แสดงใบเบิกสาร
+        //  แสดงใบเบิกสาร    
+        console.log($scope.key+":"+$scope.type);
         $http({
-            method  :   'GET',
-            url     :   '../php/select_withdraw.php'
+                method  :   'POST',
+                url     :   '../php/select_withdraw.php',
+                data    :   {
+                    findthis: $scope.key,
+                    findtypethis: $scope.type
+                }
         }).then(function(response) {
             $scope.listReciept = response.data;
         });
