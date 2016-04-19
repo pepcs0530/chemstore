@@ -1,0 +1,55 @@
+<html>
+    <meta charset="utf-8">
+    <head>
+    <title>คำร้องขออื่นๆ</title>
+    </head>
+    <body>
+        <div class="container">
+            <h3>คำร้องขออื่นๆ</h3>
+            <table class="table table-hover">
+                <tr>
+                    <th>ลำดับที่</th>
+                    <th>วัน-เวลาที่ร้องขอ</th>
+                    <th>ผู้ร้องขอ</th>
+                    <th>รายละเอียด</th>
+                </tr>
+                <tr ng-repeat="showdata in listManageRequestOther">
+                    <td>
+                    {{$index+1}}
+                    </td>
+                    <td>
+                    {{showdata.cro_crtDt | Datetime}}
+                    </td>
+                    <td>
+                    {{showdata.ca_fname +"  "+ showdata.ca_lname}}
+                    </td>
+                    <td><input type="button" value="แสดง" ng-click="showPopup(showdata.cro_pk)" data-toggle="modal" data-target="#myModal"></td>
+                </tr>
+            </table>  
+        </div>
+        
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">รายละเอียดคำร้องอื่นๆ</h4>
+              </div>
+              <div class="modal-body">
+                  <table width="100%">
+                    <tr ng-repeat="showdata in listOneRequestOther">
+                        <td>
+                            {{showdata.cro_desc}} 
+                        </td>    
+                    </tr>
+                  </table>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
+                <button type="button" class="btn btn-primary" ng-click="confirmRequestOther(showdata.cro_pk)">ยืนยันคำร้อง</button>
+              </div>
+            </div>
+          </div>
+        </div> 
+    </body>
+</html>

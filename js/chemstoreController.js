@@ -57,6 +57,34 @@ chemstore.controller('loginCtrl', function($scope,$http,$timeout) {
         }
         ];
     
+        //  Notifications
+        $scope.startTimer = function () {
+            $scope.noti();
+            setInterval($scope.noti, 1000);
+        }
+        
+        $scope.noti = function () {
+            //alert("Hello noti");
+            $http({
+                method  :   'GET',
+                url     :   '../php/noti.php'
+            }).then(function(response) {
+                //$scope.key = response.data;
+//                console.log($scope.key);
+                //var objJSON = JSON.parse(response);
+                //var numNoti = (+Number(objJSON[1]));
+                //$scope.requestOtherNoti = objJSON[1].trim();
+                $scope.requestChemNoti = parseInt(response.data[0]);
+                $scope.requestChemIncreaseNoti = parseInt(response.data[1]);
+                $scope.requestOtherNoti = parseInt(response.data[2]);
+                $scope.sumNoti = parseInt($scope.requestChemNoti) + parseInt($scope.requestChemIncreaseNoti) + parseInt($scope.requestOtherNoti);
+            });
+        }
+        
+        window.onload = function(){
+          $scope.startTimer();
+        };
+    
     })
 
 //  คลังสินค้า  ============================================================================================================
@@ -932,4 +960,35 @@ chemstore.controller('loginCtrl', function($scope,$http,$timeout) {
                 $scope.ListRequestOther = response.data;
             });
         }
+    })
+
+//  จัดการคำร้องขออื่นๆ  ============================================================================================================
+    .controller('manageRequestOtherCtrl', function($scope,$http) {
+        $http({
+            method  :   'POST',
+            url     :   '../php/select_manageRequestOther.php'
+        }).then(function(response) {
+            $scope.listManageRequestOther = response.data;
+        });
+    
+        $scope.showPopup = function (getdata) {
+            $http({
+            method  :   'POST',
+            url     :   '../php/select_manageOneRequestOther.php',
+            data    :   {cro_pk: getdata}
+            }).then(function(response) {
+                $scope.listOneRequestOther = response.data;
+            });
+            
+            $scope.confirmRequestOther = function(){
+                $http.post("../php/update_manageOneRequestOther.php",{
+                    'cro_pk' : getdata
+                }).success(function (data) {
+                    alert("ยืนยันคำร้องเรียบร้อย");
+                    location.reload();
+                });
+            }
+        }
+        
+        
     })

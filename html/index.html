@@ -31,11 +31,11 @@ type : {{type}}
     <div class="container-fluid">
       <ul class="nav navbar-nav">
           <li><a class="navbar-brand" href="#/viewStock">คลังสารเคมี</a></li>
-        <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" >จัดการคำร้องขอ<span class="caret"></span></a>
+        <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" >จัดการคำร้องขอ <span class="badge">{{sumNoti}}</span><span class="caret"></span></a>
             <ul class="dropdown-menu" >
-              <li><a href="#/requestChem">คำร้องขอสารเคมี</a></li>
-              <li><a href="#/requestChemIncrease">คำร้องขอสารเคมีเพิ่ม</a></li>
-              <li><a href="#/requestEtc">คำร้องขออื่นๆ</a></li>
+              <li role="presentation"><a href="#/manageRequestChem">คำร้องขอสารเคมี <span class="badge">{{requestChemNoti}}</span></a></li>
+              <li role="presentation"><a href="#/manageRequestChemIncrease">คำร้องขอสารเคมีเพิ่ม <span class="badge">{{requestChemIncreaseNoti}}</span></a></li>
+              <li role="presentation"><a href="#/manageRequestOther">คำร้องขออื่นๆ <span class="badge">{{requestOtherNoti}}</span></a></li>
             </ul>
         </li>
           

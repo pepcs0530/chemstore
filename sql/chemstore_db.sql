@@ -750,13 +750,15 @@ CREATE TABLE `chem_request_other` (
   PRIMARY KEY (`cro_pk`),
   KEY `cro_ca_fk` (`cro_ca_fk`),
   CONSTRAINT `cro_ca_fk` FOREIGN KEY (`cro_ca_fk`) REFERENCES `chem_account` (`ca_pk`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 /*Data for the table `chem_request_other` */
 
 insert  into `chem_request_other`(`cro_pk`,`cro_desc`,`cro_useflg`,`cro_crtDt`,`cro_updDt`,`cro_status`,`cro_ca_fk`) values 
-(1,'ทดสอบ','1','2016-04-18 16:53:00',NULL,'1',2),
-(2,'ทดสอบ2','1','0000-00-00 00:00:00',NULL,'0',2);
+(1,'ทดสอบ','1','2016-04-18 16:53:00','2016-04-20 02:44:40','0',2),
+(2,'ทดสอบ2','1','0000-00-00 00:00:00','2016-04-20 02:44:46','0',2),
+(3,'ทอสอบ3','1','2016-04-19 15:22:40','2016-04-20 02:44:50','0',2),
+(4,'ทดสอบ4','1','2016-04-19 16:15:09','2016-04-20 02:47:50','1',2);
 
 /*Table structure for table `chem_unit` */
 

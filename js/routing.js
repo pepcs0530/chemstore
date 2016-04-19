@@ -12,8 +12,8 @@
                 templateUrl: '../html/contact.html'
           }
           ).when(
-            '/requestChem',{
-                templateUrl: '../html/requestChem.html', 
+            '/manageRequestChem',{
+                templateUrl: '../html/manageRequestChem.html', 
                 controller:  'submitRequestCtrl'
           }
           ).when(
@@ -84,18 +84,23 @@
             } 
            ).when(
             '/login',{
-                templateUrl: 'login.html',
+                templateUrl: '../html/login.html',
                 controller: 'loginCtrl'
             }   
           ).when(
             '/statusRequestChem',{
-                templateUrl: 'statusRequestChem.html',
+                templateUrl: '../html/statusRequestChem.html',
                 controller: 'teacherRequestCtrl'
             }   
           ).when(
             '/requestOther',{
-                templateUrl: 'requestOther.html',
+                templateUrl: '../html/requestOther.html',
                 controller: 'requestOtherCtrl'
+            }   
+          ).when(
+            '/manageRequestOther',{
+                templateUrl: '../html/manageRequestOther.html',
+                controller: 'manageRequestOtherCtrl'
             }   
           ).otherwise({
                 redirectTo: '/'
