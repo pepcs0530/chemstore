@@ -64,16 +64,10 @@ chemstore.controller('loginCtrl', function($scope,$http,$timeout) {
         }
         
         $scope.noti = function () {
-            //alert("Hello noti");
             $http({
                 method  :   'GET',
                 url     :   '../php/noti.php'
             }).then(function(response) {
-                //$scope.key = response.data;
-//                console.log($scope.key);
-                //var objJSON = JSON.parse(response);
-                //var numNoti = (+Number(objJSON[1]));
-                //$scope.requestOtherNoti = objJSON[1].trim();
                 $scope.requestChemNoti = parseInt(response.data[0]);
                 $scope.requestChemIncreaseNoti = parseInt(response.data[1]);
                 $scope.requestOtherNoti = parseInt(response.data[2]);
@@ -774,7 +768,7 @@ chemstore.controller('loginCtrl', function($scope,$http,$timeout) {
     })
 
 //  ย้ายคลัง  ============================================================================================================
-    .controller('transferCtrl', function($scope,$http, $filter) {     
+    .controller('transferChemCtrl', function($scope,$http, $filter) {     
         //  ปุ่ม prev
         $scope.deleteRecord = function () {
             if(parseInt($scope.begin) - parseInt($scope.searchRange.value) < 0)
