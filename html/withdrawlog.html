@@ -10,7 +10,10 @@
             </tr>
             <tr ng-repeat="showdata in listReciept">
 <!--                <td>{{showdata.cr_crtDt | date : 'DD-MM-YYYYThh:mm:ssTZD'}}</td>ng-bind="date | date:'MM/dd/yyyy'"-->
-                <td>{{showdata.cr_crtDt | Datetime }} </td>
+                <td>
+                    วันนที่เขียนคำร้อง {{showdata.cr_crtDt | Datetime }}<br>
+                    วันนที่ได้รับอนุมัติ {{showdata.cr_updDt | Datetime}}
+                </td>
                 <td>{{showdata.cr_no}}</td>
                 <td>{{showdata.ca_tname+" "+showdata.ca_fname+" "+showdata.ca_lname}}</td>
                 <td>{{showdata.cp_name}}</td>
@@ -27,30 +30,25 @@
                 <h4 class="modal-title" id="myModalLabel">รายละเอียดใบเบิกสาร</h4>
               </div>
               <div class="modal-body">
-                <table class= "table-bordered">
-                    <tr>
-                        <th>ชื่อสารเคมี</th>
-                        <th>ประเภทสารเคมี</th>
-                        <th>Cas no.</th>
-                        <th>สถานะ</th>
-                        <th>จำนวนที่เบิก</th>
-                        <th>หน่วย</th>
-                        <th>ห้อง</th>
-                        <th>เกรด</th>
-                        <th>วันหมดอายุ</th>
-                    </tr>
+                <table width="100%">
                     <tr ng-repeat="showdata in listRecieptDetail">
-                        <td>{{showdata.cc_name}}</td>
-                        <td>{{showdata.cc_type}}</td>
-                        <td>{{showdata.cc_casNo}}</td>
-                        <td>{{showdata.cc_state}}</td>
-                        <td>{{showdata.crd_amt}}</td>
-                        <td>{{showdata.crd_unit}}</td>
-                        <td>{{showdata.cc_room}}</td>
-                        <td>{{showdata.cc_grade}}</td>
-                        <td>{{showdata.cc_expDt | Date}}</td>
+                        <td>
+                            {{showdata.cc_name}}
+                        </td>  
+                        <td>
+                            {{showdata.crd_amt}}
+                        </td>  
+                        <td>
+                            {{showdata.crd_unit}}
+                        </td>
+                        <td>
+                            {{showdata.cl_name}}
+                        </td>
+                        <td>
+                            {{showdata.crd_price}}&nbsp;credit
+                        </td>  
                     </tr>
-                </table> 
+                  </table>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>

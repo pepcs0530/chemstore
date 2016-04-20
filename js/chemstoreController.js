@@ -153,6 +153,21 @@ chemstore.controller('loginCtrl', function($scope,$http,$timeout) {
                 console.log($scope.chemdetail);
             });
         }
+        
+        $scope.summitRequest = function() {
+            console.log($scope.listReciept[$scope.index]);
+            $http({
+            method  :   'POST',
+            url     :   '../php/update_submitRequest.php',
+            data    :   {cr_pk: $scope.listReciept[$scope.index].cr_pk,
+                        totalprice: $scope.listReciept[$scope.index].cr_totalprice,
+                        cr_cp_fk: $scope.listReciept[$scope.index].cr_cp_fk}
+            }).then(function(data) {
+                alert("อนุมัติการยืมเรียบร้อย");
+                location.reload();
+                console.log(data);
+            });
+        }
     })
 
 //  นำสารเข้า  ============================================================================================================
@@ -538,8 +553,7 @@ chemstore.controller('loginCtrl', function($scope,$http,$timeout) {
             }).then(function(data) {
                 console.log(data);
                 alert("เพิ่มโปรเจคเรียบร้อย");
-                $scope.addProject = {teacher : $scope.session,
-                                     teacher_pk : $scope.key}
+                location.reload();
             });
         }
         //  ยกเลิก
@@ -889,15 +903,16 @@ chemstore.controller('loginCtrl', function($scope,$http,$timeout) {
             //  แสดงใบเบิกสาร
             $http({
                 method  :   'POST',
-                url     :   '../php/select_withdrawDetail.php',
+                url     :   '../php/select_chemdetail.php',
                 data    :   {
-                    'crd_cr_pk' : $scope.crd_cr_pk
+                    'crd_cr_fk' : $scope.crd_cr_pk
                 }
             }).then(function(response) {
                 $scope.listRecieptDetail = response.data;
             });
         }
     })
+
 //  สถานะคำร้องขอของอาจารย์  ============================================================================================================
     .controller('teacherRequestCtrl', function($scope,$http) {
 
@@ -908,7 +923,8 @@ chemstore.controller('loginCtrl', function($scope,$http,$timeout) {
         }).then(function(response) {
             $scope.ListReciept = response.data;
         });
-        $scope.showPopup = function (getdata) {
+        $scope.showPopup = function (getdata,index) {
+            $scope.index = index;
             $http({
             method  :   'POST',
             url     :   '../php/select_chemdetail.php',
@@ -965,6 +981,7 @@ chemstore.controller('loginCtrl', function($scope,$http,$timeout) {
             url     :   '../php/select_manageRequestOther.php'
         }).then(function(response) {
             $scope.listManageRequestOther = response.data;
+            console.log($scope.listManageRequestOther);
         });
     
 

@@ -12,7 +12,7 @@ chemstore.filter('Date', function($filter){
 })
     .filter('Datetime', function($filter){
     return function(input){
-        if(input == null || input == "0000-00-00 00:00:00"){ return ""; } 
+        if(input == null || input == "0000-00-00 00:00:00"){ return "-"; } 
 
         var _date = $filter('date')(new Date(input),'dd/MM/yyyy - HH:mm:ss');
 

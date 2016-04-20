@@ -6,7 +6,7 @@
     $findtypethis = $_POST['findtypethis'];
 
     if($findtypethis == 1){
-            $sql = "SELECT `cr_pk`,`cr_no`,`ca_user`,`ca_tname`,`ca_fname`,`ca_lname`,`cp_name`,`cp_teach_fk`,`cr_crtDt` ".
+            $sql = "SELECT `cr_pk`,`cr_no`,`ca_user`,`ca_tname`,`ca_fname`,`ca_lname`,`cp_name`,`cp_teach_fk`,`cr_crtDt`,`cr_updDt` ".
             "FROM `chem_receipt` ".
             "INNER JOIN `chem_project` ".
             "ON `cr_cp_fk` = `cp_pk` ".
@@ -22,7 +22,6 @@
             "ON cp_teach_fk = `ca_pk` ".
             "WHERE cr_no LIKE 'NO.".$findthis."%' ".
             "ORDER BY `cr_crtDt` DESC";
-            
     }
 
     $query = mysql_query($sql);

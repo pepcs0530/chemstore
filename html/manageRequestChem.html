@@ -12,8 +12,8 @@
                     <th>เลขที่ใบเสร็จ</th>
                     <th>วัน-เวลาที่ร้องขอ</th>
                     <th>สถานะการร้องขอ</th>
-                    <th>รายละเอียด</th>
                     <th>ยอดรวม</th>
+                    <th>รายละเอียด</th>
                 </tr>
                 <tr ng-repeat="showdata in listReciept">
                     <td>
@@ -25,9 +25,7 @@
                     <td>
                     {{showdata.cr_crtDt | Datetime}}
                     </td>
-                    <td>
-                    {{showdata.cr_status}}
-                    </td>
+                    <td ng-bind-html="showdata.cr_status | confirmFilter"></td>
                     <td>{{showdata.cr_totalprice}}</td>
                     <td><input type="button" value="แสดง" ng-click="showPopup(showdata.cr_pk,$index)" data-toggle="modal" data-target="#myModal"></td>
                 </tr>
@@ -52,8 +50,10 @@
                         </td>  
                         <td>
                             {{showdata.crd_unit}}
-                            
-                        </td>  
+                        </td>
+                        <td>
+                            {{showdata.cl_name}}
+                        </td>
                         <td>
                             {{showdata.crd_price}}&nbsp;credit
                         </td>  
@@ -63,7 +63,7 @@
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
-                <button type="button" class="btn btn-primary" ng-click="">บันทึก</button>
+                <button type="button" class="btn btn-primary" ng-click="summitRequest()">อนุมัติ</button>
               </div>
             </div>
           </div>

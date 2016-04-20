@@ -5,7 +5,7 @@
 
     if($findthis == "ดูทั้งหมด") {
     
-        $sql = "SELECT * FROM chem_receipt ORDER BY cr_crtDt";
+        $sql = "SELECT * FROM chem_receipt WHERE `cr_status` = '0' ORDER BY cr_crtDt";
         
     }else{
 

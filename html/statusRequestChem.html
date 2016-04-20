@@ -5,6 +5,7 @@
             <th>เลขที่ใบเสร็จ</th>
             <th>วันที่ร้องขอ</th>
             <th>สถาณะการร้องขอ</th>
+            <th>ค่าใช้จ่าย</th>
             <th>operation</th>
         </tr>
         <tr ng-repeat="showdata in ListReciept">
@@ -17,10 +18,11 @@
             <td>
             {{showdata.cr_crtDt}}
             </td>
+            <td ng-bind-html="showdata.cr_status | confirmFilter"></td>
             <td>
-            {{showdata.cr_status}}
+            {{showdata.cr_totalprice}}
             </td>
-            <td><input type="button" value="showDetail" ng-click="showPopup(showdata.cr_pk)" 
+            <td><input type="button" value="showDetail" ng-click="showPopup(showdata.cr_pk,$index)" 
                        data-toggle="modal" data-target="#myModal"></td>
         </tr>
     </table>   
@@ -50,6 +52,7 @@
                         </td>  
                     </tr>
                   </table>
+                  ค่าใช้จ่าย&nbsp; {{ListReciept[index].cr_totalprice}}
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>

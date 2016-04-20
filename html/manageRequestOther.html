@@ -11,6 +11,7 @@
                     <th>ลำดับที่</th>
                     <th>วัน-เวลาที่ร้องขอ</th>
                     <th>ผู้ร้องขอ</th>
+                    <th>สถานะคำร้อง</th>
                     <th>รายละเอียด</th>
                 </tr>
                 <tr ng-repeat="showdata in listManageRequestOther">
@@ -20,6 +21,7 @@
                     <td>
                     {{showdata.cro_crtDt | Datetime}}
                     </td>
+                    <td ng-bind-html="showdata.cro_status | confirmFilter"></td>
                     <td>
                     {{showdata.ca_fname +"  "+ showdata.ca_lname}}
                     </td>
