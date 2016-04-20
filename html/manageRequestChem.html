@@ -13,6 +13,7 @@
                     <th>วัน-เวลาที่ร้องขอ</th>
                     <th>สถานะการร้องขอ</th>
                     <th>รายละเอียด</th>
+                    <th>ยอดรวม</th>
                 </tr>
                 <tr ng-repeat="showdata in listReciept">
                     <td>
@@ -27,7 +28,8 @@
                     <td>
                     {{showdata.cr_status}}
                     </td>
-                    <td><input type="button" value="แสดง" ng-click="showPopup(showdata.cr_pk)" data-toggle="modal" data-target="#myModal"></td>
+                    <td>{{showdata.cr_totalprice}}</td>
+                    <td><input type="button" value="แสดง" ng-click="showPopup(showdata.cr_pk,$index)" data-toggle="modal" data-target="#myModal"></td>
                 </tr>
             </table>   
         </div>
@@ -57,6 +59,7 @@
                         </td>  
                     </tr>
                   </table>
+                  ค่าใช้จ่ายรวม {{listReciept[index].cr_totalprice}}
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>

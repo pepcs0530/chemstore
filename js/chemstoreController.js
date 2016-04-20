@@ -140,8 +140,10 @@ chemstore.controller('loginCtrl', function($scope,$http,$timeout) {
             data    :   {findthis : "ดูทั้งหมด"}
         }).then(function(response) {
             $scope.listReciept = response.data;
+            console.log($scope.listReciept);
         });
-        $scope.showPopup = function (getdata) {
+        $scope.showPopup = function (getdata,index) {
+            $scope.index = index;
             $http({
             method  :   'POST',
             url     :   '../php/select_chemdetail.php',
@@ -221,7 +223,6 @@ chemstore.controller('loginCtrl', function($scope,$http,$timeout) {
     .controller('recieptCtrl', function($scope,$http) {
     $scope.cartlist = [];
     $scope.begin = 0;
-    
     $scope.options = [{
         name: '5',
         value: 5
@@ -429,8 +430,10 @@ chemstore.controller('loginCtrl', function($scope,$http,$timeout) {
                       new Date().getDate() + 
                      (new Date().getMonth()+1) + 
                       new Date().getFullYear(), 
-                    cr_cp_fk : $scope.selectedProject.cp_pk}, 
-                headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
+                    cr_cp_fk : $scope.selectedProject.cp_pk,
+                    totalmoney : $scope.total},
+                    
+                    headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
                     }).then(function(response) {                
 
                     angular.forEach($scope.cartlist, function(value, key){            
@@ -762,7 +765,6 @@ chemstore.controller('loginCtrl', function($scope,$http,$timeout) {
                     console.log(data);
                     alert("แก้ไขข้อมูลเรียบร้อย");
                     jQuery('#myModal').modal('hide');
-                    //location.reload();
                 });
         }
     })

@@ -6,7 +6,9 @@
 
     $cr_no = $_POST['cr_no'];
     $cr_cp_fk = $_POST['cr_cp_fk'];
-    $sql = "INSERT INTO `chem_receipt` (cr_no, cr_cp_fk, cr_crtDt) VALUE('".$cr_no."','".$cr_cp_fk."', CURRENT_TIMESTAMP)";
+    $totalmoney = $_POST['totalmoney'];
+
+    $sql = "INSERT INTO `chem_receipt` (cr_no, cr_totalprice, cr_cp_fk, cr_crtDt) VALUE('".$cr_no."','".$totalmoney ."','".$cr_cp_fk."', CURRENT_TIMESTAMP)";
     $query = mysql_query($sql);
 
     $sql = "SELECT cr_pk FROM `chem_receipt` ORDER BY `cr_pk` DESC LIMIT 1";
