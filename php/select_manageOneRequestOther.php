@@ -1,15 +1,22 @@
 <?php
     $_POST = json_decode(file_get_contents('php://input'), true);
     $cro_pk = $_POST['cro_pk'];
-
+    $findthis = $_POST['findthis'];
     include 'connect.php';  
 
-
+    if($findthis == "ดูทั้งหมด"){
     $sql = "SELECT * FROM `chem_request_other`
+        INNER JOIN `chem_account`
+        ON `cro_ca_fk`=`ca_pk` 
+        WHERE `cro_pk` = ".$cro_pk."
+        ORDER BY `cro_pk` DESC";
+    }else{   
+        $sql = "SELECT * FROM `chem_request_other`
         INNER JOIN `chem_account`
         ON `cro_ca_fk`=`ca_pk` 
         WHERE `cro_status`= '0' AND `cro_pk` = ".$cro_pk."
         ORDER BY `cro_pk` DESC";
+    }
 
     $query = mysql_query($sql);
     $data=array();

@@ -967,11 +967,21 @@ chemstore.controller('loginCtrl', function($scope,$http,$timeout) {
             $scope.listManageRequestOther = response.data;
         });
     
+
+        $scope.showReport = function () {
+            $http({
+                method  :   'POST',
+                url     :   '../php/select_all_RequestOther.php'
+            }).then(function(response) {
+                $scope.listAllRequestOther = response.data;
+            });  
+        }
+    
         $scope.showPopup = function (getdata) {
             $http({
             method  :   'POST',
             url     :   '../php/select_manageOneRequestOther.php',
-            data    :   {cro_pk: getdata}
+            data    :   {cro_pk: getdata,findthis : ""}
             }).then(function(response) {
                 $scope.listOneRequestOther = response.data;
             });
@@ -984,6 +994,17 @@ chemstore.controller('loginCtrl', function($scope,$http,$timeout) {
                     location.reload();
                 });
             }
+        }
+        
+        $scope.showPopup2 = function (getdata) {
+            jQuery("#myModal2").modal("hide"); 
+            $http({
+            method  :   'POST',
+            url     :   '../php/select_manageOneRequestOther.php',
+            data    :   {cro_pk: getdata,findthis : "ดูทั้งหมด"}
+            }).then(function(response) {
+                $scope.listOneRequestOther = response.data;
+            });
         }
         
         
