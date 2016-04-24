@@ -1,71 +1,121 @@
-<!DOCTYPE>
-<html>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <head>
-        <title>
-            แก้ไขข้อมูลผู้ใช้งาน
-        </title>
-    </head>
-    <body  ng-app="chemstore" ng-controller="editmembersCtrl" ng-init="checked=true; dis=true; btng1=true; btng2=true; btng3=true; fix=true" >    
-        checked:{{checked}} | dis:{{dis}} | btng1:{{btng1}} | btng2:{{btng2}} | btng3:{{btng3}} | fix:{{fix}}
-        <caption><H3>แก้ไขข้อมูลผู้ใช้งาน</H3></caption>
-        <table width="100%" border="0"  id="here">
-            <tr ng-model="checked">
-                <td align="right"><label for="code">รหัส :</label></td>
-                <td><input ng-model="listAcountData.ca_code" type="text" class="" id="form-code" ng-disabled="fix"/></td>
-            </tr>
-            <tr ng-show="checked">
-                <td align="right"><label for="tname">คำนำหน้า :</label></td>
-                <td><input ng-model="listAcountData.ca_tname" type="text" class="" id="form-tname" ng-disabled="dis"/></td>
-            </tr>
-            <tr ng-show="checked">
-                <td align="right"><label for="fname">ชื่อ :</label></td>
-                <td><input ng-model="listAcountData.ca_fname" type="text" class="" id="form-fname" ng-disabled="dis"/></td>
-            </tr>
-            <tr ng-show="checked">
-                <td align="right"><label for="lname">นามสกุล :</label></td>
-                <td><input ng-model="listAcountData.ca_lname" type="text" class="" id="form-lname" ng-disabled="dis"/></td>
-            </tr>
-            <tr ng-show="checked">
-                <td align="right"><label for="tel">เบอร์โทร :</label></td>
-                <td><input ng-model="listAcountData.ca_tel" type="text" class="" id="form-tel" ng-disabled="dis"/></td>
-            </tr>
-            <tr ng-show="!checked">
-                <td align="right"><label for="user">username :</label></td>
-                <td><input ng-model="listAcountData.ca_user" type="text" class="" id="form-user" ng-disabled="fix"/></td>
-            </tr>
-            <tr ng-show="!checked">
-                <td align="right"><label for="pass">password :</label></td>
-                <td><input ng-model="pass" type="password" class="" id="form-pass" ng-disabled="dis"/></td>
-            </tr>
-            <tr ng-show="!checked">
-                <td align="right"><label for="new_pass">new-password :</label></td>
-                <td><input ng-model="new_pass" type="password" class="" id="form-new-pass" ng-disabled="dis"/></td>
-            </tr>
-            <tr ng-show="!checked">
-                <td align="right"><label for="re_new_pass">re new-password :</label></td>
-                <td><input ng-model="re_new_pass" type="password" class="" id="form-re-new-pass" ng-disabled="dis"/></td>
-            </tr>
-            <tr>
-                <td >
+<div ng-init="checked=true; dis=true; btng1=true; btng2=true; btng3=true; fix=true" >    
+    <nav class="navbar navbar-default" >
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href=""><i class="fa fa-pencil-square-o"></i>&nbsp;แก้ไขข้อมูลผู้ใช้งาน</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <p class="navbar-text">checked:{{checked}} | dis:{{dis}} | btng1:{{btng1}} | btng2:{{btng2}} | btng3:{{btng3}} | fix:{{fix}}</p>
+            </ul>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="col-sm-9">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4><b><i class="fa fa-pencil-square-o"></i>&nbsp;แก้ไขข้อมูลผู้ใช้งาน</b></h4>
+                </div>
+                <div class="panel-body">
+                    <form class="form-horizontal" role="form" >
+                        <div class="form-group">
+                            <div ng-model="checked">
+                                <label for="code" class="col-sm-3 control-label">รหัส :</label>
+                                <div class="col-sm-4">
+                                    <input class="form-control" ng-model="listAcountData.ca_code" type="text" class="" id="form-code" ng-disabled="fix"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div ng-show="checked">
+                                <label for="tname" class="col-sm-3 control-label">คำนำหน้า :</label>
+                                <div class="col-sm-4">
+                                    <input class="form-control" ng-model="listAcountData.ca_tname" type="text" class="" id="form-tname" ng-disabled="dis"/>
+                                </div>
+                            </div>
+                        </div> 
+                        <div class="form-group">
+                            <div ng-show="checked">
+                                <label for="fname" class="col-sm-3 control-label">ชื่อ :</label>
+                                <div class="col-sm-4">
+                                    <input class="form-control" ng-model="listAcountData.ca_fname" type="text" class="" id="form-fname" ng-disabled="dis"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div ng-show="checked">
+                                <label for="lname" class="col-sm-3 control-label">นามสกุล :</label>
+                                <div class="col-sm-4">
+                                    <input class="form-control" ng-model="listAcountData.ca_lname" type="text" class="" id="form-lname" ng-disabled="dis"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div ng-show="checked">
+                                <label for="tel" class="col-sm-3 control-label">เบอร์โทร :</label>
+                                <div class="col-sm-4">
+                                    <input class="form-control" ng-model="listAcountData.ca_tel" type="text" class="" id="form-tel" ng-disabled="dis"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div ng-show="!checked">
+                                <label for="user" class="col-sm-3 control-label">username :</label>
+                                <div class="col-sm-4">
+                                    <input class="form-control" ng-model="listAcountData.ca_user" type="text" class="" id="form-user" ng-disabled="fix"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div ng-show="!checked">
+                                <label for="pass" class="col-sm-3 control-label">password :</label>
+                                <div class="col-sm-4">
+                                    <input class="form-control" ng-model="pass" type="password" class="" id="form-pass" ng-disabled="dis"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div ng-show="!checked">
+                                <label for="pass" class="col-sm-3 control-label">password :</label>
+                                <div class="col-sm-4">
+                                    <input class="form-control" ng-model="pass" type="password" class="" id="form-pass" ng-disabled="dis"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div ng-show="!checked">listAcountData.
+                                <label for="re_new_pass" class="col-sm-3 control-label">re new-password :</label>
+                                <div class="col-sm-4">
+                                    <input ng-model="re_new_pass" type="password" class="" id="form-re-new-pass" ng-disabled="dis"/>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="panel-footer">    
+                    <div class="col-sm-offset-8 ">
+                        <div ng-show="btng1">
+                            <input type="button" class="btn btn-warning" ng-click="confirmMember()" name="confirmMember" value="แก้ไขข้อมูล" />
+                            <input type="button" class="btn btn-primary" ng-click="changePassMember()" name="changePassMember" value="เปลี่ยนรหัสผ่าน" />
+                        </div >
+                    </div>
+                    <div class="col-sm-offset-10 ">
+                        <div ng-show="!btng2">
+                            <input type="button" class="btn btn-success" ng-click="updateMember()" name="updateMember" value="ตกลง" />
+                            <input type="button" class="btn btn-danger" ng-click="cancleMember()" name="cancleMember" value="ยกเลิก" />
+                        </div>
+                         <div ng-show="!btng3">
+                            <input type="button" class="btn btn-success" ng-click="updatePassMember()" name="updatePassMember" value="ตกลง" />
+                            <input type="button" class="btn btn-danger" ng-click="cancleMember()" name="cancleMember" value="ยกเลิก" />
+                        </div>
+                    </div>
+                </div> 
+            </div>
+        </div>
+                       
+                                
                     
-                </td>
-                <td>
-                    <div ng-show="btng1">
-                        <input type="button" ng-click="confirmMember()" name="confirmMember" value="แก้ไขข้อมูล" />
-                        <input type="button" ng-click="changePassMember()" name="changePassMember" value="เปลี่ยนรหัสผ่าน" />
-                    </div >
-                    <div ng-show="!btng2">
-                        <input type="button" ng-click="updateMember()" name="updateMember" value="ตกลง" />
-                        <input type="button" ng-click="cancleMember()" name="cancleMember" value="ยกเลิก" />
-                    </div>
-                    <div ng-show="!btng3">
-                        <input type="button" ng-click="updatePassMember()" name="updatePassMember" value="ตกลง" />
-                        <input type="button" ng-click="cancleMember()" name="cancleMember" value="ยกเลิก" />
-                    </div>
-                </td>
-            </tr>
-        </table>
-    </body>
-</html>
+                    
+                    
+             
+    </div>
+</div>

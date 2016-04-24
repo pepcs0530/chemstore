@@ -3,7 +3,7 @@
 	function($routeProvider) {
       $routeProvider
           .when(
-            '/',{
+            '/news',{
                 templateUrl: '../html/news.html',
                 controller: 'loginCtrl'
           }
@@ -103,6 +103,6 @@
                 controller: 'manageRequestOtherCtrl'
             }   
           ).otherwise({
-                redirectTo: '/'
+                redirectTo: '/news'
       	  }); 
 }]);

@@ -12,64 +12,101 @@
     
     <script type="text/javascript" src="../js/lib/bootstrap.min.js"></script>
     <link rel="stylesheet" href="../css/bootstrap.min.css">
-    
+
+    <script type="text/javascript" src="../js/lib/bootstrap-select.min.js"></script>
+    <link rel="stylesheet" href="../css/bootstrap-select.min.css">
     <script type="text/javascript" src="../js/lib/angular-simple-slideshow.js"></script>
     <link rel="stylesheet" href="../css/angular-simple-slideshow.css">
-    
+    <link rel="stylesheet" href="../css/app.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <script type="text/javascript" src="../js/lib/ui-bootstrap-tpls.min.js"></script>
   
     <script src="../js/chemstoreApp.js"></script>
     <script src="../js/routing.js"></script>
     <script src="../js/chemstoreController.js"></script>
     <script src="../js/chemstoreFliter.js"></script>
-    
-<body ng-controller="loginCtrl" ng-init="checkSession(); checked=true; dis=true; btng1=true; btng2=true; btng3=true; fix=true">
-type : {{type}}
-
+  <body ng-controller ="loginCtrl" ng-init="checkSession(); checked=true; dis=true; btng1=true; btng2=true; btng3=true; fix=true">
+  
   <!--    login by manager    -->
-    <nav class="navbar navbar-default" ng-show="type == 1">
+  <nav class="navbar navbar-inverse navbar-fixed-top ">
     <div class="container-fluid">
-      <ul class="nav navbar-nav">
-          <li><a class="navbar-brand" href="#/viewStock">คลังสารเคมี</a></li>
-        <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" >จัดการคำร้องขอ <span class="badge">{{sumNoti}}</span><span class="caret"></span></a>
-            <ul class="dropdown-menu" >
-              <li role="presentation"><a href="#/manageRequestChem">คำร้องขอสารเคมี <span class="badge">{{requestChemNoti}}</span></a></li>
-              <li role="presentation"><a href="#/manageRequestChemIncrease">คำร้องขอสารเคมีเพิ่ม <span class="badge">{{requestChemIncreaseNoti}}</span></a></li>
-              <li role="presentation"><a href="#/manageRequestOther">คำร้องขออื่นๆ <span class="badge">{{requestOtherNoti}}</span></a></li>
-            </ul>
-        </li>
-          
-        <li><a href="#/viewReciept" >เบิกสารเคมี</a></li>
-
-        <li><a href="#/inboundChem" >นำเข้าสารเคมี</a></li>
-
-        <li><a href="#/sold" >ขายคืน</a></li>
-          
-        <li><a href="#/transfer" >ย้ายคลัง</a></li>
-
-        <li><a href="#/editChem" >แก้ไขข้อมูลสารเคมี</a></li>
-
-        <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" >ประวัติรายการ<span class="caret"></span></a>
-          <ul class="dropdown-menu" >
-            <li><a href="#/importlog"  >ประวัติการนำเข้า</a></li>
-            <li><a href="#/withdrawlog"  >ประวัติการเบิกสาร</a></li>
-            <li><a href="#/salelog"  >ประวัติการขายคืน</a></li>
-          </ul>
-        </li>
-
-        <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" >ระบบ<span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="#/addMember" >เพิ่มผุ้ใช้งาน</a></li>
-            <li><a href="#/editMember" >แก้ไขข้อมูลผู้ใช้งาน</a></li>
-          </ul>
-        </li>
-        <li><a href="../php/logout.php" >ออกจากระบบ</a></li>
-      </ul>
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"> 
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span> 
+        </button>
+        <a class="navbar-brand" href="#/news">คลังสารเคมี</a>
       </div>
-    </nav>
+      <div class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li ng-hide = "logIn"><a href="#/news">หน้าแรก</a></li>
+          <li class="dropdown" ng-show ="logIn"><a class="dropdown-toggle" data-toggle="dropdown" >จัดการคำร้องขอ <span class="badge">{{sumNoti}}</span><span class="caret"></span></a>
+              <ul class="dropdown-menu" >
+                <li role="presentation"><a href="#/manageRequestChem">คำร้องขอสารเคมี <span class="badge">{{requestChemNoti}}</span></a></li>
+                <li role="presentation"><a href="#/manageRequestChemIncrease">คำร้องขอสารเคมีเพิ่ม <span class="badge">{{requestChemIncreaseNoti}}</span></a></li>
+                <li role="presentation"><a href="#/manageRequestOther">คำร้องขออื่นๆ <span class="badge">{{requestOtherNoti}}</span></a></li>
+              </ul>
+          </li>
+
+          <li><a href="#/viewStock" >คลังสารเคมี</a></li>
+
+          <li><a href="#/viewReciept" ng-show ="logIn" >เบิกสารเคมี</a></li>
+
+          <li><a href="#/inboundChem" ng-show ="logIn" >นำเข้าสารเคมี</a></li>
+
+          <li><a href="#/sold" ng-show ="logIn">ขายคืน</a></li>
+            
+          <li><a href="#/transfer" ng-show ="logIn">ย้ายคลัง</a></li>
+
+          <li><a href="#/editChem" ng-show ="logIn">แก้ไขข้อมูลสารเคมี</a></li>
+
+          <li class="dropdown" ng-show ="logIn"><a class="dropdown-toggle" data-toggle="dropdown" >ประวัติรายการ<span class="caret"></span></a>
+            <ul class="dropdown-menu" >
+              <li><a href="#/importlog"  >ประวัติการนำเข้า</a></li>
+              <li><a href="#/withdrawlog"  >ประวัติการเบิกสาร</a></li>
+              <li><a href="#/salelog"  >ประวัติการขายคืน</a></li>
+            </ul>
+          </li>
+          <li><a href="#/contact">ติดต่อเรา</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li class="dropdown" ng-show ="logIn"><a class="dropdown-toggle" data-toggle="dropdown" >ยินดีต้อนรับ! คุณ&nbsp;{{session}}<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><a href="#/addMember" >เพิ่มผุ้ใช้งาน</a></li>
+              <li><a href="#/editMember" >แก้ไขข้อมูลผู้ใช้งาน</a></li>
+              <li><a href="#/addProject">เพิ่มโปรเจค</a></li>
+              <li role="separator" class="divider"></li>
+              <li><a href="../php/logout.php" >ออกจากระบบ</a></li>
+            </ul>
+          </li>
+        </ul>
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul ng-hide = "logIn"  class="nav navbar-nav navbar-right">
+              <form class="navbar-form navbar-left" role="search" method="post">
+                  <div class="form-group">
+                      <input type="text" class="form-control" placeholder="Username" ng-model="login.username">
+                      <input type="password" class="form-control" placeholder="Password" ng-model="login.password">
+                  </div>
+                  <input class="btn btn-default" type="submit" value="Log in" ng-click="createLogin()"/>
+                  <input class="btn btn-default" type="reset" value="Clear" />
+              </form>
+          </ul>-->
+      </div>
+    </div>
+  </nav>
+
+  <!--<nav class="navbar navbar-default navbar-fixed-bottom">
+    <div class="container-fluid">
+        <p class="navbar-text ">© 2016 - คลังสารเคมี<br>
+             ภาควิชาเคมี  คณะวิทยาศาสตร์ สจล.
+        </p>   
+    </div>
+  </nav>-->
     
     <!--    login by teacher    -->
-    <nav class="navbar navbar-default" ng-show="type == 2">
+    <!-- <nav class="navbar navbar-inverse  navbar-fixed-top" ng-show="type == 2">
         <div class="container-fluid">
           <div class="navbar-header">
             <a class="navbar-brand" href="#/viewStock">คลังสารเคมี</a>
@@ -102,10 +139,10 @@ type : {{type}}
             <li><a href="../php/logout.php" >ออกจากระบบ</a></li>
           </ul>
         </div>
-    </nav>
+    </nav>-->
     
     <!--    login by operator    -->
-    <nav class="navbar navbar-default" ng-show="type == 3">
+    <!--<nav class="navbar navbar-default" ng-show="type == 3">
         <div class="container-fluid">
           <div class="navbar-header">
             <a class="navbar-brand" href="#/viewStock">คลังสารเคมี</a>
@@ -121,10 +158,10 @@ type : {{type}}
             <li><a href="../php/logout.php" >ออกจากระบบ</a></li>
           </ul>
         </div>
-    </nav>
+    </nav>-->
     
     <!--    login by scientist    -->
-    <nav class="navbar navbar-default" ng-show="type == 4">
+   <!-- <nav class="navbar navbar-default" ng-show="type == 4">
         <div class="container-fluid">
           <div class="navbar-header">
             <a class="navbar-brand" href="#/viewStock">คลังสารเคมี</a>
@@ -142,31 +179,7 @@ type : {{type}}
             <li><a href="../php/logout.php" >ออกจากระบบ</a></li>
           </ul>
         </div>
-    </nav>
-    
-    <!--    ไม่ได้ login    -->
-    <nav class="navbar navbar-default" ng-show="type == ''">
-      <div class="container-fluid">
-        <div class="navbar-header">
-            <a class="navbar-brand" href="#/">หน้าแรก</a>
-            <a class="navbar-brand" href="#/viewStock">คลังสารเคมี</a>
-            <a class="navbar-brand" href="#/contact">ติดต่อเรา</a>
-        </div>
-        
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          <ul class="nav navbar-nav navbar-right">
-            <form class="navbar-form navbar-left" role="search" method="post">
-                <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Username" ng-model="login.username">
-                    <input type="password" class="form-control" placeholder="Password" ng-model="login.password">
-                </div>
-                <input class="btn btn-default" type="submit" value="Log in" ng-click="createLogin()"/>
-                <input class="btn btn-default" type="reset" value="Clear" />
-            </form>
-          </ul>
-        </div><!-- /.navbar-collapse -->
-      </div><!-- /.container-fluid -->
-    </nav>
+    </nav>-->
 <div ng-view></div>
     
 </body>

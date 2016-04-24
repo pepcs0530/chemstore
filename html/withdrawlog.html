@@ -1,12 +1,19 @@
-<div class ="container" ng-controller= "withdrawlogCtrl">
-    <caption><H3>ประวัติการเบิกสาร</H3></caption>
+ <nav class="navbar navbar-default">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href=""><i class="fa fa-plus-square"></i>&nbsp;ประวัติการเบิกสาร</a>
+            </div>
+        </div>
+</nav>
+
+<div class ="container">
         <table class= " table table-bordered" >
             <tr>
                 <th>วันที่-เวลา</th>
                 <th>เลขที่ใบเบิก</th>
                 <th>บัญชีผู้ใช้</th>
                 <th>โปรเจค</th>
-                <th>รายละเอียด</th>
+                <th style="text-align: center;">รายละเอียด</th>
             </tr>
             <tr ng-repeat="showdata in listReciept">
 <!--                <td>{{showdata.cr_crtDt | date : 'DD-MM-YYYYThh:mm:ssTZD'}}</td>ng-bind="date | date:'MM/dd/yyyy'"-->
@@ -17,7 +24,7 @@
                 <td>{{showdata.cr_no}}</td>
                 <td>{{showdata.ca_tname+" "+showdata.ca_fname+" "+showdata.ca_lname}}</td>
                 <td>{{showdata.cp_name}}</td>
-                <td><input type="button" value="แสดง" ng-click="addCart(showdata)" data-toggle="modal" data-target="#myModal"></td>
+                <td style="text-align: center;"><button type="button" class="btn btn-default" value="แสดง" ng-click="addCart(showdata)" data-toggle="modal" data-target="#myModal">แสดง</button></td>
             </tr>
         </table> 
     

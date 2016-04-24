@@ -1,0 +1,12 @@
+body {
+  padding-top: 50px;
+}
+#slides_control > div{
+    height: 200px;
+ }
+img{
+    margin:auto;
+    width: 80%;
+}
+#slides_control {
+}

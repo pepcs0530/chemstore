@@ -1,38 +1,51 @@
-<!DOCTYPE>
-<html>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <body  ng-app="chemstore" ng-controller="addProjectCtrl">    
-
-        <caption><H3>เพิ่มโปรเจค</H3></caption>
-        <table width="100%" border="0"  id="here">
-            <tr>
-                <td align="right"><label for="acctyp">อาจารย์ :</label></td>
-                <td>
-                    <input type="text" ng-model="addProject.teacher" ng-disabled="true"/>
-                </td>
-            </tr>
-            <tr>
-                <td align="right"><label for="cp_name">ชื่อโปรเจค :</label></td>
-                <td><input ng-model="addProject.cp_name" type="text" class="" id="form-cp_name" /></td>
-            </tr>
-            <tr>
-                <td align="right"><label for="cp_budget">งบประมาณ :</label></td> 
-                <td><input ng-model="addProject.cp_budget" type="text" class="" id="form-cp_budget" />&nbsp;งบที่คงเหลืออยู่{{listAcountData[0].ca_credit-addProject.cp_budget}}</td>
-            </tr>
-            <tr>
-                <td align="right"><label for="cp_desc">รายละเอียด :</label></td>
-                <td><textarea ng-model="addProject.cp_desc" id="form-cp_desc" rows="4" cols="50"></textarea></td>
-            </tr>
-            <tr>
-                <td >
-
-                </td>
-                <td>
-                    <input type="button" ng-click="createProject()" name="createProject" value="เพิ่ม" />
-                    <input type="button" ng-click="cancleProject()" name="cancleProject" value="ยกเลิก" />
-                </td>
-            </tr>
-        </table>
-    </body>
-</html>
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href=""><i class="fa fa-plus-square"></i>&nbsp;เพิ่มโปรเจค</a>
+            </div>
+        </div>
+    </nav>
+   
+    <div class="container">
+        <div class="col-sm-9">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4><b><i class="fa fa-plus-square"></i>&nbsp;เพิ่มโปรเจคใหม่</b></h4>
+                </div>
+                <div class="panel-body">
+                    <form class="form-horizontal" role="form" >
+                        <div class="form-group">
+                            <label for="acctyp" class="col-sm-3 control-label">อาจารย์ :</label>
+                            <div class="col-sm-4">
+                                <input class="form-control" type="text" ng-model="addProject.teacher" ng-disabled="true"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="cp_name" class="col-sm-3 control-label">ชื่อโปรเจค :</label>
+                            <div class="col-sm-4">
+                                <input class="form-control" ng-model="addProject.cp_name" type="text" class="" id="form-cp_name" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="cp_budget" class="col-sm-3 control-label">งบประมาณ :</label>
+                            <div class="col-sm-4">
+                                <input class="form-control" ng-model="addProject.cp_budget" type="text" class="" id="form-cp_budget" />&nbsp;งบที่คงเหลืออยู่{{listAcountData[0].ca_credit-addProject.cp_budget}}
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="cp_desc" class="col-sm-3 control-label">รายละเอียด :</label>
+                            <div class="col-sm-4">
+                                <textarea ng-model="addProject.cp_desc" id="form-cp_desc" rows="4" cols="50"></textarea>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="panel-footer">    
+                    <div class="col-sm-offset-10 ">
+                        <input type="button" class="btn btn-success" ng-click="createProject()" name="createProject" value="เพิ่ม" />
+                        <input type="button" class="btn btn-danger" ng-click="cancleProject()" name="cancleProject" value="ยกเลิก" />
+                    </div>
+                </div>
+            </div>
+         </div>
+        

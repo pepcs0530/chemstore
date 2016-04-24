@@ -1,29 +1,23 @@
-<div class="container" ng-controller="loginCtrl" ng-show="type == '' ">
-    <h3>ข่าว-ประชาสัมพันธ์...</h3>
+   <nav class="navbar navbar-default ">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href=""><i class="fa fa-plus-square"></i>&nbsp;ข่าว-ประชาสัมพันธ์...</a>
+            </div>
+        </div>
+    </nav>
     
-    <style>
-        
-        #slides_control > div{
-          height: 200px;
-        }
-        img{
-          margin:auto;
-          width: 80%;
-        }
-        #slides_control {
-        }
-    </style>
-    <div ng-controller="loginCtrl" id="slides_control">
-        <div>
-          <carousel interval="myInterval">
-            <slide ng-repeat="slide in slides" active="slide.active">
-              <img ng-src="{{slide.image}}">
-              <div class="carousel-caption">
-<!--                <h4>Slide {{$index+1}}</h4>-->
-              </div>
-            </slide>
-          </carousel>
+    <div class="container">
+        <div id="slides_control">
+            <div>
+              <carousel interval="myInterval">
+                <slide ng-repeat="slide in slides" active="slide.active">
+                  <img ng-src="{{slide.image}}">
+                  <div class="carousel-caption">
+    <!--                <h4>Slide {{$index+1}}</h4>-->
+                  </div>
+                </slide>
+              </carousel>
+            </div>
         </div>
     </div>
-</div>
 

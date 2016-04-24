@@ -1,5 +1,5 @@
 //  Login   ============================================================================================================
-chemstore.controller('loginCtrl', function($scope,$http,$timeout) {
+chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$location) {
     $scope.createLogin = function () {    
         $http({
             method  :   'POST',
@@ -7,9 +7,11 @@ chemstore.controller('loginCtrl', function($scope,$http,$timeout) {
             data    :   {ca_user: $scope.login.username,ca_pass: $scope.login.password}
         }).then(function(response) {
             console.log(response.data);
+            $rootScope.logIn = false;
             if(response.data == "true"){
+                $rootScope.logIn = true;
                 alert("ยินดิต้อนรับเข้าสู่ระบบ");
-                location.reload();
+                $location.path('/news')
             }else{
                 alert("usernameหรือpasswordไม่ถูกต้อง");
             }

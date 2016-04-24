@@ -1,36 +1,40 @@
-<!DOCTYPE>
-<html>
-    <meta charset="utf-8">
-    <head>
-        <title>
-            เบิกสารเคมี
-        </title>
-    </head>
-
-    <script src="../js/angular.min.js"></script>
-    <script src="../js/recieptController.js" type="text/javascript"></script>
-    <body  ng-app="chemstore" ng-controller="recieptCtrl">
-        <caption><H3>เบิกสารเคมี</H3></caption>
-        Controller:{{index}} <br>
-        ค้นหา<input type="text" ng-model="searchThis"> <br>
-        <input type="button" ng-click="deleteRecord()" value="previous">
+<nav class="navbar navbar-default">
+    <div class="container">
+        <div class="navbar-header">
+            <a class="navbar-brand" href=""><i class="fa fa-upload"></i>&nbsp;เบิกสารเคมี</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <form class="navbar-form navbar-left" role="search">
+                <div class="form-group">
+                    <input class="form-control" type="text" ng-model="searchThis"  placeholder="Search">
+                </div>
+            </form> 
+        </ul>
+    </div>
+</nav>
+<div class="container">
+    <div class="row"> 
+        <button type="button" class="btn btn-primary btn-xs"  ng-click="deleteRecord()" value="previous"><i class="fa fa-backward"></i>&nbsp;previous</button>
+        <button type="button" class="btn btn-primary btn-xs" ng-click="addRecord()" value="next">next&nbsp;<i class="fa fa-forward"></i></button>
         <select ng-init="searchRange = options[0]" 
                 ng-model="searchRange" 
                 ng-options="option.name for option in options">
-        </select>
-    <input type="button" ng-click="addRecord()" value="next"><br>
-        <table width="100%" border="1">
+        </select>  
+    </div>
+    <br>
+    <div class="row"> 
+        <table class= " table table-bordered">
             <tr>
-                <th bgcolor = 66CCCC width="20%" >ชื่อสารเคมี</th>
-                <th bgcolor = 66CCCC width="10%">Cas no.</th>
-                <th bgcolor = 66CCCC width="5%">สถานะ</th>
-                <th bgcolor = 66CCCC width="10%">ปริมาณ</th>
-                <th bgcolor = 66CCCC width="10%">อาคาร</th>
-                <th bgcolor = 66CCCC width="5%">ห้อง</th>
-                <th bgcolor = 66CCCC width="5%">ราคา/หน่วย</th>
-                <th bgcolor = 66CCCC width="5%">เกรด</th>
-                <th bgcolor = 66CCCC width="10%">ผู้ผลิต</th>
-                <th bgcolor = 66CCCC >operation</th>
+                <th>ชื่อสารเคมี</th>
+                <th>Cas no.</th>
+                <th>สถานะ</th>
+                <th>ปริมาณ</th>
+                <th>อาคาร</th>
+                <th>ห้อง</th>
+                <th>ราคา/หน่วย</th>
+                <th>เกรด</th>
+                <th>ผู้ผลิต</th>
+                <th style="text-align: center;">operation</th>
             </tr>
             <tr ng-repeat="showdata in listChem | filter : searchThis | limitTo : searchRange.value : begin">
                 <td>{{showdata.cc_name}}</td>
@@ -42,27 +46,29 @@
                 <td>{{showdata.cc_price}}/{{showdata.cu_name_abb}}</td>
                 <td>{{showdata.cc_grade}}</td>
                 <td>{{showdata.cc_producer}}</td>
-                <td><input type="button" value="add" ng-click="addtCart(showdata)"></td>
+                <td style="text-align: center;"><button type="button" class="btn btn-success btn-sm" value="add" ng-click="addtCart(showdata)"><i class="fa fa-check-square"></i>&nbsp;Add</button></td>
             </tr>
         </table>   
-        
+    </div>    
+    <div class="row"> 
         <caption><H3>สารเคมีที่เบิก</H3></caption>
-        เลือกโปรเจค : <select  
-                ng-model="selectedProject" 
-                ng-options="option.cp_name for option in listProject">
-        </select>
-        <form>
-            <table border="1">
+            <label>เลือกโปรเจค:&nbsp;</label>
+            <select  
+                    ng-model="selectedProject" 
+                    ng-options="option.cp_name for option in listProject">
+            </select>
+            <br>
+            <table  class= "table table-bordered">
                 <tr>
-                    <th bgcolor = 66CCCC width="20%" >ชื่อสารเคมี</th>
-                    <th bgcolor = 66CCCC width="10%">Cas no.</th>
-                    <th bgcolor = 66CCCC width="5%">สถานะ</th>
-                    <th bgcolor = 66CCCC width="10%">ปริมาณ</th>
-                    <th bgcolor = 66CCCC width="5%">ราคา/หน่วย</th>
-                    <th bgcolor = 66CCCC width="5%">จำนวนที่ต้องการ</th>
-                    <th bgcolor = 66CCCC width="5%">หน่วย</th>
-                    <th bgcolor = 66CCCC width="5"%>ค่าใช้จ่าย</th>
-                    <th bgcolor = 66CCCC width="5"%>operation</th>
+                    <th>ชื่อสารเคมี</th>
+                    <th>Cas no.</th>
+                    <th>สถานะ</th>
+                    <th>ปริมาณ</th>
+                    <th>ราคา/หน่วย</th>
+                    <th>จำนวนที่ต้องการ</th>
+                    <th>หน่วย</th>
+                    <th>ค่าใช้จ่าย</th>
+                    <th style="text-align: center;">operation</th>
                 </tr>
                 <tr ng-repeat="showdata in cartlist">
                     <td>{{showdata.cc_name}}</td>
@@ -70,7 +76,11 @@
                     <td>{{showdata.cc_state}}</td>
                     <td>{{showdata.cc_quantity}}&nbsp;{{showdata.cu_name_abb}}</td>
                     <td>{{showdata.cc_price}}/{{showdata.cu_name_abb}}</td>
-                    <td><input type="text" ng-change="pricecal($index)" ng-model="cartlist[$index].volumeRequest" ></td>
+                    <td>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" ng-change="pricecal($index)" ng-model="cartlist[$index].volumeRequest" >&nbsp;&nbsp;
+                        </div>
+                    </td>
                     <td>
                         <select ng-model="cartlist[$index].unitRequest" ng-change="pricecal($index)">
                             <option value="kg">
@@ -91,13 +101,20 @@
                         </select>
                     </td>
                     <td>{{showdata.totalprice}}</td>
-                    <td><input type="button" value="delete" ng-click="deleteCart($index)"></td>
+                    <td style="text-align: center;"><button class="btn btn-danger btn-sm" value="delete" ng-click="deleteCart($index)"><i class="fa fa-times-circle"></i>&nbsp; Delete</button></td>
                 </tr>
             </table>
-            งบในโปรเจคที่เหลือ:{{selectedProject.cp_budget}}<br>
-            ค่าใช้จ่ายทั้งหมด:{{total}}<br>
-            ยอดคงเหลือ:{{selectedProject.cp_budget-total}}
-            <br><input type="submit" value="ยืนยันการยืม" ng-click="createRequest()">
-        </form>
-    </body>
-</html>
+        </div>
+        <div class="row"> 
+            <div class="col-sm-4 col-md-offset-8">
+                <div class="well">
+                    งบในโปรเจคที่เหลือ&nbsp;:&nbsp;{{selectedProject.cp_budget}}<br>
+                    ค่าใช้จ่ายทั้งหมด&nbsp;:&nbsp;{{total}}<br>
+                    ยอดคงเหลือ&nbsp;:&nbsp;{{selectedProject.cp_budget-total}}
+                    <div class="col-md-offset-8">
+                        <button class="btn btn-success" type="submit" value="ยืนยันการยืม" ng-click="createRequest()">ยืนยันการยืม</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+ </div>

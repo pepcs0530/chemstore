@@ -1,35 +1,38 @@
-<html>
-    <meta charset="utf-8">
-    <head>
-    <title>คำร้องขออื่นๆ</title>
-    </head>
-    <body>
+ <nav class="navbar navbar-default">
         <div class="container">
-            <h3>คำร้องขออื่นๆ</h3><input type="button"  value="ประวัติการยืนยัน" ng-click="showReport()" data-toggle="modal" data-target="#myModal2">
-            <table class="table table-hover">
-                <tr>
-                    <th>ลำดับที่</th>
-                    <th>วัน-เวลาที่ร้องขอ</th>
-                    <th>ผู้ร้องขอ</th>
-                    <th>สถานะคำร้อง</th>
-                    <th>รายละเอียด</th>
-                </tr>
-                <tr ng-repeat="showdata in listManageRequestOther">
-                    <td>
-                    {{$index+1}}
-                    </td>
-                    <td>
-                    {{showdata.cro_crtDt | Datetime}}
-                    </td>
-                    <td ng-bind-html="showdata.cro_status | confirmFilter"></td>
-                    <td>
-                    {{showdata.ca_fname +"  "+ showdata.ca_lname}}
-                    </td>
-                    <td><input type="button" value="แสดง" ng-click="showPopup(showdata.cro_pk)" data-toggle="modal" data-target="#myModal"></td>
-                </tr>
-            </table>  
+            <div class="navbar-header">
+                <a class="navbar-brand" href=""><i class="fa fa-plus-square"></i>&nbsp;คำร้องขออื่นๆ</a>
+            </div>
         </div>
-        
+    </nav>
+        <div class="container">
+            <button type="button" class="btn btn-success"  value="ประวัติการยืนยัน" ng-click="showReport()" data-toggle="modal" data-target="#myModal2">ประวัติการยืนยัน</button>
+            <br><br>
+            <div class="row">   
+              <table class="table table-bordered">
+                  <tr>
+                      <th style="text-align: center;">ลำดับที่</th>
+                      <th>วัน-เวลาที่ร้องขอ</th>
+                      <th style="text-align: center;">ผู้ร้องขอ</th>
+                      <th>สถานะคำร้อง</th>
+                      <th style="text-align: center;">รายละเอียด</th>
+                  </tr>
+                  <tr ng-repeat="showdata in listManageRequestOther">
+                      <td style="text-align: center;">
+                      {{$index+1}}
+                      </td>
+                      <td>
+                      {{showdata.cro_crtDt | Datetime}}
+                      </td>
+                      <td style="text-align: center;" ng-bind-html="showdata.cro_status | confirmFilter"></td>
+                      <td>
+                      {{showdata.ca_fname +"  "+ showdata.ca_lname}}
+                      </td>
+                      <td style="text-align: center;"><button type="button" class="btn btn-default" value="แสดง" ng-click="showPopup(showdata.cro_pk)" data-toggle="modal" data-target="#myModal">แสดง</button></td>
+                  </tr>
+              </table>  
+          </div>
+        </div>
         <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
           <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -48,7 +51,7 @@
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
-                <button type="button" class="btn btn-primary" ng-click="confirmRequestOther(showdata.cro_pk)">ยืนยันคำร้อง</button>
+                <button type="button" class="btn btn-success" ng-click="confirmRequestOther(showdata.cro_pk)">ยืนยันคำร้อง</button>
               </div>
             </div>
           </div>
@@ -56,7 +59,7 @@
         
                 
         <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-          <div class="modal-dialog" role="document">
+          <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -65,13 +68,13 @@
               <div class="modal-body">
                   <table class="table table-hover">
                 <tr>
-                    <th>ลำดับที่</th>
+                    <th style="text-align: center;">ลำดับที่</th>
                     <th>วัน-เวลาที่ร้องขอ</th>
                     <th>ผู้ร้องขอ</th>
-                    <th>รายละเอียด</th>
+                    <th style="text-align: center;">รายละเอียด</th>
                 </tr>
                 <tr ng-repeat="showdata in listAllRequestOther">
-                    <td>
+                    <td style="text-align: center;">
                     {{$index+1}}
                     </td>
                     <td>
@@ -80,7 +83,7 @@
                     <td>
                     {{showdata.ca_fname +"  "+ showdata.ca_lname}}
                     </td>
-                    <td><input type="button" value="แสดง" ng-click="showPopup2(showdata.cro_pk)" data-toggle="modal" data-target="#myModal3"></td>
+                    <td style="text-align: center;"><button type="button" class="btn btn-default"  value="แสดง" ng-click="showPopup2(showdata.cro_pk)" data-toggle="modal" data-target="#myModal3">แสดง</button></td>
                 </tr>
             </table>  
               </div>
@@ -113,6 +116,3 @@
             </div>
           </div>
         </div>
-        
-    </body>
-</html>

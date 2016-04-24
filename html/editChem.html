@@ -1,18 +1,26 @@
-<!DOCTYPE>
-<html>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <div ng-controller= "editChemCtrl" ng-init="editChem=true; update=true">
-        <div class ="container">
-            <div ng-show="editChem">
-                <caption><H3>แก้ไขข้อมูลสารเคมี</H3></caption>
-                ค้นหา : <input type="text" ng-model="searchThis"><br/>
-                <input type="button" ng-click="deleteRecord()" value="previous">
-                    <select ng-init="searchRange = options[0]" 
+<div ng-init="editChem=true; update=true">
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" href=""><i class="fa fa-plus-square"></i>&nbsp;แก้ไขข้อมูลสารเคมี</a>
+            </div>
+            <ul class="nav navbar-nav">
+                <form class="navbar-form navbar-left">
+                    <div class="form-group">
+                        <strong>ค้นหารายการ :&nbsp;</strong><input class="form-control" type="text" ng-model="searchThis.$" placeholder="ใส่คำที่คุณต้องการค้นหา">
+                    </div>
+                        <select ng-init="searchRange = options[2]" 
                             ng-model="searchRange" 
                             ng-options="option.name for option in options">
-                    </select>
-                <input type="button" ng-click="addRecord()" value="next"><br>
+                            </select> 
+                        <button type="button" class="btn btn-primary btn-xs"  ng-click="deleteRecord()" value="previous"><i class="fa fa-backward"></i>&nbsp;previous</button>
+                        <button type="button" class="btn btn-primary btn-xs" ng-click="addRecord()" value="next">next&nbsp;<i class="fa fa-forward"></i></button>
+                    </form> 
+                </ul>
+            </div>
+        </nav>
+        <div class ="container">
+            <div ng-show="editChem">
                 <table class= " table table-bordered">
                     <tr>
                         <th>ชื่อสารเคมี</th>
@@ -36,7 +44,7 @@
                         <td>{{showdata.cc_price}}/{{showdata.cu_name_abb}}</td>
                         <td>{{showdata.cc_grade}}</td>
                         <td>{{showdata.cc_producer}}</td>
-                        <td><input type="button" value="เลือก" ng-click="editThis(showdata)" data-toggle="modal" data-target="#myModal"></td>
+                        <td><button type="button" class="btn btn-success btn-sm" value="เลือก" ng-click="editThis(showdata)" data-toggle="modal" data-target="#myModal"><i class="fa fa-check-square"></i>&nbsp;เลือก</button></td>
                     </tr>
                 </table> 
             </div>
@@ -49,90 +57,108 @@
                     <h4 class="modal-title" id="myModalLabel">ยืนยันแก้ไขข้อมูลสารเคมี</h4>
                   </div>
                   <div class="modal-body">
-                      <table width="100%" border="0">
-                        <tr>
-                            <td align="right"><label for="cc_name">ชื่อสารเคมี :</label></td>
-                            <td><input ng-model="editThisData.cc_name" type="text" class="" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td align="right"><label for="cc_type">ประเภทสารเคมี :</label></td>
-                            <td><input ng-model="editThisData.cc_type" type="text" class="" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td align="right"><label for="cc_code">รหัสสารเคมี :</label></td>
-                            <td><input ng-model="editThisData.cc_code" type="text" class="" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td align="right"><label for="cc_casNo">เลขอ้างอิงเฉพาะ (Cas no.) :</label></td>
-                            <td><input ng-model="editThisData.cc_casNo" type="text" class="" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td align="right"><label for="cc_state">สถานะสาร :</label></td>
-                            <td>
-                                <select ng-model="editThisData.cc_state">
+                      <form class="form-horizontal" role="form" >
+                        <div class="form-group">
+                            <label for="cc_name" class="col-sm-3 control-label">ชื่อสารเคมี :</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" ng-model="editThisData.cc_name" type="text" class="" />
+                            </div>
+                        </div>
+                         <div class="form-group">
+                            <label for="cc_type"  class="col-sm-3 control-label">ประเภทสารเคมี :</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" ng-model="editThisData.cc_type" type="text" class="" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="cc_code" class="col-sm-3 control-label">รหัสสารเคมี :</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" ng-model="editThisData.cc_code" type="text" class="" />
+                            </div>
+                        </div> 
+                        <div class="form-group">
+                            <label for="cc_casNo" class="col-sm-3 control-label">เลขอ้างอิงเฉพาะ (Cas no.) :</label>
+                            <div class="col-sm-6">
+                                <input  class="form-control"ng-model="editThisData.cc_casNo" type="text" class="" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="cc_state" class="col-sm-3 control-label">สถานะสาร :</label></td>
+                            <div class="col-sm-6">
+                                <select  ng-model="editThisData.cc_state">
                                     <option value="" >เลือกสถานะ</option>
                                     <option value="S" >solid</option>
                                     <option value="L">liquid</option>
                                     <option value="G">gas</option>
                                 </select> {{cc_state}}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td align="right"><label for="cc_volume">ขนาดบรรจุ :</label></td>
-                            <td>
-                                <input ng-model="editThisData.cc_volume" type="text" class="" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="cc_volume" class="col-sm-3 control-label">ขนาดบรรจุ :</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" ng-model="editThisData.cc_volume" type="text" class="" />
 
                                 <select  ng-model="editThisData.cu_pk" >
                                     <option ng-repeat="lu in listUnit" value="{{lu.cu_pk}}" >{{lu.cu_name_abb}}</option>
                                 </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td align="right"><label for="cc_quantity">จำนวน :</label></td>
-                            <td><input ng-model="editThisData.cc_quantity" type="text" class="" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td align="right"><label for="cc_packing">จำนวนแพ็ค :</label></td>
-                            <td><input ng-model="editThisData.cc_packing" type="text" class="" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td align="right"><label for="location">คลัง :</label></td>
-                            <td>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="cc_quantity" class="col-sm-3 control-label">จำนวน :</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" ng-model="editThisData.cc_quantity" type="text" class="" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="cc_packing" class="col-sm-3 control-label">จำนวนแพ็ค :</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" ng-model="editThisData.cc_packing" type="text" class="" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="location" class="col-sm-3 control-label">คลัง :</label>
+                            <div class="col-sm-6">
                                 <select ng-model="editThisData.cl_pk">
                                     <option ng-repeat="ll in listLoc" value="{{ll.cl_pk}}">{{ll.cl_name}}</option>
                                 </select> {{cc_location_fk}}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td align="right"><label for="cc_room">ห้อง :</label></td>
-                            <td><input ng-model="editThisData.cc_room" type="text" class="" /></td>
-                        </tr>
-                        <tr>
-                            <td align="right"><label for="cc_price">ราคา :</label></td>
-                            <td><input ng-model="editThisData.cc_price" type="text" class="" /></td>
-                        </tr>
-                        <tr>
-                            <td align="right"><label for="cc_grade">เกรด :</label></td>
-                            <td><input ng-model="editThisData.cc_grade" type="text" class="" /></td>
-                        </tr>
-                        <tr>
-                            <td align="right"><label for="cc_expDt">วันหมดอายุ :</label></td>
-                            <td><input ng-model="editThisData.cc_expDt" type="date" class="" /></td>
-                        </tr>
-                        <tr>
-                            <td align="right"><label for="cc_producer">ผู้ผลิต :</label></td>
-                            <td><input ng-model="editThisData.cc_producer" type="text" class="" /></td>
-                        </tr>
-                        <tr>
-                            <td align="right"><label for="cc_desc">หมายเหตุ :</label></td>
-                            <td><textarea ng-model="editThisData.cc_desc" id="form-cc_desc" rows="4" cols="50"></textarea></td>
-                        </tr>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="cc_room" class="col-sm-3 control-label">ห้อง :</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" ng-model="editThisData.cc_room" type="text" class="" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="cc_price" class="col-sm-3 control-label">ราคา :</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" ng-model="editThisData.cc_price" type="text" class="" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="cc_grade" class="col-sm-3 control-label">เกรด :</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" ng-model="editThisData.cc_grade" type="text" class="" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="cc_expDt" class="col-sm-3 control-label">วันหมดอายุ :</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" ng-model="editThisData.cc_expDt" type="date" class="" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="cc_producer" class="col-sm-3 control-label">ผู้ผลิต :</label>
+                            <div class="col-sm-6">
+                                <input class="form-control" ng-model="editThisData.cc_producer" type="text" class="" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="cc_desc" class="col-sm-3 control-label">หมายเหตุ :</label>
+                            <div class="col-sm-6">
+                                <textarea class="form-control" ng-model="editThisData.cc_desc" id="form-cc_desc" rows="4" cols="50"></textarea>
+                            </div>
+                        </div>
                     </table>
                   </div>
                   <div class="modal-footer">
@@ -144,4 +170,3 @@
             </div>  
         </div>
     </div>
-</html>
