@@ -11,6 +11,7 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
             if(response.data == "true"){
                 $rootScope.logIn = true;
                 alert("ยินดิต้อนรับเข้าสู่ระบบ");
+                location.reload();
                 $location.path('/news')
             }else{
                 alert("usernameหรือpasswordไม่ถูกต้อง");
@@ -25,21 +26,21 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
                 url     :   '../php/getType.php'
             }).then(function(response) {
                 $scope.type = response.data;
-//                console.log($scope.type);
+                console.log($scope.type);
             });
             $http({
                 method  :   'GET',
                 url     :   '../php/getSession.php'
             }).then(function(response) {
                 $scope.session = response.data;
-//                console.log($scope.session);
+                console.log($scope.session);
             });
             $http({
                 method  :   'GET',
                 url     :   '../php/getKey.php'
             }).then(function(response) {
                 $scope.key = response.data;
-//                console.log($scope.key);
+                console.log($scope.key);
             });
     }
         $scope.myInterval = 3000;
