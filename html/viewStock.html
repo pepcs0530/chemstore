@@ -1,29 +1,31 @@
 <nav class="navbar navbar-default">
   <div class="container">
     <div class="navbar-header">
-      <a class="navbar-brand" href="#"><i class="fa fa-flask"></i>&nbsp;รายชื่อสารเคมี</a>
+      <a class="navbar-brand" ><i class="fa fa-flask"></i>&nbsp;รายชื่อสารเคมี</a>
     </div>
     <ul class="nav navbar-nav">
         <form class="navbar-form navbar-left">
-            <strong>ค้นหารายการ :</strong>
+            <div class="form-group">
+                <input type="text" class="form-control" ng-model="searchThis" placeholder="ค้นหา">
+            </div>
+            <strong>เลือกคลัง :</strong>
             <select   ng-model="selectData" ng-change="getdata()">
                 <option ng-repeat="lu in listLocation" value="{{lu.cl_name}}" >{{lu.cl_name}}</option>
             </select>
-            <div class="form-group">
-                <input type="text" class="form-control" ng-model="searchThis" placeholder="ใส่คำที่คุณต้องการค้นหา">
-            </div>
-            <select ng-init="searchRange = options[2]" 
-            ng-model="searchRange" 
-            ng-options="option.name for option in options">
-            </select> 
-            <button type="button" class="btn btn-primary btn-xs"  ng-click="deleteRecord()" value="previous"><i class="fa fa-backward"></i>&nbsp;previous</button>
-            <button type="button" class="btn btn-primary btn-xs" ng-click="addRecord()" value="next">next&nbsp;<i class="fa fa-forward"></i></button>  
+            
+            
         </form> 
     </ul>
   </div>
 </nav>
 
 <div class="container">
+    จำนวนแถวที่แสดง : <select ng-init="searchRange = options[2]" 
+            ng-model="searchRange" 
+            ng-options="option.name for option in options">
+            </select> 
+            <button type="button" class="btn btn-primary btn-xs"  ng-click="deleteRecord()" value="previous"><i class="fa fa-backward"></i>&nbsp;previous</button>
+            <button type="button" class="btn btn-primary btn-xs" ng-click="addRecord()" value="next">next&nbsp;<i class="fa fa-forward"></i></button>  
     <table class="table table-bordered" id="here">
         <tr>
             <th>ชื่อสารเคมี</th>

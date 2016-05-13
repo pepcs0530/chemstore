@@ -1,3 +1,8 @@
+<style>
+    th{
+        text-align: center;
+    }
+</style>
 <div ng-init="editChem=true; update=true">
     <nav class="navbar navbar-default">
         <div class="container">
@@ -44,7 +49,7 @@
                         <td>{{showdata.cc_price}}/{{showdata.cu_name_abb}}</td>
                         <td>{{showdata.cc_grade}}</td>
                         <td>{{showdata.cc_producer}}</td>
-                        <td><button type="button" class="btn btn-success btn-sm" value="เลือก" ng-click="editThis(showdata)" data-toggle="modal" data-target="#myModal"><i class="fa fa-check-square"></i>&nbsp;เลือก</button></td>
+                        <td align="center"><button type="button" class="btn btn-success btn-sm" value="เลือก" ng-click="editThis(showdata)" data-toggle="modal" data-target="#myModal"><i class="fa fa-check-square"></i>&nbsp;</button></td>
                     </tr>
                 </table> 
             </div>
@@ -54,7 +59,7 @@
                 <div class="modal-content" >
                   <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title" id="myModalLabel">ยืนยันแก้ไขข้อมูลสารเคมี</h4>
+                    <h4 class="modal-title" id="myModalLabel"><i class="fa fa-pencil-square-o"></i>&nbsp;ยืนยันแก้ไขข้อมูลสารเคมี</h4>
                   </div>
                   <div class="modal-body">
                       <form class="form-horizontal" role="form" >
@@ -163,7 +168,7 @@
                   </div>
                   <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
-                    <button type="button" class="btn btn-primary" ng-click="updateChem()">บันทึก</button>
+                    <button type="button" class="btn btn-success" ng-click="updateChem()">บันทึก</button>
                   </div>
                 </div>
               </div>

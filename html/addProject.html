@@ -1,7 +1,7 @@
     <nav class="navbar navbar-default">
         <div class="container">
             <div class="navbar-header">
-                <a class="navbar-brand" href=""><i class="fa fa-plus-square"></i>&nbsp;เพิ่มโปรเจค</a>
+                <a class="navbar-brand" href=""><i class="glyphicon glyphicon-book"></i>&nbsp;จัดการข้อมูลโปรเจค</a>
             </div>
         </div>
     </nav>
@@ -10,7 +10,7 @@
         <div class="col-sm-9">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h4><b><i class="fa fa-plus-square"></i>&nbsp;เพิ่มโปรเจคใหม่</b></h4>
+                    <h4><b><i class="fa fa-plus-circle fa-lg"></i>&nbsp;เพิ่มโปรเจคใหม่</b></h4>
                 </div>
                 <div class="panel-body">
                     <form class="form-horizontal" role="form" >
@@ -29,7 +29,7 @@
                         <div class="form-group">
                             <label for="cp_budget" class="col-sm-3 control-label">งบประมาณ :</label>
                             <div class="col-sm-4">
-                                <input class="form-control" ng-model="addProject.cp_budget" type="text" class="" id="form-cp_budget" />&nbsp;งบที่คงเหลืออยู่{{listAcountData[0].ca_credit-addProject.cp_budget}}
+                                <input class="form-control" ng-model="addProject.cp_budget" type="text" class="" id="form-cp_budget" />&nbsp;งบคงเหลือ : {{listAcountData[0].ca_credit-addProject.cp_budget}}
                             </div>
                         </div>
                         <div class="form-group">
@@ -40,7 +40,7 @@
                         </div>
                     </form>
                 </div>
-                <div class="panel-footer">    
+                <div class="panel-footer" align="right">    
                     <div class="col-sm-offset-10 ">
                         <input type="button" class="btn btn-success" ng-click="createProject()" name="createProject" value="เพิ่ม" />
                         <input type="button" class="btn btn-danger" ng-click="cancleProject()" name="cancleProject" value="ยกเลิก" />

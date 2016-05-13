@@ -102,6 +102,11 @@
                 templateUrl: '../html/manageRequestOther.html',
                 controller: 'manageRequestOtherCtrl'
             }   
+          ).when(
+            '/addNews',{
+                templateUrl: '../html/addNews.html',
+                controller: 'addNewsCtrl'
+            }   
           ).otherwise({
                 redirectTo: '/news'
       	  }); 

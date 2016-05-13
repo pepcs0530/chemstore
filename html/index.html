@@ -24,6 +24,8 @@
     <script src="../js/routing.js"></script>
     <script src="../js/chemstoreController.js"></script>
     <script src="../js/chemstoreFliter.js"></script>
+    <script src="../js/chemstoreDirective.js"></script>
+    <script src="../js/chemstoreService.js"></script>
     <body ng-controller ="loginCtrl" ng-init="checkSession(); checked=true; dis=true; btng1=true; btng2=true; btng3=true; fix=true">
 
         <!--    login by manager    -->
@@ -53,6 +55,12 @@
                             <li><a href="#/importlog"  >ประวัติการนำเข้า</a></li>
                             <li><a href="#/withdrawlog"  >ประวัติการเบิกสาร</a></li>
                             <li><a href="#/salelog"  >ประวัติการขายคืน</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" >จัดการข้อมูลประชาสัมพันธ์<span class="caret"></span></a>
+                        <ul class="dropdown-menu" >
+                            <li><a href="#/addNews">เพิ่มข้อมูล</a></li>
+                            <li><a href="#/editNews">แก้ไขข้อมูล</a></li>
                         </ul>
                     </li>
                     <li><a href="#/contact">ติดต่อเรา</a></li>
@@ -87,7 +95,7 @@
                 <div class="nav navbar-nav navbar-right">
                     <li class="dropdown" ng-hide="type == ''"><a class="dropdown-toggle" data-toggle="dropdown" >ยินดีต้อนรับ! คุณ&nbsp;{{session}}<span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#/addMember" >เพิ่มผุ้ใช้งาน</a></li>
+                            <li ng-hide="type != '1'"><a href="#/addMember" >เพิ่มผุ้ใช้งาน</a></li>
                             <li><a href="#/editMember" >แก้ไขข้อมูลผู้ใช้งาน</a></li>
                             <li><a href="#/addProject">เพิ่มโปรเจค</a></li>
                             <li role="separator" class="divider"></li>

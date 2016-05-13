@@ -50,31 +50,6 @@ insert  into `chem_account`(`ca_pk`,`ca_code`,`ca_user`,`ca_pass`,`ca_tname`,`ca
 (5,'x001','x001','x0011','ดร.','อาจารย์ทดสอบ1','ทดสอบระบบ','54321','1','2016-03-25 00:56:09','2016-03-28 00:06:07',100000,2),
 (6,'x002','x002','1','ดร,','อาจารย์ทดสอบ2','ทดสอบระบบ',NULL,'1','2016-03-25 00:56:09',NULL,NULL,2);
 
-/*Table structure for table `chem_account_identify` */
-
-DROP TABLE IF EXISTS `chem_account_identify`;
-
-CREATE TABLE `chem_account_identify` (
-  `cai_pk` int(10) NOT NULL AUTO_INCREMENT COMMENT 'PK ยืนยันแอคเคาท์',
-  `cai_id` varchar(20) DEFAULT NULL COMMENT 'ชื่อยืนยันแอคเคาท์เข้าใช้งาน',
-  `cai_pass` varchar(30) DEFAULT NULL COMMENT 'รหัสยืนยันแอคเคาท์เข้าใช้งาน',
-  `cai_useflg` varchar(1) DEFAULT NULL COMMENT 'สถานะการใช้งาน',
-  `cai_ca_fk` int(10) DEFAULT NULL COMMENT 'FK บัญชี',
-  `cai_crtDt` datetime DEFAULT NULL COMMENT 'วันเวลาที่เพิ่ม',
-  `cai_updDt` datetime DEFAULT NULL COMMENT 'วันเวลาที่แก้ไข',
-  PRIMARY KEY (`cai_pk`),
-  KEY `cai_ca_fk` (`cai_ca_fk`),
-  CONSTRAINT `cai_ca_fk` FOREIGN KEY (`cai_ca_fk`) REFERENCES `chem_account` (`ca_pk`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
-
-/*Data for the table `chem_account_identify` */
-
-insert  into `chem_account_identify`(`cai_pk`,`cai_id`,`cai_pass`,`cai_useflg`,`cai_ca_fk`,`cai_crtDt`,`cai_updDt`) values 
-(1,'manager','1','1',1,'2016-03-25 01:20:25',NULL),
-(2,'teacher','1','1',2,'2016-03-25 01:23:09',NULL),
-(3,'operator','1','1',3,'2016-03-25 01:23:50',NULL),
-(4,'science','1','1',4,'2016-03-25 01:24:26',NULL);
-
 /*Table structure for table `chem_account_type` */
 
 DROP TABLE IF EXISTS `chem_account_type`;
@@ -619,6 +594,28 @@ insert  into `chem_location`(`cl_pk`,`cl_name`,`cl_desc`,`cl_useflg`,`cl_crtDt`,
 (6,'ตึกวิทย์เก่า',NULL,'1','2016-03-24 17:47:54','2016-03-24 17:47:54'),
 (7,'คลังกลาง',NULL,'1','2016-03-24 17:47:54','2016-03-24 17:47:54');
 
+/*Table structure for table `chem_pr` */
+
+DROP TABLE IF EXISTS `chem_pr`;
+
+CREATE TABLE `chem_pr` (
+  `cpr_pk` int(11) NOT NULL AUTO_INCREMENT COMMENT 'PK ข่าวประชาสัมพันธ์',
+  `cpr_title` varchar(50) DEFAULT NULL COMMENT 'หัวข้อข่าวประชาสัมพันธ์',
+  `cpr_link` varchar(255) DEFAULT NULL COMMENT 'ลิ้งค์ข่าวประชาสัมพันธ์',
+  `cpr_photo` varchar(100) DEFAULT NULL COMMENT 'Path รูปภาพ',
+  `cpr_desc` varchar(255) DEFAULT NULL COMMENT 'คำอธิบาย',
+  `cpr_crtDt` datetime DEFAULT NULL COMMENT 'วันเวลาที่เพิ่ม',
+  `cpr_updDt` datetime DEFAULT NULL COMMENT 'วันเวลาที่แก้ไข',
+  `cpr_useflg` varchar(1) DEFAULT NULL COMMENT 'สถานะการใช้งาน',
+  PRIMARY KEY (`cpr_pk`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+/*Data for the table `chem_pr` */
+
+insert  into `chem_pr`(`cpr_pk`,`cpr_title`,`cpr_link`,`cpr_photo`,`cpr_desc`,`cpr_crtDt`,`cpr_updDt`,`cpr_useflg`) values 
+(1,'ลงทะเบียน','../img/','','กรุณาตรวจสอบ','2016-05-13 12:49:50',NULL,'1'),
+(2,'ทดสอบ','www.google.com','../img/2015_08_26_IMG_3972.JPG','ทดสอบ','2016-05-13 12:58:58',NULL,'1');
+
 /*Table structure for table `chem_project` */
 
 DROP TABLE IF EXISTS `chem_project`;
@@ -644,7 +641,7 @@ insert  into `chem_project`(`cp_pk`,`cp_name`,`cp_budget`,`cp_desc`,`cp_useflg`,
 (2,'โปรเจคต้นแบบ2',7000,'บลาๆๅ','1','2016-03-26 15:46:44','2016-03-26 15:46:44',5),
 (3,'โปรเจคต้นแบบ3',7000,'บลาๆๅ','1','2016-03-26 15:46:44','2016-03-26 15:46:44',6),
 (4,'โปรเจคต้นแบบ4',7000,'บลาๆๅ','1','2016-03-26 15:46:44','2016-03-26 15:46:44',6),
-(7,'เคมีประยุกต์',9890,'ทดสอบเพิ่มโปรเจค','1','2016-03-28 15:13:16','2016-04-28 17:20:50',2),
+(7,'เคมีประยุกต์',9780,'ทดสอบเพิ่มโปรเจค','1','2016-03-28 15:13:16','2016-05-12 22:46:13',2),
 (8,'พอลิเมอร์',5000,'ทดสอบเพิ่มโปรเจค','1','2016-03-28 15:14:17',NULL,2),
 (9,'คอมพิวเตอร์',200,'...','1','2016-04-20 13:44:12',NULL,2);
 
@@ -665,12 +662,13 @@ CREATE TABLE `chem_receipt` (
   PRIMARY KEY (`cr_pk`),
   KEY `cr_cp_fk` (`cr_cp_fk`),
   CONSTRAINT `cr_cp_fk` FOREIGN KEY (`cr_cp_fk`) REFERENCES `chem_project` (`cp_pk`)
-) ENGINE=InnoDB AUTO_INCREMENT=80 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=81 DEFAULT CHARSET=utf8;
 
 /*Data for the table `chem_receipt` */
 
 insert  into `chem_receipt`(`cr_pk`,`cr_no`,`cr_crtDt`,`cr_updDt`,`cr_desc`,`cr_status`,`cr_useflg`,`cr_cp_fk`,`cr_totalprice`) values 
-(79,'NO.2720132042016','2016-04-20 13:21:13','2016-04-28 17:20:50',NULL,'1','1',7,110);
+(79,'NO.2720132042016','2016-04-20 13:21:13','2016-05-12 22:46:13',NULL,'1','1',7,110),
+(80,'NO.2749221252016','2016-05-12 22:49:56',NULL,NULL,'0','1',7,1.1);
 
 /*Table structure for table `chem_receipt_detail` */
 
@@ -691,12 +689,13 @@ CREATE TABLE `chem_receipt_detail` (
   KEY `crd_cc_fk` (`crd_cc_fk`),
   CONSTRAINT `crd_cc_fk` FOREIGN KEY (`crd_cc_fk`) REFERENCES `chem_category` (`cc_pk`),
   CONSTRAINT `crd_cr_fk` FOREIGN KEY (`crd_cr_fk`) REFERENCES `chem_receipt` (`cr_pk`)
-) ENGINE=InnoDB AUTO_INCREMENT=65 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=utf8;
 
 /*Data for the table `chem_receipt_detail` */
 
 insert  into `chem_receipt_detail`(`crd_pk`,`crd_cr_fk`,`crd_cc_fk`,`crd_amt`,`crd_price`,`crd_unit`,`crd_useflg`,`crd_crtDt`,`crd_updDt`) values 
-(64,79,256,0.1,110,'l','1','2016-04-20 13:21:13',NULL);
+(64,79,256,0.1,110,'l','1','2016-04-20 13:21:13',NULL),
+(65,80,256,0.001,1.1,'l','1','2016-05-12 22:49:56',NULL);
 
 /*Table structure for table `chem_request_log` */
 

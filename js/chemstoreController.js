@@ -60,6 +60,8 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
         }
         ];
     
+    console.log($scope.slides);
+    
         //  Notifications
         $scope.startTimer = function () {
             $scope.noti();
@@ -1029,3 +1031,80 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
         
         
     })
+
+//  จัดการข้อมูลประชาสัมพันธ์===================================================================
+//    .controller('addNewsCtrl', function($scope,$http) {
+//    
+//        
+//        
+//        $scope.createNews = function(){
+//            alert("OK");
+//            $http.post("../php/create_news.php",{
+//                'title' : $scope.addNews.title, 
+//                'desc' : $scope.addNews.desc, 
+//                'link' : $scope.addNews.link
+//            }).success(function (data) {
+//                console.log(data);
+//            });
+//        }
+//        
+//        $scope.clearNews = function(){
+//            alert("Cancle");
+//        }
+//    })
+
+    .controller('addNewsCtrl', function($scope, $http){
+//            $scope.uploadFile = function(){
+//               var file = $scope.myFile;
+//               
+//               console.log('file is ' );
+//               console.dir(file);
+//               
+//               var uploadUrl = "/fileUpload";
+//               fileUpload.uploadFileToUrl(file, uploadUrl);
+//            };
+        
+            $scope.uploadFileToUrl = function(file, uploadUrl){  
+               alert("upload");
+               var fd = new FormData();
+               fd.append('file', file);
+            
+               $http.post(uploadUrl, fd, {
+                  transformRequest: angular.identity,
+                  headers: {'Content-Type': undefined}
+               })
+            
+               .success(function(){
+                   console.log("complete");
+               })
+            
+               .error(function(){
+                   console.log("error");
+               });
+            }
+        
+            $scope.createNews = function(){
+                alert("OK...");
+                var file = $scope.myFile;               
+                console.log('file is ' );
+                console.dir(file.name);
+
+                var uploadUrl = "../img";
+                $scope.uploadFileToUrl(file, uploadUrl);
+
+                $http.post("../php/insert_news.php",{
+                    'title' : $scope.addNews.title, 
+                    'desc' : $scope.addNews.desc, 
+                    'link' : $scope.addNews.link,
+                    'photo' : file.name
+                }).success(function (data) {
+                    console.log(data);
+                });
+            }
+
+            $scope.clearNews = function(){
+                alert("Cancle...");
+            }
+            
+    });
+
