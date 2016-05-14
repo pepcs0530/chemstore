@@ -23,8 +23,8 @@
             <tr ng-repeat="showdata in listReciept">
 <!--                <td>{{showdata.cr_crtDt | date : 'DD-MM-YYYYThh:mm:ssTZD'}}</td>ng-bind="date | date:'MM/dd/yyyy'"-->
                 <td>
-                    วันนที่เขียนคำร้อง {{showdata.cr_crtDt | Datetime }}<br>
-                    วันนที่ได้รับอนุมัติ {{showdata.cr_updDt | Datetime}}
+                    วันที่เขียนคำร้อง {{showdata.cr_crtDt | Datetime}}<br>
+                    วันที่ได้รับอนุมัติ {{showdata.cr_updDt | Datetime}}
                 </td>
                 <td>{{showdata.cr_no}}</td>
                 <td>{{showdata.ca_tname+" "+showdata.ca_fname+" "+showdata.ca_lname}}</td>

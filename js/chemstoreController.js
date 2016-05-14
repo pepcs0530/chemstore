@@ -278,6 +278,7 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
         $scope.listChem = response.data;
     })
     
+    
     $scope.deleteRecord = function () {
         if(parseInt($scope.begin) - parseInt($scope.searchRange.value) < 0)
             $scope.begin = 0;
@@ -468,10 +469,42 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
                                 headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
                             }).then(function(response) {
                                 console.log(response);
+                                
+                                //Export_PDF
+//                                $http({
+//                                    method  : 'POST',
+//                                    url     : '../tcpdf/examples/export_pdf_recieptDetail.php',
+//                                    target : "_blank",
+//                                    data : {
+//                                        crd_cr_fk : response.data[0].cr_pk
+//                                    },
+//                                    headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
+//                                }).then(function(response){
+//                                    console.log(response);
+//                                    
+//                                    $window.open('../tcpdf/examples/export_pdf_recieptDetail.php', "_blank");
+//                                })
+                                                        
                             })    
                         }); 
-                    })
+                        location.reload();
+                        alert(response.data[0].cr_pk);
+                
+                        //Export_PDF
+                        $http({
+                            method  : 'POST',
+                            url     : '../tcpdf/examples/export_pdf_recieptDetail.php',
+                            data : {
+                                crd_cr_fk : response.data[0].cr_pk
+                            },
+                            headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
+                        }).then(function(response){
+                            console.log(response);
+                            alert(response);
+                        })
+            })
                 alert("ดำเนินการเพิ่มรายการเรียบร้อย");
+                
         }
     }  
 })
