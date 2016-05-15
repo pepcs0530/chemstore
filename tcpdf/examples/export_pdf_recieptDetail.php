@@ -9,18 +9,20 @@
         $fk = "" ;  
     }
 
-    $sql = "SELECT * FROM `chem_receipt_detail` 
-            WHERE `crd_cr_fk` = 96";
+    $fk = 96;
+    
+    $sql = "SELECT * FROM `chem_receipt_detail`
+            INNER JOIN `chem_category`
+            ON `crd_cc_fk` = `cc_pk`
+            WHERE `crd_cr_fk` = ".$fk."
+            ORDER BY `crd_pk` ASC";
     $query = mysql_query($sql);
-    //$data=array();
-//    while($row = mysql_fetch_array ($query))
-//    {
-//        array_push($data,$row);
-//    }
-//    echo json_encode($data);
+
+    $sql2 = "SELECT * FROM `chem_receipt`
+            WHERE `cr_pk` = ".$fk."";
+    $query2 = mysql_query($sql2);
 
     
-//print "<meta charset='utf-8'>";
 //============================================================+
 // File name   : example_001.php
 // Begin       : 2008-03-04
@@ -136,14 +138,24 @@ $pdf->setTextShadow(array('enabled'=>true, 'depth_w'=>0.2, 'depth_h'=>0.2, 'colo
 // ---------------------------------------------------------
 
 //Title
-$pdf->SetFont('freeserif','B',18);
+$pdf->SetFont('freeserif','B',16);
 $pdf->Text(85,20,"ใบคำร้องสารเคมี");
 
-$pdf->SetFont('freeserif','',16);
+$total = '';
+$pdf->SetFont('freeserif','',12);
+while($row = mysql_fetch_array ($query2))
+{
+    $pdf->Text(120,30,"เลขที่ใบคำร้อง : ".$row['cr_no']);
+    $date = date_create($row['cr_crtDt']);
+    $pdf->Text(120,35,"วัน/เวลา : ".date_format($date,"d/m/Y H:i:s"));
+    $total = $row['cr_totalprice'];
+}
+
 //$pdf->SetXY(10,30);
 $pdf->Ln(10);
-$pdf->Cell(50, 0, 'รายชื่อสาร', 1, 0, 'C', 0, '', 0);
+$pdf->Cell(50, 0, 'ชื่อสารเคมี', 1, 0, 'C', 0, '', 0);
 //$pdf->SetXY(40,30);
+$pdf->Cell(20, 0, 'สถานะ', 1, 0, 'C', 0, '', 0);
 $pdf->Cell(30, 0, 'จำนวน', 1, 0, 'C', 0, '', 0);
 //$pdf->SetXY(70,30);
 $pdf->Cell(40, 0, 'ราคา', 1, 0, 'C', 0, '', 0);
@@ -151,12 +163,22 @@ $pdf->Cell(40, 0, 'หน่วย', 1, 0, 'C', 0, '', 0);
 $pdf->Ln();
 while($row = mysql_fetch_array ($query))
 {
-    $pdf->Cell(50, 0, $row['crd_cc_fk'], 1, 0, 'C', 0, '', 0);
+    $pdf->Cell(50, 0, $row['cc_name'], 1, 0, 'C', 0, '', 0);
+    $pdf->Cell(20, 0, $row['cc_state'], 1, 0, 'C', 0, '', 0);
     $pdf->Cell(30, 0, $row['crd_amt'], 1, 0, 'C', 0, '', 0);
     $pdf->Cell(40, 0, $row['crd_price'], 1, 0, 'C', 0, '', 0);
     $pdf->Cell(40, 0, $row['crd_unit'], 1, 0, 'C', 0, '', 0);
     $pdf->Ln();
 }
+
+$pdf->Ln();
+
+$pdf->Cell(45, 0, '', 0, 0, 'L', 0, '', 0);
+$pdf->Cell(45, 0, '', 0, 0, 'L', 0, '', 0);
+$pdf->Cell(45, 0, 'ราคาทั้งสิ้น :', 0, 0, 'R', 0, '', 0);
+$pdf->Cell(45, 0, $total, 0, 0, 'L', 0, '', 0);
+
+
 // ---------------------------------------------------------
 
 // Close and output PDF document
