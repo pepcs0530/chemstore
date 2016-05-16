@@ -19,6 +19,8 @@
     $query = mysql_query($sql);
 
     $sql2 = "SELECT * FROM `chem_receipt`
+            INNER JOIN `chem_project`
+            ON `cr_cp_fk` = `cp_pk`
             WHERE `cr_pk` = ".$fk."";
     $query2 = mysql_query($sql2);
 
@@ -139,7 +141,7 @@ $pdf->setTextShadow(array('enabled'=>true, 'depth_w'=>0.2, 'depth_h'=>0.2, 'colo
 
 //Title
 $pdf->SetFont('freeserif','B',16);
-$pdf->Text(85,20,"ใบคำร้องสารเคมี");
+$pdf->Text(85,20,"ใบคำร้องเบิกสารเคมี");
 
 $total = '';
 $pdf->SetFont('freeserif','',12);
@@ -149,6 +151,7 @@ while($row = mysql_fetch_array ($query2))
     $date = date_create($row['cr_crtDt']);
     $pdf->Text(120,35,"วัน/เวลา : ".date_format($date,"d/m/Y H:i:s"));
     $total = $row['cr_totalprice'];
+    $pdf->Text(20,40,"โปรเจค : ".$row['cp_name']);
 }
 
 //$pdf->SetXY(10,30);
@@ -159,15 +162,13 @@ $pdf->Cell(20, 0, 'สถานะ', 1, 0, 'C', 0, '', 0);
 $pdf->Cell(30, 0, 'จำนวน', 1, 0, 'C', 0, '', 0);
 //$pdf->SetXY(70,30);
 $pdf->Cell(40, 0, 'ราคา', 1, 0, 'C', 0, '', 0);
-$pdf->Cell(40, 0, 'หน่วย', 1, 0, 'C', 0, '', 0);
 $pdf->Ln();
 while($row = mysql_fetch_array ($query))
 {
-    $pdf->Cell(50, 0, $row['cc_name'], 1, 0, 'C', 0, '', 0);
+    $pdf->Cell(50, 0, $row['cc_name'], 1, 0, 'L', 0, '', 0);
     $pdf->Cell(20, 0, $row['cc_state'], 1, 0, 'C', 0, '', 0);
-    $pdf->Cell(30, 0, $row['crd_amt'], 1, 0, 'C', 0, '', 0);
-    $pdf->Cell(40, 0, $row['crd_price'], 1, 0, 'C', 0, '', 0);
-    $pdf->Cell(40, 0, $row['crd_unit'], 1, 0, 'C', 0, '', 0);
+    $pdf->Cell(30, 0, $row['crd_amt']." ".$row['crd_unit'], 1, 0, 'C', 0, '', 0);
+    $pdf->Cell(40, 0, $row['crd_price']." บาท", 1, 0, 'C', 0, '', 0);
     $pdf->Ln();
 }
 
@@ -176,7 +177,7 @@ $pdf->Ln();
 $pdf->Cell(45, 0, '', 0, 0, 'L', 0, '', 0);
 $pdf->Cell(45, 0, '', 0, 0, 'L', 0, '', 0);
 $pdf->Cell(45, 0, 'ราคาทั้งสิ้น :', 0, 0, 'R', 0, '', 0);
-$pdf->Cell(45, 0, $total, 0, 0, 'L', 0, '', 0);
+$pdf->Cell(45, 0, $total." บาท", 0, 0, 'L', 0, '', 0);
 
 
 // ---------------------------------------------------------
