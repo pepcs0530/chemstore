@@ -1,12 +1,126 @@
 body {
-  padding-top: 50px;
+    background-color: #eaeae1;
 }
+@import url(fonts/thsarabunnew.css); 
+body { font-family: 'THSarabunNew', sans-serif; } 
+/*slide*/
 #slides_control > div{
-    height: 200px;
- }
+  height: 200px;
+}
+
+
 img{
     margin:auto;
-    width: 80%;
+    width: 600px;
 }
 #slides_control {
+  position:absolute;
+  width: 400px;
+  left:50%;
+  top:20px;
+  margin-left:-200px;
+}
+hr {
+    height: 3px;
+    color: #9e0b0f;
+    background-color: #9e0b0f;
+    border: none; 
+}
+/*slide*/
+    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+.row.content {
+  height: 50px;
+  --
+}
+
+    /* Set gray background color and 100% height */
+    .sidenav {
+      padding-top: 10px;
+      background-color: #fff;
+      height: auto;
+    }
+    .sidenav1 {
+      padding-top: 10px;
+      background-color: #fff;
+      height: auto;
+      width: 96.5%;
+    }
+    
+    /* Set black background color, white text and some padding */
+    footer {
+      background-color: #9e0b0f;
+      color: #eeeeee;
+      border-top: 3px solid #494949;
+      height: 110px;  /* footer height */
+      padding-top: 20px;
+      display: block;
+      margin-top: 20px; /* space between content and footer */
+      box-sizing: border-box;
+      position: relative;
+      width: 100%;
+
+    }
+    
+    /* On small screens, set height to 'auto' for sidenav and grid */
+@media screen and (max-width: 767px) {
+  .sidenav {
+    height: auto;
+    padding: 15px;
+   }
+    .row.content {height:auto;} 
+  }
+
+.masthead img{
+  width:100%;
+}
+.navbar-custo{
+    background-color:#494949;
+    
+}
+
+.navbar .nav > li > a {
+    float: none;
+    color: #fff;
+
+}    
+.navbar .nav > li > a:hover,
+.navbar .nav > li > a:focus {
+
+    float: none;
+    background-color: #9e0b0f;
+}
+.navbar .navbar-nav {
+    display: inline-block;
+    float: none;
+}
+.navbar .navbar-collapse {
+    text-align: right;
+}
+.col-md-2{
+  margin-left:20px; 
+  background-color:#fff;
+}
+.col-md-8{
+  background-color:#fff;
+}
+.col-md-4{
+  margin-top:20px; 
+  background-color:#fff;
+}
+
+.badge{
+  background-color:#9e0b0f;
+}
+.affix {
+      top:0;
+      width: 100%;
+      z-index: 9999 !important;
+  }
+
+td {
+  font-size: 12px;
+}
+th{
+  font-size: 12px;
+  text-align: center;
 }

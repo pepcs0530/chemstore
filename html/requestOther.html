@@ -1,36 +1,30 @@
-<nav class="navbar navbar-default">
-    <div class="container">
-        <div class="navbar-header">
-            <a class="navbar-brand" href=""><i class="glyphicon glyphicon-bullhorn"></i>&nbsp;คำร้องขออื่นๆ</a>
+<br>
+<div class="col-sm-12">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4><b><i class="fa fa-plus-circle fa-lg"></i>&nbsp;เพิ่มคำร้อง</b></h4>
+        </div>
+        <div class="panel-body">
+            <form class="form-horizontal" role="form" >
+                <input type="button" class="btn btn-default" ng-click="showPopup()" name="showRequestOther" value="แสดงประวัติคำร้องอื่นๆ" data-toggle="modal" data-target="#myModal"/>
+                <div class="form-group">
+                    <label for="cp_desc" class="col-sm-3 control-label">รายละเอียด :</label>
+                    <div class="col-sm-4">
+                        <textarea ng-model="cro_desc" id="form-cp_desc" rows="5" cols="65"></textarea>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="panel-footer" align="right">    
+            <div class="">
+                <input type="button" class="btn btn-success" ng-click="createRequestOther()" name="createProject" value="ส่งคำร้อง" />
+                <input type="button" class="btn btn-danger" ng-click="cancleRequestOther()" name="cancleProject" value="ยกเลิก" />
+            </div>
         </div>
     </div>
-</nav>
-<div class="container">
-    <div class="col-sm-9">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h4><b><i class="fa fa-plus-circle fa-lg"></i>&nbsp;เพิ่มคำร้อง</b></h4>
-            </div>
-            <div class="panel-body">
-                <form class="form-horizontal" role="form" >
-                    <input type="button" class="btn btn-default" ng-click="showPopup()" name="showRequestOther" value="แสดงประวัติคำร้องอื่นๆ" data-toggle="modal" data-target="#myModal"/>
-                    <div class="form-group">
-                        <label for="cp_desc" class="col-sm-3 control-label">รายละเอียด :</label>
-                        <div class="col-sm-4">
-                            <textarea ng-model="cro_desc" id="form-cp_desc" rows="4" cols="50"></textarea>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="panel-footer" align="right">    
-                <div class="">
-                    <input type="button" class="btn btn-success" ng-click="createRequestOther()" name="createProject" value="ส่งคำร้อง" />
-                    <input type="button" class="btn btn-danger" ng-click="cancleRequestOther()" name="cancleProject" value="ยกเลิก" />
-                </div>
-            </div>
-        </div>
-     </div>
-</div>
+ </div>
+<!--</div>-->
+
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
