@@ -24,6 +24,8 @@ chemstore.filter('Date', function($filter){
    return function(input) {
        if(input == '0')
             return $sce.trustAsHtml("<FONT COLOR=red><b>รอการยืนยัน</b></FONT>");
+       else if(input == '2')
+            return $sce.trustAsHtml("<FONT COLOR=red><b>ไม่อนุมัติ</b></FONT>");
        else
             return $sce.trustAsHtml("<FONT COLOR=green><b>ยืนยันเรียบร้อย</b></FONT>");
    }

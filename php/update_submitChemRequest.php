@@ -5,8 +5,9 @@ include 'connect.php';
 $cr_pk = $_POST['cr_pk'];
 $totalprice = $_POST['totalprice'];
 $cr_cp_fk = $_POST['cr_cp_fk'];
+$status = $_POST['status'];
 
-$sql = "UPDATE `chem_receipt` SET `cr_status` = '1',`cr_updDt` = CURRENT_TIMESTAMP WHERE `cr_pk` = '".$cr_pk."'";
+$sql = "UPDATE `chem_receipt` SET `cr_status` = '".$status."',`cr_updDt` = CURRENT_TIMESTAMP WHERE `cr_pk` = '".$cr_pk."'";
 
     $result = mysql_query($sql);
     

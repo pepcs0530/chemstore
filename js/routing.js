@@ -38,11 +38,6 @@
                 controller: 'projectCtrl'
             } 
           ).when(
-            '/transfer',{
-                templateUrl: '../html/transfer.html',
-                controller: 'transferChemCtrl'
-            } 
-          ).when(
             '/editChem',{
                 templateUrl: '../html/editChem.html',
                 controller: 'editChemCtrl'
@@ -111,6 +106,11 @@
             '/exchangeCatagory',{
                 templateUrl: '../html/exchangeCatagory.html',
                 controller: 'exchangeCtrl'
+            }   
+          ).when(
+            '/manageLendChem',{
+                templateUrl: '../html/manageLendChem.html',
+                controller: 'submitRequestCtrl'
             }   
           ).otherwise({
                 redirectTo: '/news'

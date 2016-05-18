@@ -4,14 +4,13 @@
     }
 </style>
 
-<h5><i class="fa fa-file" aria-hidden="true"></i>&nbsp;คำร้องขอสารเคมี</h5><br>
+<h5><i class="fa fa-file" aria-hidden="true"></i>&nbsp;คำร้องขอย้ายสารเคมี</h5><br>
 <table class="table table-bordered">
     <tr style="text-align:center">
         <th>ลำดับที่</th>
         <th>เลขที่ใบเสร็จ</th>
         <th>วัน-เวลาที่ร้องขอ</th>
         <th>สถานะการร้องขอ</th>
-        <th>ยอดรวม</th>
         <th>รายละเอียด</th>
     </tr>
     <tr ng-repeat="showdata in listReciept">
@@ -25,7 +24,6 @@
         {{showdata.cr_crtDt | Datetime}}
         </td>
         <td ng-bind-html="showdata.cr_status | confirmFilter"></td>
-        <td>{{showdata.cr_totalprice}}</td>
         <td>
             <button type="button" class="btn btn-default" value="แสดง" ng-click="showPopup(showdata.cr_pk,$index)" data-toggle="modal" data-target="#myModal">แสดง</button>
         </td>
@@ -47,7 +45,6 @@
                 <th>จำนวน</th>
                 <th>หน่วย</th>
                 <th>คลัง</th>
-                <th>ราคา</th>
             </tr>
             <tr ng-repeat="showdata in chemdetail">
                 <td>
@@ -69,7 +66,6 @@
           </table>
         </div>
         <div class="modal-footer">
-            ค่าใช้จ่ายรวม {{listReciept[index].cr_totalprice}} บาท
             <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
             <button type="button" class="btn btn-success" ng-click="cancelRequest()">ไม่อนุมัติ</button>
             <button type="button" class="btn btn-success" ng-click="submitRequest()">อนุมัติ</button>
