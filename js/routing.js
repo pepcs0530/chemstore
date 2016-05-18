@@ -107,6 +107,11 @@
                 templateUrl: '../html/addNews.html',
                 controller: 'addNewsCtrl'
             }   
+          ).when(
+            '/exchangeCatagory',{
+                templateUrl: '../html/exchangeCatagory.html',
+                controller: 'exchangeCtrl'
+            }   
           ).otherwise({
                 redirectTo: '/news'
       	  }); 

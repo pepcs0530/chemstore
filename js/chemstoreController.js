@@ -291,18 +291,27 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
                 $scope.begin = parseInt($scope.begin) + parseInt($scope.searchRange.value);
     }
     
-    $scope.addtCart = function (selectedData) {
+        $scope.addtCart = function (selectedData) {
         $scope.dupp = false;
-        if($scope.cartlist.length == 0)
-            $scope.cartlist.push(selectedData);
-        else {
-            angular.forEach($scope.cartlist, function(value, key){
-                if(value == selectedData)
-                    $scope.dupp = true;
-            });
-            if(!$scope.dupp)
+        if(selectedData.cc_quantity > 0){
+            if($scope.cartlist.length == 0)
+                $scope.dupp = false;
+            else {
+                angular.forEach($scope.cartlist, function(value, key){
+                    if(value == selectedData)
+                        $scope.dupp = true;
+                });
+            }
+            if(!$scope.dupp){
                 $scope.cartlist.push(selectedData);
+                var len = $scope.cartlist.length
+                $scope.cartlist[len-1].unitRequest = $scope.cartlist[len-1].cu_name_abb;
+                $scope.cartlist[len-1].exvolumeRequest = 0;
+            }
         }
+        else {
+            alert("ปริมาณสาร "+ selectedData.cc_name+" หมด");
+        }          
     }
     
     $scope.deleteCart = function(deletedIndex) {
@@ -397,12 +406,12 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
             $scope.cantRequest = -1;
         }
         else{
-            angular.forEach($scope.cartlist, function(value, key){     
+            angular.forEach($scope.cartlist, function(value, key){
                 if(isNaN(parseInt(value.volumeRequest))){
                     alert("กรุณาระบุจำนวนสาร: "+value.cc_name+" ให้ถูกต้อง");
                     $scope.cantRequest = -1;
                 }
-                else if(value.exvolumeRequest > value.volumeRequest){
+                else if(value.cc_quantity < value.exvolumeRequest){
                     alert("สาร "+value.cc_name+" มีปริมาณไม่เพียงพอ");
                     $scope.cantRequest = -1;
                 }else {
@@ -468,40 +477,10 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
                                             crd_unit: value.cu_name_abb}, 
                                 headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
                             }).then(function(response) {
-                                console.log(response);
-                                
-                                //Export_PDF
-//                                $http({
-//                                    method  : 'POST',
-//                                    url     : '../tcpdf/examples/export_pdf_recieptDetail.php',
-//                                    target : "_blank",
-//                                    data : {
-//                                        crd_cr_fk : response.data[0].cr_pk
-//                                    },
-//                                    headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
-//                                }).then(function(response){
-//                                    console.log(response);
-//                                    
-//                                    $window.open('../tcpdf/examples/export_pdf_recieptDetail.php', "_blank");
-//                                })
-                                                        
+                                console.log(response);                        
                             })    
                         }); 
                         location.reload();
-                        alert(response.data[0].cr_pk);
-                
-                        //Export_PDF
-                        $http({
-                            method  : 'POST',
-                            url     : '../tcpdf/examples/export_pdf_recieptDetail.php',
-                            data : {
-                                crd_cr_fk : response.data[0].cr_pk
-                            },
-                            headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
-                        }).then(function(response){
-                            console.log(response);
-                            alert(response);
-                        })
             })
                 alert("ดำเนินการเพิ่มรายการเรียบร้อย");
                 
@@ -1139,5 +1118,145 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
                 alert("Cancle...");
             }
             
+    })
+    //ย้ายสารเคมี ======================================================================================
+    .controller('exchangeCtrl', function($scope, $http){
+        $scope.cartlist = [];
+        $scope.begin = 0;
+        $scope.options = [{
+            name: '5',
+            value: 5
+        },{
+            name: '10',
+            value: 10
+        }, {
+            name: '20',
+            value: 20
+        }, {
+            name: '50',
+            value: 50
+        }, {
+            name: '100',
+            value: 100
+        }];
+        $scope.fromstore = "จุฬาภรณ์1";
+         $http({
+            method  :   'GET',
+            url     :   '../php/select_chemLocation.php',
+        }).then(function(response) {
+            $scope.listLocation = response.data;
+        });
+        
+        $http({
+        method  : 'POST',
+        url     : '../php/select_chemCategory.php',
+        data    : {cl_name: "ดูทั้งหมด"}, //forms user object
+        headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
+        }).then(function(response) {
+            $scope.listChem = response.data;
+        })
+        
+         $http({
+            method  :   'POST',
+            url     :   '../php/select_account_where.php',
+            data    : { ca_pk: $scope.key}, 
+            headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
+                    }
+        ).then(function(response) {
+            $scope.listAcountData = response.data;
+        });
+    
+        $scope.deleteRecord = function () {
+            if(parseInt($scope.begin) - parseInt($scope.searchRange.value) < 0)
+                $scope.begin = 0;
+            else
+                $scope.begin = parseInt($scope.begin) - parseInt($scope.searchRange.value);
+        }
+
+        $scope.addRecord = function () {
+            if(parseInt($scope.begin) + parseInt($scope.searchRange.value) < $scope.listChem.length)
+                    $scope.begin = parseInt($scope.begin) + parseInt($scope.searchRange.value);
+        }
+        
+        $scope.addtCart = function (selectedData) {
+        $scope.dupp = false;
+        if(selectedData.cc_quantity > 0){
+            if($scope.cartlist.length == 0)
+                $scope.dupp = false;
+            else {
+                angular.forEach($scope.cartlist, function(value, key){
+                    if(value == selectedData)
+                        $scope.dupp = true;
+                });
+            }
+            if(!$scope.dupp){
+                $scope.cartlist.push(selectedData);
+                var len = $scope.cartlist.length
+                $scope.cartlist[len-1].unitRequest = $scope.cartlist[len-1].cu_name_abb;
+                $scope.cartlist[len-1].exvolumeRequest = 0;
+            }
+        }
+        else {
+            alert("ปริมาณสาร "+ selectedData.cc_name+" หมด");
+        }          
+    }
+    
+        $scope.deleteCart = function(deletedIndex) {
+            $scope.cartlist.splice(deletedIndex,1);
+        }    
+
+        $scope.volumecal = function(index){
+        //อัลกอแปลงหน่วย
+        if($scope.cartlist[index].cu_name_abb == "kg"){
+            if($scope.cartlist[index].unitRequest == "kg"){         
+                $scope.cartlist[index].exvolumeRequest = $scope.cartlist[index].volumeRequest;
+            }
+            else if($scope.cartlist[index].unitRequest == "mg"){
+                $scope.cartlist[index].exvolumeRequest = $scope.cartlist[index].volumeRequest/1000/1000;
+            }
+            else if($scope.cartlist[index].unitRequest == "g"){
+                $scope.cartlist[index].exvolumeRequest = $scope.cartlist[index].volumeRequest/1000;
+            }
+        }
+        else if($scope.cartlist[index].cu_name_abb == "g"){
+            if($scope.cartlist[index].unitRequest == "kg"){
+                $scope.cartlist[index].exvolumeRequest = $scope.cartlist[index].volumeRequest*1000;
+            }
+            else if($scope.cartlist[index].unitRequest == "mg"){
+                $scope.cartlist[index].exvolumeRequest = $scope.cartlist[index].volumeRequest/1000;
+            }
+            else if($scope.cartlist[index].unitRequest == "g"){
+                $scope.cartlist[index].exvolumeRequest = $scope.cartlist[index].volumeRequest;
+            }
+        }
+        else if($scope.cartlist[index].cu_name_abb == "mg"){
+            if($scope.cartlist[index].unitRequest == "kg"){
+                $scope.cartlist[index].exvolumeRequest = $scope.cartlist[index].volumeRequest*1000*1000;
+            }
+            else if($scope.cartlist[index].unitRequest == "mg"){
+                $scope.cartlist[index].exvolumeRequest = $scope.cartlist[index].volumeRequest;
+            }
+            else if($scope.cartlist[index].unitRequest == "g"){
+                $scope.cartlist[index].exvolumeRequest = $scope.cartlist[index].volumeRequest*1000;
+            }
+        }
+        else if($scope.cartlist[index].cu_name_abb == "l"){
+            if($scope.cartlist[index].unitRequest == "l"){
+                $scope.cartlist[index].exvolumeRequest = $scope.cartlist[index].volumeRequest;
+            }
+            else if($scope.cartlist[index].unitRequest == "ml"){
+                $scope.cartlist[index].exvolumeRequest = $scope.cartlist[index].volumeRequest/1000;
+            }
+        }
+        else if($scope.cartlist[index].cu_name_abb == "ml"){
+            if($scope.cartlist[index].unitRequest == "l"){
+                $scope.cartlist[index].exvolumeRequest = $scope.cartlist[index].volumeRequest*1000;
+            }
+            else if($scope.cartlist[index].unitRequest == "ml"){
+                $scope.cartlist[index].exvolumeRequest = $scope.cartlist[index].volumeRequest;
+            }
+        }
+    }
+  
     });
 

@@ -92,6 +92,18 @@
                     </li>
                     <li><a href="#/contact">ติดต่อเรา</a></li>
                 </ul>
+                <ul class="nav navbar-nav"  ng-hide="type != '3'">
+                    <li><a href="#/news">หน้าแรก</a></li>
+                    <li><a href="">สถานะคำร้องขอ</a></li>
+                    
+                    <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" >ดำเนินการส่งคำร้อง<span class="caret"></span></a>
+                        <ul class="dropdown-menu" >
+                            <li><a href="#/exchangeCatagory">ย้ายสารเคมี</a></li>
+                            <li><a href="#/requestOther" >ส่งคำร้องอื่นๆ</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="#/contact">ติดต่อเรา</a></li>
+                </ul>
                 <div class="nav navbar-nav navbar-right">
                     <li class="dropdown" ng-hide="type == ''"><a class="dropdown-toggle" data-toggle="dropdown" >ยินดีต้อนรับ! คุณ&nbsp;{{session}}<span class="caret"></span></a>
                         <ul class="dropdown-menu">
