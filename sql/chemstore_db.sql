@@ -34,6 +34,7 @@ CREATE TABLE `chem_account` (
   `ca_updDt` datetime DEFAULT NULL COMMENT 'วันเวลาที่แก้ไข',
   `ca_credit` double DEFAULT NULL COMMENT 'เครดิต',
   `ca_cat_fk` int(11) DEFAULT NULL COMMENT 'FK ประเภทบัญชี',
+  `ca_responplace` varchar(30) DEFAULT NULL,
   PRIMARY KEY (`ca_pk`),
   UNIQUE KEY `ca_user_unq` (`ca_user`),
   KEY `ca_cat_fk` (`ca_cat_fk`),
@@ -42,13 +43,12 @@ CREATE TABLE `chem_account` (
 
 /*Data for the table `chem_account` */
 
-insert  into `chem_account`(`ca_pk`,`ca_code`,`ca_user`,`ca_pass`,`ca_tname`,`ca_fname`,`ca_lname`,`ca_tel`,`ca_useflg`,`ca_crtDt`,`ca_updDt`,`ca_credit`,`ca_cat_fk`) values 
-(1,'M001','manager','1','ดร.','เมเนเจอร์','ทดสอบระบบ','0123456789','1','2016-03-25 00:53:15',NULL,NULL,1),
-(2,'T001','teacher','1','ดร.','อาจารย์','ทดสอบระบบ','0912345678','1','2016-03-25 00:55:08',NULL,3000,2),
-(3,'SS001','s.scientist','1','ดร.','นักวิทย์(หัวหน้า)','ทดสอบระบบ',NULL,'1','2016-03-25 00:55:39',NULL,NULL,3),
-(4,'S001','scientist','1','ดร.','นักวิทย์','ทดสอบระบบ',NULL,'1','2016-03-25 00:56:09',NULL,NULL,4),
-(5,'G001','guest','1','ดร.','ผู้เยี่ยมชม','ทดสอบระบบ','54321','1','2016-03-25 00:56:09','2016-03-28 00:06:07',100000,5),
-(6,'x002','x002','1','ดร,','อาจารย์ทดสอบ2','ทดสอบระบบ',NULL,'1','2016-03-25 00:56:09',NULL,NULL,2);
+insert  into `chem_account`(`ca_pk`,`ca_code`,`ca_user`,`ca_pass`,`ca_tname`,`ca_fname`,`ca_lname`,`ca_tel`,`ca_useflg`,`ca_crtDt`,`ca_updDt`,`ca_credit`,`ca_cat_fk`,`ca_responplace`) values 
+(1,'M001','manager','1','ดร.','เมเนเจอร์','ทดสอบระบบ','0123456789','1','2016-03-25 00:53:15',NULL,NULL,1,NULL),
+(2,'T001','teacher','1','ดร.','อาจารย์','ทดสอบระบบ','0912345678','1','2016-03-25 00:55:08',NULL,1000,2,NULL),
+(3,'SS001','s.scientist','1','ดร.','หัวหน้านักวิทย์','ทดสอบระบบ',NULL,'1','2016-03-25 00:55:39',NULL,NULL,3,'จุฬาภรณ์1'),
+(4,'S001','scientist','1','ดร.','นักวิทย์','ทดสอบระบบ',NULL,'1','2016-03-25 00:56:09',NULL,NULL,4,NULL),
+(6,'G001','guest','1','ดร,','ผู้เยี่ยมชม','ทดสอบระบบ',NULL,'1','2016-03-25 00:56:09','2016-05-15 23:26:53',99898542.6,2,NULL);
 
 /*Table structure for table `chem_account_type` */
 
@@ -71,7 +71,7 @@ insert  into `chem_account_type`(`cat_pk`,`cat_code`,`cat_name`,`cat_useflg`,`ca
 (2,'T1','teacher','1','2016-03-25 00:45:14',NULL),
 (3,'SS1','senior scientist','1','2016-03-25 00:45:49',NULL),
 (4,'S1','scientist','1','2016-03-25 00:46:32',NULL),
-(5,'G1','guest','1','2016-05-18 12:44:01',NULL);
+(5,'G1','guest','1','2016-05-18 15:01:42',NULL);
 
 /*Table structure for table `chem_category` */
 
@@ -109,7 +109,7 @@ CREATE TABLE `chem_category` (
 /*Data for the table `chem_category` */
 
 insert  into `chem_category`(`cc_pk`,`cc_code`,`cc_name`,`cc_type`,`cc_casNo`,`cc_state`,`cc_packing`,`cc_volume`,`cc_unit_fk`,`cc_quantity`,`cc_location_fk`,`cc_room`,`cc_price`,`cc_grade`,`cc_expDt`,`cc_desc`,`cc_producer`,`cc_boundQ`,`cc_useflg`,`cc_crtDt`,`cc_updDt`) values 
-(2,NULL,'4-Acetamidophenol ',NULL,'103-90-2','S',100,100,4,500,1,'506',3,'Ar.','0000-00-00 00:00:00','ย้ายไปคลัง 2','Sigma',2,'1','2016-03-24 18:42:39','2016-04-12 17:10:48'),
+(2,NULL,'4-Acetamidophenol ',NULL,'103-90-2','S',100,100,4,498,1,'506',3,'Ar.','0000-00-00 00:00:00','ย้ายไปคลัง 2','Sigma',2,'1','2016-03-24 18:42:39','2016-04-12 17:10:48'),
 (3,NULL,'Acetic acid glacial',NULL,'64-19-7','3',3,3,3,500,1,'506',490,'Ar.','0000-00-00 00:00:00','','carlo',21,'1','2016-03-24 18:42:39','2016-04-12 17:11:43'),
 (4,NULL,'Acetone',NULL,'67-64-1','3',3,3,3,490,1,'506',490,'Ar.','0000-00-00 00:00:00','','fisher',1,'1','2016-03-24 18:42:39','2016-03-24 18:42:39'),
 (5,NULL,'Acetone ',NULL,'67-64-1','3',3,3,3,498,1,'506',1,'GC','0000-00-00 00:00:00','','fisher',8,'1','2016-03-24 18:42:39','2016-03-24 18:42:39'),
@@ -363,7 +363,7 @@ insert  into `chem_category`(`cc_pk`,`cc_code`,`cc_name`,`cc_type`,`cc_casNo`,`c
 (253,NULL,'Ammonium molybdate',NULL,'12027-67-7','S',500,500,4,500,1,'512',1,'Ar.','0000-00-00 00:00:00','','carlo',0,'1','2016-03-24 18:42:39','2016-03-24 18:42:39'),
 (254,NULL,'Sodium hydrogen sulfite ',NULL,'7681-38-1','S',500,500,4,500,1,'512',1,'Ar.','0000-00-00 00:00:00','','HIMEDIE',0,'1','2016-03-24 18:42:39','2016-03-24 18:42:39'),
 (255,NULL,'Selenium',NULL,'7782-49-2','S',50,50,4,500,1,'512',1350,'Ar.','0000-00-00 00:00:00','','Merk',0,'1','2016-03-24 18:42:39','2016-03-24 18:42:39'),
-(256,NULL,'1-octanol',NULL,'111-87-5','S',1,1,3,500,1,'512',1100,'Ar.','0000-00-00 00:00:00','','Panreac',0,'1','2016-03-24 18:42:39','2016-03-24 18:42:39'),
+(256,'','1-octanol','','111-87-5','S',1,1,3,496.767,1,'512',1100,'Ar.','0000-00-00 00:00:00','','Panreac',1.234,'1','2016-03-24 18:42:39','2016-04-20 11:24:48'),
 (257,NULL,'Sodium bisulfite',NULL,'7631-90-5','S',500,500,4,500,1,'512',550,'Ar.','0000-00-00 00:00:00','','Loba',0,'1','2016-03-24 18:42:39','2016-03-24 18:42:39'),
 (258,NULL,'Neocuproine',NULL,'484-11-7','S',1,1,4,500,1,'512',1540,'Ar.','0000-00-00 00:00:00','','carlo',0,'1','2016-03-24 18:42:39','2016-03-24 18:42:39'),
 (259,NULL,'oxalic acid',NULL,'144-62-7','S',500,500,4,500,1,'512',800,'Ar.','0000-00-00 00:00:00','','carlo',0,'1','2016-03-24 18:42:39','2016-03-24 18:42:39'),
@@ -377,9 +377,9 @@ insert  into `chem_category`(`cc_pk`,`cc_code`,`cc_name`,`cc_type`,`cc_casNo`,`c
 (267,NULL,'Potassium dichromate',NULL,'7778-50-9','S',1,1,4,500,1,'512',1,'Ar.','0000-00-00 00:00:00','','carlo',0,'1','2016-03-24 18:42:39','2016-03-24 18:42:39'),
 (268,NULL,'Ammonium chloride',NULL,'12125-02-9','S',1,1,4,500,1,'512',570,'Ar.','0000-00-00 00:00:00','','carlo',0,'1','2016-03-24 18:42:39','2016-03-24 18:42:39'),
 (269,NULL,'sym-diphenylthiocarbazone',NULL,'60-10-6','S',5,5,4,500,1,'512',3600,'Ar.','0000-00-00 00:00:00','','carlo',0,'1','2016-03-24 18:42:39','2016-03-24 18:42:39'),
-(270,NULL,'3-nitroaniline',NULL,'99-09-2','S',100,100,4,500,1,'512',350,'Ar.','0000-00-00 00:00:00','','carlo',0,'1','2016-03-24 18:42:39','2016-03-24 18:42:39'),
+(270,NULL,'3-nitroaniline',NULL,'99-09-2','S',100,100,4,487.15499999999986,1,'512',350,'Ar.','0000-00-00 00:00:00','','carlo',12.345,'1','2016-03-24 18:42:39','2016-03-24 18:42:39'),
 (271,NULL,'O-tolidine',NULL,'119-93-7','S',100,100,4,500,1,'512',7600,'Ar.','0000-00-00 00:00:00','','carlo',0,'1','2016-03-24 18:42:39','2016-03-24 18:42:39'),
-(272,NULL,'2-nitroaniline',NULL,'88-74-4','S',250,250,4,500,1,'512',750,'Ar.','0000-00-00 00:00:00','','carlo',0,'1','2016-03-24 18:42:39','2016-03-24 18:42:39'),
+(272,NULL,'2-nitroaniline',NULL,'88-74-4','S',250,250,4,487.15499999999986,1,'512',750,'Ar.','0000-00-00 00:00:00','','carlo',12.345,'1','2016-03-24 18:42:39','2016-03-24 18:42:39'),
 (273,NULL,'4,4phenylenediamine',NULL,'160-50-3','S',50,50,4,500,1,'512',0,'Ar.','0000-00-00 00:00:00','','carlo',0,'1','2016-03-24 18:42:39','2016-03-24 18:42:39'),
 (274,NULL,'Allylthiourea',NULL,'109-57-9','S',50,50,4,500,1,'512',620,'Ar.','0000-00-00 00:00:00','','carlo',0,'1','2016-03-24 18:42:39','2016-03-24 18:42:39'),
 (275,NULL,'Nitrilotriacetic acid',NULL,'139-13-9','S',100,100,4,500,1,'512',960,'Ar.','0000-00-00 00:00:00','','carlo',0,'1','2016-03-24 18:42:39','2016-03-24 18:42:39'),
@@ -487,7 +487,7 @@ insert  into `chem_category`(`cc_pk`,`cc_code`,`cc_name`,`cc_type`,`cc_casNo`,`c
 (377,NULL,'Methyl red',NULL,'493-52-7','S',25,25,4,500,1,'512',540,'Ar.','0000-00-00 00:00:00','','fisher',0,'1','2016-03-24 18:42:39','2016-03-24 18:42:39'),
 (378,NULL,'Methyl orange',NULL,'547-58-0','S',100,100,4,500,1,'512',1,'Ar.','0000-00-00 00:00:00','','carlo',0,'1','2016-03-24 18:42:39','2016-03-24 18:42:39'),
 (379,NULL,'Methylene blue',NULL,'61-73-4','S',100,100,4,500,1,'512',1,'Ar.','0000-00-00 00:00:00','','carlo',0,'1','2016-03-24 18:42:39','2016-03-24 18:42:39'),
-(380,NULL,'2-methyl propanol',NULL,'78-83-1','S',500,500,5,500,1,'512',0,'Ar.','0000-00-00 00:00:00','','carlo',0,'1','2016-03-24 18:42:39','2016-03-24 18:42:39'),
+(380,NULL,'2-methyl propanol',NULL,'78-83-1','S',500,500,5,-1000,1,'512',0,'Ar.','0000-00-00 00:00:00','','carlo',1000,'1','2016-03-24 18:42:39','2016-03-24 18:42:39'),
 (381,NULL,'phenol red',NULL,'143-74-8','S',5,5,4,500,3,'508',550,'Ar.','0000-00-00 00:00:00','ป.สิ่งแวดล้อม','carlo',0,'1','2016-03-24 18:42:39','2016-03-24 18:42:39'),
 (382,NULL,'4 nitrophenol',NULL,'100-02-7','S',100,100,4,500,1,'512',1,'Ar.','0000-00-00 00:00:00','','BDS Lab',0,'1','2016-03-24 18:42:39','2016-03-24 18:42:39'),
 (383,NULL,'Nickel sulphate',NULL,'7786-81-4','S',500,500,4,500,1,'512',620,'Ar.','0000-00-00 00:00:00','','Fluka',0,'1','2016-03-24 18:42:39','2016-03-24 18:42:39'),
@@ -624,33 +624,22 @@ DROP TABLE IF EXISTS `chem_project`;
 CREATE TABLE `chem_project` (
   `cp_pk` int(11) NOT NULL AUTO_INCREMENT COMMENT 'PK โปรเจกต์',
   `cp_name` varchar(100) DEFAULT NULL COMMENT 'ชื่อโปรเจกต์',
-  `cp_eduLvl` varchar(100) DEFAULT NULL COMMENT 'ระดับการศึกษา',
   `cp_budget` double DEFAULT NULL COMMENT 'งบประมาณ',
   `cp_desc` varchar(255) DEFAULT NULL COMMENT 'คำอธิบาย',
   `cp_useflg` varchar(1) DEFAULT NULL COMMENT 'สถานะการใช้งาน',
   `cp_crtDt` datetime DEFAULT NULL COMMENT 'วันเวลาที่สร้าง',
   `cp_updDt` datetime DEFAULT NULL COMMENT 'วันเวลาที่แก้ไข',
   `cp_teach_fk` int(10) DEFAULT NULL COMMENT 'คีย์รหัสอาจาร์',
+  `cp_eduLvl` varchar(30) DEFAULT NULL COMMENT 'ระดับการศึกษา',
   PRIMARY KEY (`cp_pk`),
   KEY `cp_teach_fk` (`cp_teach_fk`),
   CONSTRAINT `chem_project_ibfk_1` FOREIGN KEY (`cp_teach_fk`) REFERENCES `chem_account` (`ca_pk`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
 /*Data for the table `chem_project` */
 
-insert  into `chem_project`(`cp_pk`,`cp_name`,`cp_eduLvl`,`cp_budget`,`cp_desc`,`cp_useflg`,`cp_crtDt`,`cp_updDt`,`cp_teach_fk`) values 
-(1,'โปรเจคต้นแบบ1',NULL,7000,'บลาๆๆ','1','2016-03-26 15:46:44','2016-03-26 15:46:47',5),
-(2,'โปรเจคต้นแบบ2',NULL,7000,'บลาๆๅ','1','2016-03-26 15:46:44','2016-03-26 15:46:44',5),
-(3,'โปรเจคต้นแบบ3',NULL,7000,'บลาๆๅ','1','2016-03-26 15:46:44','2016-03-26 15:46:44',6),
-(4,'โปรเจคต้นแบบ4',NULL,7000,'บลาๆๅ','1','2016-03-26 15:46:44','2016-03-26 15:46:44',6),
-(7,'เคมีประยุกต์',NULL,9780,'ทดสอบเพิ่มโปรเจค','1','2016-03-28 15:13:16','2016-05-12 22:46:13',2),
-(8,'พอลิเมอร์',NULL,5000,'ทดสอบเพิ่มโปรเจค','1','2016-03-28 15:14:17',NULL,2),
-(9,'คอมพิวเตอร์',NULL,200,'...','1','2016-04-20 13:44:12',NULL,2),
-(10,'',NULL,0,'','1','2016-05-18 13:11:05',NULL,2),
-(11,'',NULL,0,'','1','2016-05-18 13:13:01',NULL,2),
-(12,'ไนโตรเจนเหลว','ปริญญาตรี',7000,'...','1','2016-05-18 13:22:57',NULL,2),
-(13,'อิอิ','ปริญญาตรี',7000,'','1','2016-05-18 13:30:46',NULL,2),
-(14,'อิอิ','ปริญญาตรี',7000,'','1','2016-05-18 13:37:05',NULL,2);
+insert  into `chem_project`(`cp_pk`,`cp_name`,`cp_budget`,`cp_desc`,`cp_useflg`,`cp_crtDt`,`cp_updDt`,`cp_teach_fk`,`cp_eduLvl`) values 
+(9,'ทดสอบ',80154.20000000001,'อิอิ','1','2016-04-20 15:07:18','2016-05-15 23:26:52',6,NULL);
 
 /*Table structure for table `chem_receipt` */
 
@@ -666,20 +655,27 @@ CREATE TABLE `chem_receipt` (
   `cr_useflg` varchar(1) DEFAULT '1' COMMENT 'สถานะการใช้งาน',
   `cr_cp_fk` int(11) DEFAULT NULL COMMENT 'FK โปรเจคที่ยืม',
   `cr_totalprice` double DEFAULT NULL COMMENT 'ยอดเงินรวม',
+  `cp_fromstore` varchar(30) DEFAULT NULL COMMENT 'คลังต้นทาง',
+  `cp_tostore` varchar(30) DEFAULT NULL COMMENT 'คลังปลายทาง',
   PRIMARY KEY (`cr_pk`),
   KEY `cr_cp_fk` (`cr_cp_fk`),
   CONSTRAINT `cr_cp_fk` FOREIGN KEY (`cr_cp_fk`) REFERENCES `chem_project` (`cp_pk`)
-) ENGINE=InnoDB AUTO_INCREMENT=102 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=91 DEFAULT CHARSET=utf8;
 
 /*Data for the table `chem_receipt` */
 
-insert  into `chem_receipt`(`cr_pk`,`cr_no`,`cr_crtDt`,`cr_updDt`,`cr_desc`,`cr_status`,`cr_useflg`,`cr_cp_fk`,`cr_totalprice`) values 
-(96,'NO.2734151452016','2016-05-14 15:34:38',NULL,NULL,'0','1',7,1.1),
-(97,'NO.2738151452016','2016-05-14 15:38:12',NULL,NULL,'0','1',7,1.1),
-(98,'NO.2738151452016','2016-05-14 15:38:52',NULL,NULL,'0','1',7,1.1),
-(99,'NO.2741151452016','2016-05-14 15:41:51',NULL,NULL,'0','1',7,1.1),
-(100,'NO.272641852016','2016-05-18 04:26:38',NULL,NULL,'0','1',7,11.02),
-(101,'NO.21252131852016','2016-05-18 13:52:36',NULL,NULL,'0','1',12,96);
+insert  into `chem_receipt`(`cr_pk`,`cr_no`,`cr_crtDt`,`cr_updDt`,`cr_desc`,`cr_status`,`cr_useflg`,`cr_cp_fk`,`cr_totalprice`,`cp_fromstore`,`cp_tostore`) values 
+(80,'NO.699152042016','2016-04-20 15:09:57','2016-04-20 15:40:31',NULL,'1','1',9,1300,NULL,NULL),
+(81,'NO.6946152042016','2016-04-20 15:46:15','2016-05-15 23:26:52',NULL,'1','1',9,0,NULL,NULL),
+(82,'NO.6915221552016','2016-05-15 22:15:38','2016-05-15 22:33:55',NULL,'1','1',9,110,NULL,NULL),
+(83,'NO.6935221552016','2016-05-15 22:35:11','2016-05-15 22:35:39',NULL,'1','1',9,13579.5,NULL,NULL),
+(84,'NO.6955221552016','2016-05-15 22:55:33','2016-05-15 23:08:37',NULL,'1','1',9,2198.9,NULL,NULL),
+(85,'NO.6912231552016','2016-05-15 23:12:54','2016-05-15 23:13:10',NULL,'1','1',9,1357.4,NULL,NULL),
+(86,'NO.6929171752016','2016-05-17 17:29:10',NULL,NULL,'0','1',9,2100,NULL,NULL),
+(87,'NO.6934171752016','2016-05-17 17:34:41',NULL,NULL,'0','1',9,0,NULL,NULL),
+(88,'NO.6945171752016','2016-05-17 17:45:19',NULL,NULL,'0','1',9,5000,NULL,NULL),
+(89,'NO.6950171752016','2016-05-17 17:50:49',NULL,NULL,'0','1',9,5000,NULL,NULL),
+(90,'NO.6951171752016','2016-05-17 17:51:27',NULL,NULL,'0','1',9,5000,NULL,NULL);
 
 /*Table structure for table `chem_receipt_detail` */
 
@@ -700,18 +696,27 @@ CREATE TABLE `chem_receipt_detail` (
   KEY `crd_cc_fk` (`crd_cc_fk`),
   CONSTRAINT `crd_cc_fk` FOREIGN KEY (`crd_cc_fk`) REFERENCES `chem_category` (`cc_pk`),
   CONSTRAINT `crd_cr_fk` FOREIGN KEY (`crd_cr_fk`) REFERENCES `chem_receipt` (`cr_pk`)
-) ENGINE=InnoDB AUTO_INCREMENT=85 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=81 DEFAULT CHARSET=utf8;
 
 /*Data for the table `chem_receipt_detail` */
 
 insert  into `chem_receipt_detail`(`crd_pk`,`crd_cr_fk`,`crd_cc_fk`,`crd_amt`,`crd_price`,`crd_unit`,`crd_useflg`,`crd_crtDt`,`crd_updDt`) values 
-(78,96,256,0.001,1.1,'l','1','2016-05-14 15:34:40',NULL),
-(79,97,256,0.001,1.1,'l','1','2016-05-14 15:38:13',NULL),
-(80,98,256,0.001,1.1,'l','1','2016-05-14 15:38:53',NULL),
-(81,99,256,0.001,1.1,'l','1','2016-05-14 15:41:53',NULL),
-(82,100,256,0.01,11,'l','1','2016-05-18 04:26:40',NULL),
-(83,100,209,0.02,0.02,'g','1','2016-05-18 04:26:40',NULL),
-(84,101,212,0.1,96,'g','1','2016-05-18 13:52:41',NULL);
+(65,80,256,1,1100,'l','1','2016-04-20 15:09:57',NULL),
+(66,80,209,200,200,'g','1','2016-04-20 15:09:57',NULL),
+(67,81,380,1000,0,'ml','1','2016-04-20 15:46:15',NULL),
+(68,82,270,0.1,35,'g','1','2016-05-15 22:15:38',NULL),
+(69,82,272,0.1,75,'g','1','2016-05-15 22:15:38',NULL),
+(70,82,380,100,0,'ml','1','2016-05-15 22:15:38',NULL),
+(71,83,270,12.345,4320.75,'g','1','2016-05-15 22:35:11',NULL),
+(72,83,272,12.345,9258.75,'g','1','2016-05-15 22:35:11',NULL),
+(73,84,256,1.999,2198.9,'l','1','2016-05-15 22:55:33',NULL),
+(74,85,256,1.234,1357.4,'l','1','2016-05-15 23:12:54',NULL),
+(75,86,209,1000,1000,'g','1','2016-05-17 17:29:11',NULL),
+(76,86,256,1,1100,'l','1','2016-05-17 17:29:11',NULL),
+(77,87,380,1000,0,'ml','1','2016-05-17 17:34:42',NULL),
+(78,88,209,5000,5000,'g','1','2016-05-17 17:45:20',NULL),
+(79,89,209,5000,5000,'g','1','2016-05-17 17:50:50',NULL),
+(80,90,209,5000,5000,'g','1','2016-05-17 17:51:28',NULL);
 
 /*Table structure for table `chem_request_log` */
 
@@ -745,18 +750,15 @@ CREATE TABLE `chem_request_other` (
   PRIMARY KEY (`cro_pk`),
   KEY `cro_ca_fk` (`cro_ca_fk`),
   CONSTRAINT `cro_ca_fk` FOREIGN KEY (`cro_ca_fk`) REFERENCES `chem_account` (`ca_pk`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 
 /*Data for the table `chem_request_other` */
 
 insert  into `chem_request_other`(`cro_pk`,`cro_desc`,`cro_useflg`,`cro_crtDt`,`cro_updDt`,`cro_status`,`cro_ca_fk`) values 
-(1,'ทดสอบ','1','2016-04-18 16:53:00','2016-04-28 17:21:13','1',2),
-(2,'ทดสอบ2','1','0000-00-00 00:00:00','2016-05-14 00:58:20','1',2),
-(3,'ทอสอบ3','1','2016-04-19 15:22:40','2016-05-13 15:52:47','1',2),
-(4,'ทดสอบ4','1','2016-04-19 16:15:09','2016-04-20 02:47:50','1',2),
-(5,'คำร้องอื่นๆ','1','2016-05-14 00:56:19',NULL,'0',2),
-(6,'คำร้องอื่นๆ 2','1','2016-05-14 00:58:49',NULL,'0',2),
-(7,'...','1','2016-05-14 01:03:35',NULL,'0',2);
+(1,'ทดสอบ','1','2016-04-18 16:53:00','2016-04-20 02:44:40','0',2),
+(2,'ทดสอบ2','1','0000-00-00 00:00:00','2016-04-20 02:44:46','0',2),
+(3,'ทอสอบ3','1','2016-04-19 15:22:40','2016-04-20 02:44:50','0',2),
+(4,'ทดสอบ4','1','2016-04-19 16:15:09','2016-04-20 02:47:50','1',2);
 
 /*Table structure for table `chem_unit` */
 
