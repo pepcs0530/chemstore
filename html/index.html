@@ -157,7 +157,7 @@
                         <ul  class="nav nav-pills nav-stacked" role="tablist">
                           <li ng-show ="type == '1'"><a href="#/addMember" ><i class="fa fa-plus-circle" aria-hidden="true"></i>&nbsp;เพิ่มผู้ใช้งาน</a></li>
                           <li><a href="#/editMember" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;แก้ไขข้อมูลผู้ใช้งาน</a></li>
-                          <li><a href="#/addProject"><i class="fa fa-plus-circle" aria-hidden="true"></i>&nbsp;เพิ่มโปรเจค</a></li>
+                          <li ng-hide ="type == '3' || type == '4' || type == '5'"><a href="#/addProject"><i class="fa fa-plus-circle" aria-hidden="true"></i>&nbsp;เพิ่มโปรเจค</a></li>
                           <li ng-hide ="type != '1'"><a href="#/addNews"><i class="fa fa-plus-circle" aria-hidden="true"></i>&nbsp;เพิ่มข่าว</a></li>
                           <li role="separator" class="divider"></li>
                           <li><a href="../php/logout.php" ><i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp;ออกจากระบบ</a></li>

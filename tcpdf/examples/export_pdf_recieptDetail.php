@@ -141,17 +141,17 @@ $pdf->setTextShadow(array('enabled'=>true, 'depth_w'=>0.2, 'depth_h'=>0.2, 'colo
 
 //Title
 $pdf->SetFont('freeserif','B',16);
-$pdf->Text(85,20,"ใบคำร้องเบิกสารเคมี");
+$pdf->Text(85,30,"ใบคำร้องเบิกสารเคมี");
 
 $total = '';
 $pdf->SetFont('freeserif','',12);
 while($row = mysql_fetch_array ($query2))
 {
-    $pdf->Text(120,30,"เลขที่ใบคำร้อง : ".$row['cr_no']);
+    $pdf->Text(120,40,"เลขที่ใบคำร้อง : ".$row['cr_no']);
     $date = date_create($row['cr_crtDt']);
-    $pdf->Text(120,35,"วัน/เวลา : ".date_format($date,"d/m/Y H:i:s"));
+    $pdf->Text(120,45,"วัน/เวลา : ".date_format($date,"d/m/Y H:i:s"));
     $total = $row['cr_totalprice'];
-    $pdf->Text(20,40,"โปรเจค : ".$row['cp_name']);
+    $pdf->Text(20,50,"โปรเจค : ".$row['cp_name']);
 }
 
 //$pdf->SetXY(10,30);

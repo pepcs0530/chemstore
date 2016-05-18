@@ -73,7 +73,7 @@
 
     //Title
     $pdf->SetFont('freeserif','B',16);
-    $pdf->Text(120,20,"รายงานสถานะคลังล่าสุด");
+    $pdf->Text(120,30,"รายงานสถานะคลังล่าสุด");
 
     $pdf->SetFont('freeserif','',12);
     //$pdf->SetXY(10,30);

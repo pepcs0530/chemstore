@@ -577,13 +577,35 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
         ).then(function(response) {
             $scope.listAcountData = response.data;
         });
-        
+    
+        $scope.change = function(){
+            if($scope.addProject.cp_eduLvl == ''){
+                $scope.addProject.cp_budget = 0;
+            }else if($scope.addProject.cp_eduLvl == 'ปริญญาตรี'){
+                $scope.addProject.cp_budget = 7000;
+            }else{
+                $scope.addProject.cp_budget = 15000;
+            }
+        }
+    
         $scope.createProject = function(){
+            
+            if($scope.addProject.cp_eduLvl == null){
+                alert("กรุณาเลือกระดับการศึกษา")
+                return;
+            }
+            
+            if($scope.listAcountData[0].ca_credit-$scope.addProject.cp_budget < 0){
+                alert("งบประมาณไม่พอ ไม่สามารถสร้างโปรเจคได้")
+                return;
+            }
+            
             $http({
                 method  : 'POST',
                 url     : '../php/insert_project.php',
                 data    : {teacher_pk: $scope.addProject.teacher_pk,
                            name: $scope.addProject.cp_name,
+                           eduLvl: $scope.addProject.cp_eduLvl,
                            budget: $scope.addProject.cp_budget,
                            desc: $scope.addProject.cp_desc,
                            teacher_budget : $scope.listAcountData[0].ca_credit-$scope.addProject.cp_budget}, //forms user object
