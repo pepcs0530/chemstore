@@ -9,7 +9,7 @@
         
     }else{
 
-        $sql = "SELECT * FROM `chem_receipt` WHERE `cr_no` LIKE 'NO.".$findthis."%' ORDER BY cr_crtDt DESC";
+        $sql = "SELECT * FROM `chem_receipt` WHERE `cr_no` LIKE 'NO.".$findthis."%' AND cr_type = 'chemrequest' ORDER BY cr_crtDt DESC";
     }
     
 

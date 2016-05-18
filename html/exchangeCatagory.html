@@ -3,9 +3,10 @@
         text-align: center;
     }
 </style>
+<caption><h4><i class="glyphicon glyphicon-comment"></i>&nbsp;เหตุผลประกอบการพิจารณาการย้ายสารเคมี</h4></caption>
+<textarea ng-model="cartlist.cr_desc" id="form-cp_desc" rows="5" cols="100%"></textarea>
 
-<caption><h4><i class="fa fa-upload"></i>&nbsp;ย้ายคลัง</h4></caption>
-
+<caption><h4><i class="glyphicon glyphicon-tasks"></i>&nbsp;คลังสารเคมีต้นทาง</h4></caption>
 <ul class="nav navbar-nav">
     <form class="navbar-form navbar-left">
         <strong>คลังต้นทาง :</strong>
@@ -58,7 +59,7 @@
 
 <br>
 
-<caption><h4><i class="fa fa-upload"></i>&nbsp;สารเคมีที่ต้องการย้ายเข้า</h4></caption>
+<caption><h4><i class="glyphicon glyphicon-shopping-cart"></i>&nbsp;สารเคมีที่ย้ายเข้า</h4></caption>
 <form class="navbar-form navbar-left">
     <strong>คลังปลายทาง :</strong>
     <select   ng-model="listAcountData[0].ca_responplace" ng-change="getdata()">
@@ -113,3 +114,5 @@
         <td style="text-align: center;"><button class="btn btn-danger btn-sm" value="delete" ng-click="deleteCart($index)"><i class="fa fa-times-circle"></i>&nbsp;</button></td>
     </tr>
 </table>
+
+<button class="btn btn-success" type="submit" value="ยืนยันการยืม" ng-click="createRequest()" >ยืนยันการเบิก</button>
