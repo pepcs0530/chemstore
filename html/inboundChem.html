@@ -1,128 +1,116 @@
-    <div ng-init="inbound=true; new=true">    
-        <nav class="navbar navbar-default">
-          <div class="container">
-            <div class="navbar-header">
-              <a class="navbar-brand" href=""><i class="fa fa-download"></i>&nbsp;เพิ่มสารเคมีใหม่</a>
-            </div>
-          </div>
-        </nav>
-        <div class ="container">   
-            <div class=".col-xs-12 .col-sm-6 .col-md-8">
-                <div class="panel panel-default">
-                    <div class="panel-heading"><h4><b><i class="fa fa-plus-circle fa-lg"></i>&nbsp;เพิ่มสารเคมีใหม่</b></h4>
-                    </div>
-                    <div class="panel-body">
-                        <form class="form-horizontal" role="form" >
-                            <div class="form-group">
-                                <label for="cc_name" class="col-sm-4 control-label">ชื่อสารเคมี :</label>
-                                <div class="col-sm-4">
-                                    <input class="form-control" ng-model="addChem.cc_name" type="text" class="" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="cc_type" class="col-sm-4 control-label">ประเภทสารเคมี :</label>
-                                <div class="col-sm-4">
-                                    <input class="form-control" ng-model="addChem.cc_type" type="text" class="" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="cc_code" class="col-sm-4 control-label">รหัสสารเคมี :</label>
-                                <div class="col-sm-4">
-                                    <input class="form-control" ng-model="addChem.cc_code" type="text" class="" />
-                                </div>
-                            </div>
-                            <div class="form-group">  
-                                <label for="cc_casNo" class="col-sm-4 control-label">เลขอ้างอิงเฉพาะ (Cas no.) :</label>
-                                <div class="col-sm-4">
-                                    <input class="form-control" ng-model="addChem.cc_casNo" type="text" class="" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="cc_state" class="col-sm-4 control-label">สถานะสาร :</label>
-                                <div class="col-sm-4">
-                                    <select ng-model="addChem.cc_state">
-                                        <option value="S" >solid</option>
-                                        <option value="L">liquid</option>
-                                        <option value="G">gas</option>
-                                    </select>
-                                </div>
-                            </div>    
-                            <div class="form-group">
-                                <label for="cc_volume" class="col-sm-4 control-label">ขนาดบรรจุ :</label>
-                                <div class="col-sm-4">
-                                    <div class="input-group">
-                                        <input class="form-control" ng-model="cc_volume" type="text" class="" />
-                                            <select  ng-model="addChem.cu_pk" >
-                                                <option ng-repeat="lu in listUnit" value="{{lu.cu_pk}}" >{{lu.cu_name_abb}}</option>
-                                            </select> 
-                                    </div>
-                                </div> 
-                            </div>
-                            <div class="form-group">
-                                <label for="cc_quantity" class="col-sm-4 control-label">จำนวน :</label>
-                                <div class="col-sm-4">
-                                    <input class="form-control" ng-model="addChem.cc_quantity" type="text" class="" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="cc_packing" class="col-sm-4 control-label">จำนวนแพ็ค :</label>
-                                <div class="col-sm-4">
-                                    <input class="form-control" ng-model="addChem.cc_packing" type="text" class="" />
-                                </div>    
-                            </div>
-                            <div class="form-group">
-                                <label for="location" class="col-sm-4 control-label">คลัง :</label>
-                                <div class="col-sm-4">
-                                     <select  ng-model="addChem.cl_pk" >
-                                        <option ng-repeat="lu in listLoc" value="{{lu.cl_pk}}" >{{lu.cl_name}}</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="cc_room" class="col-sm-4 control-label">ห้อง :</label>
-                                <div class="col-sm-4">
-                                    <input class="form-control" ng-model="addChem.cc_room" type="text" class="" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="cc_price" class="col-sm-4 control-label">ราคา :</label>
-                                <div class="col-sm-4">
-                                    <input  class="form-control" ng-model="addChem.cc_price" type="text" class="" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="cc_grade" class="col-sm-4 control-label">เกรด :</label>
-                                <div class="col-sm-4">
-                                    <input class="form-control" ng-model="addChem.cc_grade" type="text" class="" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="cc_expDt" class="col-sm-4 control-label">วันหมดอายุ :</label>
-                                <div class="col-sm-4">
-                                    <input class="form-control" ng-model="addChem.cc_expDt" type="date" class="" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="cc_producer" class="col-sm-4 control-label">ผู้ผลิต :</label>
-                                <div class="col-sm-4">
-                                    <input class="form-control" ng-model="addChem.cc_producer" type="text" class="" />
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="cc_desc" class="col-sm-4 control-label">หมายเหตุ :</label>
-                                <div class="col-sm-4">
-                                    <textarea class="form-control" ng-model="addChem.cc_desc" id="form-cc_desc" rows="4" cols="50"></textarea>
-                                </div>
-                            </div>
-                        </form> 
-                    </div>
-                    <div class="panel-footer">    
-                        <div class="col-sm-offset-10" align="right">
-                            <input type="button" class = "btn btn-success" ng-click="insertChem()" name="inserChem" value="ยืนยัน" />
-                            <input type="button" class = "btn btn-danger" ng-click="cancleChem()" name="cancleChem" value="ยกเลิก" />
-                        </div>
-                    </div>
+<br>
+<div class="panel panel-default" ng-init="inbound=true; new=true">
+    <div class="panel-heading"><h4><b><i class="fa fa-plus-circle fa-lg"></i>&nbsp;เพิ่มสารเคมีใหม่</b></h4>
+    </div>
+    <div class="panel-body">
+        <form class="form-horizontal" role="form" >
+            <div class="form-group">
+                <label for="cc_name" class="col-sm-4 control-label">ชื่อสารเคมี :</label>
+                <div class="col-sm-4">
+                    <input class="form-control" ng-model="addChem.cc_name" type="text" class="" />
                 </div>
             </div>
+            <div class="form-group">
+                <label for="cc_type" class="col-sm-4 control-label">ประเภทสารเคมี :</label>
+                <div class="col-sm-4">
+                    <input class="form-control" ng-model="addChem.cc_type" type="text" class="" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="cc_code" class="col-sm-4 control-label">รหัสสารเคมี :</label>
+                <div class="col-sm-4">
+                    <input class="form-control" ng-model="addChem.cc_code" type="text" class="" />
+                </div>
+            </div>
+            <div class="form-group">  
+                <label for="cc_casNo" class="col-sm-4 control-label">เลขอ้างอิงเฉพาะ (Cas no.) :</label>
+                <div class="col-sm-4">
+                    <input class="form-control" ng-model="addChem.cc_casNo" type="text" class="" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="cc_state" class="col-sm-4 control-label">สถานะสาร :</label>
+                <div class="col-sm-4">
+                    <select ng-model="addChem.cc_state">
+                        <option value="S" >solid</option>
+                        <option value="L">liquid</option>
+                        <option value="G">gas</option>
+                    </select>
+                </div>
+            </div>    
+            <div class="form-group">
+                <label for="cc_volume" class="col-sm-4 control-label">ขนาดบรรจุ :</label>
+                <div class="col-sm-4">
+                    <div class="input-group">
+                        <input class="form-control" ng-model="cc_volume" type="text" class="" />
+                            <select  ng-model="addChem.cu_pk" >
+                                <option ng-repeat="lu in listUnit" value="{{lu.cu_pk}}" >{{lu.cu_name_abb}}</option>
+                            </select> 
+                    </div>
+                </div> 
+            </div>
+            <div class="form-group">
+                <label for="cc_quantity" class="col-sm-4 control-label">จำนวน :</label>
+                <div class="col-sm-4">
+                    <input class="form-control" ng-model="addChem.cc_quantity" type="text" class="" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="cc_packing" class="col-sm-4 control-label">จำนวนแพ็ค :</label>
+                <div class="col-sm-4">
+                    <input class="form-control" ng-model="addChem.cc_packing" type="text" class="" />
+                </div>    
+            </div>
+            <div class="form-group">
+                <label for="location" class="col-sm-4 control-label">คลัง :</label>
+                <div class="col-sm-4">
+                     <select  ng-model="addChem.cl_pk" >
+                        <option ng-repeat="lu in listLoc" value="{{lu.cl_pk}}" >{{lu.cl_name}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="cc_room" class="col-sm-4 control-label">ห้อง :</label>
+                <div class="col-sm-4">
+                    <input class="form-control" ng-model="addChem.cc_room" type="text" class="" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="cc_price" class="col-sm-4 control-label">ราคา :</label>
+                <div class="col-sm-4">
+                    <input  class="form-control" ng-model="addChem.cc_price" type="text" class="" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="cc_grade" class="col-sm-4 control-label">เกรด :</label>
+                <div class="col-sm-4">
+                    <input class="form-control" ng-model="addChem.cc_grade" type="text" class="" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="cc_expDt" class="col-sm-4 control-label">วันหมดอายุ :</label>
+                <div class="col-sm-4">
+                    <input class="form-control" ng-model="addChem.cc_expDt" type="date" class="" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="cc_producer" class="col-sm-4 control-label">ผู้ผลิต :</label>
+                <div class="col-sm-4">
+                    <input class="form-control" ng-model="addChem.cc_producer" type="text" class="" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="cc_desc" class="col-sm-4 control-label">หมายเหตุ :</label>
+                <div class="col-sm-4">
+                    <textarea class="form-control" ng-model="addChem.cc_desc" id="form-cc_desc" rows="4" cols="50"></textarea>
+                </div>
+            </div>
+        </form> 
+    </div>
+    <div class="panel-footer">    
+        <div class="col-sm-offset-9" align="right">
+            <input type="button" class = "btn btn-success" ng-click="insertChem()" name="inserChem" value="ยืนยัน" />
+            <input type="button" class = "btn btn-danger" ng-click="cancleChem()" name="cancleChem" value="ยกเลิก" />
         </div>
     </div>
+</div>

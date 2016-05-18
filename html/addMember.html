@@ -1,77 +1,72 @@
-    <nav class="navbar navbar-default">
-        <div class="container">
-            <div class="navbar-header">
-                <a class="navbar-brand" href=""><i class="glyphicon glyphicon-user"></i>&nbsp;จัดการข้อมูลผู้ใช้</a>
-            </div>
+<br>
+<div class="col-sm-12">
+    <div class="panel panel-default">
+        
+        <div class="panel-heading">
+            <caption><h4><b><i class="fa fa-plus-circle fa-lg"></i>&nbsp;เพิ่มสมาชิกใหม่</b></h4></caption>
         </div>
-    </nav>  
-   
-    <div class="container">
-        <div class="col-sm-9">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h4><b><i class="fa fa-plus-circle fa-lg"></i>&nbsp;เพิ่มสมาชิกใหม่</b></h4>
+        
+        <div class="panel-body">
+            <form class="form-horizontal" role="form" >
+                <div class="form-group">
+                    <label for="code" class="col-sm-3 control-label">รหัส :</label>
+                    <div class="col-sm-4">
+                        <input class="form-control" ng-model="addMember.code" type="text" class="" id="form-code" />
+                    </div>
                 </div>
-                <div class="panel-body">
-                    <form class="form-horizontal" role="form" >
-                        <div class="form-group">
-                            <label for="code" class="col-sm-3 control-label">รหัส :</label>
-                            <div class="col-sm-4">
-                                <input class="form-control" ng-model="addMember.code" type="text" class="" id="form-code" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="user" class="col-sm-3 control-label">username :</label>
-                            <div class="col-sm-4">
-                                <input class="form-control"  ng-model="addMember.user" type="text" class="" id="form-user" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="pass" class="col-sm-3 control-label">password :</label>
-                                <div class="col-sm-4">
-                                    <input class="form-control"  ng-model="addMember.pass" type="password" class="" id="form-pass" />
-                                 </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="tname" class="col-sm-3 control-label">คำนำหน้า :</label>
-                            <div class="col-sm-4">
-                                <input class="form-control"  ng-model="addMember.tname" type="text" class="" id="form-tname" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="fname" class="col-sm-3 control-label">ชื่อ :</label>
-                            <div class="col-sm-4">
-                                <input class="form-control" ng-model="addMember.fname" type="text" class="" id="form-fname" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="lname" class="col-sm-3 control-label">นามสกุล :</label>
-                            <div class="col-sm-4">
-                                <input class="form-control" ng-model="addMember.lname" type="text" class="" id="form-lname" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="tel" class="col-sm-3 control-label" >เบอร์โทร :</label>
-                            <div class="col-sm-4">
-                                <input class="form-control" ng-model="addMember.tel" type="text" class="" id="form-tel" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="acctyp" class="col-sm-3 control-label">ประเภท :</label>
-                            <div class="col-sm-4">
-                                <select ng-model="addMember.acctyp" >
-                                    <option ng-repeat="lu in listAcountType" value="{{lu.cat_pk}}" >{{lu.cat_name}}</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div> 
-                    <div class="panel-footer">    
-                        <div class="col-sm-offset-10 " align="right">
-                            <button class="btn btn-success" type="button" ng-click="createMember()" name="createMember" value="ยืนยัน">ยืนยัน</button>
-                            <button class="btn btn-danger"type="button" ng-click="clearMember()" name="clearMember" value="ยกเลิก">ยกเลิก</button>
-                        </div>
-                    </div> 
-                </div> 
-            </div>  
-    </div>     
+                <div class="form-group">
+                    <label for="user" class="col-sm-3 control-label">username :</label>
+                    <div class="col-sm-4">
+                        <input class="form-control"  ng-model="addMember.user" type="text" class="" id="form-user" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="pass" class="col-sm-3 control-label">password :</label>
+                        <div class="col-sm-4">
+                            <input class="form-control"  ng-model="addMember.pass" type="password" class="" id="form-pass" />
+                         </div>
+                </div>
+                <div class="form-group">
+                    <label for="tname" class="col-sm-3 control-label">คำนำหน้า :</label>
+                    <div class="col-sm-4">
+                        <input class="form-control"  ng-model="addMember.tname" type="text" class="" id="form-tname" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="fname" class="col-sm-3 control-label">ชื่อ :</label>
+                    <div class="col-sm-4">
+                        <input class="form-control" ng-model="addMember.fname" type="text" class="" id="form-fname" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="lname" class="col-sm-3 control-label">นามสกุล :</label>
+                    <div class="col-sm-4">
+                        <input class="form-control" ng-model="addMember.lname" type="text" class="" id="form-lname" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="tel" class="col-sm-3 control-label" >เบอร์โทร :</label>
+                    <div class="col-sm-4">
+                        <input class="form-control" ng-model="addMember.tel" type="text" class="" id="form-tel" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="acctyp" class="col-sm-3 control-label">ประเภท :</label>
+                    <div class="col-sm-4">
+                        <select ng-model="addMember.acctyp" >
+                            <option ng-repeat="lu in listAcountType" value="{{lu.cat_pk}}" >{{lu.cat_name}}</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+        </div>
+            
+        <div class="panel-footer">    
+            <div class="col-sm-offset-8 " align="right">
+                <button class="btn btn-success" type="button" ng-click="createMember()" name="createMember" value="ยืนยัน">ยืนยัน</button>
+                <button class="btn btn-danger"type="button" ng-click="clearMember()" name="clearMember" value="ยกเลิก">ยกเลิก</button>
+            </div>
+        </div> 
+    </div> 
+</div>  
 

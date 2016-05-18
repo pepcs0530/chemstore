@@ -65,7 +65,7 @@
 
     //Title
     $pdf->SetFont('freeserif','B',16);
-    $pdf->Text(75,20,"แบบฟอร์มย้ายคลังสารเคมี");
+    $pdf->Text(75,30,"แบบฟอร์มย้ายคลังสารเคมี");
 
     $pdf->Output('export_pdf_transfer.pdf', 'I');
 

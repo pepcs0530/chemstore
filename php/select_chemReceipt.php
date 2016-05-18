@@ -5,11 +5,11 @@
 
     if($findthis == "ดูทั้งหมด") {
     
-        $sql = "SELECT * FROM chem_receipt WHERE `cr_status` = '0' ORDER BY cr_crtDt";
+        $sql = "SELECT * FROM chem_receipt WHERE `cr_status` = '0' ORDER BY cr_crtDt DESC";
         
     }else{
 
-        $sql = "SELECT * FROM `chem_receipt` WHERE `cr_no` LIKE 'NO.".$findthis."%'";
+        $sql = "SELECT * FROM `chem_receipt` WHERE `cr_no` LIKE 'NO.".$findthis."%' ORDER BY cr_crtDt DESC";
     }
     
 

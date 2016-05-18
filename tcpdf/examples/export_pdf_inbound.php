@@ -28,7 +28,9 @@
     $pdf->SetKeywords('TCPDF, PDF, example, test, guide');
 
     // set default header data
-    $pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, 'CHEMICAL STORE', 'Chemistry Department, KMITL', array(0,64,255), array(0,64,128));
+    //$pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, 'CHEMICAL STORE', 'Chemistry Department, KMITL', array(0,64,255), array(0,64,128));
+    $pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, 'CHEMICAL STORE', 'Chemistry Department, KMITL', array(0,64,255),
+                        array(0,64,128));
     $pdf->setFooterData(array(0,64,0), array(0,64,128));
 
     // set header and footer fonts
@@ -76,7 +78,7 @@
 
     //Title
     $pdf->SetFont('freeserif','B',16);
-    $pdf->Text(120,20,"ประวัติการนำเข้าสารเคมี");
+    $pdf->Text(120,30,"ประวัติการนำเข้าสารเคมี");
 
     $pdf->SetFont('freeserif','',12);
     //$pdf->SetXY(10,30);

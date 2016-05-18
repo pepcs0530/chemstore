@@ -5,6 +5,8 @@
     <head>      
         <title>chemstore</title>
     </head>
+    <link rel="icon" href="../img/logo_kmitl.gif">
+    <link rel="stylesheet" href="../fonts/thsarabunnew.css" />
     <script type="text/javascript" src="../js/lib/angular.min.js"></script>
     <script type="text/javascript" src="../js/lib/jquery-2.1.4.min.js"></script>
     <script type="text/javascript" src="../js/lib/angular-route.min.js"></script>
@@ -24,71 +26,143 @@
     <script src="../js/routing.js"></script>
     <script src="../js/chemstoreController.js"></script>
     <script src="../js/chemstoreFliter.js"></script>
-    <script src="../js/chemstoreDirective.js"></script>
-    <script src="../js/chemstoreService.js"></script>
-    <body ng-controller ="loginCtrl" ng-init="checkSession(); checked=true; dis=true; btng1=true; btng2=true; btng3=true; fix=true">
 
-        <!--    login by manager    -->
-        <nav class="navbar navbar-inverse navbar-fixed-top ">
-            <div class="collapse navbar-collapse">
-                <ul class="nav navbar-nav"  ng-hide="type != '1'">
-                    <li class="navbar-header"><a class="navbar-brand" href="#/viewStock">คลังสารเคมี</a></li>
-                    <li><a href="#/news">หน้าแรก</a></li>
-                    <li class="dropdown" ><a class="dropdown-toggle" data-toggle="dropdown" >จัดการคำร้องขอ <span class="badge">{{sumNoti}}</span><span class="caret"></span></a>
-                        <ul class="dropdown-menu" >
-                            <li role="presentation"><a href="#/manageRequestChem">คำร้องขอสารเคมี <span class="badge">{{requestChemNoti}}</span></a></li>
-<!--                            <li role="presentation"><a href="#/manageRequestChemIncrease">คำร้องขอสารเคมีเพิ่ม <span class="badge">{{requestChemIncreaseNoti}}</span></a></li>-->
-                            <li role="presentation"><a href="#/manageRequestOther">คำร้องขออื่นๆ <span class="badge">{{requestOtherNoti}}</span></a></li>
-                        </ul>
-                    </li>
-                    
-                    <li class="dropdown" ><a class="dropdown-toggle" data-toggle="dropdown" >จัดการข้อมูลสารเคมี<span class="caret"></span></a>
-                        <ul class="dropdown-menu" >
-                            <li><a href="#/inboundChem"  >นำเข้าสารเคมี</a></li>
-                            <li><a href="#/editChem">แก้ไขข้อมูลสารเคมี</a></li>
-                            <li><a href="#/transfer">ย้ายคลัง</a></li>
-                        </ul>
-                    </li>                
+  <body ng-controller ="loginCtrl" ng-init="checkSession(); checked=true; dis=true; btng1=true; btng2=true; btng3=true; fix=true">
+    <div class="masthead">
+    <a href="https://www.facebook.com/chemistryKMITL/?fref=ts" style="position: absolute; top: 23px; right:40px; color:#fff;"><i class="fa fa-facebook-square  fa-lg" aria-hidden="true"></i></a>
+    
+    <img src="../img/head3.jpg" style=" margin-bottom:1px" >
+    </div>
+    
+  <!--    login by manager    -->
+      <nav ng-show ="type == '1'"  class="navbar navbar-custo" data-spy="affix" data-offset-top="197" style=" margin-bottom:0px">
+        <div class="container">
+            
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar" > 
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span> 
+            </button>
+          </div>
+            
+          <div class="collapse navbar-collapse">
+              <ul class="nav navbar-nav">
+                <li><a href="#/news"><i class="fa fa-home" aria-hidden="true"></i>&nbsp;หน้าหลัก</a></li>
 
-                    <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" >ประวัติรายการ<span class="caret"></span></a>
+                <li class="dropdown" ng-show ="type == '1'"><a class="dropdown-toggle" data-toggle="dropdown" ><i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;จัดการคำร้องขอ <span class="badge">{{sumNoti}}</span><span class="caret"></span></a>
+                    <ul class="dropdown-menu" >
+                      <li role="presentation"><a href="#/manageRequestChem">คำร้องขอสารเคมี <span class="badge">{{requestChemNoti}}</span></a></li>
+    <!--                  <li role="presentation"><a href="#/manageRequestChemIncrease">คำร้องขอสารเคมีเพิ่ม <span class="badge">{{requestChemIncreaseNoti}}</span></a></li>-->
+                      <li role="presentation"><a href="#/manageRequestOther">คำร้องขออื่นๆ <span class="badge">{{requestOtherNoti}}</span></a></li>
+                    </ul>
+                </li>
+
+                <li><a href="#/viewStock" ng-show ="type == '1'" ><i class="fa fa-flask" aria-hidden="true"></i>&nbsp;คลังสารเคมี</a></li>
+
+                <li><a href="#/viewReciept" ng-show ="type == '1'" ><i class="fa fa-upload" aria-hidden="true"></i>&nbsp;เบิกสารเคมี</a></li>
+
+                <li><a href="#/inboundChem" ng-show ="type == '1'" ><i class="fa fa-download" aria-hidden="true"></i>&nbsp;นำเข้าสารเคมี</a></li>
+
+                <li><a href="#/sold" ng-show ="type == '1'"><i class="fa fa-shopping-bag" aria-hidden="true"></i>&nbsp;ขายคืน</a></li>
+
+                <li><a href="#/transfer" ng-show ="type == '1'"><i class="fa fa-reply" aria-hidden="true"></i>&nbsp;ย้ายคลัง</a></li>
+
+                <li><a href="#/editChem" ng-show ="type == '1'"><i class="fa fa-pencil" aria-hidden="true"></i>&nbsp;แก้ไขข้อมูลสารเคมี</a></li>
+
+                <li class="dropdown" ng-show ="type == '1'"><a class="dropdown-toggle" data-toggle="dropdown" ><i class="fa fa-folder" aria-hidden="true"></i>&nbsp;ประวัติรายการ<span class="caret"></span></a>
+                  <ul class="dropdown-menu" >
+                    <li><a href="#/importlog"  >ประวัติการนำเข้า</a></li>
+                    <li><a href="#/withdrawlog"  >ประวัติการเบิกสาร</a></li>
+                    <li><a href="#/salelog"  >ประวัติการขายคืน</a></li>
+                  </ul>
+                </li>
+
+
+                  <li><a href="#/statusRequestChem" ng-show ="type == '2'" ><i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;สถานะคำร้อง</a></li>
+              </ul>
+            </div>
+        </div>
+      </nav>
+          
+        <!--    สิทธิ์ teacher  --> 
+      <nav ng-show ="type == '2'"  class="navbar navbar-custo" data-spy="affix" data-offset-top="197" style=" margin-bottom:0px;">
+          <div class="container-fluid">
+              <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar" > 
+                  <span class="sr-only">Toggle navigation</span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span>
+                  <span class="icon-bar"></span> 
+                </button>
+              </div>
+              <div class="collapse navbar-collapse">
+                  <ul class="nav navbar-nav" style="margin-right:27%;">
+                    <li><a href="#/news"><i class="fa fa-home" aria-hidden="true"></i>&nbsp;หน้าหลัก</a></li>
+                    <li><a href="#/statusRequestChem" ng-show ="type == '2'" ><i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;สถานะคำร้อง</a></li>
+                    <li class="dropdown" ng-show ="type == '2'"><a class="dropdown-toggle" data-toggle="dropdown" ><i class="fa fa-folder" aria-hidden="true"></i>&nbsp;ส่งคำร้องขอ<span class="caret"></span></a>
                         <ul class="dropdown-menu" >
-                            <li><a href="#/importlog"  >ประวัติการนำเข้า</a></li>
-                            <li><a href="#/withdrawlog"  >ประวัติการเบิกสาร</a></li>
-                            <li><a href="#/salelog"  >ประวัติการขายคืน</a></li>
+                            <li><a href="#/viewReciept">เบิกสารเคมี</a></li>
+                            <li><a href="#/requestOther">ส่งคำร้องขออื่นๆ</a></li>
+                            <li><a href="#/sold">ขายคืน</a></li>
                         </ul>
                     </li>
-                    <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" >จัดการข้อมูลประชาสัมพันธ์<span class="caret"></span></a>
+                    <li class="dropdown" ng-show ="type == '2'"><a class="dropdown-toggle" data-toggle="dropdown" ><i class="fa fa-folder" aria-hidden="true"></i>&nbsp;จัดการโปรเจค<span class="caret"></span></a>
                         <ul class="dropdown-menu" >
-                            <li><a href="#/addNews">เพิ่มข้อมูล</a></li>
-                            <li><a href="#/editNews">แก้ไขข้อมูล</a></li>
+                            <li><a href="#/viewProject">แสดงโปรเจค</a></li>
+                            <li><a href="#/addProject">เพิ่มโปรเจค</a></li>
                         </ul>
                     </li>
-                    <li><a href="#/contact">ติดต่อเรา</a></li>
-                </ul>
-                <ul class="nav navbar-nav"  ng-hide="type != '2'">
-                    <li><a href="#/news">หน้าแรก</a></li>
-                    <li><a href="#/statusRequestChem">สถานะคำร้องขอ</a></li>
-                    
-                    <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" >ดำเนินการส่งคำร้อง<span class="caret"></span></a>
+                    <li class="dropdown" ng-show ="type == '2'"><a class="dropdown-toggle" data-toggle="dropdown" ><i class="fa fa-folder" aria-hidden="true"></i>&nbsp;ประวัติรายการ<span class="caret"></span></a>
                         <ul class="dropdown-menu" >
-                            <li><a href="#/viewReciept" >เบิกสารเคมี</a></li>
-                            <li><a href="#/requestOther" >ส่งคำร้องอื่นๆ</a></li>
-                            <li><a href="#/sold">ขายคืน</a></li>                    
+                            <li><a href="#/withdrawlog">เบิกสาร</a></li>
+                            <li><a href="#/salelog">ขายคืน</a></li>
                         </ul>
                     </li>
-                    
-                    <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" >จัดการโปรเจคนักศึกษา<span class="caret"></span></a>
-                        <ul class="dropdown-menu" >
-                            <li><a href="#/viewProject" >รายชื่อโปรเจคที่ดำเนินการ</a></li>
-                            <li><a href="#/addProject" >สร้างโปรเจคนักศึกษา</a></li>                 
+                  </ul>
+              </div>
+          </div>
+      </nav>
+          
+       <a href="#/contact" style="position: absolute; top: 23px; right:65px; color:#fff;"><i class="fa fa-info-circle fa-lg" aria-hidden="true"></i></a>
+          
+        <div class="container">
+            <div class="row">
+                <br>
+                <div class="col-md-offset-1 col-md-8" >
+                    <div ng-view></div>
+                </div>
+                
+                <div class="col-md-2" >
+                  <br>
+                    <div ng-hide ="type != ''">
+                        <form role="search" method="post" >
+                            <div class="form-group">
+                              <label for="Username">ชื่อผู้ใช้งาน : </label>
+                              <input type="text" class="form-control" placeholder="Username" ng-model="login.username">
+                            </div>
+                            <div class="form-group">
+                              <label for="Password">รหัสผ่าน : </label>
+                              <input type="password" class="form-control" placeholder="Password" ng-model="login.password">
+                            </div>
+                                <input class="btn btn-default" type="submit" value="Log in" ng-click="createLogin()"/>
+                                <input class="btn btn-default" type="reset" value="Reset" />
+                        </form>
+                    </div>
+                    <div ng-hide ="type == ''">
+                      <h5  style= "text-align: center;"><b>ยินดีต้อนรับ</b></h5>
+                      <h5  style= "text-align: center;"><i class="fa fa-user fa-lg" aria-hidden="true" style="color:#00e600;"></i>&nbsp;คุณ{{session}}</h5>
+                      <hr style="height: 1px; background-color: #e0e0d1">
+                        <ul  class="nav nav-pills nav-stacked" role="tablist">
+                          <li ng-show ="type == '1'"><a href="#/addMember" ><i class="fa fa-plus-circle" aria-hidden="true"></i>&nbsp;เพิ่มผู้ใช้งาน</a></li>
+                          <li><a href="#/editMember" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;แก้ไขข้อมูลผู้ใช้งาน</a></li>
+                          <li ng-hide ="type == '3' || type == '4' || type == '5'"><a href="#/addProject"><i class="fa fa-plus-circle" aria-hidden="true"></i>&nbsp;เพิ่มโปรเจค</a></li>
+                          <li ng-hide ="type != '1'"><a href="#/addNews"><i class="fa fa-plus-circle" aria-hidden="true"></i>&nbsp;เพิ่มข่าว</a></li>
+                          <li role="separator" class="divider"></li>
+                          <li><a href="../php/logout.php" ><i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp;ออกจากระบบ</a></li>
                         </ul>
-                    </li>
-                    
-                    <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" >ประวัติรายการ<span class="caret"></span></a>
-                        <ul class="dropdown-menu" >
-                            <li><a href="#/withdrawlog"  >ประวัติการเบิกสาร</a></li>
-                            <li><a href="#/salelog"  >ประวัติการขายคืน</a></li>
-                        </ul>
+<<<<<<< HEAD
                     </li>
                     <li><a href="#/contact">ติดต่อเรา</a></li>
                 </ul>
@@ -112,32 +186,35 @@
                             <li><a href="#/addProject">เพิ่มโปรเจค</a></li>
                             <li role="separator" class="divider"></li>
                             <li><a href="../php/logout.php" >ออกจากระบบ</a></li>
+=======
+                    </div>
+                    <hr>
+                       <div class='span2 sidebar'>
+                        <h5><b>ลิงค์ที่เกี่ยวข้อง</b></h5>
+                        <ul class="nav nav-pills nav-stacked" role="tablist">
+                          <li><a href='http://www.science.kmitl.ac.th/links/department/chem/'>เว็บไซต์ภาควิชาเคมี</a></li>
+                          <li><a href='http://www.science.kmitl.ac.th/'>เว็บคณะวิทยาศาสตร์</a></li>
+                          <li><a href='http://www.kmitl.ac.th/'>เว็บไซต์สถาบัน</a></li>
+>>>>>>> origin/master
                         </ul>
-                    </li>
-                </div>
+                        <br><br><br>
+                      </div>
+                  </div>
             </div>
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav" ng-hide="type != ''">
-                    <li  class="navbar-header"><a class="navbar-brand" href="#/viewStock">คลังสารเคมี</a></li>
-                    <li><a href="#/contact">ติดต่อเรา</a></li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right" ng-hide="type != ''">
-                    <form class="navbar-form navbar-left" role="search" method="post">
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Username" ng-model="login.username">
-                            <input type="password" class="form-control" placeholder="Password" ng-model="login.password">
-                        </div>
-                        <input class="btn btn-default" type="submit" value="Log in" ng-click="createLogin()"/>
-                        <input class="btn btn-default" type="reset" value="Clear" />
-                    </form>
-                </ul>
-            </div>  
-        </nav>
+        </div>
 
+        
+        <br>
+      
+        <footer class="container-fluid text-center">
+          © 2016 Chemisty, Faculty of Science, King Mongkut's Institute of Technology Ladkrabang
+            <br>ภาควิชาเคมี ตึกจุฬาภรณ์วลัยลักษณ์ 1 ชั้น 5 คณะวิทยาศาสตร์ สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง 
+            <br>ถนนฉลองกรุง เขตลาดกระบัง กรุงเทพ 10520
+            <br>โทร 0-2329-8400 ถึง 8411 ต่อ 290, 0-2329-8000 ถึง 8099 ต่อ 6234, 6235 
+            Fax 0-2329-8415
 
-
-        <div ng-view></div>
-
+          
+        </footer>
     </body>
 </html>
 

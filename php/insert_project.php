@@ -5,18 +5,20 @@ include 'connect.php';
 
 $teacher_fk = $_POST['teacher_pk'];
 $name = $_POST['name'];
+$eduLvl = $_POST['eduLvl'];
 $budget = $_POST['budget'];
 $desc = $_POST['desc'];
 $teacher_budget = $_POST['teacher_budget'];
 
 $sql = "INSERT INTO chem_project (
     cp_name,
+    cp_eduLvl,
     cp_budget,
     cp_desc,
     cp_useflg,
     cp_crtDt,
     cp_teach_fk
-    ) VALUES ('".$name."', '".$budget."', '".$desc."', '1', CURRENT_TIMESTAMP , '".$teacher_fk."')";
+    ) VALUES ('".$name."', '".$eduLvl."', '".$budget."', '".$desc."', '1', CURRENT_TIMESTAMP , '".$teacher_fk."')";
 
 $result = mysql_query($sql);
 
