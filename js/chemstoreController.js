@@ -861,7 +861,6 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
 
 //  สถานะคำร้องขอของอาจารย์  ============================================================================================================
     .controller('teacherRequestCtrl', function($scope,$http) {
-
         $http({
             method  :   'POST',
             url     :   '../php/select_chemReceipt.php',
@@ -1390,4 +1389,24 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
                 }
             }]
         });
+    })
+// user ซีเนียรดูสถานะคำร้องย้ายคลัง ==============================================================================
+    .controller('seniorRequestChemCtrl', function($scope, $http){
+         $http({
+            method  :   'POST',
+            url     :   '../php/select_chemReceipt.php',
+            data    :   {findthis: $scope.key}
+        }).then(function(response) {
+            $scope.ListReciept = response.data;
+        });
+        $scope.showPopup = function (getdata,index) {
+            $scope.index = index;
+            $http({
+            method  :   'POST',
+            url     :   '../php/select_chemdetail.php',
+            data    :   {crd_cr_fk: getdata}
+        }).then(function(response) {
+            $scope.chemdetail = response.data;
+        });
+        }
     });
