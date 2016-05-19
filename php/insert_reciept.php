@@ -51,7 +51,15 @@
     else{
         $cr_desc = $_POST['cr_desc'];
     }
-
+    
+    $sql = "SELECT `AUTO_INCREMENT` FROM  INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'db_chem_lab' AND TABLE_NAME = 'chem_receipt'";
+    $query = mysql_query($sql);
+    $data=array();
+    while($row = mysql_fetch_array ($query))
+    {
+        array_push($data,$row);
+    }
+    $cr_no = "NO.".$cr_no.$data[0]['AUTO_INCREMENT'];
     if($requesttype == "chemrequest"){
         $sql = "INSERT INTO `chem_receipt` (cr_no, cr_totalprice, cr_cp_fk, cr_crtDt, cr_type)".
             " VALUE('".$cr_no."','".$totalmoney ."','".$cr_cp_fk."', CURRENT_TIMESTAMP, '".$requesttype."')";
@@ -63,12 +71,13 @@
     }
     
     $query = mysql_query($sql);
-    $sql = "SELECT cr_pk FROM `chem_receipt` ORDER BY `cr_pk` DESC LIMIT 1";
+//    $sql = "SELECT cr_pk FROM `chem_receipt` ORDER BY `cr_pk` DESC LIMIT 1";
+    $sql = "SELECT `AUTO_INCREMENT` FROM  INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'db_chem_lab' AND TABLE_NAME = 'chem_receipt'";
     $query = mysql_query($sql);
     $data=array();
     while($row = mysql_fetch_array ($query))
     {
         array_push($data,$row);
     }
-    echo json_encode($data);
+    echo json_encode($data[0]);
 ?>

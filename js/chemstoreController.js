@@ -427,6 +427,10 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
                     alert("กรุณาระบุจำนวนสาร: "+value.cc_name+" ให้ถูกต้อง");
                     $scope.cantRequest = -1;
                 }
+                else if(value.volumeRequest == 0){
+                    alert("สาร "+value.cc_name+" กรุณาระบุจำนวนที่ไม่ใช่ 0");
+                    $scope.cantRequest = -1;
+                }
                 else if(value.cc_quantity < value.exvolumeRequest){
                     alert("สาร "+value.cc_name+" มีปริมาณไม่เพียงพอ");
                     $scope.cantRequest = -1;
@@ -469,35 +473,33 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
                 method  : 'POST',
                 url     : '../php/insert_reciept.php',
                 data    : { 
-                    cr_no : "NO."+ $scope.key +
+                    cr_no : $scope.key +
                      $scope.selectedProject.cp_pk +
-                      new Date().getMinutes() +
-                      new Date().getHours() +
                       new Date().getDate() + 
                      (+"0"+new Date().getMonth()+1) + 
                       new Date().getFullYear(), 
                     cr_cp_fk : $scope.selectedProject.cp_pk,
                     totalmoney : $scope.total,
                     requesttype : "chemrequest"},
-                    
                     headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
-                    }).then(function(response) {                
-
+                    }).then(function(response) {
+                
                     angular.forEach($scope.cartlist, function(value, key){            
-                            $http({
-                                method  : 'POST',
-                                url     : '../php/insert_recieptDetail.php',
-                                data    : { crd_cr_fk: response.data[0].cr_pk,
-                                            crd_cc_fk: value.cc_pk,
-                                            crd_amt: value.exvolumeRequest,
-                                            crd_price: value.totalprice,
-                                            crd_unit: value.cu_name_abb}, 
-                                headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
-                            }).then(function(response) {
-                                console.log(response);                        
-                            })    
-                        }); 
-                        location.reload();
+                        $http({
+                            method  : 'POST',
+                            url     : '../php/insert_recieptDetail.php',
+                            data    : { crd_cr_fk: response.data.AUTO_INCREMENT-1,
+                                        crd_cc_fk: value.cc_pk,
+                                        crd_amt: value.exvolumeRequest,
+                                        crd_price: value.totalprice,
+                                        crd_unit: value.cu_name_abb,
+                                        crd_status: '0'}, 
+                            headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
+                        }).then(function(response) {
+                            
+                        })    
+                    }); 
+                    location.reload();
             })
                 alert("ดำเนินการเพิ่มรายการเรียบร้อย");
                 
