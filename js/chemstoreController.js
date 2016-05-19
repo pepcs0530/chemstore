@@ -1316,7 +1316,6 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
                             fontFamily: 'Verdana, sans-serif'
                         }
                     }
-<<<<<<< HEAD
                 },
                 yAxis: {
                     min: 0,
@@ -1368,19 +1367,8 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
                     }
                 }]
             });
-        })
-=======
-                }
-            }]
-        });
-            
-        });
-        
-
-        
     })
 
->>>>>>> origin/master
 // user ซีเนียรดูสถานะคำร้องย้ายคลัง ==============================================================================
     .controller('seniorRequestChemCtrl', function($scope, $http){
          $http({
@@ -1400,9 +1388,6 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
             $scope.chemdetail = response.data;
         });
         }
-<<<<<<< HEAD
-    });
-=======
     })
 
 // ดูสถานะสาร ========================================================================================================
@@ -1410,7 +1395,4 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
     .controller('viewRemainChemCtrl', function($scope, $http){
     
         
-    })
-
-;
->>>>>>> origin/master
+    });
