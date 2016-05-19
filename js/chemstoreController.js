@@ -1296,6 +1296,7 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
             }
         })
     
+//กราฟงบประมาณ ================================================================
     .controller('viewBudgetCtrl', function($scope, $http){
             jQuery('#container').highcharts({
                 chart: {
@@ -1390,7 +1391,7 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
         }
     })
 
-// ดูสถานะสาร ========================================================================================================
+// ออกรายงานสถานะสารล่าสุด ========================================================================================================
 
     .controller('viewRemainChemCtrl', function($scope, $http){
     

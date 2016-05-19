@@ -109,6 +109,6 @@
         $pdf->Ln();
     }
 
-    $pdf->Output('export_pdf_inbound.pdf', 'I');
+    $pdf->Output('export_pdf_inbound_log.pdf', 'I');
 
 ?>
