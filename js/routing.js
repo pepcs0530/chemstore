@@ -122,6 +122,11 @@
                 templateUrl: '../html/seniorRequestChem.html',
                 controller: 'seniorRequestChemCtrl'
             }   
+          ).when(
+            '/viewRemainChem',{
+                templateUrl: '../html/viewRemainChem.html',
+                controller: 'viewRemainChemCtrl'
+            }   
           ).otherwise({
                 redirectTo: '/news'
       	  }); 

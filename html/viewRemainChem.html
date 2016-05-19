@@ -1,0 +1,19 @@
+<caption><h4><i class="glyphicon glyphicon-paperclip"></i>&nbsp;รายงานสถานะสารเคมีล่าสุด</h4></caption>
+<div>
+    
+    <form method="post" action="../tcpdf/examples/export_pdf_chem_remain.php" target="_blank">
+        <select  name="select" ng-model="select.location" >
+            <option value="">---เลือกคลัง---</option>
+            <option value="0" >ทั้งหมด</option>
+            <option value="1">จุฬาภรณ์ 1</option>
+            <option value="2">จุฬาภรณ์ 2</option>
+            <option value="3">จุฬาภรณ์ 3</option>
+            <option value="4">พอลิเมอร์ช็อป</option>
+            <option value="5">ตึกพระเทพ</option>
+            <option value="6">ตึกวิทย์เก่า</option>
+            <option value="7">คลังกลาง</option>
+        </select>
+        <input type="submit" class="btn btn-default" value="พิมพ์รายงาน" >
+    </form>
+</div>
+<br>

@@ -1,14 +1,27 @@
 <?php
     include '../../php/connect.php';
     date_default_timezone_set('Asia/Bangkok');
-    $_POST = json_decode(file_get_contents('php://input'), true);
+    //$_POST = json_decode(file_get_contents('php://input'), true);
 
+    $pk = $_POST['select'];
 
-    $sql = "SELECT * FROM `chem_category`
+    if($pk == 0){
+        $sql = "SELECT * FROM `chem_category`
             INNER JOIN `chem_unit`
             ON `cc_unit_fk` = `cu_pk`
             INNER JOIN `chem_location`
             ON `cc_location_fk` = `cl_pk`";
+    }else{
+        $sql = "SELECT * FROM `chem_category`
+            INNER JOIN `chem_unit`
+            ON `cc_unit_fk` = `cu_pk`
+            INNER JOIN `chem_location`
+            ON `cc_location_fk` = `cl_pk`
+            WHERE cc_location_fk = ".$pk."";
+    }
+
+    
+
     $query = mysql_query($sql);
 
     // Include the main TCPDF library (search for installation path).
