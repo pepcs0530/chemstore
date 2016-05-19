@@ -112,6 +112,11 @@
                 templateUrl: '../html/manageLendChem.html',
                 controller: 'submitRequestCtrl'
             }   
+          ).when(
+            '/viewBudget',{
+                templateUrl: '../html/viewBudget.html',
+                controller: 'viewBudgetCtrl'
+            }   
           ).otherwise({
                 redirectTo: '/news'
       	  }); 
