@@ -9,7 +9,7 @@
         $fk = "" ;  
     }
 
-    $fk = 96;
+    $fk = 80;
     
     $sql = "SELECT * FROM `chem_receipt_detail`
             INNER JOIN `chem_category`
@@ -21,6 +21,8 @@
     $sql2 = "SELECT * FROM `chem_receipt`
             INNER JOIN `chem_project`
             ON `cr_cp_fk` = `cp_pk`
+            INNER JOIN `chem_account`
+            ON `cp_teach_fk` = `ca_pk`
             WHERE `cr_pk` = ".$fk."";
     $query2 = mysql_query($sql2);
 
@@ -65,7 +67,7 @@ $pdf->SetSubject('ใบคำร้องสารเคมี');
 $pdf->SetKeywords('TCPDF, PDF, example, test, guide');
 
 // set default header data
-$pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, 'CHEMICAL STORE', 'Chemistry Department, KMITL', array(0,64,255), array(0,64,128));
+$pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, PDF_HEADER_TITLE, 'Chemistry Department, KMITL', array(0,64,255), array(0,64,128));
 $pdf->setFooterData(array(0,64,0), array(0,64,128));
 
 // set header and footer fonts

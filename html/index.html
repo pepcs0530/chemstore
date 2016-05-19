@@ -124,7 +124,7 @@
           </div>
       </nav>
           
-      <!--    สิทธิ์ teacher  --> 
+      <!--    สิทธิ์ senior sci  --> 
       <nav ng-show ="type == '3'"  class="navbar navbar-custo" data-spy="affix" data-offset-top="197" style=" margin-bottom:0px;">
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav" style="margin-right:35%;">
@@ -132,7 +132,7 @@
                 <li><a href=""><i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;สถานะคำร้องขอ</a></li>
                 <li class="dropdown" ><a class="dropdown-toggle" data-toggle="dropdown" ><i class="fa fa-folder" aria-hidden="true"></i>&nbsp;ส่งคำร้องขอ<span class="caret"></span></a>
                     <ul class="dropdown-menu" >
-                        <li><a href="#/exchangeCatagory">ย้ายสารเคมี</a></li>
+                        <li><a href="#/exchangeCatagory">ย้ายคลังสารเคมี</a></li>
                         <li><a href="#/requestOther">ส่งคำร้องอื่นๆ</a></li>
                     </ul>
                 </li>
@@ -140,9 +140,19 @@
         </div>
       </nav>
       
+      <!--    สิทธิ์ guest  -->
+      <nav ng-show ="type == '5'"  class="navbar navbar-custo" data-spy="affix" data-offset-top="197" style=" margin-bottom:0px;">
+          <div class="collapse navbar-collapse">
+              <ul class="nav navbar-nav" style="margin-right:45%;">
+                <li><a href="#/news"><i class="fa fa-home" aria-hidden="true"></i>&nbsp;หน้าหลัก</a></li>
+                  <li><a href="#/viewStock" ><i class="fa fa-flask" aria-hidden="true"></i>&nbsp;คลังสารเคมี</a></li>
+              </ul>
+          </div>
+      </nav>
       
       
-       <a href="#/contact" style="position: absolute; top: 23px; right:65px; color:#fff;"><i class="fa fa-info-circle fa-lg" aria-hidden="true"></i></a>
+      
+<!--       <a href="#/contact" style="position: absolute; top: 23px; right:65px; color:#fff;"><i class="fa fa-info-circle fa-lg" aria-hidden="true"></i></a>-->
           
         <div class="container">
             <div class="row">
@@ -179,7 +189,7 @@
                           <li role="separator" class="divider"></li>
                           <li><a href="../php/logout.php" ><i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp;ออกจากระบบ</a></li>
                         </ul>
-
+                    </div>
                         <hr>
                        <div class='span2 sidebar'>
                         <h5><b>ลิงค์ที่เกี่ยวข้อง</b></h5>
@@ -191,7 +201,7 @@
                         </ul>
                         <br><br><br>
                       </div>
-                  </div>
+                  
             </div>
         </div>
       </div>
