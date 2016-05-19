@@ -98,11 +98,13 @@
         <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
             <button type="button" class="btn btn-danger" ng-click="cancelRequest()"
-                    ng-disabled="listReciept[index].cr_status == '3'">ไม่อนุมัติ</button>
+                    ng-disabled="listReciept[index].cr_status == '3' ||
+                                 listReciept[index].cr_status == '2'">ไม่อนุมัติ</button>
             <button type="button" class="btn btn-success" ng-click="submitRequest()" 
                     ng-disabled="listReciept[index].cp_budget-listReciept[index].cr_totalprice < 0 ||
                                  listReciept[index].cp_budget-listReciept[index].cp_budget||
-                                 listReciept[index].cr_status == '3'">อนุมัติ</button>
+                                 listReciept[index].cr_status == '3'||
+                                 listReciept[index].cr_status == '2'">อนุมัติ</button>
         </div>
     </div>
   </div>

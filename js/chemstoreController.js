@@ -154,6 +154,7 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
             data    :   {crd_cr_fk: getdata}
             }).then(function(response) {
                 $scope.chemdetail = response.data;
+                console.log($scope.chemdetail);
             });
         }
         
@@ -168,14 +169,20 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
                          totalprice: $scope.listReciept[$scope.index].cr_totalprice,
                          status : 2}
             }).then(function(data) {
-                console.log(data);
-                alert("ดำเนินการเรียบร้อย");
-                location.reload();
+                $http({
+                method  :   'POST',
+                url     :   '../php/update_receiptDetail.php',
+                data    :   {crd_cr_fk: $scope.listReciept[$scope.index].cr_pk,
+                             status : 2}
+                }).then(function(data) {
+                    alert("ดำเนินการเรียบร้อย");
+                    location.reload();
+                });
             });
         }
         
         $scope.submitRequest = function() {
-            console.log($scope.listReciept[$scope.index].cr_cp_fk);
+            
             $http({
             method  :   'POST',
             url     :   '../php/update_submitChemRequest.php',
@@ -186,8 +193,16 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
                          status : 3}
             }).then(function(data) {
                 console.log(data);
-                alert("ดำเนินการเรียบร้อย");
-                location.reload();
+                
+                $http({
+                method  :   'POST',
+                url     :   '../php/update_receiptDetail.php',
+                data    :   {crd_cr_fk: $scope.listReciept[$scope.index].cr_pk,
+                             status : 3}
+                }).then(function(data) {
+                    alert("ดำเนินการเรียบร้อย");
+                    location.reload();
+                });
             });
         }
     })
