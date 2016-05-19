@@ -66,12 +66,11 @@
         
     } 
     else if($requesttype == "lendrequest"){   
-        $sql = "INSERT INTO `chem_receipt` (cr_no, cr_crtDt, cr_desc, cr_fromstore, cr_tostore, cr_updDt, cr_type)".
-            " VALUE('".$cr_no."', CURRENT_TIMESTAMP,'".$cr_desc."','".$cr_fromstore."','".$cr_tostore."', CURRENT_TIMESTAMP, '".$requesttype."')";
+        $sql = "INSERT INTO `chem_receipt` (cr_no, cr_crtDt, cr_desc, cr_fromstore, cr_tostore, cr_type)".
+            " VALUE('".$cr_no."', CURRENT_TIMESTAMP,'".$cr_desc."','".$cr_fromstore."','".$cr_tostore."','".$requesttype."')";
     }
     
     $query = mysql_query($sql);
-//    $sql = "SELECT cr_pk FROM `chem_receipt` ORDER BY `cr_pk` DESC LIMIT 1";
     $sql = "SELECT `AUTO_INCREMENT` FROM  INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'db_chem_lab' AND TABLE_NAME = 'chem_receipt'";
     $query = mysql_query($sql);
     $data=array();

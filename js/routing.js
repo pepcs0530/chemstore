@@ -120,7 +120,7 @@
           ).when(
             '/seniorRequestChem',{
                 templateUrl: '../html/seniorRequestChem.html',
-                controller: 'seniorRequestChemCtrl'
+                controller: 'seniorRequestLendCtrl'
             }   
           ).when(
             '/viewRemainChem',{

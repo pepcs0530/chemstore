@@ -489,9 +489,8 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
                 url     : '../php/insert_reciept.php',
                 data    : { 
                     cr_no : $scope.key +
-                     $scope.selectedProject.cp_pk +
                       new Date().getDate() + 
-                     (+"0"+new Date().getMonth()+1) + 
+                     (new Date().getMonth()+1) + 
                       new Date().getFullYear(), 
                     cr_cp_fk : $scope.selectedProject.cp_pk,
                     totalmoney : $scope.total,
@@ -514,10 +513,9 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
                             
                         })    
                     }); 
-                    location.reload();
-            })
                 alert("ดำเนินการเพิ่มรายการเรียบร้อย");
-                
+                location.reload();
+            })
         }
     }  
 })
@@ -1172,7 +1170,6 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
         
         $scope.createRequest = function(){
         $scope.cantRequest = 0;
-        $scope.cartlist.requesttype="lendrequest";
         $scope.cartlist.cr_desc="ไม่ระบุเหตุผล";
         $scope.fromstore = "จุฬาภรณ์1";
         $scope.tostore = "จุฬาภรณ์1";
@@ -1186,6 +1183,10 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
             angular.forEach($scope.cartlist, function(value, key){
                 if(isNaN(parseInt(value.volumeRequest))){
                     alert("กรุณาระบุจำนวนสาร: "+value.cc_name+" ให้ถูกต้อง");
+                    $scope.cantRequest = -1;
+                }
+                else if(value.volumeRequest == 0){
+                    alert("สาร "+value.cc_name+" กรุณาระบุจำนวนที่ไม่ใช่ 0");
                     $scope.cantRequest = -1;
                 }
                 else if(value.cc_quantity < value.exvolumeRequest){
@@ -1209,48 +1210,44 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
                 }
             });
         }
-        console.log($scope.cartlist,$scope.listAcountData[0].ca_responplace,$scope.fromstore);
         
         if($scope.cantRequest == -1){
             alert("ดำเนินการยืมไม่สำเร็จ");
         }
         else{
-            console.log($scope.cartlist.requesttype);
             $http({
                 method  : 'POST',
                 url     : '../php/insert_reciept.php',
                 data    : { 
-                    cr_no : "NO."+ $scope.key +
-                      new Date().getHours() +
-                      new Date().getMinutes() +
+                    cr_no : $scope.key +
                       new Date().getDate() + 
-                     (+"0"+new Date().getMonth()+1) + 
+                     (new Date().getMonth()+1) + 
                       new Date().getFullYear(), 
-                    requesttype : $scope.cartlist.requesttype,
+                    requesttype : "lendrequest",
                     cr_desc : $scope.cartlist.cr_desc,
                     cr_fromstore : $scope.listAcountData[0].ca_responplace,
                     cr_tostore : $scope.fromstore
                     },
-                    
                     headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
                     }).then(function(response) {  
                     angular.forEach($scope.cartlist, function(value, key){            
-                            $http({
-                                method  : 'POST',
-                                url     : '../php/insert_recieptDetail.php',
-                                data    : { crd_cr_fk: response.data[0].cr_pk,
-                                            crd_cc_fk: value.cc_pk,
-                                            crd_amt: value.exvolumeRequest,
-                                            crd_price: 0,
-                                            crd_unit: value.cu_name_abb}, 
-                                headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
-                            }).then(function(response) {
-                                console.log(response);                        
-                            })    
-                        }); 
-                        location.reload();
+                        $http({
+                            method  : 'POST',
+                            url     : '../php/insert_recieptDetail.php',
+                            data    : { crd_cr_fk: response.data.AUTO_INCREMENT-1,
+                                        crd_cc_fk: value.cc_pk,
+                                        crd_amt: value.exvolumeRequest,
+                                        crd_price: 0,
+                                        crd_unit: value.cu_name_abb,
+                                        crd_status: '0'}, 
+                            headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
+                        }).then(function(response) {
+                            console.log(response)
+                        })    
+                    }); 
+                alert("ดำเนินการเพิ่มรายการเรียบร้อย");
+                location.reload();
             })
-            alert("ดำเนินการเพิ่มรายการเรียบร้อย");
         }
     }  
     })
