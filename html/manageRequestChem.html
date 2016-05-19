@@ -67,12 +67,42 @@
                 </td>  
             </tr>
           </table>
+        <table style="width:100%">
+            <tr>
+                <td style="text-align:right">ค่าใช้จ่ายรวม</td>
+                <td style="text-align:right">{{listReciept[index].cr_totalprice}}</td>
+                <td>บาท</td>
+            </tr>
+            <tr>
+                <td style="text-align:right">ยอดเงินคงเหลือของผู้เบิก</td>
+                <td style="text-align:right">{{listReciept[index].ca_credit}}</td>
+                <td>บาท</td>
+            </tr>
+            <tr>
+                <td style="text-align:right">คงเหลือ</td>
+                <td style="text-align:right">{{listReciept[index].ca_credit-listReciept[index].cr_totalprice}}</td>
+                <td>บาท</td>
+            </tr>
+            <tr>
+                <td style="text-align:right">ยอดเงินคงเหลือของโปรเจค</td>
+                <td style="text-align:right">{{listReciept[index].cp_budget}}</td>
+                <td>บาท</td>
+            </tr>
+            <tr>
+                <td style="text-align:right">คงเหลือ</td>
+                <td style="text-align:right">{{listReciept[index].cp_budget-listReciept[index].cr_totalprice}}</td>
+                <td>บาท</td>
+            </tr>
+        </table>
         </div>
         <div class="modal-footer">
-            ค่าใช้จ่ายรวม {{listReciept[index].cr_totalprice}} บาท
             <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
-            <button type="button" class="btn btn-danger" ng-click="cancelRequest()">ไม่อนุมัติ</button>
-            <button type="button" class="btn btn-success" ng-click="submitRequest()">อนุมัติ</button>
+            <button type="button" class="btn btn-danger" ng-click="cancelRequest()"
+                    ng-disabled="listReciept[index].cr_status == '3'">ไม่อนุมัติ</button>
+            <button type="button" class="btn btn-success" ng-click="submitRequest()" 
+                    ng-disabled="listReciept[index].cp_budget-listReciept[index].cr_totalprice < 0 ||
+                                 listReciept[index].cp_budget-listReciept[index].cp_budget||
+                                 listReciept[index].cr_status == '3'">อนุมัติ</button>
         </div>
     </div>
   </div>

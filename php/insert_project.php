@@ -28,17 +28,4 @@ if($result){
 else{
     die ("Error : ".mysql_error());
 }
-
-$sql = "UPDATE `chem_account` SET `ca_credit`='".$teacher_budget."' WHERE `ca_pk`='".$teacher_fk."'";
-
-$result = mysql_query($sql);
-
-if($result){
-    Print "\n Your information has been successfully added to the database."; 
-}
-else{
-    die ("Error : ".mysql_error());
-}
-
-
 ?>

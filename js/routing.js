@@ -14,7 +14,7 @@
           ).when(
             '/manageRequestChem',{
                 templateUrl: '../html/manageRequestChem.html', 
-                controller:  'submitRequestCtrl'
+                controller:  'submitChemRequestCtrl'
           }
           ).when(
             '/inboundChem',{
@@ -25,7 +25,7 @@
           ).when(
             '/viewReciept',{
                 templateUrl: '../html/viewReciept.html',
-                controller: 'recieptCtrl'
+                controller: 'receiptCtrl'
             }
           ).when(
             '/sold',{
@@ -110,7 +110,7 @@
           ).when(
             '/manageLendChem',{
                 templateUrl: '../html/manageLendChem.html',
-                controller: 'submitRequestCtrl'
+                controller: 'submitLendRequestCtrl'
             }   
           ).when(
             '/viewBudget',{

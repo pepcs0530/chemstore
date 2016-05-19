@@ -128,9 +128,8 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
         });
         $scope.selectData = "จุฬาภรณ์1";
         $http({
-            method  : 'POST',
+            method  : 'GET',
             url     : '../php/select_chemCategory.php',
-            data    : {cl_name: "ดูทั้งหมด"}, //forms user object
             headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
         }).then(function(response) {
             $scope.listChem = response.data;
@@ -138,7 +137,7 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
     })
 
 //  ยืนยันคำร้องขอ  ========================================================================================================
-    .controller('submitRequestCtrl', function($scope,$http) {
+    .controller('submitChemRequestCtrl', function($scope,$http) {
         $http({
             method  :   'POST',
             url     :   '../php/select_chemReceipt.php',
@@ -154,39 +153,41 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
             url     :   '../php/select_chemdetail.php',
             data    :   {crd_cr_fk: getdata}
             }).then(function(response) {
-            $scope.chemdetail = response.data;
-                console.log($scope.chemdetail);
+                $scope.chemdetail = response.data;
             });
         }
         
         $scope.cancelRequest = function() {
+            console.log($scope.listReciept[$scope.index].cr_cp_fk);
             $http({
             method  :   'POST',
             url     :   '../php/update_submitChemRequest.php',
             data    :   {cr_pk: $scope.listReciept[$scope.index].cr_pk,
-                        totalprice: $scope.listReciept[$scope.index].cr_totalprice,
-                        cr_cp_fk: $scope.listReciept[$scope.index].cr_cp_fk,
-                        status : 2}
+                         cr_cp_fk: $scope.listReciept[$scope.index].cr_cp_fk,
+                         cp_teach_fk: $scope.listReciept[$scope.index].cp_teach_fk,
+                         totalprice: $scope.listReciept[$scope.index].cr_totalprice,
+                         status : 2}
             }).then(function(data) {
                 console.log(data);
                 alert("ดำเนินการเรียบร้อย");
                 location.reload();
-                
             });
         }
+        
         $scope.submitRequest = function() {
+            console.log($scope.listReciept[$scope.index].cr_cp_fk);
             $http({
             method  :   'POST',
             url     :   '../php/update_submitChemRequest.php',
             data    :   {cr_pk: $scope.listReciept[$scope.index].cr_pk,
-                        totalprice: $scope.listReciept[$scope.index].cr_totalprice,
-                        cr_cp_fk: $scope.listReciept[$scope.index].cr_cp_fk,
-                        status : 1}
+                         cr_cp_fk: $scope.listReciept[$scope.index].cr_cp_fk,
+                         cp_teach_fk: $scope.listReciept[$scope.index].cp_teach_fk,
+                         totalprice: $scope.listReciept[$scope.index].cr_totalprice,
+                         status : 3}
             }).then(function(data) {
                 console.log(data);
                 alert("ดำเนินการเรียบร้อย");
                 location.reload();
-                
             });
         }
     })
@@ -256,7 +257,7 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
     })
 
 //  เบิกสาร  ============================================================================================================
-    .controller('recieptCtrl', function($scope,$http) {
+    .controller('receiptCtrl', function($scope,$http) {
     $scope.cartlist = [];
     $scope.begin = 0;
     $scope.options = [{
@@ -286,9 +287,8 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
     });
     
     $http({
-        method  : 'POST',
+        method  : 'GET',
         url     : '../php/select_chemCategory.php',
-        data    : {cl_name: "ดูทั้งหมด"}, //forms user object
         headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
     }).then(function(response) {
         $scope.listChem = response.data;
@@ -307,7 +307,7 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
                 $scope.begin = parseInt($scope.begin) + parseInt($scope.searchRange.value);
     }
     
-        $scope.addtCart = function (selectedData) {
+    $scope.addtCart = function (selectedData) {
         $scope.dupp = false;
         if(selectedData.cc_quantity > 0){
             if($scope.cartlist.length == 0)
@@ -415,7 +415,6 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
     
     $scope.createRequest = function(){
         $scope.cantRequest = 0;
-        $scope.cartlist.requesttype="chemrequest";
         //ตรวจสอบความถูกต้อง
         
         if($scope.cartlist.length == 0){
@@ -479,7 +478,7 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
                       new Date().getFullYear(), 
                     cr_cp_fk : $scope.selectedProject.cp_pk,
                     totalmoney : $scope.total,
-                    requesttype : $scope.cartlist.requesttype},
+                    requesttype : "chemrequest"},
                     
                     headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
                     }).then(function(response) {                
@@ -512,7 +511,6 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
         //    สร้างโปรเจค
         $scope.addProject = {teacher : $scope.session,
                              teacher_pk : $scope.key}
-        
         //    สร้างโปรเจค
         $http({
         method  : 'POST',
@@ -541,8 +539,7 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
                 data    : {teacher_pk: $scope.addProject.teacher_pk,
                            name: $scope.addProject.cp_name,
                            budget: $scope.addProject.cp_budget,
-                           desc: $scope.addProject.cp_desc,
-                           teacher_budget : $scope.listAcountData[0].ca_credit-$scope.addProject.cp_budget}, //forms user object
+                           desc: $scope.addProject.cp_desc}, //forms user object
                 headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
             }).then(function(data) {
                 console.log(data);
@@ -757,9 +754,8 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
     
         //  แสดงสารเคมี
         $http({
-            method  : 'POST',
+            method  : 'GET',
             url     : '../php/select_chemCategory.php',
-            data    : {cl_name: "ดูทั้งหมด"}, //forms user object
             headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
             }).then(function(response) {
                 $scope.listChem = response.data;
@@ -817,6 +813,7 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
                 });
         }
     })
+
 //  ประวัติการนำเข้าสาร  ============================================================================================================
     .controller('importlogCtrl', function($scope,$http) {
         //  แสดงใบเบิกสาร
@@ -972,38 +969,8 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
         
     })
 
-//  จัดการข้อมูลประชาสัมพันธ์===================================================================
-//    .controller('addNewsCtrl', function($scope,$http) {
-//    
-//        
-//        
-//        $scope.createNews = function(){
-//            alert("OK");
-//            $http.post("../php/create_news.php",{
-//                'title' : $scope.addNews.title, 
-//                'desc' : $scope.addNews.desc, 
-//                'link' : $scope.addNews.link
-//            }).success(function (data) {
-//                console.log(data);
-//            });
-//        }
-//        
-//        $scope.clearNews = function(){
-//            alert("Cancle");
-//        }
-//    })
-
     .controller('addNewsCtrl', function($scope, $http){
-//            $scope.uploadFile = function(){
-//               var file = $scope.myFile;
-//               
-//               console.log('file is ' );
-//               console.dir(file);
-//               
-//               var uploadUrl = "/fileUpload";
-//               fileUpload.uploadFileToUrl(file, uploadUrl);
-//            };
-        
+    
             $scope.uploadFileToUrl = function(file, uploadUrl){  
                alert("upload");
                var fd = new FormData();
@@ -1048,6 +1015,7 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
             
     })
     //ย้ายสารเคมี ======================================================================================
+
     .controller('exchangeCtrl', function($scope, $http){
         $scope.cartlist = [];
         $scope.begin = 0;
@@ -1076,9 +1044,8 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
         });
         
         $http({
-        method  : 'POST',
+        method  : 'GET',
         url     : '../php/select_chemCategory.php',
-        data    : {cl_name: "ดูทั้งหมด"}, //forms user object
         headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
         }).then(function(response) {
             $scope.listChem = response.data;
@@ -1271,125 +1238,119 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
     }  
     })
     //จัดการคำร้องขอย้ายคลังสารเคมี ================================================================
-.controller('submitRequestCtrl', function($scope,$http) {
-        $http({
-            method  :   'POST',
-            url     :   '../php/select_chemReceipt.php',
-            data    :   {findthis : "lendrequest"}
-        }).then(function(response) {
-            $scope.listReciept = response.data;
-            console.log($scope.listReciept);
-        });
-        $scope.showPopup = function (getdata,index) {
-            $scope.index = index;
+
+    .controller('submitLendRequestCtrl', function($scope,$http) {
             $http({
-            method  :   'POST',
-            url     :   '../php/select_chemdetail.php',
-            data    :   {crd_cr_fk: getdata}
+                method  :   'POST',
+                url     :   '../php/select_chemReceipt.php',
+                data    :   {findthis : "lendrequest"}
             }).then(function(response) {
-            $scope.chemdetail = response.data;
-                console.log($scope.chemdetail);
+                $scope.listReciept = response.data;
+                console.log($scope.listReciept);
             });
-        }
-        
-        $scope.cancelRequest = function() {
-            $http({
-            method  :   'POST',
-            url     :   '../php/update_submitChemRequest.php',
-            data    :   {cr_pk: $scope.listReciept[$scope.index].cr_pk,
-                        status : 2}
-            }).then(function(data) {
-                console.log(data);
-                alert("ดำเนินการเรียบร้อย");
-                location.reload();
+            $scope.showPopup = function (getdata,index) {
+                $scope.index = index;
+                $http({
+                method  :   'POST',
+                url     :   '../php/select_chemdetail.php',
+                data    :   {crd_cr_fk: getdata}
+                }).then(function(response) {
+                $scope.chemdetail = response.data;
+                    console.log($scope.chemdetail);
+                });
+            }
+
+            $scope.cancelRequest = function() {
                 
-            });
-        }
-        $scope.submitRequest = function() {
-            $http({
-            method  :   'POST',
-            url     :   '../php/update_submitLendRequest.php',
-            data    :   {cr_pk: $scope.listReciept[$scope.index].cr_pk,
-                        status : 1}
-            }).then(function(data) {
-                console.log(data);
-                alert("ดำเนินการเรียบร้อย");
-                location.reload();
-                
-            });
-        }
-    }).controller('viewBudgetCtrl', function($scope, $http){
-        jQuery('#container').highcharts({
-            chart: {
-                type: 'column'
-            },
-            title: {
-                text: 'World\'s largest cities per 2014'
-            },
-            subtitle: {
-                text: 'Source: <a href="http://en.wikipedia.org/wiki/List_of_cities_proper_by_population">Wikipedia</a>'
-            },
-            xAxis: {
-                type: 'category',
-                labels: {
-                    rotation: -45,
-                    style: {
-                        fontSize: '13px',
-                        fontFamily: 'Verdana, sans-serif'
-                    }
-                }
-            },
-            yAxis: {
-                min: 0,
+            }
+            
+            $scope.submitRequest = function() {
+                $http({
+                method  :   'POST',
+                url     :   '../php/update_submitLendRequest.php',
+                data    :   {cr_pk: $scope.listReciept[$scope.index].cr_pk,
+                            status : 1}
+                }).then(function(data) {
+                    console.log(data);
+                    alert("ดำเนินการเรียบร้อย");
+                    location.reload();
+
+                });
+            }
+        })
+    
+    .controller('viewBudgetCtrl', function($scope, $http){
+            jQuery('#container').highcharts({
+                chart: {
+                    type: 'column'
+                },
                 title: {
-                    text: 'Population (millions)'
-                }
-            },
-            legend: {
-                enabled: false
-            },
-            tooltip: {
-                pointFormat: 'Population in 2008: <b>{point.y:.1f} millions</b>'
-            },
-            series: [{
-                name: 'Population',
-                data: [
-                    ['Shanghai', 23.7],
-                    ['Lagos', 16.1],
-                    ['Istanbul', 14.2],
-                    ['Karachi', 14.0],
-                    ['Mumbai', 12.5],
-                    ['Moscow', 12.1],
-                    ['São Paulo', 11.8],
-                    ['Beijing', 11.7],
-                    ['Guangzhou', 11.1],
-                    ['Delhi', 11.1],
-                    ['Shenzhen', 10.5],
-                    ['Seoul', 10.4],
-                    ['Jakarta', 10.0],
-                    ['Kinshasa', 9.3],
-                    ['Tianjin', 9.3],
-                    ['Tokyo', 9.0],
-                    ['Cairo', 8.9],
-                    ['Dhaka', 8.9],
-                    ['Mexico City', 8.9],
-                    ['Lima', 8.9]
-                ],
-                dataLabels: {
-                    enabled: true,
-                    rotation: -90,
-                    color: '#FFFFFF',
-                    align: 'right',
-                    format: '{point.y:.1f}', // one decimal
-                    y: 10, // 10 pixels down from the top
-                    style: {
-                        fontSize: '13px',
-                        fontFamily: 'Verdana, sans-serif'
+                    text: 'World\'s largest cities per 2014'
+                },
+                subtitle: {
+                    text: 'Source: <a href="http://en.wikipedia.org/wiki/List_of_cities_proper_by_population">Wikipedia</a>'
+                },
+                xAxis: {
+                    type: 'category',
+                    labels: {
+                        rotation: -45,
+                        style: {
+                            fontSize: '13px',
+                            fontFamily: 'Verdana, sans-serif'
+                        }
                     }
-                }
-            }]
-        });
-    })
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: 'Population (millions)'
+                    }
+                },
+                legend: {
+                    enabled: false
+                },
+                tooltip: {
+                    pointFormat: 'Population in 2008: <b>{point.y:.1f} millions</b>'
+                },
+                series: [{
+                    name: 'Population',
+                    data: [
+                        ['Shanghai', 23.7],
+                        ['Lagos', 16.1],
+                        ['Istanbul', 14.2],
+                        ['Karachi', 14.0],
+                        ['Mumbai', 12.5],
+                        ['Moscow', 12.1],
+                        ['São Paulo', 11.8],
+                        ['Beijing', 11.7],
+                        ['Guangzhou', 11.1],
+                        ['Delhi', 11.1],
+                        ['Shenzhen', 10.5],
+                        ['Seoul', 10.4],
+                        ['Jakarta', 10.0],
+                        ['Kinshasa', 9.3],
+                        ['Tianjin', 9.3],
+                        ['Tokyo', 9.0],
+                        ['Cairo', 8.9],
+                        ['Dhaka', 8.9],
+                        ['Mexico City', 8.9],
+                        ['Lima', 8.9]
+                    ],
+                    dataLabels: {
+                        enabled: true,
+                        rotation: -90,
+                        color: '#FFFFFF',
+                        align: 'right',
+                        format: '{point.y:.1f}', // one decimal
+                        y: 10, // 10 pixels down from the top
+                        style: {
+                            fontSize: '13px',
+                            fontFamily: 'Verdana, sans-serif'
+                        }
+                    }
+                }]
+            });
+        })
 // user ซีเนียรดูสถานะคำร้องย้ายคลัง ==============================================================================
     .controller('seniorRequestChemCtrl', function($scope, $http){
          $http({
