@@ -1,8 +1,8 @@
 <?php
     include '../../php/connect.php';
     date_default_timezone_set('Asia/Bangkok');
-    $_POST = json_decode(file_get_contents('php://input'), true);
-
+//    $_POST = json_decode(file_get_contents('php://input'), true);
+    
     //-------------------------------------------------------------
 
     if (isset($_POST["crd_cr_fk"])) {
@@ -11,7 +11,6 @@
         $fk = "" ;  
     }
 
-    $fk = 80;
     
     $sql = "SELECT * FROM `chem_receipt_detail`
         INNER JOIN `chem_category`
@@ -37,6 +36,7 @@
 
     // create new PDF document
     $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+    
 
     // set document information
     $pdf->SetCreator(PDF_CREATOR);
@@ -152,7 +152,7 @@
         $pdf->Cell(50, 0, $row['cc_name'], 1, 0, 'L', 0, '', 0);
         $pdf->Cell(15, 0, $row['crd_amt']." ".$row['crd_unit'], 1, 0, 'C', 0, '', 0);
         $pdf->Cell(20, 0, $row['crd_price']." บาท", 1, 0, 'C', 0, '', 0);
-        $pdf->Cell(25, 0, $row['crd_amt'] * $row['crd_price']." บาท", 1, 0, 'C', 0, '', 0);
+        $pdf->Cell(25, 0, $row['crd_price']." บาท", 1, 0, 'C', 0, '', 0);
         $pdf->Cell(20, 0, $row['cl_name_abb']." ".$row['cc_room'], 1, 0, 'C', 0, '', 0);
         $pdf->Cell(20, 0, '', 1, 0, 'C', 0, '', 0);
         $pdf->Ln();

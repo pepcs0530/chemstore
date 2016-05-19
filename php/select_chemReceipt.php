@@ -11,7 +11,8 @@
     }
 
     if($findthis == "chemrequest") {
-        $sql = "SELECT * FROM chem_receipt WHERE `cr_status` = '0' AND cr_type = 'chemrequest' ORDER BY cr_crtDt DESC";
+//        $sql = "SELECT * FROM chem_receipt WHERE `cr_status` = '0' AND cr_type = 'chemrequest' ORDER BY cr_crtDt DESC";
+        $sql = "SELECT * FROM chem_receipt WHERE cr_type = 'chemrequest' ORDER BY cr_crtDt DESC";
     }else if($findthis == "lendrequest") {
         $sql = "SELECT * FROM chem_receipt WHERE `cr_status` = '0' AND cr_type = 'lendrequest' ORDER BY cr_crtDt DESC";
     }

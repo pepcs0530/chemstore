@@ -475,7 +475,7 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
                       new Date().getMinutes() +
                       new Date().getHours() +
                       new Date().getDate() + 
-                     (new Date().getMonth()+1) + 
+                     (+"0"+new Date().getMonth()+1) + 
                       new Date().getFullYear(), 
                     cr_cp_fk : $scope.selectedProject.cp_pk,
                     totalmoney : $scope.total,
@@ -870,6 +870,7 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
             $scope.ListReciept = response.data;
         });
         $scope.showPopup = function (getdata,index) {
+            console.log($scope.ListReciept[index]);
             $scope.index = index;
             $http({
             method  :   'POST',

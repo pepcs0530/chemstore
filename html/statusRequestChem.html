@@ -31,8 +31,12 @@
         <td ng-hide="key == 3"> 
         {{showdata.cr_totalprice}}
         </td>
-        <td><input type="button" value="แสดง" ng-click="showPopup(showdata.cr_pk,$index)" 
-                   data-toggle="modal" data-target="#myModal">
+        <td>
+          <form action="../tcpdf/examples/export_pdf_withdraw.php" target="_blank" method="post">
+              <input type="hidden" value="{{showdata.cr_pk}}" name="crd_cr_fk">
+              <input type="submit" class="btn btn-default" data-dismiss="modal" ng-hide="showdata.cr_status == 0 || showdata.cr_status == 2" value="พิมพ์ใบเสร็จ">
+              <input type="button" class="btn btn-default" value="แสดง" ng-click="showPopup(showdata.cr_pk,$index)" data-toggle="modal" data-target="#myModal">
+          </form>
         </td>
     </tr>
 </table> 
@@ -71,8 +75,10 @@
       </div>
       <div class="modal-footer">
           <label ng-hide="key == 3">ค่าใช้จ่ายรวมทั้งสิ้น : {{ListReciept[index].cr_totalprice}}</label>
+
         <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
       </div>
     </div>
   </div>
 </div>  
+
