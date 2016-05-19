@@ -117,6 +117,11 @@
                 templateUrl: '../html/viewBudget.html',
                 controller: 'viewBudgetCtrl'
             }   
+          ).when(
+            '/seniorRequestChem',{
+                templateUrl: '../html/seniorRequestChem.html',
+                controller: 'seniorRequestChemCtrl'
+            }   
           ).otherwise({
                 redirectTo: '/news'
       	  }); 
