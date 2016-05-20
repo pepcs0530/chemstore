@@ -506,9 +506,38 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
             console.log($scope.listReciept);
         });
     
-        $scope.addCart = function (selectedData) {
+        $scope.showpop = function (selectedData) {
             $scope.crd_cr_pk = selectedData.cr_pk;
             
+            //  แสดงใบเบิกสาร
+            $http({
+                method  :   'POST',
+                url     :   '../php/select_chemdetail.php',
+                data    :   {
+                    'crd_cr_fk' : $scope.crd_cr_pk
+                }
+            }).then(function(response) {
+                $scope.listRecieptDetail = response.data;
+            });
+        }
+    })
+
+
+//  ประวัติการย้ายคลัง  ============================================================================================================
+    .controller('ExchangeLogCtrl', function($scope,$http) {
+        //  แสดงใบเบิกสาร    
+        $http({
+                method  :   'POST',
+                url     :   '../php/select_logExchange.php',
+                data    :   {type:"all"}
+        }).then(function(response) {
+            $scope.listReciept = response.data;
+            console.log($scope.listReciept);
+        });
+    
+        $scope.showpop = function (selectedData) {
+            $scope.crd_cr_pk = selectedData.cr_pk;
+            console.log(selectedData);
             //  แสดงใบเบิกสาร
             $http({
                 method  :   'POST',
@@ -562,8 +591,8 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
         });
     })
 
-    //  ประวัติคำร้องขออื่นๆของอาจารย์  ============================================================================================================
-    .controller('teacherOtherlogCtrl', function($scope,$http) {
+    //  ประวัติคำร้องขออื่นๆของทุกสิท  ============================================================================================================
+    .controller('allOtherlogCtrl', function($scope,$http) {
         //  แสดงใบเบิกสาร    
         $http({
                 method  :   'POST',
@@ -1056,6 +1085,7 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
         }    
     }) 
 
+// สร้างข่าว ===============================================================================================
     .controller('addNewsCtrl', function($scope, $http){
     
             $scope.uploadFileToUrl = function(file, uploadUrl){  
@@ -1101,11 +1131,9 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
             }
             
     })
-    //ย้ายสารเคมี ======================================================================================
 
-//  ตรวจถึงตรงนี้
-
-    .controller('exchangeCtrl', function($scope, $http){
+//ย้ายสารเคมี ======================================================================================
+    .controller('seniorExchangeCtrl', function($scope, $http){
         $scope.cartlist = [];
         $scope.begin = 0;
         $scope.options = [{
@@ -1148,6 +1176,7 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
                     }
         ).then(function(response) {
             $scope.listAcountData = response.data;
+            $scope.tostore = $scope.listAcountData.ca_responplace;
         });
     
         $scope.deleteRecord = function () {
@@ -1244,13 +1273,15 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
         
         $scope.createRequest = function(){
         $scope.cantRequest = 0;
-        $scope.cartlist.cr_desc="ไม่ระบุเหตุผล";
         $scope.fromstore = "จุฬาภรณ์1";
-        $scope.tostore = "จุฬาภรณ์1";
         //ตรวจสอบความถูกต้อง
         
         if($scope.cartlist.length == 0){
             alert("ไม่มีรายการสินค้า");
+            $scope.cantRequest = -1;
+        }
+        else if($scope.fromstore == $scope.tostore){
+            alert("ท่านไม่สามารถย้ายสารในคลังที่คุณรับผิดชอบได้");
             $scope.cantRequest = -1;
         }
         else{
@@ -1308,7 +1339,7 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
                         $http({
                             method  : 'POST',
                             url     : '../php/insert_recieptDetail.php',
-                            data    : { crd_cr_fk: response.data.AUTO_INCREMENT-1,
+                            data    : { crd_cr_fk: response.data.cr_pk,
                                         crd_cc_fk: value.cc_pk,
                                         crd_amt: value.exvolumeRequest,
                                         crd_price: 0,
@@ -1326,6 +1357,63 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
     }  
     })
 
+// user ซีเนียรดูสถานะคำร้องย้ายคลัง ==============================================================================
+    .controller('seniorExchangeStatusCtrl', function($scope, $http){
+         $http({
+            method  :   'POST',
+            url     :   '../php/select_chemReceipt.php',
+            data    :   {findthis: $scope.key}
+        }).then(function(response) {
+            $scope.ListReciept = response.data;
+             console.log( $scope.ListReciept );
+        });
+        $scope.showPopup = function (getdata,index) {
+            $scope.index = index;
+            $http({
+            method  :   'POST',
+            url     :   '../php/select_chemdetail.php',
+            data    :   {crd_cr_fk: getdata}
+        }).then(function(response) {
+            $scope.chemdetail = response.data;
+        });
+        }
+    })
+
+// reportรายงานสถานะสารล่าสุด ========================================================================================================
+    .controller('viewRemainChemCtrl', function($scope, $http){
+    
+        
+    })
+
+// ประวัติการย้ายคลัง ========================================================================================================
+    .controller('seniorExchangeLogCtrl', function($scope, $http){
+    //  แสดงใบเบิกสาร    
+        $http({
+                method  :   'POST',
+                url     :   '../php/select_logExchange.php',
+                data    :   {type:$scope.key}
+        }).then(function(response) {
+            $scope.listReciept = response.data;
+            console.log($scope.listReciept);
+        });
+    
+        $scope.showpop = function (selectedData) {
+            $scope.crd_cr_pk = selectedData.cr_pk;
+            
+            //  แสดงใบเบิกสาร
+            $http({
+                method  :   'POST',
+                url     :   '../php/select_chemdetail.php',
+                data    :   {
+                    'crd_cr_fk' : $scope.crd_cr_pk
+                }
+            }).then(function(response) {
+                $scope.listRecieptDetail = response.data;
+            });
+        }
+    })
+
+//ตรวจถึงตรงนี้
     .controller('viewBudgetCtrl', function($scope, $http){
             jQuery('#container').highcharts({
                 chart: {
@@ -1397,32 +1485,6 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
                     }
                 }]
             });
-    })
-
-// user ซีเนียรดูสถานะคำร้องย้ายคลัง ==============================================================================
-    .controller('seniorExchangeStatusCtrl', function($scope, $http){
-         $http({
-            method  :   'POST',
-            url     :   '../php/select_chemReceipt.php',
-            data    :   {findthis: $scope.key}
-        }).then(function(response) {
-            $scope.ListReciept = response.data;
-             console.log( $scope.ListReciept );
-        });
-        $scope.showPopup = function (getdata,index) {
-            $scope.index = index;
-            $http({
-            method  :   'POST',
-            url     :   '../php/select_chemdetail.php',
-            data    :   {crd_cr_fk: getdata}
-        }).then(function(response) {
-            $scope.chemdetail = response.data;
-        });
-        }
-    })
-
-// ดูรายงานสถานะสาร ========================================================================================================
-    .controller('viewRemainChemCtrl', function($scope, $http){
-    
-        
     });
+
+    

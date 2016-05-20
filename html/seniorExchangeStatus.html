@@ -14,8 +14,7 @@
         <th>เลขที่ใบเสร็จ</th>
         <th>วัน-เวลาที่ร้องขอ</th>
         <th>สถานะการร้องขอ</th>
-        <th>ราคารวมทั้งสิ้น</th>
-        <th>รายละเอียด</th>
+        <th>รายละเอียด</th> 
     </tr>
     <tr ng-repeat="showdata in ListReciept">
         <td>
@@ -28,9 +27,6 @@
         {{showdata.cr_crtDt}}
         </td>
         <td ng-bind-html="showdata.cr_status | confirmFilter"></td>
-        <td> 
-        {{showdata.cr_totalprice}}
-        </td>
         <td>
           <form action="../tcpdf/examples/export_pdf_withdraw.php" target="_blank" method="post">
               <input type="hidden" value="{{showdata.cr_pk}}" name="crd_cr_fk">
@@ -54,7 +50,6 @@
                 <th>ชื่อสารเคมี</th>
                 <th>จำนวน</th>
                 <th>หน่วย</th>
-                <th ng-hide="key == 3">ราคา</th>
             </tr>
             <tr ng-repeat="showdata in chemdetail">
                 <td>
@@ -66,9 +61,6 @@
                 <td>
                     {{showdata.crd_unit}}
 
-                </td>  
-                <td>
-                    {{showdata.crd_price}}
                 </td>  
             </tr>
           </table>

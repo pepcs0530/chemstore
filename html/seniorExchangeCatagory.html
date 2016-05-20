@@ -10,7 +10,7 @@
 <ul class="nav navbar-nav">
     <form class="navbar-form navbar-left">
         <strong>คลังต้นทาง :</strong>
-        <select   ng-model="fromstore" ng-change="getdata()">
+        <select   ng-model="fromstore">
             <option ng-repeat="lu in listLocation" value="{{lu.cl_name}}" >{{lu.cl_name}}</option>
         </select>
     </form>
@@ -62,7 +62,7 @@
 <caption><h4><i class="glyphicon glyphicon-shopping-cart"></i>&nbsp;สารเคมีที่ย้ายเข้า</h4></caption>
 <form class="navbar-form navbar-left">
     <strong>คลังปลายทาง :</strong>
-    <select   ng-model="listAcountData[0].ca_responplace" ng-change="getdata()">
+    <select   ng-model="listAcountData[0].ca_responplace" ng-disabled="true">
         <option ng-repeat="lu in listLocation" value="{{lu.cl_name}}" >{{lu.cl_name}}</option>
     </select>
 </form>
@@ -115,4 +115,5 @@
     </tr>
 </table>
 
-<button class="btn btn-success" type="submit" value="ยืนยันการยืม" ng-click="createRequest()" >ยืนยันการเบิก</button>
+<button class="btn btn-success" type="submit" value="ยืนยันการยืม" ng-click="createRequest()" >ยืนยันการย้าย</button>
+<br><br>

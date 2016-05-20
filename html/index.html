@@ -72,6 +72,7 @@
                   <ul class="dropdown-menu" >
                     <li><a href="#/importlog"  >ประวัติการนำเข้า</a></li>
                     <li><a href="#/receiptlog"  >ประวัติการเบิกสาร</a></li>
+                    <li><a href="#/ExchangeLog">ประวัติการย้ายคลัง</a></li>
                     <li><a href="#/otherlog"  >ประวัติคำร้องขออื่นๆ</a></li>
                   </ul>
                 </li>
@@ -102,6 +103,7 @@
                             <li><a href="#/sold">ขายคืน</a></li>
                         </ul>
                     </li>
+                    <li><a href="#/viewStock"><i class="fa fa-flask" aria-hidden="true"></i>&nbsp;คลังสารเคมี</a></li>
                     <li class="dropdown" ng-show ="type == '2'"><a class="dropdown-toggle" data-toggle="dropdown" ><i class="fa fa-folder" aria-hidden="true"></i>&nbsp;จัดการโปรเจค<span class="caret"></span></a>
                         <ul class="dropdown-menu" >
                             <li><a href="#/viewProject">แสดงโปรเจค</a></li>
@@ -128,14 +130,20 @@
                 
                 <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown">จัดการคำร้องขอ<span class="caret"></span></a>
                     <ul class="dropdown-menu" >
-                      <li><a href="#/seniorExchangeStatusCtrl"><i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;สถานะคำร้องขอย้ายคลัง</a></li>
+                      <li><a href="#/seniorExchangeStatus"><i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;สถานะคำร้องขอย้ายคลัง</a></li>
                     </ul>
                 </li>
-                
+                <li><a href="#/viewStock"><i class="fa fa-flask" aria-hidden="true"></i>&nbsp;คลังสารเคมี</a></li>
                 <li class="dropdown" ><a class="dropdown-toggle" data-toggle="dropdown" ><i class="fa fa-folder" aria-hidden="true"></i>&nbsp;ส่งคำร้องขอ<span class="caret"></span></a>
                     <ul class="dropdown-menu" >
-                        <li><a href="#/exchangeCatagory">ย้ายคลังสารเคมี</a></li>
-                        <li><a href="#/requestOther">ส่งคำร้องอื่นๆ</a></li>
+                        <li><a href="#/seniorExchangeCatagory">ย้ายคลังสารเคมี</a></li>
+                        <li><a href="#/addOtherCtrl">ส่งคำร้องอื่นๆ</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" ><i class="fa fa-folder" aria-hidden="true"></i>&nbsp;ประวัติรายการ<span class="caret"></span></a>
+                    <ul class="dropdown-menu" >
+                        <li><a href="#/seniorExchangeLog">ประวัติการย้ายคลัง</a></li>
+                        <li><a href="#/seniorOtherlog">ประวัติคำร้องอื่นๆ</a></li>
                     </ul>
                 </li>
             </ul>

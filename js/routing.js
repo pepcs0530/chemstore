@@ -18,7 +18,7 @@
           }
           ).when(
             '/inboundChem',{
-                templateUrl: '../html/inboundChem.html',
+                templateUrl: '../html/manageInboundChem.html',
                 controller:  'inboundChemCtrl'
 
             }
@@ -34,7 +34,7 @@
             }
           ).when(
             '/viewProject',{
-                templateUrl: '../html/viewProject.html',
+                templateUrl: '../html/teacherViewProject.html',
                 controller: 'viewProjectCtrl'
             } 
           ).when(
@@ -69,7 +69,7 @@
             }  
           ).when(
             '/addMember',{
-                templateUrl: '../html/addMember.html',
+                templateUrl: '../html/manageAddMember.html',
                 controller: 'addMembersCtrl'
             }  
           ).when(
@@ -79,7 +79,7 @@
             }  
           ).when(
             '/addProject',{
-                templateUrl: '../html/addProject.html',
+                templateUrl: '../html/teacherAddProject.html',
                 controller: 'addProjectCtrl'
             } 
            ).when(
@@ -104,13 +104,13 @@
             }   
           ).when(
             '/addNews',{
-                templateUrl: '../html/addNews.html',
+                templateUrl: '../html/manageAddNews.html',
                 controller: 'addNewsCtrl'
             }   
           ).when(
-            '/exchangeCatagory',{
-                templateUrl: '../html/exchangeCatagory.html',
-                controller: 'exchangeCtrl'
+            '/seniorExchangeCatagory',{
+                templateUrl: '../html/seniorExchangeCatagory.html',
+                controller: 'seniorExchangeCtrl'
             }   
           ).when(
             '/manageExchangeChem',{
@@ -123,8 +123,8 @@
                 controller: 'viewBudgetCtrl'
             }   
           ).when(
-            '/seniorExchangeStatusCtrl',{
-                templateUrl: '../html/seniorExchangeStatusCtrl.html',
+            '/seniorExchangeStatus',{
+                templateUrl: '../html/seniorExchangeStatus.html',
                 controller: 'seniorExchangeStatusCtrl'
             }   
           ).when(
@@ -140,7 +140,22 @@
           ).when(
             '/teacherOtherlog',{
                 templateUrl: '../html/logOther.html',
-                controller: 'teacherOtherlogCtrl'
+                controller: 'allOtherlogCtrl'
+            }   
+          ).when(
+            '/seniorOtherlog',{
+                templateUrl: '../html/logOther.html',
+                controller: 'allOtherlogCtrl'
+            }   
+          ).when(
+            '/seniorExchangeLog',{
+                templateUrl: '../html/logExchang.html',
+                controller: 'seniorExchangeLogCtrl'
+            }   
+          ).when(
+            '/ExchangeLog',{
+                templateUrl: '../html/logExchang.html',
+                controller: 'ExchangeLogCtrl'
             }   
           ).otherwise({
                 redirectTo: '/news'

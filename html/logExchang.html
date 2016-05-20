@@ -11,20 +11,20 @@
 
 <table class= " table table-bordered" >
     <tr>
+        <th>ลำดับ</th>
         <th>วันที่-เวลา</th>
         <th>เลขที่ใบเบิก</th>
         <th>บัญชีผู้ใช้</th>
-        <th>โปรเจค</th>
-        <th style="text-align: center;">รายละเอียด</th>
+        <th>รายละเอียด</th>
     </tr>
     <tr ng-repeat="showdata in listReciept">
+        <td>{{$index+1}}</td>
         <td>
             วันที่เขียนคำร้อง {{showdata.cr_crtDt | Datetime}}<br>
             วันที่ได้รับอนุมัติ {{showdata.cr_updDt | Datetime}}
         </td>
         <td>{{showdata.cr_no}}</td>
         <td>{{showdata.ca_tname+" "+showdata.ca_fname+" "+showdata.ca_lname}}</td>
-        <td>{{showdata.cp_name}}</td>
         <td style="text-align: center;"><button type="button" class="btn btn-default" value="แสดง" ng-click="showpop(showdata)" data-toggle="modal" data-target="#myModal">แสดง</button></td>
     </tr>
 </table> 
@@ -44,7 +44,6 @@
                 <th>จำนวน</th>
                 <th>หน่วย</th>
                 <th>คลัง</th>
-                <th>ราคา</th>
             </tr>
             <tr ng-repeat="showdata in listRecieptDetail">
                 <td>
@@ -59,9 +58,6 @@
                 <td>
                     {{showdata.cl_name}}
                 </td>
-                <td>
-                    {{showdata.crd_price}}&nbsp;บาท
-                </td>  
             </tr>
           </table>
       </div>
