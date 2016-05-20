@@ -67,6 +67,10 @@
     $pdf->SetFont('freeserif','B',16);
     $pdf->Text(75,30,"แบบฟอร์มย้ายคลังสารเคมี");
 
+    $pdf->SetFont('freeserif','',12);
+    $pdf->Ln(10);
+    $pdf->Cell(35, 0, 'ชื่อ-นามสกุล ผู้ขอเบิก', 1, 0, 'L', 0, '', 0);
+
     $pdf->Output('export_pdf_transfer.pdf', 'I');
 
 ?>
