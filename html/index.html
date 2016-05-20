@@ -21,14 +21,14 @@
     <link rel="stylesheet" href="../css/app.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <script type="text/javascript" src="../js/lib/ui-bootstrap-tpls.min.js"></script>
-
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    
     <script src="../js/chemstoreApp.js"></script>
     <script src="../js/routing.js"></script>
     <script src="../js/chemstoreController.js"></script>
     <script src="../js/chemstoreFliter.js"></script>
-    
-    <script src="https://code.highcharts.com/highcharts.js"></script>
-    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+  
 
   <body ng-controller ="loginCtrl" ng-init="checkSession(); checked=true; dis=true; btng1=true; btng2=true; btng3=true; fix=true">
     <div class="masthead">
@@ -54,36 +54,27 @@
               <ul class="nav navbar-nav">
                 <li><a href="#/news"><i class="fa fa-home" aria-hidden="true"></i>&nbsp;หน้าหลัก</a></li>
 
-                <li class="dropdown" ng-show ="type == '1'"><a class="dropdown-toggle" data-toggle="dropdown" ><i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;จัดการคำร้องขอ <span class="badge">{{sumNoti}}</span><span class="caret"></span></a>
+                <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" ><i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;จัดการคำร้องขอ <span class="badge">{{sumNoti}}</span><span class="caret"></span></a>
                     <ul class="dropdown-menu" >
                       <li role="presentation"><a href="#/manageRequestChem">คำร้องขอสารเคมี <span class="badge">{{requestChemNoti}}</span></a></li>
-                      <li role="presentation"><a href="#/manageLendChem">คำร้องขอย้ายสารเคมี <span class="badge">{{requestChemNoti}}</span></a></li>
-    <!--                  <li role="presentation"><a href="#/manageRequestChemIncrease">คำร้องขอสารเคมีเพิ่ม <span class="badge">{{requestChemIncreaseNoti}}</span></a></li>-->
+                      <li role="presentation"><a href="#/manageExchangeChem">คำร้องขอย้ายสารเคมี <span class="badge">{{requestChemNoti}}</span></a></li>
                       <li role="presentation"><a href="#/manageRequestOther">คำร้องขออื่นๆ <span class="badge">{{requestOtherNoti}}</span></a></li>
                     </ul>
                 </li>
 
-                <li><a href="#/viewStock" ng-show ="type == '1'" ><i class="fa fa-flask" aria-hidden="true"></i>&nbsp;คลังสารเคมี</a></li>
+                <li><a href="#/viewStock"><i class="fa fa-flask" aria-hidden="true"></i>&nbsp;คลังสารเคมี</a></li>
 
-                <li><a href="#/viewReciept" ng-show ="type == '1'" ><i class="fa fa-upload" aria-hidden="true"></i>&nbsp;เบิกสารเคมี</a></li>
+                <li><a href="#/inboundChem"><i class="fa fa-download" aria-hidden="true"></i>&nbsp;นำเข้าสารเคมี</a></li>
 
-                <li><a href="#/inboundChem" ng-show ="type == '1'" ><i class="fa fa-download" aria-hidden="true"></i>&nbsp;นำเข้าสารเคมี</a></li>
+                <li><a href="#/editChem"><i class="fa fa-pencil" aria-hidden="true"></i>&nbsp;แก้ไขข้อมูลสารเคมี</a></li>
 
-                <li><a href="#/sold" ng-show ="type == '1'"><i class="fa fa-shopping-bag" aria-hidden="true"></i>&nbsp;ขายคืน</a></li>
-
-                <li><a href="#/exchangeCatagory" ng-show ="type == '1'"><i class="fa fa-reply" aria-hidden="true"></i>&nbsp;ย้ายคลัง</a></li>
-
-                <li><a href="#/editChem" ng-show ="type == '1'"><i class="fa fa-pencil" aria-hidden="true"></i>&nbsp;แก้ไขข้อมูลสารเคมี</a></li>
-
-                <li class="dropdown" ng-show ="type == '1'"><a class="dropdown-toggle" data-toggle="dropdown" ><i class="fa fa-folder" aria-hidden="true"></i>&nbsp;ประวัติรายการ<span class="caret"></span></a>
+                <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" ><i class="fa fa-folder" aria-hidden="true"></i>&nbsp;ประวัติรายการ<span class="caret"></span></a>
                   <ul class="dropdown-menu" >
                     <li><a href="#/importlog"  >ประวัติการนำเข้า</a></li>
-                    <li><a href="#/withdrawlog"  >ประวัติการเบิกสาร</a></li>
-                    <li><a href="#/salelog"  >ประวัติการขายคืน</a></li>
+                    <li><a href="#/receiptlog"  >ประวัติการเบิกสาร</a></li>
+                    <li><a href="#/otherlog"  >ประวัติคำร้องขออื่นๆ</a></li>
                   </ul>
                 </li>
-
-<!--                  <li><a href="#/statusRequestChem" ng-show ="type == '2'" ><i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;สถานะคำร้อง</a></li>-->
               </ul>
             </div>
         </div>
@@ -103,11 +94,11 @@
               <div class="collapse navbar-collapse">
                   <ul class="nav navbar-nav" style="margin-right:27%;">
                     <li><a href="#/news"><i class="fa fa-home" aria-hidden="true"></i>&nbsp;หน้าหลัก</a></li>
-                    <li><a href="#/statusRequestChem" ng-show ="type == '2'" ><i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;สถานะคำร้อง</a></li>
+                    <li><a href="#/teacherRequestChem" ng-show ="type == '2'" ><i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;สถานะคำร้อง</a></li>
                     <li class="dropdown" ng-show ="type == '2'"><a class="dropdown-toggle" data-toggle="dropdown" ><i class="fa fa-folder" aria-hidden="true"></i>&nbsp;ส่งคำร้องขอ<span class="caret"></span></a>
                         <ul class="dropdown-menu" >
-                            <li><a href="#/viewReciept">เบิกสารเคมี</a></li>
-                            <li><a href="#/requestOther">ส่งคำร้องขออื่นๆ</a></li>
+                            <li><a href="#/teacherAddReciept">เบิกสารเคมี</a></li>
+                            <li><a href="#/addOtherCtrl">ส่งคำร้องขออื่นๆ</a></li>
                             <li><a href="#/sold">ขายคืน</a></li>
                         </ul>
                     </li>
@@ -119,8 +110,9 @@
                     </li>
                     <li class="dropdown" ng-show ="type == '2'"><a class="dropdown-toggle" data-toggle="dropdown" ><i class="fa fa-folder" aria-hidden="true"></i>&nbsp;ประวัติรายการ<span class="caret"></span></a>
                         <ul class="dropdown-menu" >
-                            <li><a href="#/withdrawlog">เบิกสาร</a></li>
-                            <li><a href="#/salelog">ขายคืน</a></li>
+                            <li><a href="#/teacherReceiptlog">ประวัติการเบิกสาร</a></li>
+                            <li><a href="#/teacherOtherlog">ประวัติคำร้องอื่นๆ</a></li>
+                            <li><a href="#/salelog">ประวัติการขายคืน</a></li>
                         </ul>
                     </li>
                   </ul>
@@ -133,7 +125,13 @@
         <div class="collapse navbar-collapse">
             <ul class="nav navbar-nav" style="margin-right:35%;">
                 <li><a href="#/news"><i class="fa fa-home" aria-hidden="true"></i>&nbsp;หน้าหลัก</a></li>
-                <li><a href="#/statusRequestChem"><i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;สถานะคำร้องขอ</a></li>
+                
+                <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown">จัดการคำร้องขอ<span class="caret"></span></a>
+                    <ul class="dropdown-menu" >
+                      <li><a href="#/seniorExchangeStatusCtrl"><i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;สถานะคำร้องขอย้ายคลัง</a></li>
+                    </ul>
+                </li>
+                
                 <li class="dropdown" ><a class="dropdown-toggle" data-toggle="dropdown" ><i class="fa fa-folder" aria-hidden="true"></i>&nbsp;ส่งคำร้องขอ<span class="caret"></span></a>
                     <ul class="dropdown-menu" >
                         <li><a href="#/exchangeCatagory">ย้ายคลังสารเคมี</a></li>
@@ -152,12 +150,7 @@
                   <li><a href="#/viewStock" ><i class="fa fa-flask" aria-hidden="true"></i>&nbsp;คลังสารเคมี</a></li>
               </ul>
           </div>
-      </nav>
-      
-      
-      
-<!--       <a href="#/contact" style="position: absolute; top: 23px; right:65px; color:#fff;"><i class="fa fa-info-circle fa-lg" aria-hidden="true"></i></a>-->
-          
+      </nav>          
         <div class="container">
             <div class="row">
                 <br>
@@ -188,7 +181,6 @@
                         <ul  class="nav nav-pills nav-stacked" role="tablist">
                           <li ng-show ="type == '1'"><a href="#/addMember" ><i class="fa fa-plus-circle" aria-hidden="true"></i>&nbsp;เพิ่มผู้ใช้งาน</a></li>
                           <li><a href="#/editMember" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;แก้ไขข้อมูลผู้ใช้งาน</a></li>
-                          <li ng-hide ="type == '3' || type == '4' || type == '5'"><a href="#/addProject"><i class="fa fa-plus-circle" aria-hidden="true"></i>&nbsp;เพิ่มโปรเจค</a></li>
                           <li ng-hide ="type != '1'"><a href="#/addNews"><i class="fa fa-plus-circle" aria-hidden="true"></i>&nbsp;เพิ่มข่าว</a></li>
                           <li ng-hide ="type != '1'"><a href="#/viewBudget"><i class="glyphicon glyphicon-stats" aria-hidden="true"></i>&nbsp;งบประมาณ</a></li>
                           <li ng-hide ="type != '1'"><a href="#/viewRemainChem"><i class="glyphicon glyphicon-list-alt" aria-hidden="true"></i>&nbsp;รายงานสถานะสารเคมีล่าสุด</a></li>

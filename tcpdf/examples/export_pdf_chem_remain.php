@@ -10,14 +10,15 @@
             INNER JOIN `chem_unit`
             ON `cc_unit_fk` = `cu_pk`
             INNER JOIN `chem_location`
-            ON `cc_location_fk` = `cl_pk`";
+            ON `cc_location_fk` = `cl_pk`
+            ORDER BY cc_name";
     }else{
         $sql = "SELECT * FROM `chem_category`
             INNER JOIN `chem_unit`
             ON `cc_unit_fk` = `cu_pk`
             INNER JOIN `chem_location`
             ON `cc_location_fk` = `cl_pk`
-            WHERE cc_location_fk = ".$pk."";
+            WHERE cc_location_fk = ".$pk." ORDER BY cc_name";
     }
 
     
@@ -108,7 +109,7 @@
         $pdf->Cell(20, 0, $row['cc_state'], 1, 0, 'C', 0, '', 0);
         $pdf->Cell(20, 0, $row['cc_packing']." ".$row['cu_name_abb'], 1, 0, 'C', 0, '', 0);
         $pdf->Cell(20, 0, $row['cc_volume']." ".$row['cu_name_abb'], 1, 0, 'C', 0, '', 0);
-        $pdf->Cell(20, 0, $row['cc_quantity'], 1, 0, 'C', 0, '', 0);
+        $pdf->Cell(20, 0, number_format ($row['cc_quantity'] , 4, ".", ","), 1, 0, 'C', 0, '', 0);
         $pdf->Cell(20, 0, $row['cl_name'], 1, 0, 'C', 0, '', 0);
         $pdf->Cell(20, 0, $row['cc_room'], 1, 0, 'C', 0, '', 0);
         $pdf->Cell(30, 0, $row['cc_price'], 1, 0, 'C', 0, '', 0);

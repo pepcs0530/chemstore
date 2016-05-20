@@ -105,11 +105,10 @@
                     <label for="cc_volume" class="col-sm-3 control-label">ขนาดบรรจุ :</label>
                     <div class="col-sm-6">
                         <input class="form-control" ng-model="editThisData.cc_volume" type="text" class="" />
-
-                        <select  ng-model="editThisData.cu_pk" >
-                            <option ng-repeat="lu in listUnit" value="{{lu.cu_pk}}" >{{lu.cu_name_abb}}</option>
-                        </select>
                     </div>
+                    หน่วย : <select  ng-model="editThisData.cu_pk" >
+                            <option ng-repeat="lu in listUnit" value="{{lu.cu_pk}}" >{{lu.cu_name_abb}}</option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label for="cc_quantity" class="col-sm-3 control-label">จำนวน :</label>

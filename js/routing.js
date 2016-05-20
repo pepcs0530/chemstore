@@ -14,7 +14,7 @@
           ).when(
             '/manageRequestChem',{
                 templateUrl: '../html/manageRequestChem.html', 
-                controller:  'submitChemRequestCtrl'
+                controller:  'submitRequestChemCtrl'
           }
           ).when(
             '/inboundChem',{
@@ -23,9 +23,9 @@
 
             }
           ).when(
-            '/viewReciept',{
-                templateUrl: '../html/viewReciept.html',
-                controller: 'receiptCtrl'
+            '/teacherAddReciept',{
+                templateUrl: '../html/teacherAddReciept.html',
+                controller: 'teacherAddReciept'
             }
           ).when(
             '/sold',{
@@ -35,7 +35,7 @@
           ).when(
             '/viewProject',{
                 templateUrl: '../html/viewProject.html',
-                controller: 'projectCtrl'
+                controller: 'viewProjectCtrl'
             } 
           ).when(
             '/editChem',{
@@ -44,13 +44,18 @@
             } 
           ).when(
             '/importlog',{
-                templateUrl: '../html/importlog.html',
+                templateUrl: '../html/logImport.html',
                 controller: 'importlogCtrl'
             }
           ).when(
-            '/withdrawlog',{
-                templateUrl: '../html/withdrawlog.html',
-                controller: 'withdrawlogCtrl'
+            '/receiptlog',{
+                templateUrl: '../html/logReceipt.html',
+                controller: 'receiptlogCtrl'
+           } 
+          ).when(
+            '/teacherReceiptlog',{
+                templateUrl: '../html/logReceipt.html',
+                controller: 'teacherReceiptlog'
            } 
           ).when(
             '/salelog',{
@@ -65,12 +70,12 @@
           ).when(
             '/addMember',{
                 templateUrl: '../html/addMember.html',
-                controller: 'membersCtrl'
+                controller: 'addMembersCtrl'
             }  
           ).when(
             '/editMember',{
                 templateUrl: '../html/editMember.html',
-                controller: 'editmembersCtrl'
+                controller: 'editMembersCtrl'
             }  
           ).when(
             '/addProject',{
@@ -83,19 +88,19 @@
                 controller: 'loginCtrl'
             }   
           ).when(
-            '/statusRequestChem',{
-                templateUrl: '../html/statusRequestChem.html',
+            '/teacherRequestChem',{
+                templateUrl: '../html/teacherRequestChem.html',
                 controller: 'teacherRequestCtrl'
             }   
           ).when(
-            '/requestOther',{
+            '/addOtherCtrl',{
                 templateUrl: '../html/requestOther.html',
-                controller: 'requestOtherCtrl'
+                controller: 'addOtherCtrl'
             }   
           ).when(
             '/manageRequestOther',{
                 templateUrl: '../html/manageRequestOther.html',
-                controller: 'manageRequestOtherCtrl'
+                controller: 'submitRequestOther'
             }   
           ).when(
             '/addNews',{
@@ -108,9 +113,9 @@
                 controller: 'exchangeCtrl'
             }   
           ).when(
-            '/manageLendChem',{
-                templateUrl: '../html/manageLendChem.html',
-                controller: 'submitLendRequestCtrl'
+            '/manageExchangeChem',{
+                templateUrl: '../html/manageExchangeChem.html',
+                controller: 'submitExchangeChemCtrl'
             }   
           ).when(
             '/viewBudget',{
@@ -118,14 +123,24 @@
                 controller: 'viewBudgetCtrl'
             }   
           ).when(
-            '/seniorRequestChem',{
-                templateUrl: '../html/seniorRequestChem.html',
-                controller: 'seniorRequestLendCtrl'
+            '/seniorExchangeStatusCtrl',{
+                templateUrl: '../html/seniorExchangeStatusCtrl.html',
+                controller: 'seniorExchangeStatusCtrl'
             }   
           ).when(
             '/viewRemainChem',{
                 templateUrl: '../html/viewRemainChem.html',
                 controller: 'viewRemainChemCtrl'
+            }   
+          ).when(
+            '/otherlog',{
+                templateUrl: '../html/logOther.html',
+                controller: 'otherlogCtrl'
+            }   
+          ).when(
+            '/teacherOtherlog',{
+                templateUrl: '../html/logOther.html',
+                controller: 'teacherOtherlogCtrl'
             }   
           ).otherwise({
                 redirectTo: '/news'

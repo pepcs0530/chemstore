@@ -3,7 +3,6 @@
         text-align: center;
     }
 </style>
-
 <h5><i class="fa fa-file" aria-hidden="true"></i>&nbsp;คำร้องขอย้ายสารเคมี</h5><br>
 <table class="table table-bordered">
     <tr style="text-align:center">
@@ -45,6 +44,7 @@
                 <th>จำนวน</th>
                 <th>หน่วย</th>
                 <th>คลัง</th>
+                <th>สถานะ</th>
             </tr>
             <tr ng-repeat="showdata in chemdetail">
                 <td>
@@ -58,17 +58,21 @@
                 </td>
                 <td>
                     {{showdata.cl_name}}
-                </td>
-                <td>
-                    {{showdata.crd_price}}
-                </td>  
+                </td> 
+                <td ng-bind-html="showdata.crd_status | confirmFilter"></td>
             </tr>
           </table>
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
-            <button type="button" class="btn btn-danger" ng-click="cancelRequest()">ไม่อนุมัติ</button>
-            <button type="button" class="btn btn-success" ng-click="submitRequest()">อนุมัติ</button>
+            <button type="button" class="btn btn-danger" ng-click="cancelRequest()"
+                    ng-disabled="listReciept[index].cr_status == '3' ||
+                                 listReciept[index].cr_status == '2'">ไม่อนุมัติ</button>
+            <button type="button" class="btn btn-success" ng-click="submitRequest()" 
+                    ng-disabled="listReciept[index].cp_budget-listReciept[index].cr_totalprice < 0 ||
+                                 listReciept[index].cp_budget-listReciept[index].cp_budget||
+                                 listReciept[index].cr_status == '3'||
+                                 listReciept[index].cr_status == '2'">อนุมัติ</button>
         </div>
     </div>
   </div>

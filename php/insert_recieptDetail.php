@@ -15,4 +15,11 @@
     $sql = "INSERT INTO chem_receipt_detail (crd_cr_fk, crd_cc_fk, crd_amt, crd_price, crd_unit, crd_crtDT, crd_status) ".
            "VALUE ('".$crd_cr_fk."','".$crd_cc_fk."','".$crd_amt."','".$crd_price."','".$crd_unit."', CURRENT_TIMESTAMP,'".$crd_status."')";
     $query = mysql_query($sql);
+
+    if($query){
+        Print "\n Your information has been successfully added to the database."; 
+    }
+    else{
+        die ("Error : ".mysql_error());
+    }
 ?>

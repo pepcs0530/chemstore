@@ -13,6 +13,9 @@
                 "WHERE cr_type = 'chemrequest' ".
                 "ORDER BY cr_crtDt DESC";
     }
+    else if($findthis == "exchangechem") {
+        $sql = "SELECT `cr_pk`,`cr_no`,`cr_crtDt`,`cr_desc`,`cr_status`,`cr_fromstore`,`cr_tostore` FROM chem_receipt WHERE cr_type = 'exchangechem'";
+    }
     else{
         $sql = "SELECT * FROM `chem_receipt` WHERE `cr_no` LIKE 'NO.".$findthis."%' ORDER BY cr_crtDt DESC";
     }

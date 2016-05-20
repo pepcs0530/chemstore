@@ -48,6 +48,7 @@
                 <th>หน่วย</th>
                 <th>คลัง</th>
                 <th>ราคา</th>
+                <th>สถานะ</th>
             </tr>
             <tr ng-repeat="showdata in chemdetail">
                 <td>
@@ -65,6 +66,7 @@
                 <td>
                     {{showdata.crd_price}}
                 </td>  
+                <td ng-bind-html="showdata.crd_status | confirmFilter"></td>
             </tr>
           </table>
         <table style="width:100%">

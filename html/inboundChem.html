@@ -1,4 +1,5 @@
 <br>
+
 <div class="panel panel-default" ng-init="inbound=true; new=true">
     <div class="panel-heading"><h4><b><i class="fa fa-plus-circle fa-lg"></i>&nbsp;เพิ่มสารเคมีใหม่</b></h4>
     </div>
@@ -42,7 +43,7 @@
                 <label for="cc_volume" class="col-sm-4 control-label">ขนาดบรรจุ :</label>
                 <div class="col-sm-4">
                     <div class="input-group">
-                        <input class="form-control" ng-model="cc_volume" type="text" class="" />
+                        <input class="form-control" ng-model="addChem.cc_volume" type="text" class="" />
                             <select  ng-model="addChem.cu_pk" >
                                 <option ng-repeat="lu in listUnit" value="{{lu.cu_pk}}" >{{lu.cu_name_abb}}</option>
                             </select> 

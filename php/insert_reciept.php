@@ -52,26 +52,26 @@
         $cr_desc = $_POST['cr_desc'];
     }
     
-    $sql = "SELECT `AUTO_INCREMENT` FROM  INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'db_chem_lab' AND TABLE_NAME = 'chem_receipt'";
+    $sql = "SELECT cr_pk FROM `chem_receipt` ORDER BY cr_pk DESC LIMIT 1";
     $query = mysql_query($sql);
     $data=array();
     while($row = mysql_fetch_array ($query))
     {
         array_push($data,$row);
     }
-    $cr_no = "NO.".$cr_no.$data[0]['AUTO_INCREMENT'];
+    $cr_no = "NO.".($cr_no.$data[0]['cr_pk']+1);
     if($requesttype == "chemrequest"){
         $sql = "INSERT INTO `chem_receipt` (cr_no, cr_totalprice, cr_cp_fk, cr_crtDt, cr_type)".
             " VALUE('".$cr_no."','".$totalmoney ."','".$cr_cp_fk."', CURRENT_TIMESTAMP, '".$requesttype."')";
         
     } 
-    else if($requesttype == "lendrequest"){   
+    else if($requesttype == "exchangechem"){   
         $sql = "INSERT INTO `chem_receipt` (cr_no, cr_crtDt, cr_desc, cr_fromstore, cr_tostore, cr_type)".
             " VALUE('".$cr_no."', CURRENT_TIMESTAMP,'".$cr_desc."','".$cr_fromstore."','".$cr_tostore."','".$requesttype."')";
     }
     
     $query = mysql_query($sql);
-    $sql = "SELECT `AUTO_INCREMENT` FROM  INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = 'db_chem_lab' AND TABLE_NAME = 'chem_receipt'";
+    $sql = "SELECT cr_pk FROM `chem_receipt` ORDER BY cr_pk DESC LIMIT 1";
     $query = mysql_query($sql);
     $data=array();
     while($row = mysql_fetch_array ($query))
