@@ -14,7 +14,7 @@
 
 <table class= " table table-bordered" >
     <tr>
-        <th>วันที่-เวลา</th>
+        <th>วันที่</th>
         <th>ชื่อสารเคมี</th>
         <th>Cas no.</th>
         <th>สถานะ</th>
@@ -25,7 +25,7 @@
         <th>ห้อง</th>
     </tr>
     <tr ng-repeat="showdata in listImport">
-        <td>{{showdata.cil_crtDt | Datetime}}</td>
+        <td>{{showdata.cil_crtDt | Date}}</td>
         <td>{{showdata.cc_name}}</td>
         <td>{{showdata.cc_casNo}}</td>
         <td>{{showdata.cc_state}}</td>
