@@ -576,6 +576,7 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
 
 //  ประวัติการเบิกสาร  ============================================================================================================
     .controller('receiptlogCtrl', function($scope,$http) {
+        $scope.loadDone = false; //ซ่อนลายการสาร
         //  แสดงใบเบิกสาร    
         $http({
                 method  :   'POST',
@@ -585,19 +586,21 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
             $scope.listReciept = response.data;
             console.log($scope.listReciept);
         });
-    
-        $scope.showpop = function (selectedData) {
-            $scope.crd_cr_pk = selectedData.cr_pk;
-            
+        
+        $scope.showpop = function (selectedData,index) {
+            $scope.recieptIndex = index;
+            console.log($scope.listReciept[$scope.recieptIndex]);
             //  แสดงใบเบิกสาร
             $http({
                 method  :   'POST',
                 url     :   '../php/select_chemdetail.php',
                 data    :   {
-                    'crd_cr_fk' : $scope.crd_cr_pk
+                    'crd_cr_fk' : selectedData
                 }
             }).then(function(response) {
                 $scope.listRecieptDetail = response.data;
+                $scope.loadDone = true;
+                console.log($scope.listRecieptDetail );
             });
         }
     })

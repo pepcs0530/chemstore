@@ -13,7 +13,7 @@
     </form>
     
     <div>
-        <table class= " table table-bordered" >
+        <table class= " table table-bordered" ng-hide="loadDone">
             <tr>
                 <th>วันที่เขียนคำร้อง</th>
                 <th>วันที่ได้รับอนุมัติ</th>
@@ -40,28 +40,43 @@
                 <td>{{showdata.cr_no}}</td>
                 <td>{{showdata.ca_tname+" "+showdata.ca_fname+" "+showdata.ca_lname}}</td>
                 <td>{{showdata.cp_name}}</td>
-                <td rowspan="1">
-                    <table class="table table-striped" width="100%">
-                        <tr>
-                            <th>ชื่อสารเคมี</th>
-                            <th>จำนวน</th>
-                            <th>หน่วย</th>
-                            <th>คลัง</th>
-                            <th>ราคา</th>
-                        </tr>
-                        <tr ng-repeat="showdata in listRecieptDetail">
-                            <td>{{showdata.cc_name}}</td>
-                            <td>{{showdata.crd_amt}}</td>
-                            <td>{{showdata.crd_unit}}</td>
-                            <td>{{showdata.cl_name}}</td>
-                            <td>{{showdata.crd_price}}&nbsp;บาท</td>
-                        </tr>
-                    </table>
+                <td>
+                    <input type="button" value="แสดงลายละเอียด" ng-click="showpop(showdata.cr_pk,$index)">
                 </td>
-                
-                
             </tr>
-        </table> 
+        </table>
+        <div  ng-hide="!loadDone">
+            <input type="button" value="ย้อนกลับ" ng-click="loadDone = false"><br>
+            
+            ชื่อผู้เบิก : {{listReciept[recieptIndex].ca_tname}}&nbsp;{{listReciept[recieptIndex].ca_fname}}&nbsp;&nbsp;{{listReciept[recieptIndex].ca_lname}}
+            
+            <table class= " table table-bordered" width="100%">
+                <tr>
+                    <th>ชื่อสารเคมี</th>
+                    <th>จำนวน</th>
+                    <th>หน่วย</th>
+                    <th>คลัง</th>
+                    <th>ราคา</th>
+                </tr>
+                <tr ng-repeat="showdata in listRecieptDetail">
+                    <td>
+                        {{showdata.cc_name}}
+                    </td>  
+                    <td>
+                        {{showdata.crd_amt}}
+                    </td>  
+                    <td>
+                        {{showdata.crd_unit}}
+                    </td>
+                    <td>
+                        {{showdata.cl_name}}
+                    </td>
+                    <td>
+                        {{showdata.crd_price}}&nbsp;บาท
+                    </td>  
+                </tr>
+              </table>
+        </div>
     </div>
 </div>
 
