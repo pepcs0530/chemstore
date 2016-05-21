@@ -1,18 +1,110 @@
 <?php
     include '../../php/connect.php';
     date_default_timezone_set('Asia/Bangkok');
-    $_POST = json_decode(file_get_contents('php://input'), true);
+    //$_POST = json_decode(file_get_contents('php://input'), true);
+
+//    $sql = "SELECT * FROM `chem_import_log`
+//            INNER JOIN `chem_category`
+//            ON `cil_cc_fk` = `cc_pk`
+//            INNER JOIN `chem_location`
+//            ON `cc_location_fk` = `cl_pk`
+//            INNER JOIN `chem_unit`
+//            ON `cc_unit_fk` = `cu_pk`
+//            ORDER BY `cil_pk` ASC";
+
+    $loc = $_POST['location'];
+    $state = $_POST['state'];
+    $stDt = $_POST['stDt'];
+    $edDt = $_POST['edDt'];  
+    $name = $_POST['name'];   
+    $casNo = $_POST['casNo'];   
+    $grade = $_POST['grade'];
+    $selectAll = $_POST['selectAll'];
+    
+//    print "คลัง : ".$loc."<br>";
+//    print "สถานะ : ".$state."<br>";
+//    print "จาก : ".$stDt."<br>";
+//    print "ถึง : ".$edDt."<br>";
+//    print "ชื่อสาร : ".$name."<br>";
+//    print "Cas no. : ".$casNo."<br>";
+//    print "เกรด : ".$grade."<br>";
+
+//    $sql = "SELECT * FROM `chem_import_log`
+//    INNER JOIN `chem_category`
+//    ON `cil_cc_fk` = `cc_pk`
+//    INNER JOIN `chem_location`
+//    ON `cc_location_fk` = `cl_pk`
+//    INNER JOIN `chem_unit`
+//    ON `cc_unit_fk` = `cu_pk`
+//    WHERE 
+//    cil_crtDt BETWEEN '".$stDt."' AND '".$edDt."' 
+//    AND cl_name = '".$loc."'
+//    AND cc_state = '".$state."'
+//    AND cc_name = '".$name."'
+//    AND cc_casNo = '".$casNo."'
+//    AND cc_grade = '".$grade."'
+//    ORDER BY `cil_pk` ASC";
 
     $sql = "SELECT * FROM `chem_import_log`
+    INNER JOIN `chem_category`
+    ON `cil_cc_fk` = `cc_pk`
+    INNER JOIN `chem_location`
+    ON `cc_location_fk` = `cl_pk`
+    INNER JOIN `chem_unit`
+    ON `cc_unit_fk` = `cu_pk` ";
+
+    if($loc != null || $state != null || $stDt != null || $edDt != null || $name != null || $casNo != null || $grade != null){
+        $sql .= "WHERE cil_useflg = '1' ";  
+//        print "WHERE<br>";
+    }
+
+    if($loc != null){
+        $sql .= "AND cl_name = '".$loc."' ";    
+//        print "LOC<br>";
+    }
+
+    if($state != null){
+        $sql .= "AND cc_state = '".$state."' ";  
+//        print "STATE<br>";
+    }
+
+    if($stDt != null && $edDt != null ){
+        $sql .= "AND cil_crtDt BETWEEN '".$stDt."' AND '".$edDt."' ";   
+//        print "DATE<br>";
+    }
+
+    if($name != null){
+        $sql .= "AND cc_name = '".$name."' ";   
+//        print "NAME<br>";
+    }
+
+    if($casNo != null){
+        $sql .= "AND cc_casNo = '".$casNo."' "; 
+//        print "CAS<br>";
+    }
+
+    if($grade != null){
+        $sql .= "AND cc_grade = '".$grade."' "; 
+//        print "GRADE<br>";
+    }
+
+    $sql .= "ORDER BY `cil_pk` ASC"; 
+
+    //print "SQL : ".$sql."<br> : ".$selectAll;
+    
+    if($selectAll == 'all'){
+        $sql = "SELECT * FROM `chem_import_log`
             INNER JOIN `chem_category`
             ON `cil_cc_fk` = `cc_pk`
             INNER JOIN `chem_location`
             ON `cc_location_fk` = `cl_pk`
             INNER JOIN `chem_unit`
-            ON `cc_unit_fk` = `cu_pk`
-            ORDER BY `cil_pk` ASC";
-
-    $query = mysql_query($sql);
+            ON `cc_unit_fk` = `cu_pk` ";
+        $query = mysql_query($sql);
+    }else{
+        $query = mysql_query($sql);
+    }
+    
     
     // Include the main TCPDF library (search for installation path).
     require_once('tcpdf_include.php');

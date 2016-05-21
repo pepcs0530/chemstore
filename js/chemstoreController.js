@@ -485,12 +485,45 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
 
 //  ประวัติการนำเข้าสาร  ============================================================================================================
     .controller('importlogCtrl', function($scope,$http) {
+    
+        $scope.logImpt ={
+            stDt : new Date(Date.now()),
+            edDt : new Date(Date.now())
+        };
+    
+        console.log($scope.logImpt.stDt);
+        console.log($scope.logImpt.edDt);
+
+        // Daterange filter
+        $scope.dateRangeFilter = function (property, startDate, endDate) {
+            return function (item) {
+                console.log("item : ",item[property]);
+                if (item[property] === null) return false;
+
+                var itemDate = moment(item[property]);
+                var s = moment(startDate, "DD-MM-YYYY");    console.log("start :",s);
+                var e = moment(endDate, "DD-MM-YYYY");      console.log("end :",e);
+
+                if (itemDate >= s && itemDate <= e) return true;
+                return false;
+            }
+        }
+    
         //  แสดงใบเบิกสาร
         $http({
             method  :   'GET',
             url     :   '../php/select_logImport.php'
         }).then(function(response) {
             $scope.listImport = response.data;
+            console.log($scope.listImport);
+        });
+    
+        $http({
+            method  :   'GET',
+            url     :   '../php/select_chemLocation.php',
+        }).then(function(response) {
+            $scope.listLocation = response.data;
+            console.log($scope.listLocation);
         });
     })
 

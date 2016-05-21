@@ -12,7 +12,7 @@ chemstore.filter('Date', function($filter){
 })
     .filter('Datetime', function($filter){
     return function(input){
-        if(input == null || input == "0000-00-00 00:00:00"){ return "-"; } 
+        if(input == null || input == "0000-00-00 00:00:00"){ return ""; } 
 
         var _date = $filter('date')(new Date(input),'dd/MM/yyyy - HH:mm:ss');
 
@@ -34,3 +34,4 @@ chemstore.filter('Date', function($filter){
             return $sce.trustAsHtml("<FONT COLOR=green><b>ยังไม่ได้รับสารเคมี</</b></FONT>");
    }
 })
+
