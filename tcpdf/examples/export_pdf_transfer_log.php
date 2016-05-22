@@ -3,76 +3,60 @@
     date_default_timezone_set('Asia/Bangkok');
     //$_POST = json_decode(file_get_contents('php://input'), true);
 
-    $findthis = $_POST['findthis'];
-    $findtypethis = $_POST['findtypethis'];
-//    $findthis = 1;
-//    $findtypethis = 1;
-
+    isset($_POST['locationF']) ? $locF = $_POST['locationF'] : $locF = null;
+    isset($_POST['locationT']) ? $locT = $_POST['locationT'] : $locT = null;
+    isset($_POST['state']) ? $state = $_POST['state'] : $state = null;
     isset($_POST['stDt']) ? $stDt = $_POST['stDt'] : $stDt = null;
     isset($_POST['edDt']) ? $edDt = $_POST['edDt'] : $edDt = null;
-    isset($_POST['no']) ? $no = $_POST['no'] : $no = null;
-    isset($_POST['project']) ? $project = $_POST['project'] : $project = null;
+    isset($_POST['name']) ? $name = $_POST['name'] : $name = null;
+    isset($_POST['casNo']) ? $casNo = $_POST['casNo'] : $casNo = null;
+    isset($_POST['grade']) ? $grade = $_POST['grade'] : $grade = null;
     isset($_POST['selectAll']) ? $selectAll = $_POST['selectAll'] : $selectAll = null;
 
-    if($findtypethis == 1){
-//            $sql = "SELECT `cr_pk`,`cr_no`,`ca_user`,`ca_tname`,`ca_fname`,`ca_lname`,`cp_name`,`cp_teach_fk`,`cr_crtDt`,`cr_updDt` ".
-//            "FROM `chem_receipt` ".
-//            "INNER JOIN `chem_project` ".
-//            "ON `cr_cp_fk` = `cp_pk` ".
-//            "INNER JOIN `chem_account` ".
-//            "ON cp_teach_fk = `ca_pk` ".
-//            "ORDER BY `cr_crtDt` DESC";
-        if($selectAll == true){
-            $sql = "SELECT cr.cr_pk,cr.cr_no,cr.cr_totalprice,cr.cr_cp_fk,cr.cr_status,cr.cr_crtDt,cr.cr_updDt,cr.cr_tostore,ca.ca_fname,ca.ca_lname,ca.ca_tname,cr.cr_fromstore,cp.cp_teach_fk,cp.cp_name,cp.cp_budget,ca.ca_credit ".
-                "FROM chem_receipt AS cr ".
-                "INNER JOIN chem_project AS cp ".
-                "ON cp_pk = cr_cp_fk ".
-                "INNER JOIN chem_account AS ca ".
-                "ON cp_teach_fk = ca_pk ".
-                "WHERE cr_type = 'chemrequest' ".
-                "ORDER BY cr_crtDt DESC";
+    if($selectAll == true){
+            $sql = "SELECT `cr_pk`,`cr_no`,`cr_crtDt`,`cr_updDt`,`cr_desc`,`cr_status`,`cr_fromstore`,`cr_tostore`,`ca_tname`,`ca_fname`,`ca_lname`
+                FROM `chem_receipt`
+                INNER JOIN `chem_account` 
+                ON `ca_pk` = SUBSTRING(cr_no, 4, 1)
+                WHERE cr_type = 'exchangechem'
+                ORDER BY cr_crtDt DESC";
         }else{
-            $sql = "SELECT cr.cr_pk,cr.cr_no,cr.cr_totalprice,cr.cr_cp_fk,cr.cr_status,cr.cr_crtDt,cr.cr_updDt,cr.cr_tostore,ca.ca_fname,ca.ca_lname,ca.ca_tname,cr.cr_fromstore,cp.cp_teach_fk,cp.cp_name,cp.cp_budget,ca.ca_credit ".
-                "FROM chem_receipt AS cr ".
-                "INNER JOIN chem_project AS cp ".
-                "ON cp_pk = cr_cp_fk ".
-                "INNER JOIN chem_account AS ca ".
-                "ON cp_teach_fk = ca_pk ".
-                "WHERE cr_type = 'chemrequest' ";
+            $sql = "SELECT `cr_pk`,`cr_no`,`cr_crtDt`,`cr_updDt`,`cr_desc`,`cr_status`,`cr_fromstore`,`cr_tostore`,`ca_tname`,`ca_fname`,`ca_lname`
+                FROM `chem_receipt`
+                INNER JOIN `chem_account` 
+                ON `ca_pk` = SUBSTRING(cr_no, 4, 1)
+                WHERE cr_type = 'exchangechem' ";
             
+            if($locF != null){
+                $sql .= "AND cr_fromstore = ".$locF." ";
+            }
+            
+            if($locT != null){
+                $sql .= "AND cr_tostore = ".$locT." ";
+            }
+
+//            if($state != null){
+//                $sql .= "AND cc_state = '".$state."' ";
+//            }
+
             if($stDt != null && $edDt != null ){
-                $sql .= "AND cr.cr_updDt BETWEEN '".$stDt."' AND '".$edDt."' ";
+                $sql .= "AND cr_updDt BETWEEN '".$stDt."' AND '".$edDt."' ";
             }
-            
-            if($no != null){
-                $sql .= "AND cr.cr_no LIKE '%".$no."%' ";
-            }
-            
-            if($project != null){
-                $sql .= "AND cp.cp_name LIKE '%".$project."%' ";
-            }
-            
-            $sql .= "ORDER BY cr_crtDt DESC";
+
+//            if($name != null){
+//                $sql .= "AND cc_name LIKE '%".$name."%' ";
+//            }
+
+//            if($casNo != null){
+//                $sql .= "AND cc_casNo LIKE '%".$casNo."%' ";
+//            }
+
+//            if($grade != null){
+//                $sql .= "AND cc_grade LIKE '%".$grade."%' ";
+//            }
+
+            $sql .= "ORDER BY `cr_crtDt` DESC";
         }
-        
-    }else{
-//        $sql = "SELECT `cr_pk`,`cr_no`,`ca_user`,`ca_tname`,`ca_fname`,`ca_lname`,`cp_name`,`cp_teach_fk`,`cr_crtDt`,`cr_updDt` ".
-//            "FROM `chem_receipt` ".
-//            "INNER JOIN `chem_project` ".
-//            "ON `cr_cp_fk` = `cp_pk` ".
-//            "INNER JOIN `chem_account` ".
-//            "ON cp_teach_fk = `ca_pk` ".
-//            "WHERE cr_no LIKE 'NO.".$findthis."%' ".
-//            "ORDER BY `cr_crtDt` DESC";
-        $sql = "SELECT cr.cr_pk,cr.cr_no,cr.cr_totalprice,cr.cr_cp_fk,cr.cr_status,cr.cr_crtDt,cr.cr_updDt,cr.cr_tostore,ca.ca_fname,ca.ca_lname,ca.ca_tname,cr.cr_fromstore,cp.cp_teach_fk,cp.cp_name,cp.cp_budget,ca.ca_credit ".
-                "FROM chem_receipt AS cr ".
-                "INNER JOIN chem_project AS cp ".
-                "ON cp_pk = cr_cp_fk ".
-                "INNER JOIN chem_account AS ca ".
-                "ON cp_teach_fk = ca_pk ".
-                "WHERE cr_type = 'chemrequest' AND cr_no like 'NO.".$findthis."%'".
-                "ORDER BY cr_crtDt DESC";
-    }
 
     $query = mysql_query($sql);
     
@@ -85,8 +69,8 @@
     // set document information
     $pdf->SetCreator(PDF_CREATOR);
     $pdf->SetAuthor('Computer Science, KMITL');
-    $pdf->SetTitle('ประวัติการเบิกสารเคมี');
-    $pdf->SetSubject('ประวัติการเบิกสารเคมี');
+    $pdf->SetTitle('ประวัติการย้ายคลังสารเคมี');
+    $pdf->SetSubject('ประวัติการย้ายคลังสารเคมี');
     $pdf->SetKeywords('TCPDF, PDF, example, test, guide');
 
     // set default header data
@@ -139,7 +123,7 @@
     $pdf->setTextShadow(array('enabled'=>true, 'depth_w'=>0.2, 'depth_h'=>0.2, 'color'=>array(196,196,196), 'opacity'=>1, 'blend_mode'=>'Normal'));
 
     $pdf->SetFont('freeserif','B',16);
-    $pdf->Text(120,30,"ประวัติการเบิกสารเคมี");
+    $pdf->Text(120,30,"ประวัติการย้ายคลังสารเคมี");
     $pdf->Ln(10);
 
     $pdf->SetFont('freeserif','',12);
@@ -218,14 +202,14 @@
             $pdf->Cell(45, 0, 'อาจารย์ที่ปรึกษา', 1, 0, 'C', 0, '', 0);
 //            $name = $row['ca_tname']." ".$row['ca_fname']." ".$row['ca_lname'];
 
-            $pdf->Cell(40, 0, 'โครงงานพิเศษ/วิทยานิพนธ์', 1, 0, 'C', 0, '', 0);
+//            $pdf->Cell(40, 0, 'โครงงานพิเศษ/วิทยานิพนธ์', 1, 0, 'C', 0, '', 0);
 //            $project = $row['cp_name'];
 
             $pdf->Cell(50, 0, 'ชื่อสารเคมี', 1, 0, 'C', 0, '', 0);
+            $pdf->Cell(40, 0, 'Cas no.', 1, 0, 'C', 0, '', 0);
+            $pdf->Cell(20, 0, 'เกรด', 1, 0, 'C', 0, '', 0);
             $pdf->Cell(15, 0, 'จำนวน', 1, 0, 'C', 0, '', 0);
             $pdf->Cell(15, 0, 'หน่วย', 1, 0, 'C', 0, '', 0);
-            $pdf->Cell(10, 0, 'คลัง', 1, 0, 'C', 0, '', 0);
-            $pdf->Cell(15, 0, 'ราคา', 1, 0, 'C', 0, '', 0);
             $first++;
         }
         
@@ -233,14 +217,14 @@
         $date_upd = date_create($row['cr_updDt']);
         $cr_no = $row['cr_no'];
         $name = $row['ca_tname']." ".$row['ca_fname']." ".$row['ca_lname'];
-        $project = $row['cp_name'];
+//        $project = $row['cp_name'];
         
         $pdf->Ln();
         
         $find = $row['cr_pk'];
         
         
-        $sql2 = "SELECT `cc_name`,`crd_amt`,`crd_price`,`crd_unit`,`cl_name`,`cl_name_abb`".
+        $sql2 = "SELECT cc_pk,crd_status,`cc_name`,`cc_casNo`,`cc_grade`,`crd_amt`,`crd_price`,`crd_unit`,`cl_name`".
            "FROM `chem_receipt_detail`".
            "INNER JOIN `chem_category`".
            "ON `cc_pk` = `crd_cc_fk`".
@@ -256,24 +240,22 @@
                 $pdf->Cell(25, 0, date_format($date_upd,"d/m/Y"), 1, 0, 'L', 0, '', 0);
                 $pdf->Cell(27, 0, $cr_no, 1, 0, 'C', 0, '', 0);
                 $pdf->Cell(45, 0, $name, 1, 0, 'L', 0, '', 0);
-                $pdf->Cell(40, 0, $project, 1, 0, 'L', 0, '', 0);
                 $pdf->Cell(50, 0, $row['cc_name'], 1, 0, 'L', 0, '', 0);
+                $pdf->Cell(40, 0, $row['cc_casNo'], 1, 0, 'L', 0, '', 0);
+                $pdf->Cell(20, 0, $row['cc_grade'], 1, 0, 'L', 0, '', 0);
                 $pdf->Cell(15, 0, $row['crd_amt'], 1, 0, 'C', 0, '', 0);
                 $pdf->Cell(15, 0, $row['crd_unit'], 1, 0, 'C', 0, '', 0);
-                $pdf->Cell(10, 0, $row['cl_name_abb'], 1, 0, 'C', 0, '', 0);
-                $pdf->Cell(15, 0, $row['crd_price'], 1, 0, 'C', 0, '', 0);
                 
             }else{
                 $pdf->Cell(25, 0, '', 1, 0, 'L', 0, '', 0);
                 $pdf->Cell(25, 0, '', 1, 0, 'L', 0, '', 0);
                 $pdf->Cell(27, 0, '', 1, 0, 'C', 0, '', 0);
                 $pdf->Cell(45, 0, '', 1, 0, 'L', 0, '', 0);
-                $pdf->Cell(40, 0, '', 1, 0, 'L', 0, '', 0);
                 $pdf->Cell(50, 0, $row['cc_name'], 1, 0, 'L', 0, '', 0);
+                $pdf->Cell(40, 0, $row['cc_casNo'], 1, 0, 'L', 0, '', 0);
+                $pdf->Cell(20, 0, $row['cc_grade'], 1, 0, 'L', 0, '', 0);
                 $pdf->Cell(15, 0, $row['crd_amt'], 1, 0, 'C', 0, '', 0);
                 $pdf->Cell(15, 0, $row['crd_unit'], 1, 0, 'C', 0, '', 0);
-                $pdf->Cell(10, 0, $row['cl_name_abb'], 1, 0, 'C', 0, '', 0);
-                $pdf->Cell(15, 0, $row['crd_price'], 1, 0, 'C', 0, '', 0);
             }
             
             
@@ -285,5 +267,5 @@
         //$pdf->Ln();
     }
 
-    $pdf->Output('export_pdf_withdraw_log.pdf', 'I');
+    $pdf->Output('export_pdf_transfer_log.pdf', 'I');
 ?>

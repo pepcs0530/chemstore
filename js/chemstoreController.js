@@ -577,20 +577,66 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
 //  ประวัติการเบิกสาร  ============================================================================================================
     .controller('receiptlogCtrl', function($scope,$http) {
         $scope.loadDone = false; //ซ่อนลายการสาร
-        //  แสดงใบเบิกสาร    
-        $http({
+    
+        $scope.page = 1;
+        $scope.logRecpt = {
+            stDt : '',
+            edDt : '',
+            no : '',
+            project : '',
+            selectAll : ''
+        }
+        
+        $scope.back = function(){
+            $scope.page = 1;
+        }
+        
+        $scope.back2 = function(){
+            $scope.page = 2;
+        }
+        
+        $scope.search = function(select){
+            $scope.page = 2;
+            console.log(select.stDt);
+            console.log(select.edDt);
+            console.log(select.no);
+            console.log(select.project);
+            console.log(select.selectAll);
+            
+            $http({
                 method  :   'POST',
                 url     :   '../php/select_logReciept.php',
-                data    :   {type:"all"}
-        }).then(function(response) {
-            $scope.listReciept = response.data;
-            console.log($scope.listReciept);
-        });
+                data    :   {
+                    type:"all",
+                    stDt : select.stDt,
+                    edDt : select.edDt,
+                    no : select.no,
+                    project : select.project,
+                    selectAll : select.selectAll
+                }
+            }).then(function(response) {
+                $scope.listReciept = response.data;
+                console.log($scope.listReciept);
+            });
+            
+            
+            
+        }
+
+//        $http({
+//                method  :   'POST',
+//                url     :   '../php/select_logReciept.php',
+//                data    :   {type:"all"}
+//        }).then(function(response) {
+//            $scope.listReciept = response.data;
+//            console.log($scope.listReciept);
+//        });
         
         $scope.showpop = function (selectedData,index) {
+            $scope.page = 3;
             $scope.recieptIndex = index;
             console.log($scope.listReciept[$scope.recieptIndex]);
-            //  แสดงใบเบิกสาร
+            
             $http({
                 method  :   'POST',
                 url     :   '../php/select_chemdetail.php',
@@ -599,29 +645,82 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
                 }
             }).then(function(response) {
                 $scope.listRecieptDetail = response.data;
-                $scope.loadDone = true;
+//                $scope.loadDone = true;
                 console.log($scope.listRecieptDetail );
             });
         }
     })
 
-
 //  ประวัติการย้ายคลัง  ============================================================================================================
     .controller('ExchangeLogCtrl', function($scope,$http) {
-        //  แสดงใบเบิกสาร    
-        $http({
+        $scope.page = 1;
+    
+        $scope.logExchg = {
+            locationF : '',
+            locationT : '',
+            state : '',
+            stDt : '',
+            edDt : '',
+            name : '',
+            casNo : '',
+            grade : '',
+            selectAll : ''
+        }
+        
+        $scope.search = function(select){
+            $scope.page = 2;
+            console.log(select.locationF);
+            console.log(select.locationT);
+            console.log(select.state);
+            console.log(select.stDt);
+            console.log(select.edDt);
+            console.log(select.name);
+            console.log(select.casNo);
+            console.log(select.grade);
+            console.log(select.selectAll);
+            
+            $http({
                 method  :   'POST',
                 url     :   '../php/select_logExchange.php',
-                data    :   {type:"all"}
-        }).then(function(response) {
-            $scope.listReciept = response.data;
-            console.log($scope.listReciept);
-        });
+                data    :   {
+                    type:"all",
+                    locationF : select.locationF,
+                    locationT : select.locationT,
+                    state : select.state,
+                    stDt : select.stDt,
+                    edDt : select.edDt,
+                    name : select.name,
+                    casNo : select.casNo,
+                    grade : select.grade,
+                    selectAll : select.selectAll
+                }
+            }).then(function(response) {
+                $scope.listReciept = response.data;
+                console.log($scope.listReciept);
+            });
+            
+            
+            
+        }
+        
+        $scope.next2 = function(){
+            $scope.page = 3;
+        }
+        
+        $scope.back = function(){
+            $scope.page = 1;
+        }
+        
+        $scope.back2 = function(){
+            $scope.page = 2;
+        }
+    
+        
     
         $scope.showpop = function (selectedData) {
+            $scope.page = 3;
             $scope.crd_cr_pk = selectedData.cr_pk;
             console.log(selectedData);
-            //  แสดงใบเบิกสาร
             $http({
                 method  :   'POST',
                 url     :   '../php/select_chemdetail.php',
@@ -632,6 +731,15 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
                 $scope.listRecieptDetail = response.data;
             });
         }
+        
+        
+        $http({
+            method  :   'GET',
+            url     :   '../php/select_chemLocation.php',
+        }).then(function(response) {
+            $scope.listLocation = response.data;
+            console.log($scope.listLocation);
+        });
     })
 
 //  ประวัติการเบิกสารอาจารย์  ============================================================================================================
