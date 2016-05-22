@@ -74,17 +74,17 @@
     }
 
     if($name != null){
-        $sql .= "AND cc_name = '".$name."' ";   
+        $sql .= "AND cc_name LIKE '%".$name."%' ";   
 //        print "NAME<br>";
     }
 
     if($casNo != null){
-        $sql .= "AND cc_casNo = '".$casNo."' "; 
+        $sql .= "AND cc_casNo LIKE '%".$casNo."%' "; 
 //        print "CAS<br>";
     }
 
     if($grade != null){
-        $sql .= "AND cc_grade = '".$grade."' "; 
+        $sql .= "AND cc_grade LIKE '%".$grade."%' "; 
 //        print "GRADE<br>";
     }
 
@@ -92,7 +92,7 @@
 
     //print "SQL : ".$sql."<br> : ".$selectAll;
     
-    if($selectAll == 'all'){
+    if($selectAll == true){
         $sql = "SELECT * FROM `chem_import_log`
             INNER JOIN `chem_category`
             ON `cil_cc_fk` = `cc_pk`

@@ -486,13 +486,60 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
 //  ประวัติการนำเข้าสาร  ============================================================================================================
     .controller('importlogCtrl', function($scope,$http) {
     
-        $scope.logImpt ={
-            stDt : new Date(Date.now()),
-            edDt : new Date(Date.now())
-        };
+        $scope.page = true;
+        $scope.logImpt = {
+            location : '',
+            state : '',
+            stDt : '',
+            edDt : '',
+            name : '',
+            casNo : '',
+            grade : '',
+            selectAll : ''
+        }
     
-        console.log($scope.logImpt.stDt);
-        console.log($scope.logImpt.edDt);
+        $scope.back = function(){
+            $scope.page = true;
+        }
+        
+        $scope.search = function(select){
+            $scope.page = false;
+            console.log(select.location);
+            console.log(select.state);
+            console.log(select.stDt);
+            console.log(select.edDt);
+            console.log(select.name);
+            console.log(select.casNo);
+            console.log(select.grade);
+            console.log(select.selectAll);
+            
+            $http({
+                method  :   'POST',
+                url     :   '../php/select_logImport.php',
+                data : {
+                    location : select.location,
+                    state : select.state,
+                    stDt : select.stDt,
+                    edDt : select.edDt,
+                    name : select.name,
+                    casNo : select.casNo,
+                    grade : select.grade,
+                    selectAll : select.selectAll
+                }
+            }).then(function(response) {
+                $scope.listImport = response.data;
+                console.log("res :",$scope.listImport);
+            });
+            
+        }
+    
+//        $scope.logImpt ={
+//            stDt : new Date(Date.now()),
+//            edDt : new Date(Date.now())
+//        };
+//    
+//        console.log($scope.logImpt.stDt);
+//        console.log($scope.logImpt.edDt);
 
         // Daterange filter
         $scope.dateRangeFilter = function (property, startDate, endDate) {
@@ -510,13 +557,13 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
         }
     
         //  แสดงใบเบิกสาร
-        $http({
-            method  :   'GET',
-            url     :   '../php/select_logImport.php'
-        }).then(function(response) {
-            $scope.listImport = response.data;
-            console.log($scope.listImport);
-        });
+//        $http({
+//            method  :   'GET',
+//            url     :   '../php/select_logImport.php'
+//        }).then(function(response) {
+//            $scope.listImport = response.data;
+//            console.log($scope.listImport);
+//        });
     
         $http({
             method  :   'GET',
@@ -1415,6 +1462,56 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
 // reportรายงานสถานะสารล่าสุด ========================================================================================================
     .controller('viewRemainChemCtrl', function($scope, $http){
     
+        
+        $scope.page = true;
+        $scope.remain = {
+            location : '',
+            state : '',
+            stDt : '',
+            edDt : '',
+            name : '',
+            casNo : '',
+            grade : '',
+            selectAll : ''
+        }
+    
+        $scope.back = function(){
+            $scope.page = true;
+        }
+            
+        $scope.search = function(select){
+            
+            $scope.page = false;
+            console.log(select.location);
+            console.log(select.state);
+            console.log(select.stDt);
+            console.log(select.edDt);
+            console.log(select.name);
+            console.log(select.casNo);
+            console.log(select.grade);
+            console.log(select.selectAll);
+            
+            $http({
+                method  : 'POST',
+                url     : '../php/select_remainChem.php',
+                data : {
+                    location : select.location,
+                    state : select.state,
+                    stDt : select.stDt,
+                    edDt : select.edDt,
+                    name : select.name,
+                    casNo : select.casNo,
+                    grade : select.grade,
+                    selectAll : select.selectAll
+                    },
+                headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
+            }).then(function(response) {
+                console.log("res :",response.data);
+                $scope.listChem = response.data;
+            })
+            
+        }
+        
         
     })
 
