@@ -4,8 +4,10 @@
     }
 </style>  
 
-<div class="navbar-header">
-    <caption><h4><i class="fa fa-file-text-o"></i>&nbsp;ประวัติการเบิกสารเคมี</h4></caption><br>
+<caption><center><h4><b><i class="fa fa-file-text-o"></i>&nbsp;ประวัติการเบิกสารเคมี</b></h4></center></caption><hr>
+
+<div class="navbar-header" style="width:100%">
+    
     <form method="post" action="../tcpdf/examples/export_pdf_withdraw_log.php" target="_blank">
         <input type="hidden" value="{{key}}" name="findthis">
         <input type="hidden" value="{{type}}" name="findtypethis">
@@ -33,7 +35,7 @@
         <div ng-show="page == 2">
             <input type="button" class="btn btn-default" value="ย้อนกลับ" ng-click="back()">
             <input type="submit" class="btn btn-default" value="พิมพ์รายงาน" >
-            <table class= " table table-bordered" ng-hide="loadDone">
+            <table class = "table table-bordered"  width="100%">
                 <tr>
                     <th>วันที่เขียนคำร้อง</th>
                     <th>วันที่ได้รับอนุมัติ</th>

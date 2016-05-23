@@ -7,12 +7,12 @@
     }
 </style> 
 
-<h4><i class="fa fa-file-text-o"></i>&nbsp;ประวัติคำร้องขออื่นๆ</h4><br>
+<caption><center><h4><b><i class="fa fa-file-text-o"></i>&nbsp;ประวัติคำร้องขออื่นๆ</b></h4></center></caption><hr>
 
 <table class="table table-bordered">
   <tr>
       <th>ลำดับที่</th>
-      <th>วัน-เวลาที่ร้องขอ</th>
+      <th>วันที่ร้องขอ</th>
       <th>สถานะคำร้อง</th>
       <th>ผู้ร้องขอ</th>
       <th style="width:20%">รายละเอียด</th>
@@ -22,7 +22,7 @@
       {{$index+1}}
       </td>
       <td>
-      {{showdata.cro_crtDt | Datetime}}
+      {{showdata.cro_crtDt | Date}}
       </td>
       <td ng-bind-html="showdata.cro_status | confirmFilter"></td>
       <td>

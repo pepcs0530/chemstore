@@ -8,6 +8,11 @@
                 controller: 'loginCtrl'
           }
           ).when(
+            '/logout',{
+                templateUrl: '../html/logout.html',
+                controller: 'logoutCtrl'
+          }
+          ).when(
             '/contact',{
                 templateUrl: '../html/contact.html'
           }
@@ -17,7 +22,7 @@
                 controller:  'submitRequestChemCtrl'
           }
           ).when(
-            '/inboundChem',{
+            '/manageInboundChem',{
                 templateUrl: '../html/manageInboundChem.html',
                 controller:  'inboundChemCtrl'
 
@@ -38,7 +43,7 @@
                 controller: 'viewProjectCtrl'
             } 
           ).when(
-            '/editChem',{
+            '/manageEditChem',{
                 templateUrl: '../html/editChem.html',
                 controller: 'editChemCtrl'
             } 
@@ -55,7 +60,7 @@
           ).when(
             '/teacherReceiptlog',{
                 templateUrl: '../html/logReceipt.html',
-                controller: 'teacherReceiptlog'
+                controller: 'teacherReceiptlogCtrl'
            } 
           ).when(
             '/salelog',{

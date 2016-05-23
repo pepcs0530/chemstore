@@ -4,7 +4,7 @@
     }
 </style>
 
-<caption><h4><i class="fa fa-flask"></i>&nbsp;เบิกสารเคมี</h4></caption>
+<caption><center><h4><b><i class="fa fa-flask"></i>&nbsp;เบิกสารเคมี</b></h4></center></caption><hr>
 
 
 <form class="navbar-form navbar-left">
@@ -110,13 +110,14 @@
     </tr>
 </table>
 
-<div class="col-sm-4 col-md-offset-8">
-    <div class="well">
+
+<form class="navbar-form navbar-right">
+    <div class="well" style="width: 250px;">
         งบในโปรเจคที่เหลือ&nbsp;:&nbsp;{{selectedProject.cp_budget}}<br>
         ค่าใช้จ่ายทั้งหมด&nbsp;:&nbsp;{{total}}<br>
-        ยอดคงเหลือ&nbsp;:&nbsp;{{selectedProject.cp_budget-total}}
-        <div class="col-md-offset-5">
+        ยอดคงเหลือ&nbsp;:&nbsp;{{selectedProject.cp_budget-total}}<br>
+<!--        <div class="col-md-offset-5">-->
             <button class="btn btn-success" type="submit" value="ยืนยันการยืม" ng-click="createRequest()" >ยืนยันการเบิก</button>
-        </div>
+<!--        </div>-->
     </div>
-</div>
+</form>

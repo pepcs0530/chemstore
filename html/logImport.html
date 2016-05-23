@@ -4,11 +4,13 @@
     }
 </style> 
 
-<div class="navbar-header">
-    <caption><h4><i class="fa fa-file-text-o"></i>&nbsp;ประวัติการนำเข้าสารเคมี</h4></caption><br>
+<caption><center><h4><b><i class="fa fa-file-text-o"></i>&nbsp;ประวัติการนำเข้าสารเคมี</b></h4></center></caption><hr>
+
+<div class="navbar-header" style="width:100% ">
+    
     <form method="post" action="../tcpdf/examples/export_pdf_inbound_log.php" target="_blank">
         
-        <div ng-show="page == true">
+        <div ng-show="page == true" >
             <strong>คลัง :</strong>
             <select ng-model="logImpt.location" name="location">
                 <option value="" >---เลือก---</option>
@@ -50,7 +52,7 @@
         <div ng-show="page == false">
             <button type="button" class="btn btn-default" ng-click="back()" >ย้อนกลับ</button>
             <input type="submit" class="btn btn-default" value="พิมพ์รายงาน" >
-            <table class= " table table-bordered" >
+            <table class= "table table-bordered" >
                 <tr>
                     <th>วันที่</th>
                     <th>ชื่อสารเคมี</th>

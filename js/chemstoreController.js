@@ -10,10 +10,10 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
             $rootScope.logIn = false;
             if(response.data == "true"){
                 $rootScope.logIn = true;
-                //alert("ยินดิต้อนรับเข้าสู่ระบบ");
+                alert("ยินดิต้อนรับเข้าสู่ระบบ");
                 //location.reload();
                 
-                toastr.success('เข้าสู่ระบบสำเร็จ', 'ยินดีต้อนรับเข้าสู่ระบบ');
+                //toastr.success('เข้าสู่ระบบสำเร็จ', 'ยินดีต้อนรับเข้าสู่ระบบ');
                 $timeout(location.reload(), 5000);
                 
                 $location.path('/news')
@@ -89,6 +89,14 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
           $scope.startTimer();
         };
     
+    })
+
+//  Logout   ============================================================================================================
+    .controller('logoutCtrl', function($scope,$http,$timeout,$location,toastr){
+        alert("ออกจากระบบ")
+        //toastr.success('ออกจากระบบ');
+        $timeout(location.reload(), 5000);
+        window.location.href="../php/logout.php";
     })
 
 //  คลังสินค้า  ============================================================================================================
@@ -622,10 +630,7 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
             }).then(function(response) {
                 $scope.listReciept = response.data;
                 console.log($scope.listReciept);
-            });
-            
-            
-            
+            });  
         }
 
 //        $http({
@@ -748,31 +753,90 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
     })
 
 //  ประวัติการเบิกสารอาจารย์  ============================================================================================================
-    .controller('teacherReceiptlog', function($scope,$http) {
-        //  แสดงใบเบิกสาร    
-        $http({
+    .controller('teacherReceiptlogCtrl', function($scope,$http) {
+    
+        $scope.page = 1;
+        $scope.logRecpt = {
+            stDt : '',
+            edDt : '',
+            no : '',
+            project : '',
+            selectAll : ''
+        }
+        
+        $scope.back = function(){
+            $scope.page = 1;
+        }
+        
+        $scope.back2 = function(){
+            $scope.page = 2;
+        } 
+        
+//        $http({
+//                method  :   'POST',
+//                url     :   '../php/select_logReciept.php',
+//                data    :   {type:$scope.key}
+//        }).then(function(response) {
+//            $scope.listReciept = response.data;
+//            console.log($scope.listReciept);
+//        });
+        
+        $scope.search = function(select){
+            $scope.page = 2;
+            console.log(select.stDt);
+            console.log(select.edDt);
+            console.log(select.no);
+            console.log(select.project);
+            console.log(select.selectAll);
+            
+            $http({
                 method  :   'POST',
                 url     :   '../php/select_logReciept.php',
-                data    :   {type:$scope.key}
-        }).then(function(response) {
-            $scope.listReciept = response.data;
-            console.log($scope.listReciept);
-        });
-    
-        $scope.addCart = function (selectedData) {
-            $scope.crd_cr_pk = selectedData.cr_pk;
+                data    :   {
+                    type: $scope.key,
+                    stDt : select.stDt,
+                    edDt : select.edDt,
+                    no : select.no,
+                    project : select.project,
+                    selectAll : select.selectAll
+                }
+            }).then(function(response) {
+                $scope.listReciept = response.data;
+                console.log($scope.listReciept);
+            });  
+        }
+        
+        $scope.showpop = function (selectedData,index) {
+            $scope.page = 3;
+            $scope.recieptIndex = index;
+            console.log($scope.listReciept[$scope.recieptIndex]);
             
-            //  แสดงใบเบิกสาร
             $http({
                 method  :   'POST',
                 url     :   '../php/select_chemdetail.php',
                 data    :   {
-                    'crd_cr_fk' : $scope.crd_cr_pk
+                    'crd_cr_fk' : selectedData
                 }
             }).then(function(response) {
                 $scope.listRecieptDetail = response.data;
+                console.log($scope.listRecieptDetail );
             });
         }
+    
+//        $scope.addCart = function (selectedData) {
+//            $scope.crd_cr_pk = selectedData.cr_pk;
+//            
+//            //  แสดงใบเบิกสาร
+//            $http({
+//                method  :   'POST',
+//                url     :   '../php/select_chemdetail.php',
+//                data    :   {
+//                    'crd_cr_fk' : $scope.crd_cr_pk
+//                }
+//            }).then(function(response) {
+//                $scope.listRecieptDetail = response.data;
+//            });
+//        }
     })
 
 //  ประวัติคำร้องขออื่นๆ  ============================================================================================================
@@ -1555,23 +1619,34 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
 
 // user ซีเนียรดูสถานะคำร้องย้ายคลัง ==============================================================================
     .controller('seniorExchangeStatusCtrl', function($scope, $http){
-         $http({
+    
+        $scope.page = 1;
+        
+        $scope.back = function(){
+            $scope.page = 1;
+        }
+    
+        $http({
             method  :   'POST',
             url     :   '../php/select_chemReceipt.php',
             data    :   {findthis: $scope.key}
         }).then(function(response) {
-            $scope.ListReciept = response.data;
+            $scope.listReciept = response.data;
              console.log( $scope.ListReciept );
         });
+    
         $scope.showPopup = function (getdata,index) {
-            $scope.index = index;
+            $scope.page = 2;
+            console.log(index);
+            $scope.recieptIndex = index;
+            console.log($scope.listReciept[$scope.recieptIndex]);
             $http({
-            method  :   'POST',
-            url     :   '../php/select_chemdetail.php',
-            data    :   {crd_cr_fk: getdata}
-        }).then(function(response) {
-            $scope.chemdetail = response.data;
-        });
+                method  :   'POST',
+                url     :   '../php/select_chemdetail.php',
+                data    :   {crd_cr_fk: getdata}
+            }).then(function(response) {
+                $scope.chemdetail = response.data;
+            });
         }
     })
 

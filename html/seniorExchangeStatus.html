@@ -4,39 +4,107 @@
     }
 </style>
 
-<div class="navbar-header">
-    <caption><h4><i class="fa fa-plus-square"></i>&nbsp;สถานะคำร้องขอ</h4></caption>
+<caption><center><h4><b><i class="fa fa-file"></i>&nbsp;สถานะคำร้องขอย้ายคลัง</b></h4></center></caption><hr>
+
+<div class="navbar-header" style="width:100%">
+    
+    <div ng-show="page == 1">
+        <table class="table table-bordered">
+            <tr>
+                <th>ลำดับที่</th>
+                <th>เลขที่ใบเสร็จ</th>
+                <th>วันที่ร้องขอ</th>
+                <th>สถานะการร้องขอ</th>
+                <th>รายละเอียด</th> 
+            </tr>
+            <tr ng-repeat="showdata in listReciept">
+                <td>
+                {{$index+1}}
+                </td>
+                <td>
+                {{showdata.cr_no}}
+                </td>
+                <td>
+                {{showdata.cr_crtDt | Date}}
+                </td>
+                <td ng-bind-html="showdata.cr_status | confirmFilter"></td>
+                <td>
+                  <form action="../tcpdf/examples/export_pdf_withdraw.php" target="_blank" method="post">
+                      <input type="hidden" value="{{showdata.cr_pk}}" name="crd_cr_fk">
+                      <input type="submit" class="btn btn-default" data-dismiss="modal" ng-hide="showdata.cr_status == 0 || showdata.cr_status == 2" value="พิมพ์ใบเสร็จ">
+                      <input type="button" class="btn btn-default" value="แสดง" ng-click="showPopup(showdata.cr_pk,$index)" data-toggle="modal" data-target="#myModal">
+                  </form>
+                </td>
+            </tr>
+        </table> 
+    </div>
+    
+    <div ng-show="page == 2">
+        
+        <input type="button" class="btn btn-default" value="ย้อนกลับ" ng-click="back()"><br>
+        
+        เลขที่ใบเสร็จ : {{listReciept[recieptIndex].cr_no}} <br>
+        
+        วันที่ร้อง : {{listReciept[recieptIndex].cr_no}} <br>
+        
+        <label>ค่าใช้จ่ายรวมทั้งสิ้น : {{listReciept[recieptIndex].cr_totalprice}}</label>
+        
+        <table width="100%" class="table table-striped">
+            <tr>
+                <th>ชื่อสารเคมี</th>
+                <th>จำนวน</th>
+                <th>หน่วย</th>
+            </tr>
+            <tr ng-repeat="showdata in chemdetail">
+                <td>
+                    {{showdata.cc_name}}
+                </td>  
+                <td>
+                    {{showdata.crd_amt}}
+                </td>  
+                <td>
+                    {{showdata.crd_unit}}
+
+                </td>  
+            </tr>
+          </table>
+    </div>
+    
+<!--
+    <table class="table table-bordered">
+        <tr>
+            <th>ลำดับที่</th>
+            <th>เลขที่ใบเสร็จ</th>
+            <th>วันที่ร้องขอ</th>
+            <th>สถานะการร้องขอ</th>
+            <th>รายละเอียด</th> 
+        </tr>
+        <tr ng-repeat="showdata in ListReciept">
+            <td>
+            {{$index+1}}
+            </td>
+            <td>
+            {{showdata.cr_no}}
+            </td>
+            <td>
+            {{showdata.cr_crtDt | Date}}
+            </td>
+            <td ng-bind-html="showdata.cr_status | confirmFilter"></td>
+            <td>
+              <form action="../tcpdf/examples/export_pdf_withdraw.php" target="_blank" method="post">
+                  <input type="hidden" value="{{showdata.cr_pk}}" name="crd_cr_fk">
+                  <input type="submit" class="btn btn-default" data-dismiss="modal" ng-hide="showdata.cr_status == 0 || showdata.cr_status == 2" value="พิมพ์ใบเสร็จ">
+                  <input type="button" class="btn btn-default" value="แสดง" ng-click="showPopup(showdata.cr_pk,$index)" data-toggle="modal" data-target="#myModal">
+              </form>
+            </td>
+        </tr>
+    </table> 
+-->
 </div>
 
-<table class="table table-bordered">
-    <tr>
-        <th>ลำดับที่</th>
-        <th>เลขที่ใบเสร็จ</th>
-        <th>วัน-เวลาที่ร้องขอ</th>
-        <th>สถานะการร้องขอ</th>
-        <th>รายละเอียด</th> 
-    </tr>
-    <tr ng-repeat="showdata in ListReciept">
-        <td>
-        {{$index+1}}
-        </td>
-        <td>
-        {{showdata.cr_no}}
-        </td>
-        <td>
-        {{showdata.cr_crtDt}}
-        </td>
-        <td ng-bind-html="showdata.cr_status | confirmFilter"></td>
-        <td>
-          <form action="../tcpdf/examples/export_pdf_withdraw.php" target="_blank" method="post">
-              <input type="hidden" value="{{showdata.cr_pk}}" name="crd_cr_fk">
-              <input type="submit" class="btn btn-default" data-dismiss="modal" ng-hide="showdata.cr_status == 0 || showdata.cr_status == 2" value="พิมพ์ใบเสร็จ">
-              <input type="button" class="btn btn-default" value="แสดง" ng-click="showPopup(showdata.cr_pk,$index)" data-toggle="modal" data-target="#myModal">
-          </form>
-        </td>
-    </tr>
-</table> 
 
+
+<!--
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -73,4 +141,5 @@
     </div>
   </div>
 </div>  
+-->
 

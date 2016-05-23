@@ -33,6 +33,7 @@
     <script src="../js/routing.js"></script>
     <script src="../js/chemstoreController.js"></script>
     <script src="../js/chemstoreFliter.js"></script>
+    <script src="../js/chemstoreConfig.js"></script>
   
 
   <body ng-controller ="loginCtrl" ng-init="checkSession(); checked=true; dis=true; btng1=true; btng2=true; btng3=true; fix=true">
@@ -246,9 +247,9 @@
                   
                   <li><a href="#/viewStock"><i class="fa fa-flask" aria-hidden="true"></i>&nbsp;คลังสารเคมี</a></li>
 
-                  <li><a href="#/inboundChem"><i class="fa fa-download" aria-hidden="true"></i>&nbsp;นำเข้าสารเคมี</a></li>
+                  <li><a href="#/manageInboundChem"><i class="fa fa-download" aria-hidden="true"></i>&nbsp;นำเข้าสารเคมี</a></li>
 
-                  <li><a href="#/editChem"><i class="fa fa-pencil" aria-hidden="true"></i>&nbsp;แก้ไขข้อมูลสารเคมี</a></li>
+                  <li><a href="#/manageEditChem"><i class="fa fa-pencil" aria-hidden="true"></i>&nbsp;แก้ไขข้อมูลสารเคมี</a></li>
                   
                   <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" ><i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;ประวัติรายการ<span class="caret"></span></a>
                       <ul class="dropdown-menu" >
@@ -285,7 +286,7 @@
                         
                       <li role="separator" class="divider"></li>
                         
-                      <li><a href="../php/logout.php" ><i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp;ออกจากระบบ</a></li>
+                      <li><a href="#/logout" ><i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp;ออกจากระบบ</a></li>
                         
                     </ul>
                   </li>
@@ -344,7 +345,7 @@
                     <ul class="dropdown-menu">
                       <li><a href="#/editMember" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;แก้ไขข้อมูลผู้ใช้งาน</a></li>
                       <li role="separator" class="divider"></li>
-                      <li><a href="../php/logout.php" ><i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp;ออกจากระบบ</a></li>
+                      <li><a href="#/logout" ><i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp;ออกจากระบบ</a></li>
                     </ul>
                 </li>
               </ul>
@@ -360,7 +361,7 @@
                 
                   <li class="active"><a href="#/news"><i class="fa fa-home" aria-hidden="true"></i>&nbsp;หน้าแรก</a></li>
                   
-                  <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-cog" aria-hidden="true"></i>&nbsp;จัดการคำร้องขอ<span class="caret"></span></a>
+                  <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-check-square-o" aria-hidden="true"></i>&nbsp;สถานะคำร้องขอ<span class="caret"></span></a>
                     <ul class="dropdown-menu" >
                       <li><a href="#/seniorExchangeStatus">สถานะคำร้องขอย้ายคลัง</a></li>
                     </ul>
@@ -397,7 +398,7 @@
                     <ul class="dropdown-menu">
                       <li><a href="#/editMember" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;แก้ไขข้อมูลผู้ใช้งาน</a></li>
                       <li role="separator" class="divider"></li>
-                      <li><a href="../php/logout.php" ><i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp;ออกจากระบบ</a></li>
+                      <li><a href="#/logout" ><i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp;ออกจากระบบ</a></li>
                     </ul>
                 </li>
               </ul>
@@ -430,7 +431,7 @@
                     <ul class="dropdown-menu">
                       <li><a href="#/editMember" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;แก้ไขข้อมูลผู้ใช้งาน</a></li>
                       <li role="separator" class="divider"></li>
-                      <li><a href="../php/logout.php" ><i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp;ออกจากระบบ</a></li>
+                      <li><a href="#/logout" ><i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp;ออกจากระบบ</a></li>
                     </ul>
                 </li>
               </ul>
@@ -463,7 +464,7 @@
                     <ul class="dropdown-menu">
                       <li><a href="#/editMember" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;แก้ไขข้อมูลผู้ใช้งาน</a></li>
                       <li role="separator" class="divider"></li>
-                      <li><a href="../php/logout.php" ><i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp;ออกจากระบบ</a></li>
+                      <li><a href="#/logout" ><i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp;ออกจากระบบ</a></li>
                     </ul>
                 </li>
               </ul>
