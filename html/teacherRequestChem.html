@@ -7,11 +7,13 @@
 <caption><center><h4><b><i class="fa fa-list-alt"></i>&nbsp;สถานะคำร้องขอ</b></h4></center></caption><hr>
 
 <div class="navbar-header" style="width:100%">
-    <table class="table table-bordered">
+    
+    <div ng-show="page == 1">
+        <table class="table table-bordered">
         <tr>
             <th>ลำดับที่</th>
             <th>เลขที่ใบเสร็จ</th>
-            <th>วัน-เวลาที่ร้องขอ</th>
+            <th>วันที่ร้องขอ</th>
             <th>สถานะการร้องขอ</th>
             <th>ราคารวมทั้งสิ้น</th>
             <th>รายละเอียด</th>
@@ -24,7 +26,7 @@
             {{showdata.cr_no}}
             </td>
             <td>
-            {{showdata.cr_crtDt}}
+            {{showdata.cr_crtDt | Date}}
             </td>
             <td ng-bind-html="showdata.cr_status | confirmFilter"></td>
             <td> 
@@ -33,16 +35,51 @@
             <td>
               <form action="../tcpdf/examples/export_pdf_withdraw.php" target="_blank" method="post">
                   <input type="hidden" value="{{showdata.cr_pk}}" name="crd_cr_fk">
-                  <input type="submit" class="btn btn-default" data-dismiss="modal" ng-hide="showdata.cr_status == 0 || showdata.cr_status == 2" value="พิมพ์ใบเสร็จ">
+                  
                   <input type="button" class="btn btn-default" value="แสดง" ng-click="showPopup(showdata.cr_pk,$index)" data-toggle="modal" data-target="#myModal">
+                  
+                  <input type="submit" class="btn btn-default" data-dismiss="modal" ng-hide="showdata.cr_status == 0 || showdata.cr_status == 2" value="พิมพ์ใบเสร็จ">
               </form>
             </td>
         </tr>
     </table> 
+    </div>
+    
+    <div ng-show="page == 2">
+        <input type="button" class="btn btn-default" value="ย้อนกลับ" ng-click="back()"><br><br>
+            
+        ค่าใช้จ่ายรวม : {{listReciept[index].cr_totalprice}} บาท
+        
+        <table width="100%" class="table table-striped">
+            <tr>
+                <th>ชื่อสารเคมี</th>
+                <th>จำนวน</th>
+                <th>หน่วย</th>
+                <th>สถานที่</th>
+                <th>สถานะ</th>
+            </tr>
+            <tr ng-repeat="showdata in chemdetail">
+                <td>
+                    {{showdata.cc_name}}
+                </td>  
+                <td>
+                    {{showdata.crd_amt}}
+                </td> 
+                <td>{{showdata.cl_name}}</td>
+                <td>
+                    {{showdata.crd_unit}}
+                </td>  
+                <td ng-bind-html="showdata.crd_status | confirmFilter"></td>
+            </tr>
+          </table>
+    </div>
+    
+    
 </div>
 
 
 
+<!--
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -87,4 +124,5 @@
     </div>
   </div>
 </div>  
+-->
 

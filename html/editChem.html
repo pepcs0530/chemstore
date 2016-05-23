@@ -26,26 +26,36 @@
 <!--    <div ng-show="editChem">-->
         <table class= " table table-bordered">
             <tr>
-                <th>ชื่อสารเคมี</th>
+                <th>ชื่อ</th>
+                <th>ประเภท</th>
+                <th>รหัส</th>
                 <th>Cas no.</th>
                 <th>สถานะ</th>
                 <th>ปริมาณ</th>
-                <th>อาคาร</th>
+                <th>ขนาดบรรจุ</th>
+                <th>หน่วย</th>
+                <th>คลัง</th>
                 <th>ห้อง</th>
                 <th>ราคา/หน่วย</th>
                 <th>เกรด</th>
+                <th>วันหมดอายุ</th>
                 <th>ผู้ผลิต</th>
                 <th>แก้ไข</th>
             </tr>
             <tr ng-repeat="showdata in listChem | filter : searchThis | limitTo : searchRange.value : begin">
                 <td>{{showdata.cc_name}}</td>
+                <td>{{showdata.cc_type}}</td>
+                <td>{{showdata.cc_code}}</td>
                 <td>{{showdata.cc_casNo}}</td>
                 <td>{{showdata.cc_state}}</td>
                 <td>{{showdata.cc_quantity | number:4}}</td>
+                <td>{{showdata.cc_volume}}</td>
+                <td>{{showdata.cu_name_abb}}</td>
                 <td>{{showdata.cl_name}}</td>
                 <td>{{showdata.cc_room}}</td>
                 <td>{{showdata.cc_price}}/{{showdata.cu_name_abb}}</td>
                 <td>{{showdata.cc_grade}}</td>
+                <td>{{showdata.cc_expDt | Date}}</td>
                 <td>{{showdata.cc_producer}}</td>
                 <td align="center"><button type="button" class="btn btn-success btn-sm" value="เลือก" ng-click="editThis(showdata)" data-toggle="modal" data-target="#myModal"><i class="fa fa-check-square"></i>&nbsp;</button></td>
             </tr>

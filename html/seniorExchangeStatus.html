@@ -41,11 +41,11 @@
     
     <div ng-show="page == 2">
         
-        <input type="button" class="btn btn-default" value="ย้อนกลับ" ng-click="back()"><br>
+        <input type="button" class="btn btn-default" value="ย้อนกลับ" ng-click="back()"><br><br>
         
         เลขที่ใบเสร็จ : {{listReciept[recieptIndex].cr_no}} <br>
         
-        วันที่ร้อง : {{listReciept[recieptIndex].cr_no}} <br>
+        วันที่ร้อง : {{listReciept[recieptIndex].cr_crtDt | Date}} <br>
         
         <label>ค่าใช้จ่ายรวมทั้งสิ้น : {{listReciept[recieptIndex].cr_totalprice}}</label>
         

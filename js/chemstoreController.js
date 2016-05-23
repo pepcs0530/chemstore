@@ -189,6 +189,7 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
                              status : 2}
                 }).then(function(data) {
                     alert("ดำเนินการเรียบร้อย");
+                    //toastr.success('ดำเนินการเรียบร้อย');
                     location.reload();
                 });
             });
@@ -225,15 +226,17 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
                 data    :   {crd_cr_fk: $scope.listReciept[$scope.index].cr_pk,
                              status : 4}
                 }).then(function(data) {
-                    alert("ดำเนินการเรียบร้อย");
-                    location.reload();
+                    //alert("ดำเนินการเรียบร้อย");
+                    //location.reload();
+                    toastr.success('ดำเนินการเรียบร้อย');
+                    $timeout(location.reload(), 5000);
                 });
             });
         }
     })
 
     //จัดการคำร้องขอย้ายคลังสารเคมี ================================================================
-    .controller('submitExchangeChemCtrl', function($scope,$http) {
+    .controller('submitExchangeChemCtrl', function($scope, $http, $timeout, toastr) {
             $http({
                 method  :   'POST',
                 url     :   '../php/select_chemReceipt.php',
@@ -274,6 +277,8 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
                     }).then(function(data) {
                         alert("ดำเนินการเรียบร้อย");
                         location.reload();
+//                        toastr.success('ดำเนินการเรียบร้อย');
+//                        $timeout(location.reload(), 5000);
                     });
                 });
             }      
@@ -304,13 +309,15 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
                     }).then(function(data) {
                         alert("ดำเนินการเรียบร้อย");
                         location.reload();
+//                       toastr.success('ดำเนินการเรียบร้อย');
+//                       $timeout(location.reload(), 5000);
                     });
                 });
             }
         })
     
 //  จัดการคำร้องขออื่นๆ  ============================================================================================================
-    .controller('submitRequestOther', function($scope,$http) {
+    .controller('submitRequestOther', function($scope, $http, $timeout, toastr) {
         $http({
             method  :   'POST',
             url     :   '../php/select_manageRequestOther.php'
@@ -324,12 +331,14 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
             }).success(function (data) {
                 alert("ยืนยันคำร้องเรียบร้อย");
                 location.reload();
+//                toastr.success('ยืนยันคำร้องเรียบร้อย');
+//                $timeout(location.reload(), 5000);
             });
         }
     })
 
 //  นำสารเข้า  ============================================================================================================
-    .controller('inboundChemCtrl', function($scope,$http) {
+    .controller('inboundChemCtrl', function($scope, $http, $timeout, toastr) {
         //  แสดงสถานที่
         $scope.addChem = {cc_state : "S",
                           cl_pk : "1",
@@ -388,6 +397,7 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
             }).then(function(response) {
                 console.log(response);
                 alert("ดำเนินการเพิ่มเรียบร้อย");
+                //toastr.success('ดำเนินการเพิ่มเรียบร้อย');
                 $scope.addChem = {
                     cc_state : "S",
                     cl_pk : "1",
@@ -399,7 +409,10 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
     })
 
 //  แก้ไขข้อมูลสารเคมี  =======================================================================================================
-    .controller('editChemCtrl', function($scope,$http, $filter) {
+    .controller('editChemCtrl', function($scope,$http, $filter, $timeout, toastr) {
+    
+        $scope.selectThis = false;
+    
         //  ปุ่ม prev
         $scope.deleteRecord = function () {
             if(parseInt($scope.begin) - parseInt($scope.searchRange.value) < 0)
@@ -463,6 +476,9 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
         
         //  เลือกสารเคมีที่จะแก้ไข
         $scope.editThis = function (selectedData) {
+            
+            $scope.selectThis = true;
+            
             $scope.editThisData = selectedData;
             $scope.editThisData.cc_expDt = new Date($scope.editThisData.cc_expDt);
         }
@@ -492,6 +508,8 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
                     console.log(data);
                     alert("แก้ไขข้อมูลเรียบร้อย");
                     location.reload();
+//                    toastr.success('แก้ไขข้อมูลเรียบร้อย');
+//                    $timeout(location.reload(), 5000);
                 });
         }
     })
@@ -671,9 +689,7 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
             state : '',
             stDt : '',
             edDt : '',
-            name : '',
-            casNo : '',
-            grade : '',
+            no : '',
             selectAll : ''
         }
         
@@ -684,9 +700,7 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
             console.log(select.state);
             console.log(select.stDt);
             console.log(select.edDt);
-            console.log(select.name);
-            console.log(select.casNo);
-            console.log(select.grade);
+            console.log(select.no);
             console.log(select.selectAll);
             
             $http({
@@ -699,9 +713,7 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
                     state : select.state,
                     stDt : select.stDt,
                     edDt : select.edDt,
-                    name : select.name,
-                    casNo : select.casNo,
-                    grade : select.grade,
+                    no : select.no,
                     selectAll : select.selectAll
                 }
             }).then(function(response) {
@@ -864,7 +876,7 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
     })
 
 //  member  ============================================================================================================
-    .controller('addMembersCtrl', function($scope,$http) {
+    .controller('addMembersCtrl', function($scope, $http, $timeout, toastr) {
         //    เลือกประเภทผู้ใช้
         $http({
             method  :   'GET',
@@ -894,8 +906,10 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
                 console.log(data);
                 if(data.substring(data.length-55,data.length-38) == "Error : Duplicate"){
                     alert("มี username นี้อยู่ในระบบแล้ว");
+                    //toastr.error('มี username นี้อยู่ในระบบแล้ว');
                 }else{
-                    alert("เพิ่มสมาชิกเรียบร้อย"); 
+                    alert("เพิ่มสมาชิกเรียบร้อย");
+                    //toastr.success('เพิ่มสมาชิกเรียบร้อย');
                     $scope.addMember = {acctyp : "4"};
                 }
             });
@@ -903,7 +917,7 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
     })
 
 //  edit member  =========================================================================================================
-    .controller('editMembersCtrl', function($scope,$http) {
+    .controller('editMembersCtrl', function($scope, $http, $timeout, toastr) {
         //  แก้ไขข้อมูลส่วนตัว
         $scope.confirmMember = function(){
             $scope.checked = true;
@@ -952,16 +966,20 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
             }).success(function (data) {
                 alert("แก้ไขสมาชิกเรียบร้อย");
                 location.reload();
+//                toastr.success('แก้ไขสมาชิกเรียบร้อย');
+//                $timeout(location.reload(), 5000);
             });
         }
     
         //  ยืนยันแก้ไขรหัสผ่าน
         $scope.updatePassMember = function(){
             if($scope.pass != $scope.listAcountData.ca_pass){
-                alert("รหัสผ่านไม่ถูกต้อง / ไม่ได้กรอกรหัสผ่าน");
+//                alert("รหัสผ่านไม่ถูกต้อง / ไม่ได้กรอกรหัสผ่าน");
+                toastr.error('รหัสผ่านไม่ถูกต้อง / ไม่ได้กรอกรหัสผ่าน');
             }else{
                 if($scope.new_pass != $scope.re_new_pass){
-                    alert("รหัสผ่านใหม่ไม่สอดคล้องกัน");
+//                    alert("รหัสผ่านใหม่ไม่สอดคล้องกัน");
+                    toastr.error('รหัสผ่านใหม่ไม่สอดคล้องกัน');
                 }else{
                     $http.post("../php/update_passMember.php",{
                         'pk' : $scope.listAcountData.ca_pk, 
@@ -970,6 +988,8 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
                         console.log(data);
                         alert("แก้ไขรหัสผ่านเรียบร้อย");
                         location.reload();
+//                        toastr.success('แก้ไขรหัสผ่านเรียบร้อย');
+//                        $timeout(location.reload(), 5000);
                     });  
                 }
             }             
@@ -979,6 +999,13 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
 
 //  สถานะคำร้องขอของอาจารย์  ============================================================================================================
     .controller('teacherRequestCtrl', function($scope,$http) {
+    
+        $scope.page = 1;
+    
+        $scope.back = function(){
+            $scope.page = 1;  
+        }
+        
         $http({
             method  :   'POST',
             url     :   '../php/select_chemReceipt.php',
@@ -986,16 +1013,18 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
         }).then(function(response) {
             $scope.listReciept = response.data;
         });
+    
         $scope.showPopup = function (getdata,index) {
+            $scope.page = 2; 
             $scope.index = index;
             $http({
-            method  :   'POST',
-            url     :   '../php/select_chemdetail.php',
-            data    :   {crd_cr_fk: getdata}
-        }).then(function(response) {
-            $scope.chemdetail = response.data;
-            console.log($scope.chemdetail);
-        });
+                method  :   'POST',
+                url     :   '../php/select_chemdetail.php',
+                data    :   {crd_cr_fk: getdata}
+            }).then(function(response) {
+                $scope.chemdetail = response.data;
+                console.log($scope.chemdetail);
+            });
         }
     })
 
@@ -1346,7 +1375,7 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
     }) 
 
 // สร้างข่าว ===============================================================================================
-    .controller('addNewsCtrl', function($scope, $http){
+    .controller('addNewsCtrl', function($scope, $http, $timeout, toastr){
     
             $scope.uploadFileToUrl = function(file, uploadUrl){  
                alert("upload");
@@ -1368,7 +1397,7 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
             }
         
             $scope.createNews = function(){
-                alert("OK...");
+                //alert("OK...");
                 var file = $scope.myFile;               
                 console.log('file is ' );
                 console.dir(file.name);
@@ -1383,11 +1412,16 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
                     'photo' : file.name
                 }).success(function (data) {
                     console.log(data);
+                    alert('ดำเนินการเพิ่มเรียบร้อย');
                 });
             }
 
             $scope.clearNews = function(){
-                alert("Cancle...");
+                $scope.addNews ={
+                    title : '',
+                    desc : '',
+                    link : ''
+                }
             }
             
     })
@@ -1708,20 +1742,69 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
 
 // ประวัติการย้ายคลัง ========================================================================================================
     .controller('seniorExchangeLogCtrl', function($scope, $http){
-    //  แสดงใบเบิกสาร    
-        $http({
-                method  :   'POST',
-                url     :   '../php/select_logExchange.php',
-                data    :   {type:$scope.key}
-        }).then(function(response) {
-            $scope.listReciept = response.data;
-            console.log($scope.listReciept);
-        });
+    
+        $scope.page = 1;
+    
+        $scope.logExchg = {
+            locationF : '',
+            locationT : '',
+            state : '',
+            stDt : '',
+            edDt : '',
+            no : '',
+            selectAll : ''
+        }
+       
+        $scope.back = function(){
+            $scope.page = 1;
+        }
+        
+        $scope.back2 = function(){
+            $scope.page = 2;
+        }
+        
+//        $http({
+//                method  :   'POST',
+//                url     :   '../php/select_logExchange.php',
+//                data    :   {type:$scope.key}
+//        }).then(function(response) {
+//            $scope.listReciept = response.data;
+//            console.log($scope.listReciept);
+//        });
+        
+        $scope.search = function(select){
+            $scope.page = 2;
+            console.log(select.locationF);
+            console.log(select.locationT);
+            console.log(select.state);
+            console.log(select.stDt);
+            console.log(select.edDt);
+            console.log(select.no);
+            console.log(select.selectAll);
+        
+            $http({
+                    method  :   'POST',
+                    url     :   '../php/select_logExchange.php',
+                    data    :   {
+                        type:$scope.key,
+                        locationF : select.locationF,
+                        locationT : select.locationT,
+                        state : select.state,
+                        stDt : select.stDt,
+                        edDt : select.edDt,
+                        no : select.no,
+                        selectAll : select.selectAll
+                    }
+            }).then(function(response) {
+                $scope.listReciept = response.data;
+                console.log($scope.listReciept);
+            });
+        }
     
         $scope.showpop = function (selectedData) {
+            $scope.page = 3;
             $scope.crd_cr_pk = selectedData.cr_pk;
-            
-            //  แสดงใบเบิกสาร
+                        
             $http({
                 method  :   'POST',
                 url     :   '../php/select_chemdetail.php',
@@ -1732,6 +1815,15 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
                 $scope.listRecieptDetail = response.data;
             });
         }
+        
+        $http({
+            method  :   'GET',
+            url     :   '../php/select_chemLocation.php',
+        }).then(function(response) {
+            $scope.listLocation = response.data;
+            console.log($scope.listLocation);
+        });
+    
     })
 
 //ตรวจถึงตรงนี้

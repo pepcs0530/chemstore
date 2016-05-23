@@ -44,6 +44,9 @@
             <input ng-model="logExchg.edDt" name="edDt" type="date" />
             <br>
             <br>
+            
+            <strong>เลขที่ใบย้าย :</strong>
+            <input type="text" ng-model="logExchg.no" name="no" /><br><br>
               
 <!--
             <strong>ชื่อสาร :</strong>
@@ -63,13 +66,14 @@
         <div ng-show="page == 2">
 <!--            <button type="button" class="btn btn-default" ng-click="next2()" >ไป</button>-->
             <button type="button" class="btn btn-default" ng-click="back()" >ย้อนกลับ</button>
+            <input type="hidden" value="{{key}}" name="type">
             <input type="submit" class="btn btn-default" value="พิมพ์รายงาน" >
             <table class= "table table-bordered" >
                 <tr>
                     <th>ลำดับ</th>
                     <th>วันที่เขียนคำร้อง</th>
                     <th>วันที่อนุมัติ</th>
-                    <th>เลขที่ใบเบิก</th>
+                    <th>เลขที่ใบย้าย</th>
                     <th>บัญชีผู้ใช้</th>
                     <th>จากคลัง</th>
                     <th>ไปคลัง</th>
