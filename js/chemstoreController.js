@@ -151,63 +151,45 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
 
 //  ยืนยันคำร้องขอ  ========================================================================================================
     .controller('submitRequestChemCtrl', function($scope,$http) {
+        $scope.showcontent = false;
         $http({
-            method  :   'POST',
+            method  :   'GET',
             url     :   '../php/select_chemReceipt.php',
-            data    :   {findthis : "chemrequest"}
         }).then(function(response) {
             $scope.listReciept = response.data;
-            console.log($scope.listReciept);
+//            console.log($scope.listReciept);
         });
-        $scope.showPopup = function (getdata,index) {
+        $scope.showdetail = function (getdata,index) {
+            $scope.showcontent = true;
+            console.log(getdata,index);
             $scope.index = index;
             $http({
             method  :   'POST',
             url     :   '../php/select_chemdetail.php',
             data    :   {crd_cr_fk: getdata}
             }).then(function(response) {
+                
                 $scope.chemdetail = response.data;
-                console.log($scope.chemdetail);
+//                console.log($scope.chemdetail);
             });
         }
         
         $scope.cancelRequest = function() {
-            console.log($scope.listReciept[$scope.index].cr_cp_fk);
-            $http({
-            method  :   'POST',
-            url     :   '../php/update_submitChemRequest.php',
-            data    :   {cr_pk: $scope.listReciept[$scope.index].cr_pk,
-                         cr_cp_fk: $scope.listReciept[$scope.index].cr_cp_fk,
-                         cp_teach_fk: $scope.listReciept[$scope.index].cp_teach_fk,
-                         totalprice: $scope.listReciept[$scope.index].cr_totalprice,
-                         status : 2}
-            }).then(function(data) {
-                $http({
-                method  :   'POST',
-                url     :   '../php/update_receiptDetail.php',
-                data    :   {crd_cr_fk: $scope.listReciept[$scope.index].cr_pk,
-                             status : 2}
-                }).then(function(data) {
-                    alert("ดำเนินการเรียบร้อย");
-                    //toastr.success('ดำเนินการเรียบร้อย');
-                    location.reload();
-                });
-            });
+           
         }
         
         $scope.submitRequest = function() {
-            console.log($scope.chemdetail[$scope.index]);
+            console.log($scope.listReciept[$scope.index]);
 
             $http({
             method  :   'POST',
             url     :   '../php/update_submitChemRequest.php',
             data    :   {cr_pk: $scope.listReciept[$scope.index].cr_pk,
-                         cr_cp_fk: $scope.listReciept[$scope.index].cr_cp_fk,
-                         cp_teach_fk: $scope.listReciept[$scope.index].cp_teach_fk,
+                         cr_cp_fk: $scope.listReciept[$scope.index].cp_pk,
+                         cp_teach_fk: $scope.listReciept[$scope.index].ca_pk,
                          totalprice: $scope.listReciept[$scope.index].cr_totalprice,
                          status : 3}
             }).then(function(data) {
-                
                 angular.forEach($scope.chemdetail, function(value, key){         
                     $http({
                         method  : 'POST',
@@ -226,8 +208,8 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
                 data    :   {crd_cr_fk: $scope.listReciept[$scope.index].cr_pk,
                              status : 4}
                 }).then(function(data) {
-                    //alert("ดำเนินการเรียบร้อย");
-                    //location.reload();
+                    alert("ดำเนินการเรียบร้อย");
+                    location.reload();
                     toastr.success('ดำเนินการเรียบร้อย');
                     $timeout(location.reload(), 5000);
                 });
@@ -1266,10 +1248,11 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
                      (new Date().getMonth()+1) + 
                       new Date().getFullYear(), 
                     cr_cp_fk : $scope.selectedProject.cp_pk,
-                    totalmoney : $scope.total},
+                    totalmoney : $scope.total,
+                    requesttype : "chemrequest"},
                     headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
                     }).then(function(response) {
-                    console.log(response);
+                    console.log(response.data.cr_pk);
                     angular.forEach($scope.cartlist, function(value, key){
                         $http({
                             method  : 'POST',
@@ -1630,37 +1613,36 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
         else{
             $http({
                 method  : 'POST',
-                url     : '../php/insert_exchange.php',
+                url     : '../php/insert_reciept.php',
                 data    : { 
-                    ce_no : $scope.key +
+                    cr_no : $scope.key +
                       new Date().getDate() + 
                      (new Date().getMonth()+1) + 
                       new Date().getFullYear(), 
-                    ce_desc : $scope.cartlist.cr_desc,
-                    ce_fromstore : $scope.listAcountData[0].ca_responplace,
-                    ce_tostore : $scope.fromstore,
-                    ce_ca_fk : $scope.key
+                    requesttype : "exchangechem",
+                    cr_desc : $scope.cartlist.cr_desc,
+                    cr_fromstore : $scope.listAcountData[0].ca_responplace,
+                    cr_tostore : $scope.fromstore
                     },
                     headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
                     }).then(function(response) {  
-                    console.log(response);
                     angular.forEach($scope.cartlist, function(value, key){            
                         $http({
                             method  : 'POST',
-                            url     : '../php/insert_exchangeDetail.php',
-                            data    : { ced_ce_fk: response.data.ce_pk,
-                                        ced_cc_fk: value.cc_pk,
-                                        ced_amt: value.exvolumeRequest,
-                                        ced_price: 0,
-                                        ced_unit: value.cu_name_abb,
-                                        ced_status: '0'}, 
+                            url     : '../php/insert_recieptDetail.php',
+                            data    : { crd_cr_fk: response.data.cr_pk,
+                                        crd_cc_fk: value.cc_pk,
+                                        crd_amt: value.exvolumeRequest,
+                                        crd_price: 0,
+                                        crd_unit: value.cu_name_abb,
+                                        crd_status: '0'}, 
                             headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
                         }).then(function(response) {
                             console.log(response)
                         })    
                     }); 
-//                alert("ดำเนินการเพิ่มรายการเรียบร้อย");
-//                location.reload();
+                alert("ดำเนินการเพิ่มรายการเรียบร้อย");
+                location.reload();
             })
         }
     }  

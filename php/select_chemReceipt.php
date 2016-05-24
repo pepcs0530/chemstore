@@ -1,27 +1,16 @@
 <?php
     $_POST = json_decode(file_get_contents('php://input'), true);
     include 'connect.php';
-    $findthis = $_POST['findthis'];
 
-    if($findthis == "chemrequest") {
-        $sql = "SELECT cr.cr_pk,cr.cr_no,cr.cr_totalprice,cr.cr_cp_fk,cr.cr_status,cr.cr_crtDt,cr.cr_tostore,cr.cr_fromstore,cp.cp_teach_fk,cp.cp_budget,ca.ca_credit ".
-                "FROM chem_receipt AS cr ".
-                "INNER JOIN chem_project AS cp ".
-                "ON cp_pk = cr_cp_fk ".
-                "INNER JOIN chem_account AS ca ".
-                "ON cp_teach_fk = ca_pk ".
-                "WHERE cr_type = 'chemrequest' ".
-                "ORDER BY cr_crtDt DESC";
-    }
-    else if($findthis == "exchangechem") {
-        $sql = "SELECT `cr_pk`,`cr_no`,`cr_crtDt`,`cr_desc`,`cr_status`,`cr_fromstore`,`cr_tostore` FROM chem_receipt WHERE cr_type = 'exchangechem'";
-    }
-    else{
-        $sql = "SELECT * FROM `chem_receipt` WHERE `cr_no` LIKE 'NO.".$findthis."%' ORDER BY cr_crtDt DESC";
-    }
-    
-
-    
+    $sql = "SELECT `cr_pk`,`cr_no`,`cr_crtDt`,`cr_updDt`,`cr_status`,`cr_totalprice`,`cp_pk`,`cp_name`,`cp_desc`,`ca_pk`,`ca_tname`,`ca_fname`,`ca_lname`,`ca_credit`,`cp_budget`
+        FROM chem_receipt
+        INNER JOIN chem_project
+        ON cp_pk = cr_cp_fk 
+        INNER JOIN chem_account
+        ON cp_teach_fk = ca_pk 
+        
+        ORDER BY cr_crtDt DESC";
+//WHERE `cr_status` = 0
     $query = mysql_query($sql);
     $data=array();
 

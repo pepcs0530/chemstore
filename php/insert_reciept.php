@@ -18,18 +18,25 @@
         $cr_cp_fk = $_POST['cr_cp_fk'];
     }
 
-    if(!isset($_POST['totalmoney'])){
-        $totalmoney = '';    
+    if(!isset($_POST['cr_cost'])){
+        $cr_cost = '';    
     } 
     else{
-        $totalmoney = $_POST['totalmoney'];
+        $cr_cost = $_POST['cr_cost'];
     }
     
-    if(!isset($_POST['cr_desc'])){
-        $ce_desc = '';    
+    if(!isset($_POST['cr_projectbudget'])){
+        $cr_projectbudget = '';    
     } 
     else{
-        $ce_desc = $_POST['cr_desc'];
+        $cr_projectbudget = $_POST['cr_projectbudget'];
+    }
+
+    if(!isset($_POST['cr_teacherbudget'])){
+        $cr_teacherbudget = '';    
+    } 
+    else{
+        $cr_teacherbudget = $_POST['cr_teacherbudget'];
     }
 
     $sql = "SELECT cr_pk FROM `chem_receipt` ORDER BY cr_pk DESC LIMIT 1";
@@ -45,8 +52,8 @@
     }else{
         $cr_no = "NO.".($cr_no.$data[0]['cr_pk']+1);
     }
-    $sql = "INSERT INTO `chem_receipt` (cr_no, cr_totalprice, cr_cp_fk, cr_crtDt)".
-            " VALUE('".$cr_no."','".$totalmoney ."','".$cr_cp_fk."', CURRENT_TIMESTAMP)";
+    $sql = "INSERT INTO `chem_receipt` (cr_no, cr_totalprice, cr_cp_fk, cr_crtDt, cr_projectbudget, cr_teacherbudget, cr_cost)".
+            " VALUE('".$cr_no."','".$totalmoney ."','".$cr_cp_fk."', CURRENT_TIMESTAMP,'".$cr_projectbudget."','".$cr_teacherbudget."','".$cr_cost."')";
     
     $query = mysql_query($sql);
     
