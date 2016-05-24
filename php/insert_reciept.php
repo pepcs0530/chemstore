@@ -3,12 +3,6 @@
 
     //mysql connect
     include 'connect.php';
-    if(!isset($_POST['requesttype'])){
-        $requesttype = '';    
-    } 
-    else{
-        $requesttype = $_POST['requesttype'];    
-    }
     
     if(!isset($_POST['cr_no'])){
         $cr_no = '';    
@@ -31,46 +25,31 @@
         $totalmoney = $_POST['totalmoney'];
     }
     
-    if(!isset($_POST['cr_fromstore'])){
-        $cr_fromstore = '';    
+    if(!isset($_POST['cr_desc'])){
+        $ce_desc = '';    
     } 
     else{
-        $cr_fromstore = $_POST['cr_fromstore'];
-    }
-    
-    if(!isset($_POST['cr_tostore'])){
-        $cr_tostore = '';    
-    } 
-    else{
-        $cr_tostore = $_POST['cr_tostore'];
+        $ce_desc = $_POST['cr_desc'];
     }
 
-    if(!isset($_POST['cr_desc'])){
-        $cr_desc = '';    
-    } 
-    else{
-        $cr_desc = $_POST['cr_desc'];
-    }
-    
     $sql = "SELECT cr_pk FROM `chem_receipt` ORDER BY cr_pk DESC LIMIT 1";
     $query = mysql_query($sql);
     $data=array();
     while($row = mysql_fetch_array ($query))
     {
         array_push($data,$row);
+    }  
+
+    if(count($data) == 0){
+        $cr_no = "NO.".$cr_no."0";
+    }else{
+        $cr_no = "NO.".($cr_no.$data[0]['cr_pk']+1);
     }
-    $cr_no = "NO.".($cr_no.$data[0]['cr_pk']+1);
-    if($requesttype == "chemrequest"){
-        $sql = "INSERT INTO `chem_receipt` (cr_no, cr_totalprice, cr_cp_fk, cr_crtDt, cr_type)".
-            " VALUE('".$cr_no."','".$totalmoney ."','".$cr_cp_fk."', CURRENT_TIMESTAMP, '".$requesttype."')";
-        
-    } 
-    else if($requesttype == "exchangechem"){   
-        $sql = "INSERT INTO `chem_receipt` (cr_no, cr_crtDt, cr_desc, cr_fromstore, cr_tostore, cr_type)".
-            " VALUE('".$cr_no."', CURRENT_TIMESTAMP,'".$cr_desc."','".$cr_fromstore."','".$cr_tostore."','".$requesttype."')";
-    }
+    $sql = "INSERT INTO `chem_receipt` (cr_no, cr_totalprice, cr_cp_fk, cr_crtDt)".
+            " VALUE('".$cr_no."','".$totalmoney ."','".$cr_cp_fk."', CURRENT_TIMESTAMP)";
     
     $query = mysql_query($sql);
+    
     $sql = "SELECT cr_pk FROM `chem_receipt` ORDER BY cr_pk DESC LIMIT 1";
     $query = mysql_query($sql);
     $data=array();

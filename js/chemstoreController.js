@@ -1266,11 +1266,10 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
                      (new Date().getMonth()+1) + 
                       new Date().getFullYear(), 
                     cr_cp_fk : $scope.selectedProject.cp_pk,
-                    totalmoney : $scope.total,
-                    requesttype : "chemrequest"},
+                    totalmoney : $scope.total},
                     headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
                     }).then(function(response) {
-                    console.log(response.data.cr_pk);
+                    console.log(response);
                     angular.forEach($scope.cartlist, function(value, key){
                         $http({
                             method  : 'POST',
@@ -1631,36 +1630,37 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
         else{
             $http({
                 method  : 'POST',
-                url     : '../php/insert_reciept.php',
+                url     : '../php/insert_exchange.php',
                 data    : { 
-                    cr_no : $scope.key +
+                    ce_no : $scope.key +
                       new Date().getDate() + 
                      (new Date().getMonth()+1) + 
                       new Date().getFullYear(), 
-                    requesttype : "exchangechem",
-                    cr_desc : $scope.cartlist.cr_desc,
-                    cr_fromstore : $scope.listAcountData[0].ca_responplace,
-                    cr_tostore : $scope.fromstore
+                    ce_desc : $scope.cartlist.cr_desc,
+                    ce_fromstore : $scope.listAcountData[0].ca_responplace,
+                    ce_tostore : $scope.fromstore,
+                    ce_ca_fk : $scope.key
                     },
                     headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
                     }).then(function(response) {  
+                    console.log(response);
                     angular.forEach($scope.cartlist, function(value, key){            
                         $http({
                             method  : 'POST',
-                            url     : '../php/insert_recieptDetail.php',
-                            data    : { crd_cr_fk: response.data.cr_pk,
-                                        crd_cc_fk: value.cc_pk,
-                                        crd_amt: value.exvolumeRequest,
-                                        crd_price: 0,
-                                        crd_unit: value.cu_name_abb,
-                                        crd_status: '0'}, 
+                            url     : '../php/insert_exchangeDetail.php',
+                            data    : { ced_ce_fk: response.data.ce_pk,
+                                        ced_cc_fk: value.cc_pk,
+                                        ced_amt: value.exvolumeRequest,
+                                        ced_price: 0,
+                                        ced_unit: value.cu_name_abb,
+                                        ced_status: '0'}, 
                             headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
                         }).then(function(response) {
                             console.log(response)
                         })    
                     }); 
-                alert("ดำเนินการเพิ่มรายการเรียบร้อย");
-                location.reload();
+//                alert("ดำเนินการเพิ่มรายการเรียบร้อย");
+//                location.reload();
             })
         }
     }  
