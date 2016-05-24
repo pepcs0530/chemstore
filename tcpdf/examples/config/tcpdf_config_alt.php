@@ -70,7 +70,7 @@ define ('K_PATH_IMAGES', dirname(__FILE__).'/../images/');
  * Please set here your own logo or an empty string to disable it.
  */
 //define ('PDF_HEADER_LOGO', 'tcpdf_logo.jpg');
-define ('PDF_HEADER_LOGO', 'logo_kmitl.gif');
+define ('PDF_HEADER_LOGO', 'LogoBW.png');
 
 /**
  * Header logo image width in user units.
