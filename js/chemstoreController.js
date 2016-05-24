@@ -411,7 +411,6 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
 //  แก้ไขข้อมูลสารเคมี  =======================================================================================================
     .controller('editChemCtrl', function($scope,$http, $filter, $timeout, toastr) {
     
-        $scope.selectThis = false;
     
         //  ปุ่ม prev
         $scope.deleteRecord = function () {
@@ -474,17 +473,24 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
                 $scope.listUnit = response.data;
         })
         
-        //  เลือกสารเคมีที่จะแก้ไข
-        $scope.editThis = function (selectedData) {
-            
-            $scope.selectThis = true;
-            
-            $scope.editThisData = selectedData;
-            $scope.editThisData.cc_expDt = new Date($scope.editThisData.cc_expDt);
+        //-----------------------------------------------------------------------------------
+        $scope.editThisData = {
         }
         
-        //  ยืนยันสารเคมีที่จะแก้ไข
-        $scope.updateChem = function () {
+        
+        $scope.getTemplate = function (contact) {
+            if (contact.cc_pk === $scope.editThisData.cc_pk) return 'edit';
+            else return 'display';
+        };
+    
+        $scope.editContact = function (selectedData) {
+            $scope.editThisData = selectedData;
+            //console.log("วันหมดอายุ",$scope.editThisData.cc_expDt);
+            $scope.editThisData.cc_expDt = new Date($scope.editThisData.cc_expDt);
+        };
+    
+        $scope.saveContact = function () {
+            console.log("Saving contact");
             $http.post("../php/update_chem.php",{         
                 'cc_pk' : $scope.editThisData.cc_pk,
                 'cc_code' : $scope.editThisData.cc_code,
@@ -508,10 +514,19 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
                     console.log(data);
                     alert("แก้ไขข้อมูลเรียบร้อย");
                     location.reload();
-//                    toastr.success('แก้ไขข้อมูลเรียบร้อย');
-//                    $timeout(location.reload(), 5000);
                 });
-        }
+            
+            $scope.reset();
+        };
+    
+        $scope.reset = function () {
+                
+            $scope.editThisData = {};
+        };
+    
+        //-----------------------------------------------------------------------------------
+            
+        
     })
 
 //  ประวัติการนำเข้าสาร  ============================================================================================================
