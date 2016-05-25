@@ -6,7 +6,7 @@
             "FROM chem_project ".
             "INNER JOIN chem_account ".
             "ON cp_teach_fk = ca_pk ".
-            "where cp_teach_fk = '".$teacher_pk."'";
+            "WHERE cp_teach_fk = '".$teacher_pk."' AND cp_useflg = '1' ";
     $query = mysql_query($sql);
     $data=array();
     while($row = mysql_fetch_array ($query))

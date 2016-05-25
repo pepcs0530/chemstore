@@ -2,27 +2,88 @@
     th{
         text-align: center;
     }
+    #edit{
+        width: 100%; padding: 5px 1px; margin: 1px 0; box-sizing: border-box;
+    }
 </style>
 
 <caption><center><h4><b><i class="fa fa-folder-open"></i>&nbsp;โปรเจคนักศึกษา</b></h4></center></caption><hr>
 
-<div class="navbar-header" style="width:100%">
-    <table class= " table table-bordered">
-        <tr>
-            <th>ชื่อโปรเจค</th>
-            <th>ระดับการศึกษา</th>
-            <th>งบประมาณ</th>
-            <th>อาจารย์ที่ปรึกษา</th>
-            <th>อธิบาย</th>
-        </tr>
-        <tr ng-repeat="showdata in listProject">
-            <td>{{showdata.cp_name}}</td>
-            <td>{{showdata.cp_eduLvl}}</td>
-            <td>{{showdata.cp_budget}}</td>
-            <td>{{showdata.ca_tname}}{{showdata.ca_fname}}</td>
-            <td>{{showdata.cp_desc}}</td>
-        </tr>
-    </table> 
-</div>
+<ul class="nav navbar-nav">
+    <form class="navbar-form navbar-left">
+        <div class="form-group">
+            <input class="form-control" type="text" ng-model="searchThis.$" placeholder="ค้นหา">
+        </div>
+    </form> 
+</ul>
+
+<form class="navbar-form navbar-right">
+    จำนวนแถวที่แสดง : <select ng-init="searchRange = options[2]" 
+        ng-model="searchRange" 
+        ng-options="option.name for option in options">
+        </select> 
+</form>
+
+<table class= " table table-bordered" style="width:100%">
+    <tr>
+        <th>ลำดับที่</th>
+        <th>ชื่อโปรเจค</th>
+        <th>ระดับการศึกษา</th>
+        <th>งบประมาณ</th>
+        <th>หมายเหตุ</th>
+        <th>แก้ไข</th>
+        <th>ลบ</th>
+    </tr>
+    <tr ng-repeat="showdata in listProject | filter : searchThis | limitTo : searchRange.value : begin" ng-include="getTemplate(showdata)">
+<!--
+        <td>{{$index+1}}</td>
+        <td>{{showdata.cp_name}}</td>
+        <td>{{showdata.cp_eduLvl}}</td>
+        <td>{{showdata.cp_budget}}</td>
+        <td>{{showdata.cp_desc}}</td>
+-->
+    </tr>
+</table> 
+
+<script type="text/ng-template" id="display">
+    <td>{{$index+1}}</td>
+    <td>{{showdata.cp_name}}</td>
+    <td>{{showdata.cp_eduLvl}}</td>
+    <td>{{showdata.cp_budget}}</td>
+    <td>{{showdata.cp_desc}}</td>
+    <td align="center"><button type="button" class="btn btn-primary btn-sm"  ng-click="editContact(showdata)" ><i class="fa fa-check-square"></i></button></td>
+    <td align="center"><button type="button" class="btn btn-danger btn-sm"  ng-click="delectContact(showdata)" ><i class="fa fa-trash-o"></i></button></td>
+</script>
+
+<script type="text/ng-template" id="edit">
+    <td>{{$index+1}}</td>
+    <td>
+        <input type="text" ng-model="editThisData.cp_name" id="edit"/>
+    </td>
+    <td>
+        <select  ng-model="editThisData.cp_eduLvl" ng-change="checkBudget()">
+            <option value="ปริญญาตรี" >ปริญญาตรี</option>
+            <option value="ปริญญาโท">ปริญญาโท</option>
+            <option value="ปริญญาเอก">ปริญญาเอก</option>
+        </select>งบประมาณสูงสุด{{editThisData.maxBudget}}
+    </td>
+    <td>
+        <input type="text" ng-model="editThisData.cp_budget" id="edit"/>
+    </td>
+    <td>
+        <input type="text" ng-model="editThisData.cp_desc" id="edit"/>
+    </td>
+    
+    <td align="center">
+            <button class="btn btn-success btn-sm" ng-click="saveContact()"><i class="fa fa-floppy-o" aria-hidden="true"></i></button>
+            <button class="btn btn-default btn-sm" ng-click="reset()"><i class="fa fa-ban" aria-hidden="true"></i></button>
+    </td>
+    <td align="center"><button type="button" class="btn btn-danger btn-sm"  ng-click="delectContact(showdata)" disabled><i class="fa fa-trash-o"></i></button></td>
+</script>
+
+<form class="navbar-form navbar-right">
+    <button type="button" class="btn btn-primary btn-xs"  ng-click="deleteRecord()" value="previous"><i class="fa fa-backward"></i>&nbsp;previous</button>
+    <button type="button" class="btn btn-primary btn-xs" ng-click="addRecord()" value="next">next&nbsp;<i class="fa fa-forward"></i></button>
+</form>
 
 

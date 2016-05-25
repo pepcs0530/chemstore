@@ -54,7 +54,7 @@
                            "INNER JOIN  chem_location ".
                            "ON cc_location_fk = cl_pk ".
                            "WHERE `cc_useflg` = '1' ";
-        if($loc != null){
+        if($loc != null ){
             $sql .= "AND cc_location_fk = ".$loc." ";
         }
         

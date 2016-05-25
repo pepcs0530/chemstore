@@ -1,92 +1,88 @@
 <caption><center><h4><b><i class="fa fa-file-text-o"></i>&nbsp;รายงานสถานะสารเคมีล่าสุด</b></h4></center></caption><hr>
 <div class="navbar-header">
-    
-
-<!--<div >-->
-    
-    <form method="post" action="../tcpdf/examples/export_pdf_chem_remain.php" target="_blank">
-        <div ng-show="page == true">
-            <strong>คลัง :</strong>
-            <select  name="location" ng-model="remain.location" >
-                <option value="">---เลือก---</option>
-                <option value="0" >ทั้งหมด</option>
-                <option value="1">จุฬาภรณ์ 1</option>
-                <option value="2">จุฬาภรณ์ 2</option>
-                <option value="3">จุฬาภรณ์ 3</option>
-                <option value="4">พอลิเมอร์ช็อป</option>
-                <option value="5">ตึกพระเทพ</option>
-                <option value="6">ตึกวิทย์เก่า</option>
-                <option value="7">คลังกลาง</option>
-            </select>
-            <strong>สถานะ :</strong>
-            <select ng-model="remain.state" name="state">
-                <option value="" >---เลือก---</option>
-                <option value="S" >Solid</option>
-                <option value="L" >Liquid</option>
-                <option value="G" >Gas</option>
-            </select>
-            <br>
-            <br>
-              
-            <strong>ตั้งแต่ :</strong>
-            <input ng-model="remain.stDt" name="stDt" type="date" />
-              
-            <strong>ถึง :</strong>
-            <input ng-model="remain.edDt" name="edDt" type="date" />
-            <br>
-            <br>
-              
-            <strong>ชื่อสาร :</strong>
-            <input type="text" ng-model="remain.name" name="name" /><br><br>
-              
-            <strong>Cas no. :</strong>
-            <input type="text" ng-model="remain.casNo" name="casNo" /><br><br>
-            
-            <strong>เกรด :</strong>
-            <input type="text" ng-model="remain.grade" name="grade" /><br><br>
-            
-            <input type="checkbox" ng-model="remain.selectAll" name="selectAll" value="true"> เลือกทั้งหมด
-            <button type="button" class="btn btn-default" ng-click="search(remain)" >ค้นหา</button>
-        </div>
-        
-        
-        
-        <div ng-show="page == false">
-            <button type="button" class="btn btn-default" ng-click="back()" >ย้อนกลับ</button>
-            <input type="submit" class="btn btn-default" value="พิมพ์รายงาน" >
-            <table class= " table table-bordered" >
-                <tr>
-                    <th>วันที่</th>
-                    <th>ชื่อสารเคมี</th>
-                    <th>Cas no.</th>
-                    <th>สถานะ</th>
-                    <th>แพ็ค</th>
-                    <th>ปริมาตร</th>
-                    <th>จำนวน</th>
-                    <th>คลัง</th>
-                    <th>ห้อง</th>
-                    <th>ราคาต่อหน่วย</th>
-                    <th>เกรด</th>
-                </tr>
-                <tr ng-repeat="showdata in listChem">
-                    <td>{{showdata.cc_updDt | Date}}</td>
-                    <td>{{showdata.cc_name}}</td>
-                    <td>{{showdata.cc_casNo}}</td>
-                    <td>{{showdata.cc_state}}</td>
-                    <td>{{showdata.cc_packing}} </td>
-                    <td>{{showdata.cc_volume}} {{showdata.cu_name_abb}}</td>
-                    <td>{{showdata.cc_quantity | number}} {{showdata.cu_name_abb}}</td>
-                    <td>{{showdata.cl_name_abb}}</td>
-                    <td>{{showdata.cc_room}}</td>
-                    <td>{{showdata.cc_price}}&nbsp;บาท</td>
-                    <td>{{showdata.cc_grade}}</td>
-                </tr>
-            </table>
-        </div>
-        
-    </form>
-<!--</div>-->
-
-
-<br>
 </div>
+    
+<form method="post" action="../tcpdf/examples/export_pdf_chem_remain.php" target="_blank">
+    <div ng-show="page == true">
+        <strong>คลัง :</strong>
+        <select  name="location" ng-model="remain.location" >
+            <option value="">---เลือก---</option>
+            <option value="" >ทั้งหมด</option>
+            <option value="1">จุฬาภรณ์ 1</option>
+            <option value="2">จุฬาภรณ์ 2</option>
+            <option value="3">จุฬาภรณ์ 3</option>
+            <option value="4">พอลิเมอร์ช็อป</option>
+            <option value="5">ตึกพระเทพ</option>
+            <option value="6">ตึกวิทย์เก่า</option>
+            <option value="7">คลังกลาง</option>
+        </select>
+        <strong>สถานะ :</strong>
+        <select ng-model="remain.state" name="state">
+            <option value="" >---เลือก---</option>
+            <option value="S" >Solid</option>
+            <option value="L" >Liquid</option>
+            <option value="G" >Gas</option>
+        </select>
+        <br>
+        <br>
+
+        <strong>ตั้งแต่ :</strong>
+        <input ng-model="remain.stDt" name="stDt" type="date" />
+
+        <strong>ถึง :</strong>
+        <input ng-model="remain.edDt" name="edDt" type="date" />
+        <br>
+        <br>
+
+        <strong>ชื่อสาร :</strong>
+        <input type="text" ng-model="remain.name" name="name" /><br><br>
+
+        <strong>Cas no. :</strong>
+        <input type="text" ng-model="remain.casNo" name="casNo" /><br><br>
+
+        <strong>เกรด :</strong>
+        <input type="text" ng-model="remain.grade" name="grade" /><br><br>
+
+        <input type="checkbox" ng-model="remain.selectAll" name="selectAll" value="true"> เลือกทั้งหมด
+        <button type="button" class="btn btn-default" ng-click="search(remain)" >ค้นหา</button>
+    </div>
+
+
+
+    <div ng-show="page == false">
+        <button type="button" class="btn btn-default" ng-click="back()" >ย้อนกลับ</button>
+        <input type="submit" class="btn btn-default" value="พิมพ์รายงาน" >
+        <table class= " table table-bordered" style="width:100%">
+            <tr>
+                <th>วันที่</th>
+                <th>ชื่อสารเคมี</th>
+                <th>Cas no.</th>
+                <th>สถานะ</th>
+                <th>แพ็ค</th>
+                <th>ปริมาตร</th>
+                <th>จำนวน</th>
+                <th>คลัง</th>
+                <th>ห้อง</th>
+                <th>ราคาต่อหน่วย</th>
+                <th>เกรด</th>
+            </tr>
+            <tr ng-repeat="showdata in listChem">
+                <td>{{showdata.cc_updDt | Date}}</td>
+                <td>{{showdata.cc_name}}</td>
+                <td>{{showdata.cc_casNo}}</td>
+                <td>{{showdata.cc_state}}</td>
+                <td>{{showdata.cc_packing}} </td>
+                <td>{{showdata.cc_volume}} {{showdata.cu_name_abb}}</td>
+                <td>{{showdata.cc_quantity | number}} {{showdata.cu_name_abb}}</td>
+                <td>{{showdata.cl_name_abb}}</td>
+                <td>{{showdata.cc_room}}</td>
+                <td>{{showdata.cc_price}}&nbsp;บาท</td>
+                <td>{{showdata.cc_grade}}</td>
+            </tr>
+        </table>
+    </div>
+
+</form>
+
+
+

@@ -10,6 +10,8 @@ $budget = $_POST['budget'];
 $desc = $_POST['desc'];
 $teacher_budget = $_POST['teacher_budget'];
 
+
+
 $sql = "INSERT INTO chem_project (
     cp_name,
     cp_eduLvl,
@@ -20,12 +22,27 @@ $sql = "INSERT INTO chem_project (
     cp_teach_fk
     ) VALUES ('".$name."', '".$cp_eduLvl."', '".$budget."', '".$desc."', '1', CURRENT_TIMESTAMP , '".$teacher_fk."')";
 
-$result = mysql_query($sql);
 
-if($result){
-    Print "\n Your information has been successfully added to the database."; 
+$result = mysql_query($sql);
+//-------------------------------------------------------------
+$sql = "SELECT `cp_pk` FROM `chem_project` ORDER BY `cp_pk` DESC LIMIT 1";
+$query = mysql_query($sql);
+$data=array();
+while($row = mysql_fetch_array ($query))
+{
+    array_push($data,$row);
 }
-else{
-    die ("Error : ".mysql_error());
-}
+echo json_encode($data[0]);
+
+//-------------------------------------------------------------
+//$result = mysql_query($sql);
+//
+//if($result){
+//    Print "\n Your information has been successfully added to the database."; 
+//}
+//else{
+//    die ("Error : ".mysql_error());
+//}
+
+
 ?>
