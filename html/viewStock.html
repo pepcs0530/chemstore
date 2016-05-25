@@ -1,46 +1,99 @@
-<caption><center><h4><b><i class="fa fa-flask"></i>&nbsp;รายการสารเคมี</b></h4></center></caption><hr>
-<form class="navbar-form navbar-left">
-    <div class="form-group">
-        <input type="text" class="form-control" ng-model="searchThis" placeholder="ค้นหา">
-    </div>
-    <strong>เลือกคลัง :</strong>
-    <select   ng-model="selectData" ng-change="getdata()">
-        <option ng-repeat="lu in listLocation" value="{{lu.cl_name}}" >{{lu.cl_name}}</option>
-    </select>
-</form> 
-<form class="navbar-form navbar-right">
-    จำนวนแถวที่แสดง : <select ng-init="searchRange = options[2]" 
-            ng-model="searchRange" 
-            ng-options="option.name for option in options">
-            </select> 
-</form>            
-<table class="table table-bordered" id="here">
-    <tr>
-        <th>ชื่อสารเคมี</th>
-        <th>Cas no.</th>
-        <th>สถานะ</th>
-        <th>ปริมาณ</th>
-        <th>อาคาร</th>
-        <th>ห้อง</th>
-        <th>ราคา/หน่วย</th>
-        <th>เกรด</th>
-        <th>ผู้ผลิต</th>
-    </tr>
-    <tr ng-repeat="showdata in listChem | filter : searchThis | filter : selectData | limitTo : searchRange.value : begin">
-        <td>{{showdata.cc_name}}</td>
-        <td>{{showdata.cc_casNo}}</td>
-        <td>{{showdata.cc_state}}</td>
-        <td>{{showdata.cc_quantity | number:4}}</td>
-        <td>{{showdata.cl_name}}</td>
-        <td>{{showdata.cc_room}}</td>
-        <td>{{showdata.cc_price}}/{{showdata.cu_name_abb}}</td>
-        <td>{{showdata.cc_grade}}</td>
-        <td>{{showdata.cc_producer}}</td>
-    </tr>
-</table>
+<div ng-show="!showcontent">
+    <caption><center><h4><b><i class="fa fa-flask"></i>&nbsp;รายการสารเคมี</b></h4></center></caption><hr>
+    <form class="navbar-form navbar-left">
+        <div class="form-group">
+            ระบุคำที่ต้องการค้นหา : <input type="text" class="form-control" ng-model="searchThis" placeholder="ค้นหา">
+        </div>
+        <strong>เลือกคลัง :</strong>
+        <select   ng-model="selectData" ng-change="getdata()">
+            <option ng-repeat="lu in listLocation" value="{{lu.cl_name}}" >{{lu.cl_name}}</option>
+        </select>
+    </form> 
+    <form class="navbar-form navbar-right">
+        จำนวนแถวที่แสดง : <select ng-init="searchRange = options[2]" 
+                ng-model="searchRange" 
+                ng-options="option.name for option in options">
+                </select> 
+    </form>            
+    <table class="table table-bordered" id="here">
+        <tr>
+            <th>ชื่อสารเคมี</th>
+            <th>Cas no.</th>
+            <th>สถานะ</th>
+            <th>ปริมาณ</th>
+            <th>อาคาร</th>
+            <th>ห้อง</th>
+            <th>ราคา/หน่วย</th>
+            <th>เกรด</th>
+            <th>รายละเอียดเพิ่มเติม</th>
+        </tr>
+        <tr ng-repeat="showdata in listChem | filter : searchThis | filter : selectData | limitTo : searchRange.value : begin">
+            <td>{{showdata.cc_name}}</td>
+            <td>{{showdata.cc_casNo}}</td>
+            <td>{{showdata.cc_state}}</td>
+            <td>{{showdata.cc_quantity | number:4}}</td>
+            <td>{{showdata.cl_name}}</td>
+            <td>{{showdata.cc_room}}</td>
+            <td>{{showdata.cc_price}}/{{showdata.cu_name_abb}}</td>
+            <td>{{showdata.cc_grade}}</td>
+            <td><input type="button" value="แสดงรายละเอียด" ng-click="showdetail($index)"</td>
+        </tr>
+    </table>
 
-<form class="navbar-form navbar-right">
-    <button type="button" class="btn btn-primary btn-xs"  ng-click="deleteRecord()" value="previous"><i class="fa fa-backward"></i>&nbsp;previous</button>
-    <button type="button" class="btn btn-primary btn-xs" ng-click="addRecord()" value="next">next&nbsp;<i class="fa fa-forward"></i></button>  
-</form>
-<!--</div>-->
+    <form class="navbar-form navbar-right">
+        <button type="button" class="btn btn-primary btn-xs"  ng-click="deleteRecord()" value="previous"><i class="fa fa-backward"></i>&nbsp;previous</button>
+        <button type="button" class="btn btn-primary btn-xs" ng-click="addRecord()" value="next">next&nbsp;<i class="fa fa-forward"></i></button>  
+    </form>
+</div>
+<div  ng-show="showcontent">
+    <caption><center><h4><b><i class="fa fa-flask"></i>&nbsp;รายการสารเคมี</b></h4></center></caption><hr>
+    <form class="navbar-form navbar-right">
+        <input type="button" value="ย้อนกลับ" ng-click="showcontent = false">
+    </form>            
+    <table class="table table-bordered" id="here">
+        <tr>
+            <td>ชื่อสารเคมี</td>
+            <td>{{listChem[index].cc_name}}</td>
+        </tr>
+        <tr>        
+            <td>Cas no.</td>
+            <td>{{listChem[index].cc_casNo}}</td>
+        </tr>
+        <tr>
+            <td>สถานะ</td>
+            <td>{{listChem[index].cc_state}}</td>
+        </tr>
+        <tr>
+            <td>ปริมาณ</td>
+            <td>{{listChem[index].cc_quantity | number:4}}</td>
+        </tr>
+        <tr>
+            <td>อาคาร</td>
+            <td>{{listChem[index].cl_name}}</td>
+        </tr>
+        <tr>
+            <td>ห้อง</td>
+            <td>{{listChem[index].cc_room}}</td>
+        </tr>
+        <tr>
+            <td>ราคาขายต่อหน่วย</td>
+            <td>{{listChem[index].cc_price}} บาทต่อ {{listChem[index].cu_name_abb}}</td>
+        </tr>
+        <tr>
+            <td>เกรด</td>
+            <td>{{listChem[index].cc_grade}}</td>
+        </tr>
+        <tr>
+            <td>
+                ผู้ผลิต
+            </td>
+            <td>
+                {{listChem[index].cc_producer}}
+            </td>
+        </tr>
+        <tr>
+            <td>วันหมดอายุ</td>
+            <td>{{listChem[index].cc_expDt}}</td>
+        </tr>
+    </table>
+</div>

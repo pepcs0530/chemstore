@@ -11,12 +11,11 @@
     <form method="post" action="../tcpdf/examples/export_pdf_withdraw_log.php" target="_blank">
         <input type="hidden" value="{{key}}" name="findthis">
         <input type="hidden" value="{{type}}" name="findtypethis">
-<!--        <input type="submit" class="btn btn-default" value="พิมพ์รายงาน" >-->
         
         <div ng-show="page == 1">
             <strong>ตั้งแต่ :</strong>
-            <input ng-model="logRecpt.stDt" name="stDt" type="date" />
-              
+            <input ng-model="logRecpt.stDt" name="stDt" type="date" />{{logRecpt}}
+            
             <strong>ถึง :</strong>
             <input ng-model="logRecpt.edDt" name="edDt" type="date" />
             <br>

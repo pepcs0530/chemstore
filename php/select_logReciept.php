@@ -10,8 +10,6 @@
     isset($_POST['selectAll']) ? $selectAll = $_POST['selectAll'] : $selectAll = null;
     
     if($type == "all") {
-        
-        
         if($selectAll == true){
             $sql = "SELECT cr.cr_pk,cr.cr_no,cr.cr_totalprice,cr.cr_cp_fk,cr.cr_status,cr.cr_crtDt,cr.cr_updDt,cr.cr_tostore,ca.ca_fname,ca.ca_lname,ca.ca_tname,cr.cr_fromstore,cp.cp_teach_fk,cp.cp_name,cp.cp_budget,ca.ca_credit ".
                 "FROM chem_receipt AS cr ".
