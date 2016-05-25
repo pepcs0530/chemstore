@@ -1353,10 +1353,21 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
     .controller('addProjectCtrl', function($scope,$http) {
         //    เลือกประเภทผู้ใช้ที่เป็น teacher
         //    สร้างโปรเจค
+
+    
         $scope.addProject = {teacher : $scope.session,
                              teacher_pk : $scope.key,
                              cp_eduLvl: "ปริญญาตรี",
                              maxBudget : 7000}
+        $scope.checkBudget = function () {
+            if($scope.addProject.cp_eduLvl == "ปริญญาตรี")
+                $scope.addProject.maxBudget = 7000;
+            else if($scope.addProject.cp_eduLvl == "ปริญญาโท" || $scope.addProject.cp_eduLvl == "ปริญญาเอก")
+                $scope.addProject.maxBudget = 15000;
+            else 
+                $scope.addProject.maxBudget = 0;
+        }
+            
         
         $http({
             method  :   'POST',
@@ -1369,12 +1380,6 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
         });
         
         $scope.createProject = function(){
-            if($scope.addProject.cp_eduLvl == "ปริญญาตรี")
-                $scope.addProject.maxBudget = 7000;
-            else if($scope.addProject.cp_eduLvl == "ปริญญาโท" || $scope.addProject.cp_eduLvl == "ปริญญาเอก")
-                $scope.addProject.maxBudget = 15000;
-            else 
-                $scope.addProject.maxBudget = 0;
             if($scope.addProject.cp_budget > $scope.addProject.maxBudget) {
                 alert("ยอดเงินเกินโควต้าระดับ : "+$scope.addProject.cp_eduLvl+" สามาถระบุได้สูงสุด "+$scope.addProject.maxBudget);
             }
@@ -1995,7 +2000,6 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
     
         $scope.saveContact = function () {
             console.log("Saving contact");
-            alert($scope.editThisData.ca_pk);
             $http.post("../php/update_account.php",{         
                 'ca_pk' : $scope.editThisData.ca_pk,
                 'ca_code' : $scope.editThisData.ca_code,
