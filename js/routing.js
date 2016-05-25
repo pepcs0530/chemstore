@@ -162,6 +162,11 @@
                 templateUrl: '../html/logExchang.html',
                 controller: 'ExchangeLogCtrl'
             }   
+          ).when(
+            '/manageEditAcoount',{
+                templateUrl: '../html/manageEditAcoount.html',
+                controller: 'manageEditAcoountCtrl'
+            }   
           ).otherwise({
                 redirectTo: '/news'
       	  }); 

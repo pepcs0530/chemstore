@@ -44,6 +44,12 @@
         }
         
         if($stDt != null && $edDt != null ){
+            $stDt = date_format($stDt,"d-m-Y");
+            $edDt = date_format($edDt,"d-m-Y");
+//
+//            $stDt = date('m-d-Y',strtotime(str_replace('-', '/', $stDt) . "+2 days"));
+//            $edDt = date('m-d-Y',strtotime(str_replace('-', '/', $edDt) . "+1 days"));
+            
             $sql .= "AND cil_crtDt BETWEEN '".$stDt."' AND '".$edDt."' ";
         }
         

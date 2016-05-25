@@ -28,11 +28,21 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
         //-------------------------------------------------------------
             $http({
                 method  :   'GET',
+                url     :   '../php/getKey.php'
+            }).then(function(response) {
+                $scope.key = response.data;
+                console.log($scope.key);
+                
+            });
+            
+            $http({
+                method  :   'GET',
                 url     :   '../php/getType.php'
             }).then(function(response) {
                 $scope.type = response.data;
                 console.log($scope.type);
             });
+        
             $http({
                 method  :   'GET',
                 url     :   '../php/getSession.php'
@@ -40,13 +50,7 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
                 $scope.session = response.data;
                 console.log($scope.session);
             });
-            $http({
-                method  :   'GET',
-                url     :   '../php/getKey.php'
-            }).then(function(response) {
-                $scope.key = response.data;
-                console.log($scope.key);
-            });
+            
     }
         $scope.myInterval = 3000;
         
@@ -508,6 +512,25 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
             $scope.reset();
         };
     
+        $scope.delectContact = function(selectedData){
+            console.log("Delete contact", selectedData.cc_pk);
+            
+            if (confirm("ยืนยันการลบข้อมูล") == true) {
+                $http.post("../php/delete_chem.php",{         
+                'cc_pk' : selectedData.cc_pk
+                
+                }).success(function (data, status, headers, config) {
+                    console.log(data);
+                    alert("ลบข้อมูลเรียบร้อย");
+                    location.reload();
+                });
+            } else {
+                
+            }
+            
+            
+        }
+    
         $scope.reset = function () {
                 
             $scope.editThisData = {};
@@ -946,6 +969,18 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
                 'tel' : $scope.listAcountData.ca_tel, 
             }).success(function (data) {
                 alert("แก้ไขสมาชิกเรียบร้อย");
+                
+//                $http({
+//                    method  :   'POST',
+//                    url     :   '../php/refreshSession.php',
+//                    data : {
+//                        'pk' : $scope.key
+//                    }
+//                }).then(function(response) {
+//                    $scope.refresh = response.data;
+//                    console.log($scope.refresh);
+//                });
+                
                 location.reload();
 //                toastr.success('แก้ไขสมาชิกเรียบร้อย');
 //                $timeout(location.reload(), 5000);
@@ -1311,10 +1346,21 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
     .controller('addProjectCtrl', function($scope,$http) {
         //    เลือกประเภทผู้ใช้ที่เป็น teacher
         //    สร้างโปรเจค
+
+    
         $scope.addProject = {teacher : $scope.session,
                              teacher_pk : $scope.key,
                              cp_eduLvl: "ปริญญาตรี",
                              maxBudget : 7000}
+        $scope.checkBudget = function () {
+            if($scope.addProject.cp_eduLvl == "ปริญญาตรี")
+                $scope.addProject.maxBudget = 7000;
+            else if($scope.addProject.cp_eduLvl == "ปริญญาโท" || $scope.addProject.cp_eduLvl == "ปริญญาเอก")
+                $scope.addProject.maxBudget = 15000;
+            else 
+                $scope.addProject.maxBudget = 0;
+        }
+            
         
         $http({
             method  :   'POST',
@@ -1327,12 +1373,6 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
         });
         
         $scope.createProject = function(){
-            if($scope.addProject.cp_eduLvl == "ปริญญาตรี")
-                $scope.addProject.maxBudget = 7000;
-            else if($scope.addProject.cp_eduLvl == "ปริญญาโท" || $scope.addProject.cp_eduLvl == "ปริญญาเอก")
-                $scope.addProject.maxBudget = 15000;
-            else 
-                $scope.addProject.maxBudget = 0;
             if($scope.addProject.cp_budget > $scope.addProject.maxBudget) {
                 alert("ยอดเงินเกินโควต้าระดับ : "+$scope.addProject.cp_eduLvl+" สามาถระบุได้สูงสุด "+$scope.addProject.maxBudget);
             }
@@ -1367,42 +1407,45 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
 // สร้างข่าว ===============================================================================================
     .controller('addNewsCtrl', function($scope, $http, $timeout, toastr){
     
-            $scope.uploadFileToUrl = function(file, uploadUrl){  
-               alert("upload");
-               var fd = new FormData();
-               fd.append('file', file);
-            
-               $http.post(uploadUrl, fd, {
-                  transformRequest: angular.identity,
-                  headers: {'Content-Type': undefined}
-               })
-            
-               .success(function(){
-                   console.log("complete");
-               })
-            
-               .error(function(){
-                   console.log("error");
-               });
-            }
+//            $scope.uploadFileToUrl = function(file, uploadUrl){  
+//               alert("upload");
+//               var fd = new FormData();
+//               fd.append('file', file);
+//            
+//               $http.post(uploadUrl, fd, {
+//                  transformRequest: angular.identity,
+//                  headers: {'Content-Type': undefined}
+//               })
+//            
+//               .success(function(){
+//                   console.log("complete");
+//               })
+//            
+//               .error(function(){
+//                   console.log("error");
+//               });
+//            }
         
             $scope.createNews = function(){
                 //alert("OK...");
-                var file = $scope.myFile;               
-                console.log('file is ' );
-                console.dir(file.name);
-
-                var uploadUrl = "../img";
-                $scope.uploadFileToUrl(file, uploadUrl);
+//                var file = $scope.myFile;               
+//                console.log('file is ' );
+//                console.dir(file.name);
+//
+//                var uploadUrl = "../img";
+//                $scope.uploadFileToUrl(file, uploadUrl);
+                
+                alert($scope.file);
 
                 $http.post("../php/insert_news.php",{
                     'title' : $scope.addNews.title, 
                     'desc' : $scope.addNews.desc, 
                     'link' : $scope.addNews.link,
-                    'photo' : file.name
+                    'photo' : $scope.addNews.photo
                 }).success(function (data) {
                     console.log(data);
                     alert('ดำเนินการเพิ่มเรียบร้อย');
+                    
                 });
             }
 
@@ -1888,6 +1931,110 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
                     }
                 }]
             });
+    })
+
+    .controller('manageEditAcoountCtrl', function($scope, $http){
+    
+        //  ปุ่ม prev
+        $scope.deleteRecord = function () {
+            if(parseInt($scope.begin) - parseInt($scope.searchRange.value) < 0)
+                $scope.begin = 0;
+            else
+                $scope.begin = parseInt($scope.begin) - parseInt($scope.searchRange.value);
+        }
+
+        //  ปุ่ม next
+        $scope.addRecord = function () {
+            if(parseInt($scope.begin) + parseInt($scope.searchRange.value) < $scope.listChem.length)
+                    $scope.begin = parseInt($scope.begin) + parseInt($scope.searchRange.value);
+        }
+        
+        $scope.begin = 0;
+        $scope.cartlist = [];
+        //  จำนวนแสดง
+        $scope.options = [{
+            name: '5',
+            value: 5
+        },{
+            name: '10',
+            value: 10
+        }, {
+            name: '20',
+            value: 20
+        }, {
+            name: '50',
+            value: 50
+        }, {
+            name: '100',
+            value: 100
+        }];
+    
+        $scope.editThisData = {
+            
+        }
+    
+        //  แสดงข้อมูลสมาชิก
+        $http({
+            method  : 'GET',
+            url     : '../php/select_allAccount.php',
+            headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
+            }).then(function(response) {
+                $scope.listAcc = response.data;
+        })
+        
+        $scope.getTemplate = function (contact) {
+            if (contact.ca_pk === $scope.editThisData.ca_pk) return 'edit';
+            else return 'display';
+        };
+    
+        $scope.editContact = function (selectedData) {
+            $scope.editThisData = selectedData;
+        };
+    
+        $scope.saveContact = function () {
+            console.log("Saving contact");
+            $http.post("../php/update_account.php",{         
+                'ca_pk' : $scope.editThisData.ca_pk,
+                'ca_code' : $scope.editThisData.ca_code,
+                'ca_user' : $scope.editThisData.ca_user,
+                'ca_pass' : $scope.editThisData.ca_pass,
+                'ca_tname' : $scope.editThisData.ca_tname,
+                'ca_fname' : $scope.editThisData.ca_fname,
+                'ca_lname' : $scope.editThisData.ca_lname,
+                'ca_tel' : $scope.editThisData.ca_tel
+                
+                }).success(function (data, status, headers, config) {
+                    console.log(data);
+                    alert("แก้ไขข้อมูลเรียบร้อย");
+                    location.reload();
+                });
+            
+            $scope.reset();
+        };
+    
+        $scope.delectContact = function(selectedData){
+            console.log("Delete contact", selectedData.ca_pk);
+            
+            if (confirm("ยืนยันการลบข้อมูล") == true) {
+                $http.post("../php/delete_account.php",{         
+                'ca_pk' : selectedData.ca_pk
+                
+                }).success(function (data, status, headers, config) {
+                    console.log(data);
+                    alert("ลบข้อมูลเรียบร้อย");
+                    location.reload();
+                });
+            } else {
+                
+            }
+            
+            
+        }
+    
+        $scope.reset = function () {
+                
+            $scope.editThisData = {};
+        };
     });
 
     

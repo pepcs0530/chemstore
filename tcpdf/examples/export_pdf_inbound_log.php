@@ -19,7 +19,8 @@
     $name = $_POST['name'];   
     $casNo = $_POST['casNo'];   
     $grade = $_POST['grade'];
-    $selectAll = $_POST['selectAll'];
+
+    isset($_POST['selectAll']) ? $selectAll = $_POST['selectAll'] : $selectAll = '';
     
 //    print "คลัง : ".$loc."<br>";
 //    print "สถานะ : ".$state."<br>";
@@ -69,6 +70,12 @@
     }
 
     if($stDt != null && $edDt != null ){
+//        $stDt = date_format($stDt,"d-m-Y");
+//        $edDt = date_format($edDt,"d-m-Y");
+//        
+//        $stDt = date('m-d-Y',strtotime(str_replace('-', '/', $stDt) . "+2 days"));
+//        $edDt = date('m-d-Y',strtotime(str_replace('-', '/', $edDt) . "+1 days"));
+        
         $sql .= "AND cil_crtDt BETWEEN '".$stDt."' AND '".$edDt."' ";   
 //        print "DATE<br>";
     }
