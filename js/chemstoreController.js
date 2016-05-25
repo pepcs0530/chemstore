@@ -794,66 +794,53 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
 
 //  ประวัติการเบิกสารอาจารย์  ============================================================================================================
     .controller('teacherReceiptlogCtrl', function($scope,$http) {
+        $scope.showcontent = 1;
         $scope.logRecpt = {stDt : new Date(new Date().getFullYear(),new Date().getMonth(),1),
-                           edDt : new Date()}
-        console.log();
-        $scope.page = 1;
-//        $scope.logRecpt = {
-//            stDt :  new Date(16,5,24),
-//            edDt : '',
-//            no : '',
-//            project : '',
-//            selectAll : ''
-//        }
-//        
-//        $scope.back = function(){
-//            $scope.page = 1;
-//        }
-//        
-//        $scope.back2 = function(){
-//            $scope.page = 2;
-//        } 
-//        $scope.search = function(select){
-//            $scope.page = 2;
-//            console.log(select.stDt);
-//            console.log(select.edDt);
-//            console.log(select.no);
-//            console.log(select.project);
-//            console.log(select.selectAll);
-            
-//            $http({
-//                method  :   'POST',
-//                url     :   '../php/select_logReciept.php',
-//                data    :   {
-//                    type: $scope.key,
-//                    stDt : select.stDt,
-//                    edDt : select.edDt,
-//                    no : select.no,
-//                    project : select.project,
-//                    selectAll : select.selectAll
-//                }
-//            }).then(function(response) {
-//                $scope.listReciept = response.data;
-//                console.log($scope.listReciept);
-//            });  
-//        }
+                           edDt : new Date(),
+                           no : '',
+                           project : '',
+                           selectAll : ''}
+
+        $scope.search = function(){
+            if($scope.logRecpt.stDt == null || $scope.logRecpt.edDt == null){
+                alert("กรุณากรอกวันเริ่มต้น-สิ้นสุด"); 
+            }
+            else if($scope.logRecpt.stDt > $scope.logRecpt.edDt){
+                alert("ท่านระบุวันเริ่มต้นเกินวันที่สิ้นสุด");
+            }
+            else{
+              $http({
+                method  :   'POST',
+                url     :   '../php/select_logReciept.php',
+                data    :   {
+                    type: $scope.key,
+                    stDt : $scope.logRecpt.stDt,
+                    edDt : new Date($scope.logRecpt.edDt.getFullYear(),$scope.logRecpt.edDt.getMonth(),$scope.logRecpt.edDt.getDate()+1),
+                    no : $scope.logRecpt.no,
+                    project : $scope.logRecpt.project
+                }
+                }).then(function(response) {
+                    $scope.listReciept = response.data;
+                    console.log($scope.listReciept);
+                    $scope.showcontent = 2;
+                });   
+            } 
+        }
         
-//        $scope.showpop = function (selectedData,index) {
-//            $scope.page = 3;
-//            $scope.recieptIndex = index;
-//            console.log($scope.listReciept[$scope.recieptIndex]);
-//            
-//            $http({
-//                method  :   'POST',
-//                url     :   '../php/select_chemdetail.php',
-//                data    :   {
-//                    'crd_cr_fk' : selectedData
-//                }
-//            }).then(function(response) {
-//                $scope.listRecieptDetail = response.data;
-//                console.log($scope.listRecieptDetail );
-//            });
-//        }
+        $scope.showdetail = function (selectedData,index) {
+            $scope.index = index;
+            $http({
+                method  :   'POST',
+                url     :   '../php/select_chemdetail.php',
+                data    :   {
+                    'crd_cr_fk' : selectedData
+                }
+            }).then(function(response) {
+                $scope.listRecieptDetail = response.data;
+                console.log($scope.listRecieptDetail);
+                $scope.showcontent = 3;
+            });
+        }
     })
 
 //  ประวัติคำร้องขออื่นๆ  ============================================================================================================
