@@ -1,0 +1,92 @@
+<style>
+    th{
+        text-align: center;
+    }
+    
+    td{
+        font-size: 70%;
+    }
+    
+    #edit{
+        width: 100%; padding: 5px 1px; margin: 1px 0; box-sizing: border-box;
+    }
+    
+</style>
+
+<caption><center><h4><b><i class="fa fa-plus-square"></i>&nbsp;แก้ไขข้อมูลบัญชีผู้ใช้</b></h4></center></caption><hr>
+
+<ul class="nav navbar-nav">
+    <form class="navbar-form navbar-left">
+        <div class="form-group">
+            <input class="form-control" type="text" ng-model="searchThis.$" placeholder="ค้นหา">
+        </div>
+    </form> 
+</ul>
+
+<form class="navbar-form navbar-right">
+    จำนวนแถวที่แสดง : <select ng-init="searchRange = options[2]" 
+        ng-model="searchRange" 
+        ng-options="option.name for option in options">
+        </select> 
+</form>
+
+<table class= " table table-bordered" width="100%">
+    <tr>
+        <th>ลำดับที่</th>
+        <th>รหัส</th>
+        <th>username</th>
+        <th>password</th>
+        <th>คำนำหน้า</th>
+        <th>ชื่อ</th>
+        <th>นามสกุล</th>
+        <th>เบอร์โทร</th>
+        <th>แก้ไข</th>
+        <th>ลบ</th>
+    </tr>
+    <tr ng-repeat="showdata in listAcc | filter : searchThis | limitTo : searchRange.value : begin" ng-include="getTemplate(showdata)">
+
+    </tr>
+</table>
+
+<script type="text/ng-template" id="display">
+    <td>{{$index+1}}</td>
+    <td>{{showdata.ca_code}}</td>
+    <td>{{showdata.ca_user}}</td>
+    <td>{{showdata.ca_pass}}</td>
+    <td>{{showdata.ca_tname}}</td>
+    <td>{{showdata.ca_fname}}</td>
+    <td>{{showdata.ca_lname}}</td>
+    <td>{{showdata.ca_tel}}</td>
+    <td align="center"><button type="button" class="btn btn-primary btn-sm"  ng-click="editContact(showdata)" ><i class="fa fa-check-square"></i></button></td>
+    <td align="center"><button type="button" class="btn btn-danger btn-sm"  ng-click="delectContact(showdata)" ><i class="fa fa-trash-o"></i></button></td>
+</script>
+
+<script type="text/ng-template" id="edit">
+    <td>{{$index+1}}</td>
+    <td>
+        <input type="text" ng-model="editThisData.ca_code" id="edit"/>
+    </td>
+    <td>
+        <input type="text" ng-model="editThisData.ca_user" id="edit"/>
+    </td>
+    <td>
+        <input type="text" ng-model="editThisData.ca_pass" id="edit"/>
+    </td>
+    <td>
+        <input type="text" ng-model="editThisData.ca_tname" id="edit"/>
+    </td>
+    <td>
+        <input type="text" ng-model="editThisData.ca_fname" id="edit"/>
+    </td>
+    <td>
+        <input type="text" ng-model="editThisData.ca_lname" id="edit"/>
+    </td>
+    <td>
+        <input type="text" ng-model="editThisData.ca_tel" id="edit"/>
+    </td>
+    <td>
+            <button class="btn btn-success btn-sm" ng-click="saveContact()"><i class="fa fa-floppy-o" aria-hidden="true"></i></button>
+            <button class="btn btn-default btn-sm" ng-click="reset()"><i class="fa fa-ban" aria-hidden="true"></i></button>
+    </td>
+    <td align="center"><button type="button" class="btn btn-danger btn-sm"  ng-click="delectContact(showdata)" disabled><i class="fa fa-trash-o"></i></button></td>
+</script>

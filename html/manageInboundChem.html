@@ -39,8 +39,8 @@
             </div>    
             <div class="form-group">
                 <label for="cc_volume" class="col-sm-4 control-label">ขนาดบรรจุ :</label>
-                <div class="col-sm-4">
-                    <input class="form-control" ng-model="addChem.cc_volume" type="text" class="" />
+                <div class="col-sm-4 form-inline">
+                    <input class="form-control" style="width:50%" ng-model="addChem.cc_volume" type="text" class="" />
                     <select  ng-model="addChem.cu_pk" >
                         <option ng-repeat="lu in listUnit" value="{{lu.cu_pk}}" >{{lu.cu_name_abb}}</option>
                     </select> 
@@ -49,13 +49,13 @@
             <div class="form-group">
                 <label for="cc_quantity" class="col-sm-4 control-label">จำนวน :</label>
                 <div class="col-sm-4">
-                    <input class="form-control" ng-model="addChem.cc_quantity" type="text" class="" />
+                    <input class="form-control" style="width:50%" ng-model="addChem.cc_quantity" type="text" class="" />
                 </div>
             </div>
             <div class="form-group">
                 <label for="cc_packing" class="col-sm-4 control-label">จำนวนแพ็ค :</label>
                 <div class="col-sm-4">
-                    <input class="form-control" ng-model="addChem.cc_packing" type="text" class="" />
+                    <input class="form-control" style="width:50%" ng-model="addChem.cc_packing" type="text" class="" />
                 </div>    
             </div>
             <div class="form-group">
@@ -69,13 +69,13 @@
             <div class="form-group">
                 <label for="cc_room" class="col-sm-4 control-label">ห้อง :</label>
                 <div class="col-sm-4">
-                    <input class="form-control" ng-model="addChem.cc_room" type="text" class="" />
+                    <input class="form-control" style="width:50%" ng-model="addChem.cc_room" type="text" class="" />
                 </div>
             </div>
             <div class="form-group">
                 <label for="cc_price" class="col-sm-4 control-label">ราคา :</label>
                 <div class="col-sm-4">
-                    <input  class="form-control" ng-model="addChem.cc_price" type="text" class="" />
+                    <input  class="form-control" style="width:50%" ng-model="addChem.cc_price" type="text" class="" />
                 </div>
             </div>
             <div class="form-group">
@@ -87,13 +87,13 @@
             <div class="form-group">
                 <label for="cc_expDt" class="col-sm-4 control-label">วันหมดอายุ :</label>
                 <div class="col-sm-4">
-                    <input class="form-control" ng-model="addChem.cc_expDt" type="date" class="" />
+                    <input class="form-control" style="width:80%" ng-model="addChem.cc_expDt" type="date" class="" />
                 </div>
             </div>
             <div class="form-group">
                 <label for="cc_producer" class="col-sm-4 control-label">ผู้ผลิต :</label>
                 <div class="col-sm-4">
-                    <input class="form-control" ng-model="addChem.cc_producer" type="text" class="" />
+                    <input class="form-control" style="width:80%" ng-model="addChem.cc_producer" type="text" class="" />
                 </div>
             </div>
             <div class="form-group">

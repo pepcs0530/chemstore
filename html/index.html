@@ -34,6 +34,7 @@
     <script src="../js/chemstoreController.js"></script>
     <script src="../js/chemstoreFliter.js"></script>
     <script src="../js/chemstoreConfig.js"></script>
+    <script src="../js/chemstoreDirective.js"></script>
   
 
   <body ng-controller ="loginCtrl" ng-init="checkSession(); checked=true; dis=true; btng1=true; btng2=true; btng3=true; fix=true">
@@ -251,6 +252,8 @@
 
                   <li><a href="#/manageEditChem"><i class="fa fa-pencil" aria-hidden="true"></i>&nbsp;แก้ไขข้อมูลสารเคมี</a></li>
                   
+                  <li><a href="#/manageEditAcoount"><i class="fa fa-pencil" aria-hidden="true"></i>&nbsp;แก้ไขข้อมูลบัญชีผู้ใช้</a></li>
+                  
                   <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" ><i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;ประวัติรายการ<span class="caret"></span></a>
                       <ul class="dropdown-menu" >
                         <li><a href="#/importlog"  >ประวัติการนำเข้า</a></li>
@@ -276,7 +279,7 @@
                         
                       <li ><a href="#/addMember" ><i class="fa fa-plus-circle" aria-hidden="true"></i>&nbsp;เพิ่มผู้ใช้งาน</a></li>
                         
-                      <li><a href="#/editMember" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;แก้ไขข้อมูลผู้ใช้งาน</a></li>
+                      <li><a href="#/editMember" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;แก้ไขข้อมูลส่วนตัว</a></li>
                         
                       <li><a href="#/addNews"><i class="fa fa-plus-circle" aria-hidden="true"></i>&nbsp;เพิ่มข่าว</a></li>
                         
@@ -343,7 +346,7 @@
               <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-user fa-lg" aria-hidden="true"></i>&nbsp;ยินดีต้อนรับคุณ {{session}} <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                      <li><a href="#/editMember" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;แก้ไขข้อมูลผู้ใช้งาน</a></li>
+                      <li><a href="#/editMember" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;แก้ไขข้อมูลส่วนตัว</a></li>
                       <li role="separator" class="divider"></li>
                       <li><a href="#/logout" ><i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp;ออกจากระบบ</a></li>
                     </ul>
@@ -396,7 +399,7 @@
               <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-user fa-lg" aria-hidden="true"></i>&nbsp;ยินดีต้อนรับคุณ {{session}} <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                      <li><a href="#/editMember" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;แก้ไขข้อมูลผู้ใช้งาน</a></li>
+                      <li><a href="#/editMember" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;แก้ไขข้อมูลส่วนตัว</a></li>
                       <li role="separator" class="divider"></li>
                       <li><a href="#/logout" ><i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp;ออกจากระบบ</a></li>
                     </ul>
@@ -429,7 +432,7 @@
               <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-user fa-lg" aria-hidden="true"></i>&nbsp;ยินดีต้อนรับคุณ {{session}} <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                      <li><a href="#/editMember" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;แก้ไขข้อมูลผู้ใช้งาน</a></li>
+                      <li><a href="#/editMember" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;แก้ไขข้อมูลส่วนตัว</a></li>
                       <li role="separator" class="divider"></li>
                       <li><a href="#/logout" ><i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp;ออกจากระบบ</a></li>
                     </ul>
@@ -462,7 +465,7 @@
               <ul class="nav navbar-nav navbar-right">
                 <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-user fa-lg" aria-hidden="true"></i>&nbsp;ยินดีต้อนรับคุณ {{session}} <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                      <li><a href="#/editMember" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;แก้ไขข้อมูลผู้ใช้งาน</a></li>
+                      <li><a href="#/editMember" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;แก้ไขข้อมูลส่วนตัว</a></li>
                       <li role="separator" class="divider"></li>
                       <li><a href="#/logout" ><i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp;ออกจากระบบ</a></li>
                     </ul>

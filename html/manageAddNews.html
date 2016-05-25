@@ -1,39 +1,46 @@
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <caption><center><h4><b><i class="fa fa-plus-circle fa-lg"></i>&nbsp;เพิ่มข่าวประชาสัมพันธ์ใหม่</b></h4></center></caption>
-    </div>
-    <div class="panel-body">
-        <form class="form-horizontal" role="form" >
+<form class="form-horizontal" role="form" enctype="multipart/form-data">
+    
+<!--    <input type="submit" name="save" value="upload">-->
+    
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <caption><center><h4><b><i class="fa fa-plus-circle fa-lg"></i>&nbsp;เพิ่มข่าวประชาสัมพันธ์ใหม่</b></h4></center></caption>
+        </div>
+        
+        <div class="panel-body">
             <div class="form-group">
-                <label for="code" class="col-sm-3 control-label">หัวข้อ :</label>
+                <label for="code" class="col-sm-4 control-label">หัวข้อ :</label>
                 <div class="col-sm-4">
                     <input class="form-control" ng-model="addNews.title" type="text" class="" id="form-code" />
                 </div>
             </div>
             <div class="form-group">
-                <label for="user" class="col-sm-3 control-label">รายละเอียด :</label>
-                <div class="col-sm-8">
-                    <textarea class="form-control"  ng-model="addNews.desc" id="form-desc" rows="5" cols="150"></textarea>
+                <label for="user" class="col-sm-4 control-label">รายละเอียด :</label>
+                <div class="col-sm-4">
+                    <textarea class="form-control"  ng-model="addNews.desc" id="form-desc" rows="5" cols="50"></textarea>
                 </div>
             </div>
             <div class="form-group">
-                <label for="pass" class="col-sm-3 control-label">Link :</label>
-                    <div class="col-sm-8">
+                <label for="pass" class="col-sm-4 control-label">Link :</label>
+                    <div class="col-sm-4">
                         <input class="form-control"  ng-model="addNews.link" type="text" class="" id="form-link" />
                      </div>
             </div>
             <div class="form-group">
-                <label for="tname" class="col-sm-3 control-label">รูปภาพ :</label>
+                <label for="tname" class="col-sm-4 control-label">รูปภาพ :</label>
                 <div class="col-sm-4">
-                    <input type = "file" file-model = "myFile"/>
+                    <input type="file" fileread="file" />
                 </div>
             </div>
-
         </div> 
+        
         <div class="panel-footer">    
             <div class="col-sm-offset-10 " align="right">
-                <button class="btn btn-success" type="button" ng-click="createNews()" name="createNews" value="เพิ่ม">เพิ่ม</button>
-                <button class="btn btn-danger"type="button" ng-click="clearNews()" name="clearNews" value="ยกเลิก">ยกเลิก</button>
+                <button class="btn btn-success" type="button" name="save" ng-click="createNews()" name="createNews" value="เพิ่ม">เพิ่ม</button>
+                <button class="btn btn-danger"type="reset" ng-click="clearNews()" name="clearNews" value="ยกเลิก">ยกเลิก</button>
             </div>
         </div> 
+        
     </div> 
+</form>
+
