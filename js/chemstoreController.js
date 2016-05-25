@@ -106,6 +106,7 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
 //  คลังสินค้า  ============================================================================================================
     .controller('categoryCtrl', function($scope,$http) {
         $scope.begin = 0;
+        $scope.test;
         $scope.showcontent = false;
         $scope.options = [{
             name: '5',
