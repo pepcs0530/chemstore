@@ -857,6 +857,7 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
 
     //  ประวัติคำร้องขออื่นๆของทุกสิท  ============================================================================================================
     .controller('allOtherlogCtrl', function($scope,$http) {
+        $scope.showcontent = 1;
         //  แสดงใบเบิกสาร    
         $http({
                 method  :   'POST',
@@ -865,6 +866,12 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
         }).then(function(response) {
             $scope.listManageRequestOther = response.data;
         });
+
+        $scope.showdetail = function(index) {
+            console.log($scope.listManageRequestOther[index]);
+            $scope.index = index;
+            $scope.showcontent = 2;
+        }
     })
 
 //  member  ============================================================================================================
@@ -1299,6 +1306,7 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
                 method  : 'POST',
                 url     : '../php/insert_requestOther.php',
                 data    : {
+                            cro_header : $scope.cro_header,
                             cro_desc : $scope.cro_desc,
                             cro_ca_fk : $scope.key
                 }, 
@@ -1637,29 +1645,29 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
         else{
             $http({
                 method  : 'POST',
-                url     : '../php/insert_reciept.php',
+                url     : '../php/insert_exchange.php',
                 data    : { 
-                    cr_no : $scope.key +
+                    ce_no : $scope.key +
                       new Date().getDate() + 
                      (new Date().getMonth()+1) + 
                       new Date().getFullYear(), 
-                    requesttype : "exchangechem",
-                    cr_desc : $scope.cartlist.cr_desc,
-                    cr_fromstore : $scope.listAcountData[0].ca_responplace,
-                    cr_tostore : $scope.fromstore
+                    ce_desc : $scope.cartlist.cr_desc,
+                    ce_fromstore : $scope.listAcountData[0].ca_responplace,
+                    ce_tostore : $scope.fromstore,
+                    ce_ca_fk : $scope.key
                     },
                     headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
-                    }).then(function(response) {  
+                    }).then(function(response) {
+                        console.log(response);
                     angular.forEach($scope.cartlist, function(value, key){            
                         $http({
                             method  : 'POST',
-                            url     : '../php/insert_recieptDetail.php',
-                            data    : { crd_cr_fk: response.data.cr_pk,
-                                        crd_cc_fk: value.cc_pk,
-                                        crd_amt: value.exvolumeRequest,
-                                        crd_price: 0,
-                                        crd_unit: value.cu_name_abb,
-                                        crd_status: '0'}, 
+                            url     : '../php/insert_exchangeDetail.php',
+                            data    : { ced_ce_fk: response.data.ce_pk,
+                                        ced_cc_fk: value.cc_pk,
+                                        ced_amt: value.exvolumeRequest,
+                                        ced_unit: value.cu_name_abb,
+                                        ced_status: '0'}, 
                             headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
                         }).then(function(response) {
                             console.log(response)
@@ -1675,32 +1683,28 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
 // user ซีเนียรดูสถานะคำร้องย้ายคลัง ==============================================================================
     .controller('seniorExchangeStatusCtrl', function($scope, $http){
     
-        $scope.page = 1;
-        
-        $scope.back = function(){
-            $scope.page = 1;
-        }
-    
+        $scope.showcontent = 1;    
         $http({
             method  :   'POST',
-            url     :   '../php/select_chemReceipt.php',
+            url     :   '../php/select_exchangeChem.php',
             data    :   {findthis: $scope.key}
         }).then(function(response) {
             $scope.listReciept = response.data;
-             console.log( $scope.ListReciept );
+             console.log(response);
         });
     
-        $scope.showPopup = function (getdata,index) {
-            $scope.page = 2;
-            console.log(index);
-            $scope.recieptIndex = index;
-            console.log($scope.listReciept[$scope.recieptIndex]);
+        $scope.showdetail = function (getdata,index) {
+            $scope.index = index;
+            console.log(getdata);
+            console.log($scope.listReciept[$scope.index]);
             $http({
                 method  :   'POST',
-                url     :   '../php/select_chemdetail.php',
-                data    :   {crd_cr_fk: getdata}
+                url     :   '../php/select_exchangeDetail.php',
+                data    :   {findthis: getdata}
             }).then(function(response) {
                 $scope.chemdetail = response.data;
+                console.log($scope.chemdetail);
+                $scope.showcontent = 2;
             });
         }
     })
@@ -1764,76 +1768,30 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
 // ประวัติการย้ายคลัง ========================================================================================================
     .controller('seniorExchangeLogCtrl', function($scope, $http){
     
-        $scope.page = 1;
+        $scope.showcontent = 1;
+        $scope.logExchg = {stDt : new Date(new Date().getFullYear(),new Date().getMonth(),1),
+                           edDt : new Date(),
+                           no : '',
+                           locationF : '1',
+                           locationT : '2'}
     
-        $scope.logExchg = {
-            locationF : '',
-            locationT : '',
-            state : '',
-            stDt : '',
-            edDt : '',
-            no : '',
-            selectAll : ''
-        }
-       
-        $scope.back = function(){
-            $scope.page = 1;
-        }
-        
-        $scope.back2 = function(){
-            $scope.page = 2;
-        }
-        
-//        $http({
-//                method  :   'POST',
-//                url     :   '../php/select_logExchange.php',
-//                data    :   {type:$scope.key}
-//        }).then(function(response) {
-//            $scope.listReciept = response.data;
-//            console.log($scope.listReciept);
-//        });
-        
-        $scope.search = function(select){
-            $scope.page = 2;
-            console.log(select.locationF);
-            console.log(select.locationT);
-            console.log(select.state);
-            console.log(select.stDt);
-            console.log(select.edDt);
-            console.log(select.no);
-            console.log(select.selectAll);
-        
+        $scope.search = function(){
+            console.log($scope.showcontent);
             $http({
                     method  :   'POST',
                     url     :   '../php/select_logExchange.php',
                     data    :   {
                         type:$scope.key,
-                        locationF : select.locationF,
-                        locationT : select.locationT,
-                        state : select.state,
-                        stDt : select.stDt,
-                        edDt : select.edDt,
-                        no : select.no,
-                        selectAll : select.selectAll
+                        locationF : $scope.logExchg.locationF,
+                        locationT : $scope.logExchg.locationT,
+                        stDt : $scope.logExchg.stDt,
+                        edDt : $scope.logExchg.edDt,
+                        no : $scope.logExchg.no
                     }
             }).then(function(response) {
-                $scope.listReciept = response.data;
-                console.log($scope.listReciept);
-            });
-        }
-    
-        $scope.showpop = function (selectedData) {
-            $scope.page = 3;
-            $scope.crd_cr_pk = selectedData.cr_pk;
-                        
-            $http({
-                method  :   'POST',
-                url     :   '../php/select_chemdetail.php',
-                data    :   {
-                    'crd_cr_fk' : $scope.crd_cr_pk
-                }
-            }).then(function(response) {
-                $scope.listRecieptDetail = response.data;
+                $scope.listReciept = response.data
+                $scope.showcontent = 2;
+                console.log(response);
             });
         }
         
@@ -1844,7 +1802,20 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
             $scope.listLocation = response.data;
             console.log($scope.listLocation);
         });
-    
+        
+        $scope.showdetail = function (index) {
+            $scope.index = index;
+            console.log($scope.listReciept[$scope.index]);
+            $http({
+                method  :   'POST',
+                url     :   '../php/select_exchangeDetail.php',
+                data    :   {findthis: $scope.listReciept[$scope.index].ce_pk}
+            }).then(function(response) {
+                $scope.chemdetail = response.data;
+                
+                $scope.showcontent = 3;
+            });
+        }
     })
 
 // รายงานงบประมาณ ========================================================================================================

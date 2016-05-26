@@ -2,75 +2,9 @@
     th, td{
         text-align: center;
     }
-</style>
-
-<caption><center><h4><b><i class="fa fa-file"></i>&nbsp;สถานะคำร้องขอย้ายคลัง</b></h4></center></caption><hr>
-
-<div class="navbar-header" style="width:100%">
-    
-    <div ng-show="page == 1">
-        <table class="table table-bordered">
-            <tr>
-                <th>ลำดับที่</th>
-                <th>เลขที่ใบเสร็จ</th>
-                <th>วันที่ร้องขอ</th>
-                <th>สถานะการร้องขอ</th>
-                <th>รายละเอียด</th> 
-            </tr>
-            <tr ng-repeat="showdata in listReciept">
-                <td>
-                {{$index+1}}
-                </td>
-                <td>
-                {{showdata.cr_no}}
-                </td>
-                <td>
-                {{showdata.cr_crtDt | Date}}
-                </td>
-                <td ng-bind-html="showdata.cr_status | confirmFilter"></td>
-                <td>
-                  <form action="../tcpdf/examples/export_pdf_withdraw.php" target="_blank" method="post">
-                      <input type="hidden" value="{{showdata.cr_pk}}" name="crd_cr_fk">
-                      <input type="submit" class="btn btn-default" data-dismiss="modal" ng-hide="showdata.cr_status == 0 || showdata.cr_status == 2" value="พิมพ์ใบเสร็จ">
-                      <input type="button" class="btn btn-default" value="แสดง" ng-click="showPopup(showdata.cr_pk,$index)" data-toggle="modal" data-target="#myModal">
-                  </form>
-                </td>
-            </tr>
-        </table> 
-    </div>
-    
-    <div ng-show="page == 2">
-        
-        <input type="button" class="btn btn-default" value="ย้อนกลับ" ng-click="back()"><br><br>
-        
-        เลขที่ใบเสร็จ : {{listReciept[recieptIndex].cr_no}} <br>
-        
-        วันที่ร้อง : {{listReciept[recieptIndex].cr_crtDt | Date}} <br>
-        
-        <label>ค่าใช้จ่ายรวมทั้งสิ้น : {{listReciept[recieptIndex].cr_totalprice}}</label>
-        
-        <table width="100%" class="table table-striped">
-            <tr>
-                <th>ชื่อสารเคมี</th>
-                <th>จำนวน</th>
-                <th>หน่วย</th>
-            </tr>
-            <tr ng-repeat="showdata in chemdetail">
-                <td>
-                    {{showdata.cc_name}}
-                </td>  
-                <td>
-                    {{showdata.crd_amt}}
-                </td>  
-                <td>
-                    {{showdata.crd_unit}}
-
-                </td>  
-            </tr>
-          </table>
-    </div>
-    
-<!--
+</style>    
+<div ng-show="showcontent == 1">
+    <caption><center><h4><b><i class="fa fa-file"></i>&nbsp;สถานะคำร้องขอย้ายคลัง</b></h4></center></caption><hr>
     <table class="table table-bordered">
         <tr>
             <th>ลำดับที่</th>
@@ -79,67 +13,53 @@
             <th>สถานะการร้องขอ</th>
             <th>รายละเอียด</th> 
         </tr>
-        <tr ng-repeat="showdata in ListReciept">
+        <tr ng-repeat="showdata in listReciept">
             <td>
             {{$index+1}}
             </td>
             <td>
-            {{showdata.cr_no}}
+            {{showdata.ce_no}}
             </td>
             <td>
-            {{showdata.cr_crtDt | Date}}
+            {{showdata.ce_crtDt | Date}}
             </td>
-            <td ng-bind-html="showdata.cr_status | confirmFilter"></td>
+            <td ng-bind-html="showdata.ce_status | confirmFilter"></td>
             <td>
               <form action="../tcpdf/examples/export_pdf_withdraw.php" target="_blank" method="post">
                   <input type="hidden" value="{{showdata.cr_pk}}" name="crd_cr_fk">
-                  <input type="submit" class="btn btn-default" data-dismiss="modal" ng-hide="showdata.cr_status == 0 || showdata.cr_status == 2" value="พิมพ์ใบเสร็จ">
-                  <input type="button" class="btn btn-default" value="แสดง" ng-click="showPopup(showdata.cr_pk,$index)" data-toggle="modal" data-target="#myModal">
+                  <input type="button" class="btn btn-default" value="แสดง" ng-click="showdetail(showdata.ce_pk,$index)">
               </form>
             </td>
         </tr>
     </table> 
--->
 </div>
+    
+<div ng-show="showcontent == 2">
+    <form action="../tcpdf/examples/export_pdf_withdraw.php" target="_blank" method="post" class="navbar-form navbar-right">
+        <input type="hidden" value="{{showdata.cr_pk}}" name="crd_cr_fk">
+        <input type="submit" class="btn btn-default" data-dismiss="modal" ng-hide="showdata.ce_status == 0 || showdata.ce_status == 2" value="พิมพ์ใบเสร็จ">
+        <input type="button" class="btn btn-default" value="ย้อนกลับ" ng-click="showcontent = 1"><br><br>
+    </form>
+    เลขที่ใบเสร็จ : {{listReciept[index].ce_no}} <br>
 
+    วันที่ร้อง : {{listReciept[index].ce_crtDt | Date}} <br>
+    <table width="100%" class="table table-striped">
+        <tr>
+            <th>ชื่อสารเคมี</th>
+            <th>จำนวน</th>
+            <th>หน่วย</th>
+        </tr>
+        <tr ng-repeat="showdata in chemdetail">
+            <td>
+                {{showdata.cc_name}}
+            </td>  
+            <td>
+                {{showdata.ced_amt}}
+            </td>  
+            <td>
+                {{showdata.ced_unit}}
 
-
-<!--
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">รายการสารเคมี</h4>
-      </div>
-      <div class="modal-body">
-          <table width="100%" class="table table-striped">
-            <tr>
-                <th>ชื่อสารเคมี</th>
-                <th>จำนวน</th>
-                <th>หน่วย</th>
-            </tr>
-            <tr ng-repeat="showdata in chemdetail">
-                <td>
-                    {{showdata.cc_name}}
-                </td>  
-                <td>
-                    {{showdata.crd_amt}}
-                </td>  
-                <td>
-                    {{showdata.crd_unit}}
-
-                </td>  
-            </tr>
-          </table>
-      </div>
-      <div class="modal-footer">
-          <label>ค่าใช้จ่ายรวมทั้งสิ้น : {{ListReciept[index].cr_totalprice}}</label>
-
-        <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
-      </div>
-    </div>
-  </div>
-</div>  
--->
-
+            </td>  
+        </tr>
+      </table>
+</div>

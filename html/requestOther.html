@@ -1,26 +1,19 @@
-<div class="col-sm-12">
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <caption><center><h4><b><i class="fa fa-plus-circle fa-lg"></i>&nbsp;เพิ่มคำร้อง</b></h4></center></caption>
-        </div>
-        <div class="panel-body">
-            <form class="form-horizontal" role="form" >
-                <div class="form-group">
-                    <label for="cp_desc" class="col-sm-3 control-label">รายละเอียด :</label>
-                    <div class="col-sm-4">
-                        <textarea ng-model="cro_desc" id="form-cp_desc" rows="5" cols="70"></textarea>
-                    </div>
-                </div>
-            </form>
-        </div>
-        <div class="panel-footer" align="right">    
-            <div class="">
-                <input type="button" class="btn btn-success" ng-click="createRequestOther()" name="createProject" value="ส่งคำร้อง" />
-                <input type="button" class="btn btn-danger" ng-click="cancleRequestOther()" name="cancleProject" value="ยกเลิก" />
-            </div>
-        </div>
+<caption><center><h4><b><i class="fa fa-plus-circle fa-lg"></i>&nbsp;เพิ่มคำร้อง</b></h4></center></caption><hr>
+<form role="form">
+    <div class="form-group">
+      <label for="email">หัวข้อ:</label>
+      <input type="text" class="form-control" ng-model="cro_header">
     </div>
- </div>
+    <div class="form-group">
+        <label for="cp_desc" class="col-sm-3 control-label">รายละเอียด :</label>
+        <textarea ng-model="cro_desc" id="form-cp_desc" rows="5" cols="70"></textarea>
+    </div>
+</form>
+
+<div align="right">    
+    <input type="button" class="btn btn-success" ng-click="createRequestOther()" name="createProject" value="ส่งคำร้อง" />
+    <input type="button" class="btn btn-danger" ng-click="cancleRequestOther()" name="cancleProject" value="ยกเลิก" />
+</div>
 
 
 

@@ -6,28 +6,43 @@
         text-align: left;
     }
 </style> 
+<div ng-show="showcontent == 1">
+    <caption><center><h4><b><i class="fa fa-file-text-o"></i>&nbsp;ประวัติคำร้องขออื่นๆ</b></h4></center></caption><hr>
 
-<caption><center><h4><b><i class="fa fa-file-text-o"></i>&nbsp;ประวัติคำร้องขออื่นๆ</b></h4></center></caption><hr>
+    <table class="table table-bordered">
+      <tr>
+          <th>ลำดับที่</th>
+          <th>วันที่ร้องขอ</th>
+          <th>สถานะคำร้อง</th>
+          <th>ผู้ร้องขอ</th>
+          <th>หัวข้อ</th>
+          <th>เพิ่มเติม</th>
+      </tr>
+      <tr ng-repeat="showdata in listManageRequestOther">
+          <td>
+          {{$index+1}}
+          </td>
+          <td>
+          {{showdata.cro_crtDt | Date}}
+          </td>
+          <td ng-bind-html="showdata.cro_status | confirmFilter"></td>
+          <td>
+          {{showdata.ca_fname +"  "+ showdata.ca_lname}}
+          </td>
+          <td>{{showdata.cro_header}}</td>
+          <td><input type="button" value="แสดงรายละเอียด" ng-click="showdetail($index)"</td>
+      </tr>
+    </table> 
+</div>
 
-<table class="table table-bordered">
-  <tr>
-      <th>ลำดับที่</th>
-      <th>วันที่ร้องขอ</th>
-      <th>สถานะคำร้อง</th>
-      <th>ผู้ร้องขอ</th>
-      <th style="width:20%">รายละเอียด</th>
-  </tr>
-  <tr ng-repeat="showdata in listManageRequestOther">
-      <td>
-      {{$index+1}}
-      </td>
-      <td>
-      {{showdata.cro_crtDt | Date}}
-      </td>
-      <td ng-bind-html="showdata.cro_status | confirmFilter"></td>
-      <td>
-      {{showdata.ca_fname +"  "+ showdata.ca_lname}}
-      </td>
-      <td>{{showdata.cro_desc}}</td>
-  </tr>
-</table> 
+<div ng-show="showcontent == 2">
+    <caption><center><h4><b><i class="fa fa-file-text-o"></i>&nbsp;รายละเอียดข้อความ</b></h4></center></caption><hr>
+    <form class="navbar-form navbar-right" method="post" action="../tcpdf/examples/export_pdf_withdraw_log.php" target="_blank">
+        <input type="button" class="btn btn-default" value="ย้อนกลับ" ng-click="showcontent = 1">
+    </form>
+    ชื่อผู้ส่ง : {{listManageRequestOther[index].ca_tname}}{{listManageRequestOther[index].ca_fname}}&nbsp;&nbsp;{{listManageRequestOther[index].ca_lname}}<br>
+    วันที่ส่งคำร้อง : {{listManageRequestOther[index].cro_crtDt | Date}}<br>
+    สถานะคำร้องปัจจุบัน : <span  ng-bind-html="listManageRequestOther[index].cro_status | confirmFilter"></span><br>
+    หัวเรื่อง : {{listManageRequestOther[index].cro_header}}<br>
+    รายละเอียดเนื้อหา : {{listManageRequestOther[index].cro_desc}}
+</div>

@@ -41,6 +41,7 @@
     
     $sql = "SELECT ce_pk FROM `chem_exchange` ORDER BY ce_pk DESC LIMIT 1";
     $query = mysql_query($sql);
+
     $data=array();
     while($row = mysql_fetch_array ($query))
     {
@@ -49,7 +50,8 @@
     
     if(count($data) == 0){
         $ce_no = "NO.".$ce_no."0";
-    }else{
+    }
+    else{
         $ce_no = "NO.".($ce_no.$data[0]['ce_pk']+1);
     }
 
@@ -57,7 +59,7 @@
         " VALUE('".$ce_no."', CURRENT_TIMESTAMP,'".$ce_desc."','".$ce_fromstore."','".$ce_tostore."','".$ce_ca_fk."')";
     
     $query = mysql_query($sql);
-    
+//
     $sql = "SELECT ce_pk FROM `chem_exchange` ORDER BY ce_pk DESC LIMIT 1";
     $query = mysql_query($sql);
     $data=array();

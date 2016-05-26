@@ -4,18 +4,10 @@
     }
 </style>  
 
+<div ng-show="showcontent == 1">
 <caption><center><h4><b><i class="fa fa-file-text-o"></i>&nbsp;ประวัติการย้ายคลังสารเคมี</b></h4></center></caption><hr>
-
-<div class="navbar-header" style="width:100% ">
-    
-    <form method="post" action="../tcpdf/examples/export_pdf_transfer_log.php" target="_blank">
-        
-        <div ng-show="page == 1">
-<!--            <button type="button" class="btn btn-default" ng-click="next()" >ไป</button>-->
-            
             <strong>จากคลัง :</strong>
             <select ng-model="logExchg.locationF" name="locationF">
-                <option value="" >---เลือก---</option>
                 <option ng-repeat="lu in listLocation" value="{{lu.cl_pk}}" >{{lu.cl_name}}</option>
             </select>
             
@@ -24,16 +16,7 @@
                 <option value="" >---เลือก---</option>
                 <option ng-repeat="lu in listLocation" value="{{lu.cl_pk}}" >{{lu.cl_name}}</option>
             </select>
-              
-<!--
-            <strong>สถานะ :</strong>
-            <select ng-model="logExchg.state" name="state">
-                <option value="" >---เลือก---</option>
-                <option value="S" >Solid</option>
-                <option value="L" >Liquid</option>
-                <option value="G" >Gas</option>
-            </select>
--->
+
             <br>
             <br>
               
@@ -47,145 +30,71 @@
             
             <strong>เลขที่ใบย้าย :</strong>
             <input type="text" ng-model="logExchg.no" name="no" /><br><br>
-              
-<!--
-            <strong>ชื่อสาร :</strong>
-            <input type="text" ng-model="logExchg.name" name="name" /><br><br>
-              
-            <strong>Cas no. :</strong>
-            <input type="text" ng-model="logExchg.casNo" name="casNo" /><br><br>
-            
-            <strong>เกรด :</strong>
-            <input type="text" ng-model="logExchg.grade" name="grade" /><br><br>
--->
-              
-            <input type="checkbox" ng-model="logExchg.selectAll" name="selectAll" value="true">เลือกทั้งหมด
-            <button type="button" class="btn btn-default" ng-click="search(logExchg)" >ค้นหา</button>   
-        </div>
-        
-        <div ng-show="page == 2">
-<!--            <button type="button" class="btn btn-default" ng-click="next2()" >ไป</button>-->
-            <button type="button" class="btn btn-default" ng-click="back()" >ย้อนกลับ</button>
-            <input type="hidden" value="{{key}}" name="type">
-            <input type="submit" class="btn btn-default" value="พิมพ์รายงาน" >
-            <table class= "table table-bordered" >
-                <tr>
-                    <th>ลำดับ</th>
-                    <th>วันที่เขียนคำร้อง</th>
-                    <th>วันที่อนุมัติ</th>
-                    <th>เลขที่ใบย้าย</th>
-                    <th>บัญชีผู้ใช้</th>
-                    <th>จากคลัง</th>
-                    <th>ไปคลัง</th>
-                    <th>รายละเอียด</th>
-                </tr>
-                <tr ng-repeat="showdata in listReciept">
-                    <td>{{$index+1}}</td>
-                    <td>{{showdata.cr_crtDt | Date}}</td>
-                    <td>{{showdata.cr_updDt | Date}}</td>
-                    <td>{{showdata.cr_no}}</td>
-                    <td>{{showdata.ca_tname+" "+showdata.ca_fname+" "+showdata.ca_lname}}</td>
-                    <td>{{showdata.cr_fromstore}}</td>
-                    <td>{{showdata.cr_tostore}}</td>
-                    <td style="text-align: center;"><button type="button" class="btn btn-default" value="แสดง" ng-click="showpop(showdata)">แสดง</button></td>
-                </tr>
-            </table>
-        </div>
-        
-        <div ng-show="page == 3">
-            <button type="button" class="btn btn-default" ng-click="back2()" >ย้อนกลับ</button>
-            <table class="table table-bordered" width="100%">
-                <tr>
-                    <th>ลำดับ</th>
-                    <th>ชื่อสารเคมี</th>
-                    <th>Cas no.</th>
-                    <th>เกรด</th>
-                    <th>จำนวน</th>
-                    <th>หน่วย</th>
-                </tr>
-                <tr ng-repeat="showdata in listRecieptDetail">
-                    <td>{{$index+1}}</td>
-                    <td>
-                        {{showdata.cc_name}}
-                    </td>  
-                    <td>
-                        {{showdata.cc_casNo}}
-                    </td>  
-                    <td>
-                        {{showdata.cc_grade}}
-                    </td>  
-                    <td>
-                        {{showdata.crd_amt}}
-                    </td>  
-                    <td>
-                        {{showdata.crd_unit}}
-                    </td>
-                </tr>
-            </table>
-        </div>
-        
-    </form>
+              {{logExchg}}
+            <button type="button" class="btn btn-default" ng-click="search()" >ค้นหา</button>   
 </div>
-
-
-<!--
-<table class= " table table-bordered" >
-    <tr>
-        <th>ลำดับ</th>
-        <th>วันที่-เวลา</th>
-        <th>เลขที่ใบเบิก</th>
-        <th>บัญชีผู้ใช้</th>
-        <th>รายละเอียด</th>
-    </tr>
-    <tr ng-repeat="showdata in listReciept">
-        <td>{{$index+1}}</td>
-        <td>
-            วันที่เขียนคำร้อง {{showdata.cr_crtDt | Datetime}}<br>
-            วันที่ได้รับอนุมัติ {{showdata.cr_updDt | Datetime}}
-        </td>
-        <td>{{showdata.cr_no}}</td>
-        <td>{{showdata.ca_tname+" "+showdata.ca_fname+" "+showdata.ca_lname}}</td>
-        <td style="text-align: center;"><button type="button" class="btn btn-default" value="แสดง" ng-click="showpop(showdata)" data-toggle="modal" data-target="#myModal">แสดง</button></td>
-    </tr>
-</table> 
--->
-
-<!-- Modal -->
-<!--
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel"><i class="glyphicon glyphicon-list-alt"></i>&nbsp;&nbsp;รายละเอียดใบเบิกสาร</h4>
-      </div>
-      <div class="modal-body">
-        <table class="table table-striped" width="100%">
-            <tr>
-                <th>ชื่อสารเคมี</th>
-                <th>จำนวน</th>
-                <th>หน่วย</th>
-                <th>คลัง</th>
-            </tr>
-            <tr ng-repeat="showdata in listRecieptDetail">
-                <td>
-                    {{showdata.cc_name}}
-                </td>  
-                <td>
-                    {{showdata.crd_amt}}
-                </td>  
-                <td>
-                    {{showdata.crd_unit}}
-                </td>
-                <td>
-                    {{showdata.cl_name}}
-                </td>
-            </tr>
-          </table>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">ปิด</button>
-      </div>
-    </div>
-  </div>
-</div>-->
+        
+<div ng-show="showcontent == 2">
+    <form method="post" action="../tcpdf/examples/export_pdf_transfer_log.php" target="_blank" class="navbar-form navbar-right">
+        <button type="button" class="btn btn-default" ng-click="showcontent = 1" >ย้อนกลับ</button>
+        <input type="hidden" value="{{key}}" name="type">
+        <input type="submit" class="btn btn-default" value="พิมพ์รายงาน" >
+    </form>
+    <table class= "table table-bordered" >
+        <tr>
+            <th>ลำดับ</th>
+            <th>วันที่เขียนคำร้อง</th>
+            <th>วันที่อนุมัติ</th>
+            <th>เลขที่ใบย้าย</th>
+            <th>บัญชีผู้ใช้</th>
+            <th>จากคลัง</th>
+            <th>ไปคลัง</th>
+            <th>รายละเอียด</th>
+        </tr>
+        <tr ng-repeat="showdata in listReciept">
+            <td>{{$index+1}}</td>
+            <td>{{showdata.ce_crtDt | Date}}</td>
+            <td>{{showdata.ce_updDt | Date}}</td>
+            <td>{{showdata.ce_no}}</td>
+            <td>{{showdata.ca_tname+" "+showdata.ca_fname+" "+showdata.ca_lname}}</td>
+            <td>{{showdata.ce_fromstore}}</td>
+            <td>{{showdata.ce_tostore}}</td>
+            <td style="text-align: center;">
+                <button type="button" class="btn btn-default" value="แสดง" ng-click="showdetail($index)">แสดง</button>
+            </td>
+        </tr>
+    </table>
+</div>
+<div ng-show="showcontent == 3">
+    <form class="navbar-form navbar-right">
+        <button type="button" class="btn btn-default" ng-click="showcontent = 2" >ย้อนกลับ</button>
+    </form>
+    <table class="table table-bordered" width="100%">
+        <tr>
+            <th>ลำดับ</th>
+            <th>ชื่อสารเคมี</th>
+            <th>Cas no.</th>
+            <th>เกรด</th>
+            <th>จำนวน</th>
+            <th>หน่วย</th>
+        </tr>
+        <tr ng-repeat="showdata in chemdetail">
+            <td>{{$index+1}}</td>
+            <td>
+                {{showdata.cc_name}}
+            </td>  
+            <td>
+                {{showdata.cc_casNo}}
+            </td>  
+            <td>
+                {{showdata.cc_grade}}
+            </td>  
+            <td>
+                {{showdata.ced_amt}}
+            </td>  
+            <td>
+                {{showdata.ced_unit}}
+            </td>
+        </tr>
+    </table>
+</div>
