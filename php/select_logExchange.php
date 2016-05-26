@@ -22,19 +22,14 @@
     if($no != null){
         $sql .= " AND ce_no LIKE '%".$no."%' ";
     }
-//
-//    if($locF != null && $locT != null){
-//        $sql .= " AND ce_fromstore LIKE '%".$no."%' ";
-//        $sql .= " AND ce_tostore '%".$no."%' ";
-//    }
     
     $sql .= "ORDER BY ce_crtDt DESC";
-    echo json_encode($sql);
-//    $query = mysql_query($sql);
-//    $data=array();
-//    while($row = mysql_fetch_array ($query))
-//    {
-//        array_push($data,$row);
-//    }
-//    echo json_encode($data);
+//    echo json_encode($sql);
+    $query = mysql_query($sql);
+    $data=array();
+    while($row = mysql_fetch_array ($query))
+    {
+        array_push($data,$row);
+    }
+    echo json_encode($data);
 ?>

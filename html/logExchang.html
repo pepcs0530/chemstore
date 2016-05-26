@@ -6,20 +6,6 @@
 
 <div ng-show="showcontent == 1">
 <caption><center><h4><b><i class="fa fa-file-text-o"></i>&nbsp;ประวัติการย้ายคลังสารเคมี</b></h4></center></caption><hr>
-            <strong>จากคลัง :</strong>
-            <select ng-model="logExchg.locationF" name="locationF">
-                <option ng-repeat="lu in listLocation" value="{{lu.cl_pk}}" >{{lu.cl_name}}</option>
-            </select>
-            
-            <strong>ไปคลัง :</strong>
-            <select ng-model="logExchg.locationT" name="locationT">
-                <option value="" >---เลือก---</option>
-                <option ng-repeat="lu in listLocation" value="{{lu.cl_pk}}" >{{lu.cl_name}}</option>
-            </select>
-
-            <br>
-            <br>
-              
             <strong>ตั้งแต่ :</strong>
             <input ng-model="logExchg.stDt" name="stDt" type="date" />
               
@@ -33,7 +19,6 @@
               {{logExchg}}
             <button type="button" class="btn btn-default" ng-click="search()" >ค้นหา</button>   
 </div>
-        
 <div ng-show="showcontent == 2">
     <form method="post" action="../tcpdf/examples/export_pdf_transfer_log.php" target="_blank" class="navbar-form navbar-right">
         <button type="button" class="btn btn-default" ng-click="showcontent = 1" >ย้อนกลับ</button>
