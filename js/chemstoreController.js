@@ -1567,6 +1567,8 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
                                  teacher_pk : $scope.key,
                                  cp_eduLvl: "ปริญญาตรี",
                                  maxBudget : 7000}
+            $scope.students = [
+            ];
         }    
     }) 
 
