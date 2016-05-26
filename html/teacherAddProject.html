@@ -6,19 +6,13 @@
         <div class="panel-body">
             <form class="form-horizontal" role="form" >
                 <div class="form-group">
-                    <label for="acctyp" class="col-sm-3 control-label">อาจารย์ :</label>
-                    <div class="col-sm-4">
-                        <input class="form-control" type="text" ng-model="addProject.teacher" ng-disabled="true"/>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="cp_name" class="col-sm-3 control-label">ชื่อโปรเจค :</label>
+                    <label for="cp_name" class="col-sm-4 control-label">หัวข้อโปรเจค :</label>
                     <div class="col-sm-4">
                         <input class="form-control" ng-model="addProject.cp_name" type="text" class="" id="form-cp_name" />
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="cp_eduLvl" class="col-sm-3 control-label">ระดับการศึกษา :</label>
+                    <label for="cp_eduLvl" class="col-sm-4 control-label">ระดับการศึกษา :</label>
                     <div class="col-sm-6">
                         <select  ng-model="addProject.cp_eduLvl" ng-change="checkBudget()">
                             <option value="ปริญญาตรี" >ปริญญาตรี</option>
@@ -29,18 +23,59 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="cp_budget" class="col-sm-3 control-label">งบประมาณ :</label>
+                    <label for="cp_budget" class="col-sm-4 control-label">งบประมาณ :</label>
                     <div class="col-sm-4">
-                        <input class="form-control" ng-model="addProject.cp_budget" type="text" class="" id="form-cp_budget" />
+                        <input class="form-control" ng-model="addProject.cp_budget" type="number" class="" id="form-cp_budget" style="width:50%"/>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="cp_desc" class="col-sm-3 control-label">รายละเอียด :</label>
+                    <label for="cp_desc" class="col-sm-4 control-label">รายละเอียด :</label>
                     <div class="col-sm-4">
                         <textarea ng-model="addProject.cp_desc" id="form-cp_desc" rows="4" cols="50"></textarea>
                     </div>
                 </div>
             </form>
+            
+            <form class="form-horizontal" role="form" ng-submit="addRow()">
+                
+                <div class="form-group">
+                    <label for="cs_head" class="col-sm-4 control-label">รายชื่อนักศึกษา</label>
+                </div>
+                <div class="form-group">
+                    <label for="cs_no" class="col-sm-4 control-label">รหัส :</label>
+                    <div class="col-sm-4">
+                        <input class="form-control" ng-model="cs_code" type="text" name="cs_code"  style="width:50%"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="cs_name" class="col-sm-4 control-label">ชื่อ-นามสกุล :</label>
+                    <div class="col-sm-4">
+                        <input class="form-control" ng-model="cs_name" name="cs_name" type="text"  />
+                    </div>
+                </div>
+              
+              <button type="submit" class="btn btn-default">เพิ่ม</button>
+            </form>
+            
+            <table class="table table-condensed">
+                <tr>
+                    <th>รหัสนักศึกษา
+                    </th>
+                    <th>ชื่อ-นามสกุล
+                    </th>
+                    <th>Action
+                    </th>
+                </tr>
+                <tr ng-repeat="student in students">
+                    <td>{{student.cs_code}}
+                    </td>
+                    <td>{{student.cs_name}}
+                    </td>
+                    <td>
+                    <input type="button" value="ลบ" class="btn btn-danger btn-sm" ng-click="removeRow(student.cs_code)"/>
+                    </td>
+                </tr>
+            </table>
         </div>
         <div class="panel-footer" align="right">    
             <div class="col-sm-offset-8 ">
