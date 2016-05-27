@@ -817,7 +817,8 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
                     stDt : $scope.logRecpt.stDt,
                     edDt : new Date($scope.logRecpt.edDt.getFullYear(),$scope.logRecpt.edDt.getMonth(),$scope.logRecpt.edDt.getDate()+1),
                     no : $scope.logRecpt.no,
-                    project : $scope.logRecpt.project
+                    project : $scope.logRecpt.project,
+                    selectAll : $scope.logRecpt.selectAll
                 }
                 }).then(function(response) {
                     $scope.listReciept = response.data;

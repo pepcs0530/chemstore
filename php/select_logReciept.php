@@ -2,7 +2,7 @@
     $_POST = json_decode(file_get_contents('php://input'), true);
     include 'connect.php';
     $type = $_POST['type'];
-
+    $selectAll = $_POST['selectAll'];
     isset($_POST['stDt']) ? $stDt = date("Y-m-d", strtotime($_POST['stDt'])) : $stDt = null;
     isset($_POST['edDt']) ? $edDt =  date("Y-m-d", strtotime($_POST['edDt'])) : $edDt = null;
     isset($_POST['no']) ? $no = $_POST['no'] : $no = null;
@@ -10,24 +10,28 @@
     
     if($type == "all"){
         $sql = "SELECT cr.*,cp_pk,cp_name,cp_eduLvl,ca_tname,ca_fname,ca_lname FROM `chem_receipt` AS cr ";
-        $sql .= "INNER JOIN chem_project ON cp_pk = cr_cp_fk ";  
+        $sql .= "INNER JOIN chem_project ON cp_pk = cr_cp_fk ";
+        $sql .= "WHERE `cr_crtDt` BETWEEN '".$stDt."' AND '".$edDt."'";
     }
     else{
         $sql = "SELECT cr.*,cp_pk,cp_name,cp_eduLvl,ca_tname,ca_fname,ca_lname FROM `chem_receipt` AS cr ";
         $sql .= "INNER JOIN chem_project ON cp_pk = cr_cp_fk ";
         $sql .= "INNER JOIN chem_account ON cp_teach_fk = ca_pk ";
-        $sql .= "WHERE `cr_crtDt` BETWEEN '".$stDt."' AND '".$edDt."'";
-        $sql .= " AND cr_no LIKE 'NO.".$type."%' ";
+        $sql .= "WHERE cr_no LIKE 'NO.".$type."%' ";
     }
 
-    if($no != null){
+    if($stDt != null && $edDt != null && !$selectAll){
+        $sql .= "AND (`cr_crtDt` BETWEEN '".$stDt."' AND '".$edDt."') ";
+    }
+
+    if($no != null  && !$selectAll){
         $sql .= " AND cr_no LIKE '%".$no."%' ";
     }
-    if($project != null){
+    if($project != null  && !$selectAll){
         $sql .= " AND cp_name LIKE '%".$project."%' ";
     }
     
-    $sql .= "ORDER BY cr_crtDt DESC";
+    $sql .= " ORDER BY cr_crtDt DESC";
 
     $query = mysql_query($sql);
     $data=array();
