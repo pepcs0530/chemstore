@@ -778,7 +778,7 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
 
 //  ประวัติคำร้องขออื่นๆ  ============================================================================================================
     .controller('otherlogCtrl', function($scope,$http) {
-        //  แสดงใบเบิกสาร    
+        $scope.showcontent = 1;     
         $http({
                 method  :   'POST',
                 url     :   '../php/select_logOther.php',
@@ -786,12 +786,17 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
         }).then(function(response) {
             $scope.listManageRequestOther = response.data;
         });
+    
+        $scope.showdetail = function(index) {
+            console.log($scope.listManageRequestOther[index]);
+            $scope.index = index;
+            $scope.showcontent = 2;
+        }
     })
 
     //  ประวัติคำร้องขออื่นๆของทุกสิท  ============================================================================================================
     .controller('allOtherlogCtrl', function($scope,$http) {
-        $scope.showcontent = 1;
-        //  แสดงใบเบิกสาร    
+        $scope.showcontent = 1; 
         $http({
                 method  :   'POST',
                 url     :   '../php/select_logOther.php',

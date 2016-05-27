@@ -6,8 +6,9 @@
         text-align: left;
     }
 </style> 
+
+<caption><center><h4><b><i class="fa fa-file-text-o"></i>&nbsp;ประวัติคำร้องขออื่นๆ</b></h4></center></caption><hr>
 <div ng-show="showcontent == 1">
-    <caption><center><h4><b><i class="fa fa-file-text-o"></i>&nbsp;ประวัติคำร้องขออื่นๆ</b></h4></center></caption><hr>
 
     <table class="table table-bordered">
       <tr>
@@ -36,10 +37,10 @@
 </div>
 
 <div ng-show="showcontent == 2">
-    <caption><center><h4><b><i class="fa fa-file-text-o"></i>&nbsp;รายละเอียดข้อความ</b></h4></center></caption><hr>
-    <form class="navbar-form navbar-right" method="post" action="../tcpdf/examples/export_pdf_withdraw_log.php" target="_blank">
-        <input type="button" class="btn btn-default" value="ย้อนกลับ" ng-click="showcontent = 1">
-    </form>
+    <caption><center><h5><b><i class="fa fa-info-circle"></i>&nbsp;รายละเอียดเพิ่มเติม</b></h5></center></caption>
+    
+    <button type="button" class="btn btn-default"  ng-click="showcontent = 1"><i class="fa fa-chevron-left" aria-hidden="true"></i>&nbsp;ย้อนกลับ</button><br><br>
+    
     ชื่อผู้ส่ง : {{listManageRequestOther[index].ca_tname}}{{listManageRequestOther[index].ca_fname}}&nbsp;&nbsp;{{listManageRequestOther[index].ca_lname}}<br>
     วันที่ส่งคำร้อง : {{listManageRequestOther[index].cro_crtDt | Date}}<br>
     สถานะคำร้องปัจจุบัน : <span  ng-bind-html="listManageRequestOther[index].cro_status | confirmFilter"></span><br>
