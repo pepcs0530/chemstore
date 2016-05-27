@@ -11,6 +11,8 @@
     if($type == "all"){
         $sql = "SELECT cr.*,cp_pk,cp_name,cp_eduLvl,ca_tname,ca_fname,ca_lname FROM `chem_receipt` AS cr ";
         $sql .= "INNER JOIN chem_project ON cp_pk = cr_cp_fk ";  
+        $sql .= "INNER JOIN chem_account ON cp_teach_fk = ca_pk ";
+        $sql .= "WHERE `cr_crtDt` BETWEEN '".$stDt."' AND '".$edDt."'";
     }
     else{
         $sql = "SELECT cr.*,cp_pk,cp_name,cp_eduLvl,ca_tname,ca_fname,ca_lname FROM `chem_receipt` AS cr ";

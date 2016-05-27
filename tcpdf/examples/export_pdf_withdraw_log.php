@@ -8,13 +8,13 @@
 //    $findthis = 1;
 //    $findtypethis = 1;
 
-    isset($_POST['stDt']) ? $stDt = $_POST['stDt'] : $stDt = null;
-    isset($_POST['edDt']) ? $edDt = $_POST['edDt'] : $edDt = null;
+    isset($_POST['stDt']) ? $stDt = date("Y-m-d", strtotime($_POST['stDt'])) : $stDt = null;
+    isset($_POST['edDt']) ? $edDt =  date("Y-m-d", strtotime($_POST['edDt'] .'+1 day' )) : $edDt = null;
     isset($_POST['no']) ? $no = $_POST['no'] : $no = null;
     isset($_POST['project']) ? $project = $_POST['project'] : $project = null;
     isset($_POST['selectAll']) ? $selectAll = $_POST['selectAll'] : $selectAll = null;
 
-    if($findtypethis == 1){
+//    if($findtypethis == 1){
 //            $sql = "SELECT `cr_pk`,`cr_no`,`ca_user`,`ca_tname`,`ca_fname`,`ca_lname`,`cp_name`,`cp_teach_fk`,`cr_crtDt`,`cr_updDt` ".
 //            "FROM `chem_receipt` ".
 //            "INNER JOIN `chem_project` ".
@@ -22,59 +22,83 @@
 //            "INNER JOIN `chem_account` ".
 //            "ON cp_teach_fk = `ca_pk` ".
 //            "ORDER BY `cr_crtDt` DESC";
-        if($selectAll == true){
-            $sql = "SELECT cr.cr_pk,cr.cr_no,cr.cr_totalprice,cr.cr_cp_fk,cr.cr_status,cr.cr_crtDt,cr.cr_updDt,cr.cr_tostore,ca.ca_fname,ca.ca_lname,ca.ca_tname,cr.cr_fromstore,cp.cp_teach_fk,cp.cp_name,cp.cp_budget,ca.ca_credit ".
-                "FROM chem_receipt AS cr ".
-                "INNER JOIN chem_project AS cp ".
-                "ON cp_pk = cr_cp_fk ".
-                "INNER JOIN chem_account AS ca ".
-                "ON cp_teach_fk = ca_pk ".
-                "WHERE cr_type = 'chemrequest' ".
-                "ORDER BY cr_crtDt DESC";
-        }else{
-            $sql = "SELECT cr.cr_pk,cr.cr_no,cr.cr_totalprice,cr.cr_cp_fk,cr.cr_status,cr.cr_crtDt,cr.cr_updDt,cr.cr_tostore,ca.ca_fname,ca.ca_lname,ca.ca_tname,cr.cr_fromstore,cp.cp_teach_fk,cp.cp_name,cp.cp_budget,ca.ca_credit ".
-                "FROM chem_receipt AS cr ".
-                "INNER JOIN chem_project AS cp ".
-                "ON cp_pk = cr_cp_fk ".
-                "INNER JOIN chem_account AS ca ".
-                "ON cp_teach_fk = ca_pk ".
-                "WHERE cr_type = 'chemrequest' ";
-            
-            if($stDt != null && $edDt != null ){
-                $sql .= "AND cr.cr_updDt BETWEEN '".$stDt."' AND '".$edDt."' ";
-            }
-            
-            if($no != null){
-                $sql .= "AND cr.cr_no LIKE '%".$no."%' ";
-            }
-            
-            if($project != null){
-                $sql .= "AND cp.cp_name LIKE '%".$project."%' ";
-            }
-            
-            $sql .= "ORDER BY cr_crtDt DESC";
-        }
-        
+//        if($selectAll == true){
+//            $sql = "SELECT cr.cr_pk,cr.cr_no,cr.cr_totalprice,cr.cr_cp_fk,cr.cr_status,cr.cr_crtDt,cr.cr_updDt,cr.cr_tostore,ca.ca_fname,ca.ca_lname,ca.ca_tname,cr.cr_fromstore,cp.cp_teach_fk,cp.cp_name,cp.cp_budget,ca.ca_credit ".
+//                "FROM chem_receipt AS cr ".
+//                "INNER JOIN chem_project AS cp ".
+//                "ON cp_pk = cr_cp_fk ".
+//                "INNER JOIN chem_account AS ca ".
+//                "ON cp_teach_fk = ca_pk ".
+//                "WHERE cr_type = 'chemrequest' ".
+//                "ORDER BY cr_crtDt DESC";
+//        }else{
+//            $sql = "SELECT cr.cr_pk,cr.cr_no,cr.cr_totalprice,cr.cr_cp_fk,cr.cr_status,cr.cr_crtDt,cr.cr_updDt,cr.cr_tostore,ca.ca_fname,ca.ca_lname,ca.ca_tname,cr.cr_fromstore,cp.cp_teach_fk,cp.cp_name,cp.cp_budget,ca.ca_credit ".
+//                "FROM chem_receipt AS cr ".
+//                "INNER JOIN chem_project AS cp ".
+//                "ON cp_pk = cr_cp_fk ".
+//                "INNER JOIN chem_account AS ca ".
+//                "ON cp_teach_fk = ca_pk ".
+//                "WHERE cr_type = 'chemrequest' ";
+//            
+//            if($stDt != null && $edDt != null ){
+//                $sql .= "AND cr.cr_updDt BETWEEN '".$stDt."' AND '".$edDt."' ";
+//            }
+//            
+//            if($no != null){
+//                $sql .= "AND cr.cr_no LIKE '%".$no."%' ";
+//            }
+//            
+//            if($project != null){
+//                $sql .= "AND cp.cp_name LIKE '%".$project."%' ";
+//            }
+//            
+//            $sql .= "ORDER BY cr_crtDt DESC";
+//        }
+//        
+//    }else{
+////        $sql = "SELECT `cr_pk`,`cr_no`,`ca_user`,`ca_tname`,`ca_fname`,`ca_lname`,`cp_name`,`cp_teach_fk`,`cr_crtDt`,`cr_updDt` ".
+////            "FROM `chem_receipt` ".
+////            "INNER JOIN `chem_project` ".
+////            "ON `cr_cp_fk` = `cp_pk` ".
+////            "INNER JOIN `chem_account` ".
+////            "ON cp_teach_fk = `ca_pk` ".
+////            "WHERE cr_no LIKE 'NO.".$findthis."%' ".
+////            "ORDER BY `cr_crtDt` DESC";
+//        $sql = "SELECT cr.cr_pk,cr.cr_no,cr.cr_totalprice,cr.cr_cp_fk,cr.cr_status,cr.cr_crtDt,cr.cr_updDt,cr.cr_tostore,ca.ca_fname,ca.ca_lname,ca.ca_tname,cr.cr_fromstore,cp.cp_teach_fk,cp.cp_name,cp.cp_budget,ca.ca_credit ".
+//                "FROM chem_receipt AS cr ".
+//                "INNER JOIN chem_project AS cp ".
+//                "ON cp_pk = cr_cp_fk ".
+//                "INNER JOIN chem_account AS ca ".
+//                "ON cp_teach_fk = ca_pk ".
+//                "WHERE cr_type = 'chemrequest' AND cr_no like 'NO.".$findthis."%'".
+//                "ORDER BY cr_crtDt DESC";
+//    }
+
+    if($findtypethis == 1){
+        $sql = "SELECT cr.*,cp_pk,cp_name,cp_eduLvl,ca_tname,ca_fname,ca_lname FROM `chem_receipt` AS cr ";
+        $sql .= "INNER JOIN chem_project ON cp_pk = cr_cp_fk ";
+        $sql .= "INNER JOIN chem_account ON cp_teach_fk = ca_pk ";
+        $sql .= "WHERE `cr_crtDt` BETWEEN '".$stDt."' AND '".$edDt."'";
     }else{
-//        $sql = "SELECT `cr_pk`,`cr_no`,`ca_user`,`ca_tname`,`ca_fname`,`ca_lname`,`cp_name`,`cp_teach_fk`,`cr_crtDt`,`cr_updDt` ".
-//            "FROM `chem_receipt` ".
-//            "INNER JOIN `chem_project` ".
-//            "ON `cr_cp_fk` = `cp_pk` ".
-//            "INNER JOIN `chem_account` ".
-//            "ON cp_teach_fk = `ca_pk` ".
-//            "WHERE cr_no LIKE 'NO.".$findthis."%' ".
-//            "ORDER BY `cr_crtDt` DESC";
-        $sql = "SELECT cr.cr_pk,cr.cr_no,cr.cr_totalprice,cr.cr_cp_fk,cr.cr_status,cr.cr_crtDt,cr.cr_updDt,cr.cr_tostore,ca.ca_fname,ca.ca_lname,ca.ca_tname,cr.cr_fromstore,cp.cp_teach_fk,cp.cp_name,cp.cp_budget,ca.ca_credit ".
-                "FROM chem_receipt AS cr ".
-                "INNER JOIN chem_project AS cp ".
-                "ON cp_pk = cr_cp_fk ".
-                "INNER JOIN chem_account AS ca ".
-                "ON cp_teach_fk = ca_pk ".
-                "WHERE cr_type = 'chemrequest' AND cr_no like 'NO.".$findthis."%'".
-                "ORDER BY cr_crtDt DESC";
+        $sql = "SELECT cr.*,cp_pk,cp_name,cp_eduLvl,ca_tname,ca_fname,ca_lname FROM `chem_receipt` AS cr ";
+        $sql .= "INNER JOIN chem_project ON cp_pk = cr_cp_fk ";
+        $sql .= "INNER JOIN chem_account ON cp_teach_fk = ca_pk ";
+        $sql .= "WHERE `cr_crtDt` BETWEEN '".$stDt."' AND '".$edDt."' ";
+        $sql .= "AND cr_no LIKE 'NO.".$findthis."%' ";
     }
 
+    if($no != null){
+        $sql .= " AND cr_no LIKE '%".$no."%' ";
+    }
+    if($project != null){
+        $sql .= " AND cp_name LIKE '%".$project."%' ";
+    }
+    
+    $sql .= "ORDER BY cr_crtDt DESC";
+
+
     $query = mysql_query($sql);
+
     
     // Include the main TCPDF library (search for installation path).
     require_once('tcpdf_include.php');
@@ -254,7 +278,7 @@
             if($index==1){
                 $pdf->Cell(25, 0, date_format($date_crt,"d/m/Y"), 1, 0, 'L', 0, '', 0);
                 $pdf->Cell(25, 0, date_format($date_upd,"d/m/Y"), 1, 0, 'L', 0, '', 0);
-                $pdf->Cell(27, 0, $cr_no, 1, 0, 'C', 0, '', 0);
+                $pdf->Cell(27, 0, $cr_no, 1, 0, 'L', 0, '', 0);
                 $pdf->Cell(45, 0, $name, 1, 0, 'L', 0, '', 0);
                 $pdf->Cell(40, 0, $project, 1, 0, 'L', 0, '', 0);
                 $pdf->Cell(50, 0, $row['cc_name'], 1, 0, 'L', 0, '', 0);
@@ -286,4 +310,6 @@
     }
 
     $pdf->Output('export_pdf_withdraw_log.pdf', 'I');
+    
+    
 ?>

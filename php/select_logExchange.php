@@ -11,12 +11,14 @@
     
     if($type == "all"){
         $sql = "SELECT ce.*,ca_tname,ca_fname,ca_lname FROM `chem_exchange` AS ce ";
+        $sql .= "INNER JOIN chem_account ON ce_ca_fk = ca_pk ";
+        $sql .= "WHERE `ce_crtDt` BETWEEN '".$stDt."' AND '".$edDt."' ";
     }
     else{
         $sql = "SELECT ce.*,ca_tname,ca_fname,ca_lname FROM `chem_exchange` AS ce ";
         $sql .= "INNER JOIN chem_account ON ce_ca_fk = ca_pk ";
-        $sql .= "WHERE `ce_crtDt` BETWEEN '".$stDt."' AND '".$edDt."'";
-        $sql .= " AND ce_no LIKE 'NO.".$type."%' ";
+        $sql .= "WHERE `ce_crtDt` BETWEEN '".$stDt."' AND '".$edDt."' ";
+        $sql .= "AND ce_no LIKE 'NO.".$type."%' ";
     }
     
     if($no != null){

@@ -5,13 +5,12 @@
 
     isset($_POST['location']) ? $loc = $_POST['location'] : $loc = null;
     isset($_POST['state']) ? $state = $_POST['state'] : $state = null;
-    isset($_POST['stDt']) ? $stDt = $_POST['stDt'] : $stDt = null;
-    isset($_POST['edDt']) ? $edDt = $_POST['edDt'] : $edDt = null;
+    isset($_POST['stDt']) ? $stDt = date("Y-m-d", strtotime($_POST['stDt'])) : $stDt = null;
+    isset($_POST['edDt']) ? $edDt = date("Y-m-d", strtotime($_POST['edDt'])) : $edDt = null;
     isset($_POST['name']) ? $name = $_POST['name'] : $name = null;
     isset($_POST['casNo']) ? $casNo = $_POST['casNo'] : $casNo = null;
     isset($_POST['grade']) ? $grade = $_POST['grade'] : $grade = null;
     isset($_POST['selectAll']) ? $selectAll = $_POST['selectAll'] : $selectAll = null;
-
     
 
     if($selectAll == true){
@@ -33,7 +32,8 @@
             ON `cc_unit_fk`=`cu_pk`
             INNER JOIN `chem_location`
             ON `cc_location_fk`=`cl_pk`
-            WHERE cil_useflg = '1'";
+            WHERE cil_useflg = '1' 
+            AND cil_crtDt BETWEEN '".$stDt."' AND '".$edDt."' ";
         
         if($loc != null){
             $sql .= "AND cc_location_fk = ".$loc." ";
@@ -43,15 +43,10 @@
             $sql .= "AND cc_state = '".$state."' ";
         }
         
-        if($stDt != null && $edDt != null ){
-            $stDt = date_format($stDt,"d-m-Y");
-            $edDt = date_format($edDt,"d-m-Y");
-//
-//            $stDt = date('m-d-Y',strtotime(str_replace('-', '/', $stDt) . "+2 days"));
-//            $edDt = date('m-d-Y',strtotime(str_replace('-', '/', $edDt) . "+1 days"));
-            
-            $sql .= "AND cil_crtDt BETWEEN '".$stDt."' AND '".$edDt."' ";
-        }
+//        if($stDt != null && $edDt != null ){
+//            
+//            $sql .= "AND cil_crtDt BETWEEN '".$stDt."' AND '".$edDt."' ";
+//        }
         
         if($name != null){
             $sql .= "AND cc_name LIKE '%".$name."%' ";
