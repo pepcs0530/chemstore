@@ -67,9 +67,11 @@
                     </th>
                 </tr>
                 <tr ng-repeat="student in students">
-                    <td>{{student.cs_code}}
+                    <td>
+                        <input type="text" ng-model="student.cs_code" />
                     </td>
-                    <td>{{student.cs_name}}
+                    <td>
+                        <input type="text" ng-model="student.cs_name" />
                     </td>
                     <td>
                     <input type="button" value="ลบ" class="btn btn-danger btn-sm" ng-click="removeRow(student.cs_code)"/>

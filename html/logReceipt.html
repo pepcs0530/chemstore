@@ -4,8 +4,10 @@
     }
 </style>  
 
+<caption><center><h4><b><i class="fa fa-file-text-o"></i>&nbsp;ประวัติการเบิกสารเคมี </b></h4></center></caption><hr>
+<form method="post" action="../tcpdf/examples/export_pdf_withdraw_log.php" target="_blank">
 <div ng-show="showcontent == 1">
-    <caption><center><h4><b><i class="fa fa-file-text-o"></i>&nbsp;ประวัติการเบิกสารเคมี</b></h4></center></caption><hr>
+    
     <strong>ตั้งแต่ :</strong>
     <input ng-model="logRecpt.stDt" name="stDt" type="date" />
 
@@ -19,20 +21,25 @@
 
     <strong>ชื่อโปรเจค :</strong>
     <input type="text" ng-model="logRecpt.project" name="project" /><br><br>
+<<<<<<< HEAD
     
     <strong>ดูข้อมูลทั้งหมด :</strong>
     <input type="checkbox" ng-model="logRecpt.selectAll" name="project" /><br><br>{{logRecpt.selectAll}}
     
     <button type="button" class="btn btn-default" ng-click="search()" >ค้นหา</button>   
+=======
+
+    <button type="button" class="btn btn-default" ng-click="search()" ><i class="fa fa-search" aria-hidden="true"></i>&nbsp;ค้นหา</button> 
+>>>>>>> origin/master
 </div>
 
 <div ng-show="showcontent == 2">
-    <caption><center><h4><b><i class="fa fa-file-text-o"></i>&nbsp;รายการข้อมูลที่ค้นหาพบ</b></h4></center></caption><hr>
-    <form class="navbar-form navbar-right" method="post" action="../tcpdf/examples/export_pdf_withdraw_log.php" target="_blank">
+    <caption><center><h5><b><i class="fa fa-search"></i>&nbsp;รายการข้อมูลที่ค้นหา</b></h5></center></caption>
+    <form class="navbar-form navbar-right">
         <input type="hidden" value="{{key}}" name="findthis">
         <input type="hidden" value="{{type}}" name="findtypethis">
-        <input type="submit" class="btn btn-default" value="พิมพ์รายงาน">
-        <input type="button" class="btn btn-default" value="ย้อนกลับ" ng-click="showcontent = 1">
+        <button type="button" class="btn btn-default"  ng-click="showcontent = 1"><i class="fa fa-chevron-left" aria-hidden="true"></i>&nbsp;ย้อนกลับ</button>
+        <button type="submit" class="btn btn-default" ><i class="fa fa-print" aria-hidden="true"></i>&nbsp;พิมพ์รายงาน</button>
     </form>
     <table class = "table table-bordered"  width="100%">
         <tr>
@@ -63,10 +70,10 @@
     </table>
 </div>
 <div ng-show="showcontent == 3">
-    <caption><center><h4><b><i class="fa fa-file-text-o"></i>&nbsp;รายละเอียดเพิ่มเติม</b></h4></center></caption><hr>
-    <form  class="navbar-form navbar-right">
-        <input type="button" class="btn btn-default" value="ย้อนกลับ" ng-click="showcontent = 2">
-    </form>
+    <caption><center><h5><b><i class="fa fa-info-circle"></i>&nbsp;รายละเอียดเพิ่มเติม</b></h5></center></caption>
+    
+        <button type="button" class="btn btn-default"  ng-click="showcontent = 2"><i class="fa fa-chevron-left" aria-hidden="true"></i>&nbsp;ย้อนกลับ</button>
+    
 
     <table class= " table table-bordered" width="100%">
         <tr>
@@ -95,6 +102,7 @@
         </tr>
       </table>
 </div>
+</form>
         
 
 

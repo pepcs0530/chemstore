@@ -549,8 +549,8 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
         $scope.logImpt = {
             location : '',
             state : '',
-            stDt : '',
-            edDt : '',
+            stDt : new Date(new Date().getFullYear(),new Date().getMonth(),1),
+            edDt : new Date(),
             name : '',
             casNo : '',
             grade : '',
@@ -561,29 +561,31 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
             $scope.page = true;
         }
         
-        $scope.search = function(select){
+        $scope.search = function(){
             $scope.page = false;
-            console.log(select.location);
-            console.log(select.state);
-            console.log(select.stDt);
-            console.log(select.edDt);
-            console.log(select.name);
-            console.log(select.casNo);
-            console.log(select.grade);
-            console.log(select.selectAll);
+            console.log($scope.logImpt.location);
+            console.log($scope.logImpt.state);
+            console.log($scope.logImpt.stDt);
+            console.log($scope.logImpt.edDt);
+            console.log($scope.logImpt.name);
+            console.log($scope.logImpt.casNo);
+            console.log($scope.logImpt.grade);
+            console.log($scope.logImpt.selectAll);
             
             $http({
                 method  :   'POST',
                 url     :   '../php/select_logImport.php',
                 data : {
-                    location : select.location,
-                    state : select.state,
-                    stDt : select.stDt,
-                    edDt : select.edDt,
-                    name : select.name,
-                    casNo : select.casNo,
-                    grade : select.grade,
-                    selectAll : select.selectAll
+                    location : $scope.logImpt.location,
+                    state : $scope.logImpt.state,
+                    stDt : $scope.logImpt.stDt,
+                    edDt : new Date($scope.logImpt.edDt.getFullYear(),$scope.logImpt.edDt.getMonth(),$scope.logImpt.edDt.getDate()+1),
+                    name : $scope.logImpt.name,
+                    casNo : $scope.logImpt.casNo,
+                    grade : $scope.logImpt.grade,
+                    selectAll : $scope.logImpt.selectAll
+                    
+                    
                 }
             }).then(function(response) {
                 $scope.listImport = response.data;
@@ -600,20 +602,6 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
 //        console.log($scope.logImpt.stDt);
 //        console.log($scope.logImpt.edDt);
 
-        // Daterange filter
-        $scope.dateRangeFilter = function (property, startDate, endDate) {
-            return function (item) {
-                console.log("item : ",item[property]);
-                if (item[property] === null) return false;
-
-                var itemDate = moment(item[property]);
-                var s = moment(startDate, "DD-MM-YYYY");    console.log("start :",s);
-                var e = moment(endDate, "DD-MM-YYYY");      console.log("end :",e);
-
-                if (itemDate >= s && itemDate <= e) return true;
-                return false;
-            }
-        }
     
         //  แสดงใบเบิกสาร
 //        $http({
@@ -635,64 +623,42 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
 
 //  ประวัติการเบิกสาร  ============================================================================================================
     .controller('receiptlogCtrl', function($scope,$http) {
-        $scope.loadDone = false; //ซ่อนลายการสาร
-    
-        $scope.page = 1;
-        $scope.logRecpt = {
-            stDt : '',
-            edDt : '',
-            no : '',
-            project : '',
-            selectAll : ''
-        }
         
-        $scope.back = function(){
-            $scope.page = 1;
-        }
-        
-        $scope.back2 = function(){
-            $scope.page = 2;
-        }
-        
-        $scope.search = function(select){
-            $scope.page = 2;
-            console.log(select.stDt);
-            console.log(select.edDt);
-            console.log(select.no);
-            console.log(select.project);
-            console.log(select.selectAll);
-            
-            $http({
+        $scope.showcontent = 1;
+        $scope.logRecpt = {stDt : new Date(new Date().getFullYear(),new Date().getMonth(),1),
+                           edDt : new Date(),
+                           no : '',
+                           project : '',
+                           selectAll : ''}
+
+        $scope.search = function(){
+            if($scope.logRecpt.stDt == null || $scope.logRecpt.edDt == null){
+                alert("กรุณากรอกวันเริ่มต้น-สิ้นสุด"); 
+            }
+            else if($scope.logRecpt.stDt > $scope.logRecpt.edDt){
+                alert("ท่านระบุวันเริ่มต้นเกินวันที่สิ้นสุด");
+            }
+            else{
+              $http({
                 method  :   'POST',
                 url     :   '../php/select_logReciept.php',
                 data    :   {
-                    type:"all",
-                    stDt : select.stDt,
-                    edDt : select.edDt,
-                    no : select.no,
-                    project : select.project,
-                    selectAll : select.selectAll
+                    type: 'all',
+                    stDt : $scope.logRecpt.stDt,
+                    edDt : new Date($scope.logRecpt.edDt.getFullYear(),$scope.logRecpt.edDt.getMonth(),$scope.logRecpt.edDt.getDate()+1),
+                    no : $scope.logRecpt.no,
+                    project : $scope.logRecpt.project
                 }
-            }).then(function(response) {
-                $scope.listReciept = response.data;
-                console.log($scope.listReciept);
-            });  
+                }).then(function(response) {
+                    $scope.listReciept = response.data;
+                    console.log($scope.listReciept);
+                    $scope.showcontent = 2;
+                });   
+            } 
         }
-
-//        $http({
-//                method  :   'POST',
-//                url     :   '../php/select_logReciept.php',
-//                data    :   {type:"all"}
-//        }).then(function(response) {
-//            $scope.listReciept = response.data;
-//            console.log($scope.listReciept);
-//        });
         
-        $scope.showpop = function (selectedData,index) {
-            $scope.page = 3;
-            $scope.recieptIndex = index;
-            console.log($scope.listReciept[$scope.recieptIndex]);
-            
+        $scope.showdetail = function (selectedData,index) {
+            $scope.index = index;
             $http({
                 method  :   'POST',
                 url     :   '../php/select_chemdetail.php',
@@ -701,87 +667,40 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
                 }
             }).then(function(response) {
                 $scope.listRecieptDetail = response.data;
-//                $scope.loadDone = true;
-                console.log($scope.listRecieptDetail );
+                console.log($scope.listRecieptDetail);
+                $scope.showcontent = 3;
             });
         }
     })
 
 //  ประวัติการย้ายคลัง  ============================================================================================================
     .controller('ExchangeLogCtrl', function($scope,$http) {
-        $scope.page = 1;
+        $scope.showcontent = 1;
+        $scope.logExchg = {stDt : new Date(new Date().getFullYear(),new Date().getMonth(),1),
+                           edDt : new Date(),
+                           no : '',
+                           locationF : '1',
+                           locationT : '2'}
     
-        $scope.logExchg = {
-            locationF : '',
-            locationT : '',
-            state : '',
-            stDt : '',
-            edDt : '',
-            no : '',
-            selectAll : ''
-        }
-        
-        $scope.search = function(select){
-            $scope.page = 2;
-            console.log(select.locationF);
-            console.log(select.locationT);
-            console.log(select.state);
-            console.log(select.stDt);
-            console.log(select.edDt);
-            console.log(select.no);
-            console.log(select.selectAll);
-            
+        $scope.search = function(){
+            console.log($scope.showcontent);
             $http({
-                method  :   'POST',
-                url     :   '../php/select_logExchange.php',
-                data    :   {
-                    type:"all",
-                    locationF : select.locationF,
-                    locationT : select.locationT,
-                    state : select.state,
-                    stDt : select.stDt,
-                    edDt : select.edDt,
-                    no : select.no,
-                    selectAll : select.selectAll
-                }
+                    method  :   'POST',
+                    url     :   '../php/select_logExchange.php',
+                    data    :   {
+                        type:'all',
+                        locationF : $scope.logExchg.locationF,
+                        locationT : $scope.logExchg.locationT,
+                        stDt : $scope.logExchg.stDt,
+                        edDt : new Date($scope.logExchg.edDt.getFullYear(),$scope.logExchg.edDt.getMonth(),$scope.logExchg.edDt.getDate()+1),
+                        no : $scope.logExchg.no
+                    }
             }).then(function(response) {
-                $scope.listReciept = response.data;
-                console.log($scope.listReciept);
-            });
-            
-            
-            
-        }
-        
-        $scope.next2 = function(){
-            $scope.page = 3;
-        }
-        
-        $scope.back = function(){
-            $scope.page = 1;
-        }
-        
-        $scope.back2 = function(){
-            $scope.page = 2;
-        }
-    
-        
-    
-        $scope.showpop = function (selectedData) {
-            $scope.page = 3;
-            $scope.crd_cr_pk = selectedData.cr_pk;
-            console.log(selectedData);
-            $http({
-                method  :   'POST',
-                url     :   '../php/select_chemdetail.php',
-                data    :   {
-                    'crd_cr_fk' : $scope.crd_cr_pk
-                }
-            }).then(function(response) {
-                $scope.listRecieptDetail = response.data;
+                $scope.listReciept = response.data
+                $scope.showcontent = 2;
+                console.log(response);
             });
         }
-        
         
         $http({
             method  :   'GET',
@@ -790,6 +709,20 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
             $scope.listLocation = response.data;
             console.log($scope.listLocation);
         });
+        
+        $scope.showdetail = function (index) {
+            $scope.index = index;
+            console.log($scope.listReciept[$scope.index]);
+            $http({
+                method  :   'POST',
+                url     :   '../php/select_exchangeDetail.php',
+                data    :   {findthis: $scope.listReciept[$scope.index].ce_pk}
+            }).then(function(response) {
+                $scope.chemdetail = response.data;
+                
+                $scope.showcontent = 3;
+            });
+        }
     })
 
 //  ประวัติการเบิกสารอาจารย์  ============================================================================================================
@@ -846,7 +779,7 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
 
 //  ประวัติคำร้องขออื่นๆ  ============================================================================================================
     .controller('otherlogCtrl', function($scope,$http) {
-        //  แสดงใบเบิกสาร    
+        $scope.showcontent = 1;     
         $http({
                 method  :   'POST',
                 url     :   '../php/select_logOther.php',
@@ -854,12 +787,17 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
         }).then(function(response) {
             $scope.listManageRequestOther = response.data;
         });
+    
+        $scope.showdetail = function(index) {
+            console.log($scope.listManageRequestOther[index]);
+            $scope.index = index;
+            $scope.showcontent = 2;
+        }
     })
 
     //  ประวัติคำร้องขออื่นๆของทุกสิท  ============================================================================================================
     .controller('allOtherlogCtrl', function($scope,$http) {
-        $scope.showcontent = 1;
-        //  แสดงใบเบิกสาร    
+        $scope.showcontent = 1; 
         $http({
                 method  :   'POST',
                 url     :   '../php/select_logOther.php',
@@ -1568,6 +1506,8 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
                                  teacher_pk : $scope.key,
                                  cp_eduLvl: "ปริญญาตรี",
                                  maxBudget : 7000}
+            $scope.students = [
+            ];
         }    
     }) 
 
@@ -1956,7 +1896,7 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
                         locationF : $scope.logExchg.locationF,
                         locationT : $scope.logExchg.locationT,
                         stDt : $scope.logExchg.stDt,
-                        edDt : $scope.logExchg.edDt,
+                        edDt : new Date($scope.logExchg.edDt.getFullYear(),$scope.logExchg.edDt.getMonth(),$scope.logExchg.edDt.getDate()+1),
                         no : $scope.logExchg.no
                     }
             }).then(function(response) {

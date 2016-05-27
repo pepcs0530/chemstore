@@ -14,8 +14,11 @@
 
     $loc = $_POST['location'];
     $state = $_POST['state'];
-    $stDt = $_POST['stDt'];
-    $edDt = $_POST['edDt'];  
+    isset($_POST['stDt']) ? $stDt = date("Y-m-d", strtotime($_POST['stDt'])) : $stDt = null;
+    isset($_POST['edDt']) ? $edDt =  date("Y-m-d", strtotime($_POST['edDt'] .'+1 day' )) : $edDt = null;
+
+
+    
     $name = $_POST['name'];   
     $casNo = $_POST['casNo'];   
     $grade = $_POST['grade'];
@@ -182,7 +185,7 @@
     $pdf->SetFont('freeserif','',12);
     //$pdf->SetXY(10,30);
     $pdf->Ln(10);
-    $pdf->Cell(40, 0, 'วัน/เวลา', 1, 0, 'C', 0, '', 0);
+    $pdf->Cell(40, 0, 'วันที่', 1, 0, 'C', 0, '', 0);
     //$pdf->SetXY(40,30);
     $pdf->Cell(60, 0, 'ชื่อสารเคมี', 1, 0, 'C', 0, '', 0);
     //$pdf->SetXY(70,30);
@@ -197,7 +200,7 @@
     {
         $date=date_create($row['cil_crtDt']);
         //date_format($date,"Y/m/d H:i:s");
-        $pdf->Cell(40, 0, date_format($date,"d/m/Y H:i:s"), 1, 0, 'C', 0, '', 0);
+        $pdf->Cell(40, 0, date_format($date,"d/m/Y"), 1, 0, 'C', 0, '', 0);
         $pdf->Cell(60, 0, $row['cc_name'], 1, 0, 'C', 0, '', 0);
         $pdf->Cell(40, 0, $row['cc_casNo'], 1, 0, 'C', 0, '', 0);
         $pdf->Cell(20, 0, $row['cc_state'], 1, 0, 'C', 0, '', 0);
