@@ -1933,6 +1933,15 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
 
 // รายงานงบประมาณ ========================================================================================================
     .controller('viewBudgetCtrl', function($scope, $http){
+    $scope.datalist = [];
+        $http({
+            method  :   'POST',
+            url     :   '../php/select_reportBudget.php',
+        }).then(function(response) {
+            angular.forEach(response.data, function(value,key) {
+                $scope.datalist.push([value.cp_name,parseInt(value.sum)]);
+            });
+
             jQuery('#container').highcharts({
                 chart: {
                     type: 'column'
@@ -1967,28 +1976,7 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
                 },
                 series: [{
                     name: 'Population',
-                    data: [
-                        ['Shanghai', 23.7],
-                        ['Lagos', 16.1],
-                        ['Istanbul', 14.2],
-                        ['Karachi', 14.0],
-                        ['Mumbai', 12.5],
-                        ['Moscow', 12.1],
-                        ['São Paulo', 11.8],
-                        ['Beijing', 11.7],
-                        ['Guangzhou', 11.1],
-                        ['Delhi', 11.1],
-                        ['Shenzhen', 10.5],
-                        ['Seoul', 10.4],
-                        ['Jakarta', 10.0],
-                        ['Kinshasa', 9.3],
-                        ['Tianjin', 9.3],
-                        ['Tokyo', 9.0],
-                        ['Cairo', 8.9],
-                        ['Dhaka', 8.9],
-                        ['Mexico City', 8.9],
-                        ['Lima', 8.9]
-                    ],
+                    data: $scope.datalist,
                     dataLabels: {
                         enabled: true,
                         rotation: -90,
@@ -2003,6 +1991,7 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
                     }
                 }]
             });
+        }); 
     })
 
 // แก้ไขข้อมูลบัญชีผู้ใช้ ========================================================================================================
