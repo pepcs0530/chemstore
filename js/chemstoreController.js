@@ -1214,8 +1214,8 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
                     },
                     headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
                     }).then(function(response) {
-                    console.log(response.data.cr_pk);
                     angular.forEach($scope.cartlist, function(value, key){
+                        console.log(value);
                         $http({
                             method  : 'POST',
                             url     : '../php/insert_recieptDetail.php',
@@ -1224,6 +1224,7 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
                                         crd_amt: value.exvolumeRequest,
                                         crd_price: value.totalprice,
                                         crd_unit: value.cu_name_abb,
+                                        crd_location: value.cl_name,
                                         crd_status: '0'}, 
                             headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
                         }).then(function(response) {
@@ -2107,6 +2108,39 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
                 
             $scope.editThisData = {};
         };
+    // วิวอนุมัติสารแต่ละตัว =================================
+    }).controller('seniorSubmitRequestCtrl', function($scope, $http){
+        $http({
+        method  :   'POST',
+        url     :   '../php/select_account_where.php',
+        data    : { ca_pk: $scope.key}, 
+        headers : {'Content-Type': 'application/x-www-form-urlencoded'}}
+        ).then(function(response) {
+            $scope.listAcountData = response.data[0];
+            console.log($scope.listAcountData);
+            $http({
+            method  :   'POST',
+            url     :   '../php/select_recieptForsenior.php',
+            data    : { findthis: $scope.listAcountData.ca_responplace}, 
+            headers : {'Content-Type': 'application/x-www-form-urlencoded'}}
+            ).then(function(response) {
+                $scope.listReciept = response.data;
+            });
+        });
+        $scope.showdetail = function (getdata,index) {
+            $scope.showcontent = true;
+            console.log(getdata,index);
+            $scope.index = index;
+            $http({
+            method  :   'POST',
+            url     :   '../php/select_chemdetail.php',
+            data    :   {crd_cr_fk: getdata}
+            }).then(function(response) {
+                
+                $scope.chemdetail = response.data;
+                console.log($scope.chemdetail);
+            });
+        }
     });
 
     

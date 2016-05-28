@@ -167,6 +167,11 @@
                 templateUrl: '../html/manageEditAcoount.html',
                 controller: 'manageEditAcoountCtrl'
             }   
+          ).when(
+            '/seniorSubmitRequest',{
+                templateUrl: '../html/seniorSubmitRequest.html',
+                controller: 'seniorSubmitRequestCtrl'
+            }   
           ).otherwise({
                 redirectTo: '/news'
       	  }); 
