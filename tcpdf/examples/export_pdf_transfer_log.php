@@ -160,7 +160,7 @@
         $sql = "SELECT ce.*,ca_tname,ca_fname,ca_lname FROM `chem_exchange` AS ce ";
         $sql .= "INNER JOIN chem_account ON ce_ca_fk = ca_pk ";
         $sql .= "WHERE `ce_crtDt` BETWEEN '".$stDt."' AND '".$edDt."' ";
-        $sql .= "AND ce_no LIKE 'NO.".$$findthis."%' ";
+        $sql .= "AND ce_no LIKE 'NO.".$findthis."%' ";
     }
     
     if($no != null){
@@ -324,6 +324,7 @@
             $pdf->Cell(15, 0, 'จำนวน', 1, 0, 'C', 0, '', 0);
             $pdf->Cell(15, 0, 'หน่วย', 1, 0, 'C', 0, '', 0);
             $first++;
+            $pdf->Ln();
         }
         
         $date_crt = date_create($row['ce_crtDt']);
@@ -332,7 +333,6 @@
         $name = $row['ca_tname']." ".$row['ca_fname']." ".$row['ca_lname'];
 //        $project = $row['cp_name'];
         
-        $pdf->Ln();
         
         $find = $row['ce_pk'];
         
@@ -371,8 +371,7 @@
                 $pdf->Cell(15, 0, $row['ced_amt'], 1, 0, 'C', 0, '', 0);
                 $pdf->Cell(15, 0, $row['ced_unit'], 1, 0, 'C', 0, '', 0);
             }
-            
-            
+
             $index++;
             $pdf->Ln(); 
         }

@@ -2,7 +2,7 @@
     $_POST = json_decode(file_get_contents('php://input'), true);
     include 'connect.php';
     $type = $_POST['type'];
-    $selectAll = $_POST['selectAll'];
+    isset($_POST['selectAll']) ? $selectAll = $_POST['selectAll'] : $selectAll = null;
     isset($_POST['stDt']) ? $stDt = date("Y-m-d", strtotime($_POST['stDt'])) : $stDt = null;
     isset($_POST['edDt']) ? $edDt =  date("Y-m-d", strtotime($_POST['edDt'])) : $edDt = null;
     isset($_POST['no']) ? $no = $_POST['no'] : $no = null;

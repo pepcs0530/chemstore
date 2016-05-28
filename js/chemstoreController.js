@@ -572,6 +572,14 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
             console.log($scope.logImpt.grade);
             console.log($scope.logImpt.selectAll);
             
+            if($scope.logImpt.stDt == null || $scope.logImpt.edDt == null){
+                alert("กรุณากรอกวันเริ่มต้น-สิ้นสุด"); return;
+            }
+            
+            if($scope.logImpt.stDt > $scope.logImpt.edDt){
+                alert("ท่านระบุวันเริ่มต้นเกินวันที่สิ้นสุด");  return;
+            }
+            
             $http({
                 method  :   'POST',
                 url     :   '../php/select_logImport.php',
@@ -683,6 +691,15 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
                            locationT : '2'}
     
         $scope.search = function(){
+            
+            if($scope.logExchg.stDt == null || $scope.logExchg.edDt == null){
+                alert("กรุณากรอกวันเริ่มต้น-สิ้นสุด"); return;
+            }
+            
+            if($scope.logExchg.stDt > $scope.logExchg.edDt){
+                alert("ท่านระบุวันเริ่มต้นเกินวันที่สิ้นสุด");  return;
+            }
+            
             console.log($scope.showcontent);
             $http({
                     method  :   'POST',
@@ -1932,66 +1949,94 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
     })
 
 // รายงานงบประมาณ ========================================================================================================
-    .controller('viewBudgetCtrl', function($scope, $http){
-    $scope.datalist = [];
-        $http({
-            method  :   'POST',
-            url     :   '../php/select_reportBudget.php',
-        }).then(function(response) {
-            angular.forEach(response.data, function(value,key) {
-                $scope.datalist.push([value.cp_name,parseInt(value.sum)]);
-            });
+    .controller('viewBudgetCtrl', function($scope, $http, $filter){
+    
+        $scope.reptBudgt = {stDt : new Date(new Date().getFullYear(),new Date().getMonth(),1),
+                           edDt : new Date(),
+                           cp_name : ''}
+    
+        $scope.datalist = [];
+    
+        $scope.search = function(){
+            $scope.datalist = [];
+            
+            if($scope.reptBudgt.stDt == null || $scope.reptBudgt.edDt == null){
+                alert("กรุณากรอกวันเริ่มต้น-สิ้นสุด"); return;
+            }
+            
+            if($scope.reptBudgt.stDt > $scope.reptBudgt.edDt){
+                alert("ท่านระบุวันเริ่มต้นเกินวันที่สิ้นสุด");  return;
+            }
+            
+            $http({
+                method  :   'POST',
+                url     :   '../php/select_reportBudget.php',
+                data : {
+                    stDt : $scope.reptBudgt.stDt,
+                    edDt : new Date($scope.reptBudgt.edDt.getFullYear(),$scope.reptBudgt.edDt.getMonth(),$scope.reptBudgt.edDt.getDate()+1),
+                    cp_name : $scope.reptBudgt.cp_name
+                }
+            }).then(function(response) {    
+                console.log('response',response);
 
-            jQuery('#container').highcharts({
-                chart: {
-                    type: 'column'
-                },
-                title: {
-                    text: 'รายงานงบประมาณ'
-                },
-                subtitle: {
-                    text: ''
-                },
-                xAxis: {
-                    type: 'category',
-                    labels: {
-                        rotation: -45,
-                        style: {
-                            fontSize: '13px',
-                            fontFamily: 'Verdana, sans-serif'
-                        }
-                    }
-                },
-                yAxis: {
-                    min: 0,
+                angular.forEach(response.data, function(value,key) {
+                    $scope.datalist.push([value.cp_name,parseInt(value.sum)]);
+                });
+
+                jQuery('#container').highcharts({
+                    chart: {
+                        type: 'column'
+                    },
                     title: {
-                        text: 'งบประมาณที่เบิก (บาท)'
-                    }
-                },
-                legend: {
-                    enabled: false
-                },
-                tooltip: {
-                    pointFormat: 'Population in 2008: <b>{point.y:.1f} millions</b>'
-                },
-                series: [{
-                    name: 'Population',
-                    data: $scope.datalist,
-                    dataLabels: {
-                        enabled: true,
-                        rotation: -90,
-                        color: '#FFFFFF',
-                        align: 'right',
-                        format: '{point.y:.1f}', // one decimal
-                        y: 10, // 10 pixels down from the top
-                        style: {
-                            fontSize: '13px',
-                            fontFamily: 'Verdana, sans-serif'
+                        text: 'ช่วงวันที่ '+$filter('date')($scope.reptBudgt.stDt, "dd-MM-yy")+' ถึง '+$filter('date')($scope.reptBudgt.edDt, "dd-MM-yy")
+                    },
+                    subtitle: {
+                        text: ''
+                    },
+                    xAxis: {
+                        type: 'category',
+                        labels: {
+                            rotation: -45,
+                            style: {
+                                fontSize: '13px',
+                                fontFamily: 'Verdana, sans-serif'
+                            }
                         }
-                    }
-                }]
+                    },
+                    yAxis: {
+                        min: 0,
+                        title: {
+                            text: 'งบประมาณที่เบิก (บาท)'
+                        }
+                    },
+                    legend: {
+                        enabled: false
+                    },
+                    tooltip: {
+                        pointFormat: 'งบประมาณที่เบิก: <b>{point.y:.1f} บาท</b>'
+                    },
+                    series: [{
+                        name: 'Population',
+                        data: $scope.datalist,
+                        dataLabels: {
+                            enabled: true,
+                            rotation: -90,
+                            color: '#FFFFFF',
+                            align: 'right',
+                            format: '{point.y:.1f}', // one decimal
+                            y: 10, // 10 pixels down from the top
+                            style: {
+                                fontSize: '13px',
+                                fontFamily: 'Verdana, sans-serif'
+                            }
+                        }
+                    }]
+                });
             });
-        }); 
+        }
+    
+        
+    
     })
 
 // แก้ไขข้อมูลบัญชีผู้ใช้ ========================================================================================================
@@ -2098,7 +2143,9 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
             $scope.editThisData = {};
         };
     // วิวอนุมัติสารแต่ละตัว =================================
-    }).controller('seniorSubmitRequestCtrl', function($scope, $http){
+    })
+    
+    .controller('seniorSubmitRequestCtrl', function($scope, $http){
         $http({
         method  :   'POST',
         url     :   '../php/select_account_where.php',
