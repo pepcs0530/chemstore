@@ -1,4 +1,4 @@
-<form class="form-horizontal" role="form" enctype="multipart/form-data">
+<form class="form-horizontal" role="form" enctype="multipart/form-data" id='addNewsForm'>
     
 <!--    <input type="submit" name="save" value="upload">-->
     
@@ -11,25 +11,25 @@
             <div class="form-group">
                 <label for="code" class="col-sm-4 control-label">หัวข้อ :</label>
                 <div class="col-sm-4">
-                    <input class="form-control" ng-model="addNews.title" type="text" class="" id="form-code" />
+                    <input class="form-control" ng-model="addNews.title" name="title" type="text" class="" id="form-code" />
                 </div>
             </div>
             <div class="form-group">
                 <label for="user" class="col-sm-4 control-label">รายละเอียด :</label>
                 <div class="col-sm-4">
-                    <textarea class="form-control"  ng-model="addNews.desc" id="form-desc" rows="5" cols="50"></textarea>
+                    <textarea class="form-control"  ng-model="addNews.desc" id="form-desc" name="desc" rows="5" cols="50"></textarea>
                 </div>
             </div>
             <div class="form-group">
                 <label for="pass" class="col-sm-4 control-label">Link :</label>
                     <div class="col-sm-4">
-                        <input class="form-control"  ng-model="addNews.link" type="text" class="" id="form-link" />
+                        <input class="form-control"  ng-model="addNews.link" name="link" type="text" class="" id="form-link" />
                      </div>
             </div>
             <div class="form-group">
                 <label for="tname" class="col-sm-4 control-label">รูปภาพ :</label>
                 <div class="col-sm-4">
-                    <input type="file" fileread="file" />
+                    <input type="file" fileread="file" name="file" />
                 </div>
             </div>
         </div> 

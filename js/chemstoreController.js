@@ -1541,19 +1541,20 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
 //
 //                var uploadUrl = "../img";
 //                $scope.uploadFileToUrl(file, uploadUrl);
-                
-                alert($scope.file);
+			 var addNewsForm = document.getElementById("addNewsForm");
+			//var file = fileInput;
+			var fd = new FormData(addNewsForm);
 
-                $http.post("../php/insert_news.php",{
-                    'title' : $scope.addNews.title, 
-                    'desc' : $scope.addNews.desc, 
-                    'link' : $scope.addNews.link,
-                    'photo' : $scope.addNews.photo
-                }).success(function (data) {
-                    console.log(data);
-                    alert('ดำเนินการเพิ่มเรียบร้อย');
-                    
-                });
+			//fd.append("file", files[0]);
+			var xhr = new XMLHttpRequest();
+			xhr.open("POST", '../php/insert_news.php');
+			xhr.onreadystatechange = function() {
+				if (xhr.readyState == 4) {
+					alert('success');
+				} else if (uploadResult == 'success')
+					alert('error');
+			};
+			xhr.send(fd);
             }
 
             $scope.clearNews = function(){
