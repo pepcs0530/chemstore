@@ -2093,12 +2093,13 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
             
         }
     
-        $scope.reset = function () {
-                
+        $scope.reset = function () {    
             $scope.editThisData = {};
         };
     // วิวอนุมัติสารแต่ละตัว =================================
-    }).controller('seniorSubmitRequestCtrl', function($scope, $http){
+    })
+// ซีเนียรอนุมัติการให้สารแต่ละอย่าง ==============================================================================================
+    .controller('seniorSubmitRequestCtrl', function($scope, $http, $timeout, toastr){
         $http({
         method  :   'POST',
         url     :   '../php/select_account_where.php',
@@ -2129,6 +2130,99 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
                 $scope.chemdetail = response.data;
                 console.log($scope.chemdetail);
             });
+        }
+        $scope.cancelrequest = function () {
+            angular.forEach($scope.chemdetail, function(value,key){
+                if(value.checkthis){
+                    if(value.crd_status == 4){
+                        $scope.errortype = "1";
+                    }else if(value.crd_status == 0){
+                        $http({
+                        method  :   'POST',
+                        url     :   '../php/update_onereceiptDetail.php',
+                        data    :   {crd_pk: value.crd_pk,
+                                     status : 2}
+                        }).then(function(data) {
+                            console.log(data);
+                        });
+                        $scope.errortype = "0";
+                    }
+                }
+            });
+            if($scope.errortype == "1"){
+                toastr.error('ท่านไม่สามารถเปลี่ยนคำร้อง อนุมัติ เป็น ไม่อนุมัติ ได้');
+                $timeout(5000);
+            }else if($scope.errortype == "0"){
+                toastr.success('ดำเนินการเรียบร้อย');
+                $timeout(location.reload(), 5000);
+            }
+        }
+        $scope.receivedrequest = function () {
+            angular.forEach($scope.chemdetail, function(value,key){
+                if(value.checkthis){
+                    if(value.crd_status == 0){
+                        $scope.errortype = "1";
+                    }else if(value.crd_status == 4){
+                        $http({
+                        method  :   'POST',
+                        url     :   '../php/update_onereceiptDetail.php',
+                        data    :   {crd_pk: value.crd_pk,
+                                     status : 5}
+                        }).then(function(data) {
+                            console.log(data);
+                        });
+                        $scope.errortype = "0";
+                    }
+                }
+            });
+          if($scope.errortype == "1"){
+                toastr.error('ท่านต้องดำเนินการอนุมัติสารเคมีก่อน');
+                $timeout(5000);
+            }else if($scope.errortype == "0"){
+                toastr.success('ดำเนินการเรียบร้อย');
+                $timeout(location.reload(), 5000);
+            }      
+        }
+        $scope.submitrequest = function () {
+            angular.forEach($scope.chemdetail, function(value,key){
+                if(value.checkthis){
+                    if(value.crd_status == 4){
+                        $scope.errortype = "1";
+                    }else if(value.crd_status == 0){
+                        $http({
+                        method  :   'POST',
+                        url     :   '../php/update_onereceiptDetail.php',
+                        data    :   {crd_pk: value.crd_pk,
+                                     status : 4}
+                        }).then(function(data) {
+                            console.log(data);
+                        });
+                        $scope.errortype = "0";
+                    }
+                }
+            });
+          if($scope.errortype == "1"){
+                toastr.error('ท่านไม่สามารถอนุมัติคำร้องที่อนุมัติไปแล้วได้');
+                $timeout(5000);
+            }else if($scope.errortype == "0"){
+                toastr.success('ดำเนินการเรียบร้อย');
+                $timeout(location.reload(), 5000);
+            }       
+        }
+        $scope.statuslist = [];
+        $scope.sameAlldata = true;
+        $scope.checkselect = function (index) {
+            $scope.sameAlldata = true;
+            if($scope.chemdetail[index].checkthis){
+                $scope.statuslist.splice(index,0,$scope.chemdetail[index].crd_status);
+            }else{
+                $scope.statuslist.splice(index,1);
+            }
+            for(var i =0 ;i<$scope.statuslist.length-1;i++){
+                if($scope.statuslist[i] != $scope.statuslist[i+1]){
+                    $scope.sameAlldata = false;
+                }
+            }
         }
     });
 
