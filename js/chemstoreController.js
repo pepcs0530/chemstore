@@ -1360,11 +1360,8 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
         $scope.editContact = function (selectedData) {
             $scope.stu_tb = true;
             $scope.editThisData = selectedData;
-<<<<<<< HEAD
-            console.log("select",selectedData);
-=======
             $scope.editThisData.cp_budget = parseInt(selectedData.cp_budget);
->>>>>>> origin/master
+
         };
     
         $scope.checkBudget = function () {
