@@ -10,15 +10,12 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
             $rootScope.logIn = false;
             if(response.data == "true"){
                 $rootScope.logIn = true;
-                alert("ยินดิต้อนรับเข้าสู่ระบบ");
-                //location.reload();
                 
-                //toastr.success('เข้าสู่ระบบสำเร็จ', 'ยินดีต้อนรับเข้าสู่ระบบ');
+                toastr.success('ยินดีต้อนรับเข้าสู่ระบบ');
                 $timeout(location.reload(), 5000);
                 
                 $location.path('/news')
             }else{
-                //alert("usernameหรือpasswordไม่ถูกต้อง");
                 toastr.error('เข้าสู่ระบบไม่สำเร็จ', 'username หรือ password ไม่ถูกต้อง');
             }
         });
@@ -30,9 +27,7 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
                 method  :   'GET',
                 url     :   '../php/getKey.php'
             }).then(function(response) {
-                $scope.key = response.data;
-                console.log($scope.key);
-                
+                $scope.key = response.data;                
             });
             
             $http({
@@ -40,7 +35,6 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
                 url     :   '../php/getType.php'
             }).then(function(response) {
                 $scope.type = response.data;
-                console.log($scope.type);
             });
         
             $http({
@@ -48,7 +42,6 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
                 url     :   '../php/getSession.php'
             }).then(function(response) {
                 $scope.session = response.data;
-                console.log($scope.session);
             });
             
     }
@@ -140,7 +133,6 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
         
         $scope.showdetail = function(index) {
             $scope.index = index;
-            console.log($scope.listChem[$scope.index]);
             $scope.showcontent = true;
         }
         
@@ -149,7 +141,6 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
             url     :   '../php/select_chemLocation.php',
         }).then(function(response) {
             $scope.listLocation = response.data;
-            console.log($scope.listLocation);
         });
         $scope.selectData = "จุฬาภรณ์1";
         $http({
@@ -967,6 +958,36 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
 //  สถานะคำร้องขอของอาจารย์  ============================================================================================================
     .controller('teacherRequestCtrl', function($scope,$http) {
         $scope.content = false;
+    
+        $scope.begin = 0;
+        $scope.options = [{
+            name: '5',
+            value: 5
+        },{
+            name: '10',
+            value: 10
+        }, {
+            name: '20',
+            value: 20
+        }, {
+            name: '50',
+            value: 50
+        }, {
+            name: '100',
+            value: 100
+        }];
+        $scope.deleteRecord = function () {
+            if(parseInt($scope.begin) - parseInt($scope.searchRange.value) < 0)
+                $scope.begin = 0;
+            else
+                $scope.begin = parseInt($scope.begin) - parseInt($scope.searchRange.value);
+        }
+
+        $scope.addRecord = function () {
+            if(parseInt($scope.begin) + parseInt($scope.searchRange.value) < $scope.listReciept.length)
+                    $scope.begin = parseInt($scope.begin) + parseInt($scope.searchRange.value);
+        }
+    
         $http({
             method  :   'POST',
             url     :   '../php/select_chemReceipt.php',
@@ -992,26 +1013,16 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
     })
 
 //  เบิกสาร  ============================================================================================================
-    .controller('teacherAddReciept', function($scope,$http) {
+    .controller('teacherAddReciept', function($scope,$http,$timeout,toastr) {
     $scope.cartlist = [];
-    $scope.begin = 0;
-    $scope.options = [{
-        name: '5',
-        value: 5
-    },{
-        name: '10',
-        value: 10
-    }, {
-        name: '20',
-        value: 20
-    }, {
-        name: '50',
-        value: 50
-    }, {
-        name: '100',
-        value: 100
-    }];
     
+    $http({
+        method  :   'GET',
+        url     :   '../php/select_chemLocation.php',
+    }).then(function(response) {
+        $scope.listLocation = response.data;
+        $scope.selectData=response.data[0].cl_name;
+    });
     $http({
         method  :   'POST',
         url     :   '../php/select_chemProject.php',
@@ -1019,7 +1030,6 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
         headers : {'Content-Type': 'application/x-www-form-urlencoded'}
     }).then(function(response) {
         $scope.listProject = response.data;
-        console.log($scope.listProject);
     });
     
     $http({
@@ -1038,9 +1048,25 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
                     }
         ).then(function(response) {
             $scope.listAcountData = response.data;
-            console.log($scope.listAcountData);
         });
     
+    $scope.begin = 0;
+    $scope.options = [{
+        name: '5',
+        value: 5
+    },{
+        name: '10',
+        value: 10
+    }, {
+        name: '20',
+        value: 20
+    }, {
+        name: '50',
+        value: 50
+    }, {
+        name: '100',
+        value: 100
+    }];
     $scope.deleteRecord = function () {
         if(parseInt($scope.begin) - parseInt($scope.searchRange.value) < 0)
             $scope.begin = 0;
@@ -1072,7 +1098,8 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
             }
         }
         else {
-            alert("ปริมาณสาร "+ selectedData.cc_name+" หมด");
+            toastr.error("ปริมาณสาร "+ selectedData.cc_name+" หมด");
+            $timeout(8000);
         }          
     }
     
@@ -1165,34 +1192,40 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
         //ตรวจสอบความถูกต้อง
         
         if($scope.cartlist.length == 0){
-            alert("ไม่มีรายการสินค้า");
+            toastr.error("ไม่มีรายการสินค้า");
+            $timeout(8000);
             $scope.cantRequest = -1;
         }
         else{
             angular.forEach($scope.cartlist, function(value, key){
                 if(isNaN(parseInt(value.volumeRequest))){
-                    alert("กรุณาระบุจำนวนสาร: "+value.cc_name+" ให้ถูกต้อง");
+                    toastr.error("กรุณาระบุจำนวนสาร: "+value.cc_name+" ให้ถูกต้อง");
+                    $timeout(8000);
                     $scope.cantRequest = -1;
                 }
                 else if(value.volumeRequest == 0){
-                    alert("สาร "+value.cc_name+" กรุณาระบุจำนวนที่ไม่ใช่ 0");
+                    toastr.error("สาร "+value.cc_name+" กรุณาระบุจำนวนที่ไม่ใช่ 0");
+                    $timeout(8000);
                     $scope.cantRequest = -1;
                 }
                 else if(value.cc_quantity < value.exvolumeRequest){
-                    alert("สาร "+value.cc_name+" มีปริมาณไม่เพียงพอ");
+                    toastr.error("สาร "+value.cc_name+" มีปริมาณไม่เพียงพอ");
+                    $timeout(8000);
                     $scope.cantRequest = -1;
                 }else {
                     //ตรวจสอบหน่วย
                     if(value.cu_name_abb == "kg" || value.cu_name_abb == "g" || value.cu_name_abb == "mg"){
                         if(value.unitRequest == "l" || value.unitRequest == "ml"){
-                            alert("หน่วยของสาร "+value.cc_name+" ที่ทำการยืมไม่ถูกต้อง");
+                            toastr.error("หน่วยของสาร "+value.cc_name+" ที่ทำการยืมไม่ถูกต้อง");
+                            $timeout(8000);
                             $scope.cantRequest = -1;
                         }
                     }
                     else
                     {
                         if(value.cu_name_abb == "kg" || value.cu_name_abb == "g" || value.cu_name_abb == "mg"){
-                            alert("หน่วยของสาร "+value.cc_name+" ที่ทำการยืมไม่ถูกต้อง");
+                            toastr.error("หน่วยของสาร "+value.cc_name+" ที่ทำการยืมไม่ถูกต้อง");
+                            $timeout(8000);
                             $scope.cantRequest = -1;
                         }
                     }
@@ -1201,19 +1234,22 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
             
             if($scope.selectedProject == undefined || $scope.selectedProject == null)
             {
-                alert("กรุณาเลือกโปรเจค");     
+                toastr.error("กรุณาเลือกโปรเจค");
+                $timeout(5000);
                 $scope.cantRequest = -1;
             }
             else{
                 if($scope.selectedProject.cp_budget-$scope.total < 0){
-                    alert("ยอดเงินคงเหลือในโปรเจคไม่เพียงพอ");
+                    toastr.error("ยอดเงินคงเหลือในโปรเจคไม่เพียงพอ");
+                    $timeout(5000);
                     $scope.cantRequest = -1;
                 }
             }
         }
         
         if($scope.cantRequest == -1){
-            alert("ดำเนินการยืมไม่สำเร็จ");
+            toastr.error('ดำเนินการไม่สำเร็จ');
+            $timeout(5000);
         }
         else{
             $http({
@@ -1232,7 +1268,6 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
                     headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
                     }).then(function(response) {
                     angular.forEach($scope.cartlist, function(value, key){
-                        console.log(value);
                         $http({
                             method  : 'POST',
                             url     : '../php/insert_recieptDetail.php',
@@ -1245,34 +1280,41 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
                                         crd_status: '0'}, 
                             headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
                         }).then(function(response) {
-                            console.log(response);
+                            
                         })    
                     }); 
-                alert("ดำเนินการเพิ่มรายการเรียบร้อย");
-                location.reload();
+                toastr.success('ดำเนินการเรียบร้อย');
+                $timeout(location.reload(), 5000);    
             })
         }
     }  
 })
 
 //  คำร้องขออื่นๆ  ============================================================================================================
-    .controller('addOtherCtrl', function($scope,$http) {
+    .controller('addOtherCtrl', function($scope,$http, $timeout, toastr) {
         //  สร้างคำร้องอื่นๆ
+        $scope.cro_header = '';
+        $scope.cro_desc = '';
         $scope.createRequestOther = function(){
-            $http({
-                method  : 'POST',
-                url     : '../php/insert_requestOther.php',
-                data    : {
-                            cro_header : $scope.cro_header,
-                            cro_desc : $scope.cro_desc,
-                            cro_ca_fk : $scope.key
-                }, 
-                headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
-            }).then(function(data) {
-                console.log(data);
-                alert("ส่งคำร้องอื่นๆ เรียบร้อย");
-                $scope.cro_desc = "";
-            });
+            if($scope.cro_header != "" &&  $scope.cro_desc != ""){
+                $http({
+                    method  : 'POST',
+                    url     : '../php/insert_requestOther.php',
+                    data    : {
+                                cro_header : $scope.cro_header,
+                                cro_desc : $scope.cro_desc,
+                                cro_ca_fk : $scope.key
+                    }, 
+                    headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
+                }).then(function(data) {
+                    toastr.success('ยินดีต้อนรับเข้าสู่ระบบ');
+                    $timeout(location.reload(), 5000);
+                    $scope.cro_desc = "";
+                });
+            }else{
+                toastr.error('กรุณากรอกหัวข้อและรายละเอียด');
+                $timeout(5000);
+            }
         }
         
         //  ยกเลิก
@@ -1420,12 +1462,12 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
     }) 
 
 // add project  ============================================================================================================
-    .controller('addProjectCtrl', function($scope,$http) {
+    .controller('addProjectCtrl', function($scope,$http ,$timeout, toastr) {
         //    เลือกประเภทผู้ใช้ที่เป็น teacher
-        //    สร้างโปรเจค
-
-    
+        $scope.cs_code='';
+        $scope.cs_name='';
         $scope.addProject = {teacher : $scope.session,
+                             cp_name : '',
                              teacher_pk : $scope.key,
                              cp_eduLvl: "ปริญญาตรี",
                              maxBudget : 7000}
@@ -1437,17 +1479,19 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
             else 
                 $scope.addProject.maxBudget = 0;
         }
-            
-        $scope.students = [
-            ];
-    
-        $scope.addRow = function(){		
-            $scope.students.push({ 'cs_code':$scope.cs_code, 'cs_name': $scope.cs_name });
-            $scope.cs_code='';
-            $scope.cs_name='';
-            console.log('students',$scope.students);
+        $scope.students = [];
+        $scope.addRow = function(){
+            if($scope.cs_code == '' || $scope.cs_name == ''){
+                toastr.error('กรุณากรอกชื่อและรหัสนักศึกษา');
+                $timeout(5000);
+            }else{
+                $scope.students.push({ 'cs_code':$scope.cs_code, 'cs_name': $scope.cs_name });
+                $scope.cs_code='';
+                $scope.cs_name='';
+                toastr.success('เพิ่มนักศึกษาเรียบร้อย');
+                $timeout(5000);
+            }
         };
-    
         $scope.removeRow = function(cs_code){				
             var index = -1;		
             var comArr = eval( $scope.students );
@@ -1458,7 +1502,8 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
                 }
             }
             if( index === -1 ) {
-                alert( "Something gone wrong" );
+                toastr.error('การทำงานไม่ปกติ');
+                $timeout(5000);
             }
             $scope.students.splice( index, 1 );		
         };
@@ -1474,54 +1519,64 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
         });
         
         $scope.createProject = function(){
-            
-            if($scope.addProject.cp_budget < 0 ){
-                alert('กรุณาระบุจำนวนเงินให้ถูกต้อง');
-                return;
-            }
-            
-            if($scope.addProject.cp_budget > $scope.addProject.maxBudget) {
-                alert("ยอดเงินเกินโควต้าระดับ : "+$scope.addProject.cp_eduLvl+" สามาถระบุได้สูงสุด "+$scope.addProject.maxBudget);
-            }
-            else{
-                $http({
-                method  : 'POST',
-                url     : '../php/insert_project.php',
-                data    : {teacher_pk: $scope.addProject.teacher_pk,
-                           name: $scope.addProject.cp_name,
-                           budget: $scope.addProject.cp_budget,
-                           desc: $scope.addProject.cp_desc,
-                           cp_eduLvl : $scope.addProject.cp_eduLvl,
-                           teacher_budget : $scope.listAcountData[0].ca_credit-$scope.addProject.cp_budget}, //forms user object
-                headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
-                }).then(function(data) {
-                    
-                    console.log(data.data.cp_pk);
-                    
-                    angular.forEach($scope.students, function(value, key){
-                        $http({
+            console.log($scope.addProject);
+            if($scope.students.length == 0){
+                toastr.error('โปรเจคต้องมีนักศึกษาที่รับผิดชอบอย่างน้อย 1 คน');
+                $timeout(5000);
+            }else{
+                if($scope.addProject.cp_name== ''){
+                    toastr.error('กรุณากรอกหัวข้อปรเจค');
+                    $timeout(5000);
+                }else{
+                    if($scope.addProject.cp_budget < 0 ){
+                        toastr.error('ไม่สามารถกรอกงบประมานติดลบได้');
+                        $timeout(5000);
+                    }else{
+                        if($scope.addProject.cp_budget > $scope.addProject.maxBudget) {
+                            toastr.error('ท่านกรอกข้อมูลเงินเกินงบประมานสูงสุด');
+                            $timeout(5000);
+                        }else{
+                            $http({
                             method  : 'POST',
-                            url     : '../php/insert_student.php',
-                            data    : { cs_cp_fk : data.data.cp_pk,
-                                        cs_no : value.cs_code,
-                                        cs_name : value.cs_name
-                                      }, 
+                            url     : '../php/insert_project.php',
+                            data    : {teacher_pk: $scope.addProject.teacher_pk,
+                                       name: $scope.addProject.cp_name,
+                                       budget: $scope.addProject.cp_budget,
+                                       desc: $scope.addProject.cp_desc,
+                                       cp_eduLvl : $scope.addProject.cp_eduLvl,
+                                       teacher_budget : $scope.listAcountData[0].ca_credit-$scope.addProject.cp_budget},
                             headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
-                        }).then(function(response) {
-                            console.log(response);
-                        })    
-                    });
-                    
-                    alert("เพิ่มโปรเจคเรียบร้อย");
-                    location.reload();
-                });
-            }
-            
+                            }).then(function(data) {
+
+                                console.log(data.data.cp_pk);
+
+                                angular.forEach($scope.students, function(value, key){
+                                    $http({
+                                        method  : 'POST',
+                                        url     : '../php/insert_student.php',
+                                        data    : { cs_cp_fk : data.data.cp_pk,
+                                                    cs_no : value.cs_code,
+                                                    cs_name : value.cs_name
+                                                  }, 
+                                        headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
+                                    }).then(function(response) {
+                                        console.log(response);
+                                    })    
+                                });
+                                toastr.success('ดำเนินการเรียบร้อย');
+                                $timeout(location.reload(),5000);
+                            });
+                        }
+                    }
+                }
+
+            }  
         }
         //  ยกเลิก
         $scope.cancleProject = function(){
             $scope.addProject = {teacher : $scope.session,
                                  teacher_pk : $scope.key,
+                                 cp_name : '',
                                  cp_eduLvl: "ปริญญาตรี",
                                  maxBudget : 7000}
             $scope.students = [
@@ -2039,7 +2094,7 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
     
     })
 
-// แก้ไขข้อมูลบัญชีผู้ใช้ ========================================================================================================
+// แก้ไขข้อมูลบัญชีผู้ใช้ ================F========================================================================================
     .controller('manageEditAcoountCtrl', function($scope, $http){
     
         //  ปุ่ม prev
@@ -2143,13 +2198,9 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
         };
     // วิวอนุมัติสารแต่ละตัว =================================
     })
-<<<<<<< HEAD
+
 // ซีเนียรอนุมัติการให้สารแต่ละอย่าง ==============================================================================================
     .controller('seniorSubmitRequestCtrl', function($scope, $http, $timeout, toastr){
-=======
-    
-    .controller('seniorSubmitRequestCtrl', function($scope, $http){
->>>>>>> origin/master
         $http({
         method  :   'POST',
         url     :   '../php/select_account_where.php',
@@ -2275,5 +2326,8 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
             }
         }
     });
+
+// ซีเนียรอนุมัติการย้ายสารของแต่ละคลัง
+
 
     
