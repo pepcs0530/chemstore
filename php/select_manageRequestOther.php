@@ -5,7 +5,6 @@
     $sql = "SELECT * FROM `chem_request_other`
             INNER JOIN `chem_account`
             ON `cro_ca_fk`=`ca_pk` 
-            WHERE `cro_status`= '0'
             ORDER BY `cro_pk` DESC";
 
     $query = mysql_query($sql);

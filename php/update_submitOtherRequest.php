@@ -5,7 +5,7 @@ include 'connect.php';
 $cro_pk = $_POST['cro_pk'];
 
 $sql = "UPDATE `chem_request_other` 
-    SET `cro_status` = '1',
+    SET `cro_status` = '6',
         `cro_updDt` = CURRENT_TIMESTAMP
     WHERE cro_pk = ".$cro_pk."";
 

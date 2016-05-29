@@ -2,78 +2,96 @@
     th, td{
         text-align: center;
     }
-</style>
-<caption><center><h4><b><i class="fa fa-file" aria-hidden="true"></i>&nbsp;คำร้องขอย้ายสารเคมี</b></h4></center></caption><hr>
-<table class="table table-bordered">
-    <tr style="text-align:center">
-        <th>ลำดับที่</th>
-        <th>เลขที่ใบเสร็จ</th>
-        <th>วัน-เวลาที่ร้องขอ</th>
-        <th>สถานะการร้องขอ</th>
-        <th>รายละเอียด</th>
-    </tr>
-    <tr ng-repeat="showdata in listReciept">
-        <td>
-        {{$index+1}}
-        </td>
-        <td>
-        {{showdata.cr_no}}
-        </td>
-        <td>
-        {{showdata.cr_crtDt | Datetime}}
-        </td>
-        <td ng-bind-html="showdata.cr_status | confirmFilter"></td>
-        <td>
-            <button type="button" class="btn btn-default" value="แสดง" ng-click="showPopup(showdata.cr_pk,$index)" data-toggle="modal" data-target="#myModal">แสดง</button>
-        </td>
-    </tr>
-</table> 
-      
 
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-        <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="myModalLabel"><i class="glyphicon glyphicon-list-alt"></i>&nbsp;&nbsp;รายละเอียดคำร้องขอสารเคมี</h4>
-        </div>
-        <div class="modal-body">
-          <table class="table table-striped" width="100%">
-            <tr>
-                <th>ชื่อสารเคมี</th>
-                <th>จำนวน</th>
-                <th>หน่วย</th>
-                <th>คลัง</th>
-                <th>สถานะ</th>
-            </tr>
-            <tr ng-repeat="showdata in chemdetail">
-                <td>
-                    {{showdata.cc_name}}
-                </td>  
-                <td>
-                    {{showdata.crd_amt}}
-                </td>  
-                <td>
-                    {{showdata.crd_unit}}
-                </td>
-                <td>
-                    {{showdata.cl_name}}
-                </td> 
-                <td ng-bind-html="showdata.crd_status | confirmFilter"></td>
-            </tr>
-          </table>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">ยกเลิก</button>
-            <button type="button" class="btn btn-danger" ng-click="cancelRequest()"
-                    ng-disabled="listReciept[index].cr_status == '3' ||
-                                 listReciept[index].cr_status == '2'">ไม่อนุมัติ</button>
-            <button type="button" class="btn btn-success" ng-click="submitRequest()" 
-                    ng-disabled="listReciept[index].cp_budget-listReciept[index].cr_totalprice < 0 ||
-                                 listReciept[index].cp_budget-listReciept[index].cp_budget||
-                                 listReciept[index].cr_status == '3'||
-                                 listReciept[index].cr_status == '2'">อนุมัติ</button>
-        </div>
-    </div>
-  </div>
-</div> 
+</style>    
+<div ng-show="showcontent == 1">
+    <caption><center><h4><b><i class="fa fa-file"></i>&nbsp;สถานะคำร้องขอย้ายสารเข้าสู่คลัง</b></h4></center></caption><hr>
+    <form class="navbar-form navbar-left">
+        ระบุคำที่ต้องการค้นหา : <input type="text" class="form-control" ng-model="searchThis.$" placeholder="ค้นหา">&nbsp;
+        ประเภทสถานะคำร้อง : 
+        <select ng-model="searchThis.ce_status" class="form-control">
+            <option value="" selected>ดูทั้งหมด</option>
+            <option value="0">รอการยืนยัน</option>
+            <option value="1">อนุมัติได้รับสารครบแล้ว</option>
+            <option value="2">ไม่อนุมัติ</option>
+            <option value="3">อนุมัติดำเนินการรับสาร</option>
+        </select>
+    </form>
+    <table class="table table-bordered">
+        <tr>
+            <th>ลำดับที่</th>
+            <th>เลขที่ใบย้าย</th>
+            <th>วันที่ร้องขอ</th>
+            <th>คลังที่ย้ายสารเข้า</th>
+            <th>สถานะการร้องขอ</th>
+            <th>รายละเอียด</th> 
+        </tr>
+        <tr ng-repeat="showdata in listExchange | filter: searchThis" >
+            <td>
+            {{$index+1}}
+            </td>
+            <td>
+            {{showdata.ce_no}}
+            </td>
+            <td>
+            {{showdata.ce_crtDt | Date}}
+            </td>
+            <td>{{showdata.ce_tostore}}</td>
+            <td ng-bind-html="showdata.ce_status | confirmFilter"></td>
+            <td>
+              <form action="../tcpdf/examples/export_pdf_withdraw.php" target="_blank" method="post">
+                  <input type="hidden" value="{{showdata.ce_pk}}" name="crd_cr_fk">
+                  <input type="button" class="btn btn-info" value="แสดงรายละเอียด" ng-click="showdetail(showdata.ce_pk,$index)">
+              </form>
+            </td>
+        </tr>
+    </table> 
+</div>
+    
+<div ng-show="showcontent == 2">
+    <form action="../tcpdf/examples/export_pdf_transfer.php" target="_blank" method="post" class="navbar-form navbar-right">
+        <input type="hidden" value="{{showdata.cr_pk}}" name="crd_cr_fk">
+        
+        <button type="button" class="btn btn-default"  ng-click="showcontent = 1"><i class="fa fa-chevron-left" aria-hidden="true"></i>&nbsp;ย้อนกลับ</button>
+        <button type="submit" class="btn btn-default" ng-hide="listReciept[index].ce_status != '3'"><i class="fa fa-print" aria-hidden="true"></i>&nbsp;พิมพ์รายงาน</button>
+    </form>
+  <form class="navbar-form navbar-left">
+        ใบคำร้องที่ : {{listExchange[index].ce_no}} <br>
+        ผู้เขียนคำร้องขอ : {{listExchange[index].ca_tname}}{{listExchange[index].ca_fname}}&nbsp;{{listExchange[index].ca_lname}}<br>
+        วันที่ร้องขอ : {{listExchange[index].ce_crtDt | Date}} <br>
+        สถานะคำร้องขอปัจจุบัน : <font ng-bind-html="listExchange[index].ce_status | confirmFilter"></font><br>
+        เหตุผลประกอบคำร้องขอ : 
+        <p style="width:100%;">{{listExchange[index].ce_desc}}</p>
+    </form>
+<table width="100%" class="table table-striped">
+    <table width="100%" class="table table-striped">
+        <tr>
+            <th>ชื่อสารเคมี</th>
+            <th>จำนวนคงเหลือปัจจุบัน</th>
+            <th>จำนวนที่ต้องการเบิก</th>
+            <th>หน่วย</th>
+            <th>สถานที่</th>
+            <th>สถานะ</th>
+        </tr>
+        <tr ng-repeat="showdata in chemdetail">
+            <td>
+                {{showdata.cc_name}}
+            </td>
+            <td>{{showdata.cc_quantity | number:4}}</td>
+            <td>
+                {{showdata.ced_amt | number:4}}
+            </td> 
+            <td>
+                {{showdata.ced_unit}}
+            </td>
+            <td>{{showdata.cl_name}}</td>
+            <td ng-bind-html="showdata.ced_status | confirmFilter"></td>
+        </tr>
+      </table>
+        <button type="button" class="btn btn-danger" ng-click="cancelRequest()"
+            ng-disabled="listExchange[index].ce_status == '3' ||
+                         listExchange[index].ce_status == '2'">ไม่อนุมัติ</button>
+        <button type="button" class="btn btn-success" ng-click="submitRequest()" 
+            ng-disabled="listExchange[index].ce_status == '3'||
+                         listExchange[index].ce_status == '2'">อนุมัติ</button>
+</div>

@@ -73,7 +73,8 @@
     <table width="100%" class="table table-striped">
         <tr>
             <th>ชื่อสารเคมี</th>
-            <th>จำนวน</th>
+            <th>จำนวนคงเหลือปัจจุบัน</th>
+            <th>จำนวนที่ต้องการเบิก</th>
             <th>หน่วย</th>
             <th>ราคารวม</th>
             <th>สถานที่</th>
@@ -82,7 +83,8 @@
         <tr ng-repeat="showdata in chemdetail">
             <td>
                 {{showdata.cc_name}}
-            </td>  
+            </td>
+            <td>{{showdata.cc_quantity | number:4}}</td>
             <td>
                 {{showdata.crd_amt | number:4}}
             </td> 

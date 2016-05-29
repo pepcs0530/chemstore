@@ -8,7 +8,24 @@
 </style> 
 
 <caption><center><h4><b><i class="fa fa-file-text-o"></i>&nbsp;คำร้องขออื่นๆ</b></h4></center></caption><hr>
+<form class="navbar-form navbar-left">
+        ระบุคำที่ต้องการค้นหา : <input type="text" class="form-control" ng-model="searchThis.$" placeholder="ค้นหา">&nbsp;
+        ประเภทสถานะคำร้อง : 
+        <select ng-model="searchThis.cro_status" class="form-control">
+            <option value="" selected>ดูทั้งหมด</option>
+            <option value="0">รอการยืนยัน</option>
+            <option value="ุ6">ตอบรับข้อความแล้ว</option>
+            <option value="2">ไม่อนุมัติ</option>
 
+        </select>
+    </form>
+    <form class="navbar-form navbar-right">
+        จำนวนแถวที่แสดง : <select ng-init="searchRange = options[2]"
+                class="form-control"
+                ng-model="searchRange" 
+                ng-options="option.name for option in options">
+                </select> 
+    </form> 
 <table class="table table-bordered">
   <tr>
       <th>ลำดับที่</th>
@@ -18,7 +35,7 @@
       <th style="width:20%">รายละเอียด</th>
       <th>ดำเนินการ</th>
   </tr>
-  <tr ng-repeat="showdata in listManageRequestOther">
+  <tr ng-repeat="showdata in listManageRequestOther | filter : searchThis | limitTo : searchRange.value : begin">
       <td>
       {{$index+1}}
       </td>
@@ -33,3 +50,7 @@
       <td><button type="button" class="btn btn-success" ng-click="confirmRequestOther(showdata.cro_pk)">ยืนยันคำร้อง</button></button></td>
   </tr>
 </table> 
+         <form class="navbar-form navbar-left">
+        <button type="button" class="btn btn-primary btn-xs"  ng-click="deleteRecord()" value="previous"><i class="fa fa-backward"></i>&nbsp;previous</button>
+        <button type="button" class="btn btn-primary btn-xs" ng-click="addRecord()" value="next">next&nbsp;<i class="fa fa-forward"></i></button>  
+    </form>

@@ -10,16 +10,4 @@
 
     $sql = "UPDATE `chem_receipt` SET `cr_status` = '".$status."',`cr_updDt` = CURRENT_TIMESTAMP WHERE `cr_pk` = '".$cr_pk."'";
     $result = mysql_query($sql);
-
-    if($status == '3'){
-        $sql = "UPDATE chem_project SET cp_budget = (cp_budget - ".$totalprice."),cp_updDt = CURRENT_TIMESTAMP WHERE cp_pk = '".$cr_cp_fk."'";
-        $result = mysql_query($sql);
-        
-        $sql = "UPDATE chem_account SET ca_credit = (ca_credit - ".$totalprice."),ca_updDt = CURRENT_TIMESTAMP WHERE ca_pk = '".$cp_teach_fk."'";
-        $result = mysql_query($sql);
-    }
-    else
-    {
-        
-    }
 ?>
