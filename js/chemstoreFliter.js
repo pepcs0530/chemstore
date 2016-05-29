@@ -1,7 +1,6 @@
 //  เซ็ต FORMAT Date & Datetime ============================================================================================================
 chemstore.filter('Date', function($filter){
     return function(input){
-        console.log("input",input);
         if(input == null || input == "0000-00-00 00:00:00" || input == 'Invalid Date'){ return ""; } 
 
         var _date = $filter('date')(new Date(input),'dd/MM/yyyy');
@@ -15,7 +14,6 @@ chemstore.filter('Date', function($filter){
         if(input == null || input == "0000-00-00 00:00:00" || input == 'Invalid Date'){ return ""; } 
 
         var _date = $filter('date')(new Date(input),'dd/MM/yyyy - HH:mm:ss');
-
         return _date.toUpperCase();
     };
 })

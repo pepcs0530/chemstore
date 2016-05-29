@@ -7,9 +7,8 @@
     }
 </style> 
 
-<caption><center><h4><b><i class="fa fa-file-text-o"></i>&nbsp;ประวัติคำร้องขออื่นๆ</b></h4></center></caption><hr>
 <div ng-show="showcontent == 1">
-
+    <caption><center><h4><b><i class="fa fa-file-text-o"></i>&nbsp;ประวัติคำร้องขออื่นๆ</b></h4></center></caption><hr>
     <table class="table table-bordered">
       <tr>
           <th>ลำดับที่</th>
@@ -31,19 +30,21 @@
           {{showdata.ca_fname +"  "+ showdata.ca_lname}}
           </td>
           <td>{{showdata.cro_header}}</td>
-          <td><input type="button" value="แสดงรายละเอียด" ng-click="showdetail($index)"</td>
+          <td><input type="button" value="แสดงรายละเอียด" ng-click="showdetail($index)" class="btn btn-info"/></td>
       </tr>
     </table> 
 </div>
 
 <div ng-show="showcontent == 2">
-    <caption><center><h5><b><i class="fa fa-info-circle"></i>&nbsp;รายละเอียดเพิ่มเติม</b></h5></center></caption>
-    
+    <caption><center><h4><b><i class="fa fa-file-text-o"></i>&nbsp;รายละเอียดคำร้องขออื่นๆ</b></h4></center></caption><hr>
+    <form  class="navbar-form navbar-right">
     <button type="button" class="btn btn-default"  ng-click="showcontent = 1"><i class="fa fa-chevron-left" aria-hidden="true"></i>&nbsp;ย้อนกลับ</button><br><br>
-    
+    </form>
+    <form  class="navbar-form navbar-left">
     ชื่อผู้ส่ง : {{listManageRequestOther[index].ca_tname}}{{listManageRequestOther[index].ca_fname}}&nbsp;&nbsp;{{listManageRequestOther[index].ca_lname}}<br>
     วันที่ส่งคำร้อง : {{listManageRequestOther[index].cro_crtDt | Date}}<br>
     สถานะคำร้องปัจจุบัน : <span  ng-bind-html="listManageRequestOther[index].cro_status | confirmFilter"></span><br>
     หัวเรื่อง : {{listManageRequestOther[index].cro_header}}<br>
     รายละเอียดเนื้อหา : {{listManageRequestOther[index].cro_desc}}
+    </form>
 </div>

@@ -1,16 +1,6 @@
 <?php
     include '../../php/connect.php';
     date_default_timezone_set('Asia/Bangkok');
-//    $_POST = json_decode(file_get_contents('php://input'), true);
-    
-    //-------------------------------------------------------------
-//    print $_POST["crd_cr_fk"];
-
-//    if (isset($_POST["crd_cr_fk"])) {
-//        $fk = $_POST["crd_cr_fk"] ;    
-//    }else{  
-//        $fk = "" ;  
-//    }
 
     $fk = $_POST["crd_cr_fk"];
 

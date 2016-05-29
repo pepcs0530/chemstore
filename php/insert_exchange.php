@@ -11,13 +11,6 @@
         $ce_no = $_POST['ce_no'];
     }
     
-    if(!isset($_POST['ce_fromstore'])){
-        $ce_fromstore = '';    
-    } 
-    else{
-        $ce_fromstore = $_POST['ce_fromstore'];
-    }
-    
     if(!isset($_POST['ce_tostore'])){
         $ce_tostore = '';    
     } 
@@ -55,8 +48,8 @@
         $ce_no = "NO.".($ce_no.$data[0]['ce_pk']+1);
     }
 
-    $sql = "INSERT INTO `chem_exchange` (ce_no, ce_crtDt, ce_desc, ce_fromstore, ce_tostore, ce_ca_fk)".
-        " VALUE('".$ce_no."', CURRENT_TIMESTAMP,'".$ce_desc."','".$ce_fromstore."','".$ce_tostore."','".$ce_ca_fk."')";
+    $sql = "INSERT INTO `chem_exchange` (ce_no, ce_crtDt, ce_desc, ce_tostore, ce_ca_fk)".
+        " VALUE('".$ce_no."', CURRENT_TIMESTAMP,'".$ce_desc."','".$ce_tostore."','".$ce_ca_fk."')";
     
     $query = mysql_query($sql);
 //

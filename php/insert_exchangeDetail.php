@@ -10,9 +10,10 @@
     $ced_amt = $_POST['ced_amt'];
     $ced_unit = $_POST['ced_unit'];
     $ced_status = $_POST['ced_status'];
+    $ced_location_chem = $_POST['ced_location_chem'];
 
-    $sql = "INSERT INTO chem_exchange_detail (ced_ce_fk, ced_cc_fk, ced_amt, ced_unit, ced_crtDt, ced_status) ".
-           "VALUE ('".$ced_ce_fk."','".$ced_cc_fk."','".$ced_amt."','".$ced_unit."', CURRENT_TIMESTAMP,'".$ced_status."')";
+    $sql = "INSERT INTO chem_exchange_detail (ced_ce_fk, ced_cc_fk, ced_amt, ced_unit, ced_crtDt, ced_status, ced_location_chem) ".
+           "VALUE ('".$ced_ce_fk."','".$ced_cc_fk."','".$ced_amt."','".$ced_unit."', CURRENT_TIMESTAMP,'".$ced_status."','".$ced_location_chem."')";
     $query = mysql_query($sql);
 
     if($query){

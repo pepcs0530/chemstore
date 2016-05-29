@@ -3,11 +3,8 @@
         text-align: center;
     }
 </style>  
-
-<caption><center><h4><b><i class="fa fa-file-text-o"></i>&nbsp;ประวัติการเบิกสารเคมี </b></h4></center></caption><hr>
-<form method="post" action="../tcpdf/examples/export_pdf_withdraw_log.php" target="_blank">
 <div ng-show="showcontent == 1">
-    
+    <caption><center><h4><b><i class="fa fa-file-text-o"></i>&nbsp;ประวัติการเบิกสารเคมี </b></h4></center></caption><hr>
     <strong>ตั้งแต่ :</strong>
     <input ng-model="logRecpt.stDt" name="stDt" type="date" />
 
@@ -28,75 +25,87 @@
 </div>
 
 <div ng-show="showcontent == 2">
-    <caption><center><h5><b><i class="fa fa-search"></i>&nbsp;รายการข้อมูลที่ค้นหา</b></h5></center></caption>
-    <form class="navbar-form navbar-right">
+    <caption><center><h4><b><i class="fa fa-file-text-o"></i>&nbsp;รายการประวัติเบิกสารเคมีที่ค้นพบ</b></h4></center></caption><hr>
+    <form class="navbar-form navbar-right" method="post" action="../tcpdf/examples/export_pdf_withdraw_log.php" target="_blank">
+        <input type="hidden" value="{{logRecpt.selectAll}}" name="selectAll">
         <input type="hidden" value="{{key}}" name="findthis">
         <input type="hidden" value="{{type}}" name="findtypethis">
         <button type="button" class="btn btn-default"  ng-click="showcontent = 1"><i class="fa fa-chevron-left" aria-hidden="true"></i>&nbsp;ย้อนกลับ</button>
         <button type="submit" class="btn btn-default" ><i class="fa fa-print" aria-hidden="true"></i>&nbsp;พิมพ์รายงาน</button>
     </form>
-    <table class = "table table-bordered"  width="100%">
+    <table class="table table-bordered">
         <tr>
             <th>ลำดับที่</th>
-            <th>วันที่เขียนคำร้อง</th>
-            <th>วันที่ได้รับอนุมัติ</th>
-            <th>เลขที่ใบเบิก</th>
-            <th>บัญชีผู้ใช้</th>
-            <th>โปรเจค</th>
+            <th>เลขที่ใบเสร็จ</th>
+            <th>วันที่ร้องขอ</th>
+            <th>สถานะการร้องขอ</th>
+            <th>ราคารวมทั้งสิ้น</th>
             <th>รายละเอียด</th>
         </tr>
-        <tr ng-repeat="showdata in listReciept">
-            <td>{{$index+1}}</td>
+        <tr ng-repeat="showdata in listReciept | filter : searchThis | limitTo : searchRange.value : begin">
             <td>
-                {{showdata.cr_crtDt | Date}}
-
+            {{$index+1}}
             </td>
             <td>
-                {{showdata.cr_updDt | Date}}
+            {{showdata.cr_no}}
             </td>
-            <td>{{showdata.cr_no}}</td>
-            <td>{{showdata.ca_tname+" "+showdata.ca_fname+" "+showdata.ca_lname}}</td>
-            <td>{{showdata.cp_name}}</td>
             <td>
-                <input type="button" value="แสดง" ng-click="showdetail(showdata.cr_pk,$index)">
+            {{showdata.cr_crtDt | Date}}
             </td>
-        </tr>
-    </table>
+            <td><div ng-bind-html="showdata.cr_status | confirmFilter"></div></td>
+            <td> 
+            {{showdata.cr_cost | number:4}}
+            </td>
+            <td>
+                  <input type="button" class="btn btn-default" value="แสดง" ng-click="showdetail(showdata.cr_pk,$index)">
+            </td>
+    </tr>
+    </table> 
 </div>
 <div ng-show="showcontent == 3">
-    <caption><center><h5><b><i class="fa fa-info-circle"></i>&nbsp;รายละเอียดเพิ่มเติม</b></h5></center></caption>
-    
-        <button type="button" class="btn btn-default"  ng-click="showcontent = 2"><i class="fa fa-chevron-left" aria-hidden="true"></i>&nbsp;ย้อนกลับ</button>
+    <caption><center><h4><b><i class="fa fa-file-text-o"></i>&nbsp;รายละข้อมูลการเบิกสารเคมี</b></h4></center></caption><hr>
+    <form class="navbar-form navbar-right">
+        <input type="button" class="btn btn-default" value="ย้อนกลับ" ng-click="showcontent = 2">
+    </form>
+    <form class="navbar-form navbar-left">
+        ใบคำร้องที่ : {{listReciept[index].cr_no}} <br>
+        วันที่ร้องขอ : {{listReciept[index].cr_crtDt | Date}} <br>
+        สถานะคำร้องขอปัจจุบัน : <font ng-bind-html="listReciept[index].cr_status | confirmFilter"></font><br>
+        โปรเจคที่ร้องขอ : {{listReciept[index].cp_name}} <br>
+        ผู้เขียนคำร้องขอ : {{listReciept[index].ca_tname}}{{listReciept[index].ca_fname}}&nbsp;{{listReciept[index].ca_lname}}<br>
+    </form>
     
 
-    <table class= " table table-bordered" width="100%">
+    <table width="100%" class="table table-striped">
         <tr>
             <th>ชื่อสารเคมี</th>
             <th>จำนวน</th>
             <th>หน่วย</th>
-            <th>คลัง</th>
-            <th>ราคา</th>
+            <th>ราคารวม</th>
+            <th>สถานที่</th>
+            <th>สถานะ</th>
         </tr>
         <tr ng-repeat="showdata in listRecieptDetail">
             <td>
                 {{showdata.cc_name}}
             </td>  
             <td>
-                {{showdata.crd_amt}}
-            </td>  
+                {{showdata.crd_amt | number:4}}
+            </td> 
             <td>
                 {{showdata.crd_unit}}
             </td>
-            <td>
-                {{showdata.cl_name}}
-            </td>
-            <td>
-                {{showdata.crd_price}}&nbsp;บาท
-            </td>  
+            <td>{{showdata.crd_price}}</td>
+            <td>{{showdata.cl_name}}</td>
+            <td ng-bind-html="showdata.crd_status | confirmFilter"></td>
         </tr>
       </table>
+    <form class="navbar-form navbar-right">
+        <div class="well" style="width: 250px;">
+            ค่าใช้จ่ายรวม : {{listReciept[index].cr_cost | number:4}} บาท
+        </div>
+    </form>
 </div>
-</form>
         
 
 
