@@ -8,7 +8,7 @@
     <table class="table table-bordered">
         <tr>
             <th>ลำดับที่</th>
-            <th>เลขที่ใบเสร็จ</th>
+            <th>เลขที่ใบย้าย</th>
             <th>วันที่ร้องขอ</th>
             <th>สถานะการร้องขอ</th>
             <th>รายละเอียด</th> 
@@ -35,10 +35,15 @@
 </div>
     
 <div ng-show="showcontent == 2">
-    <form action="../tcpdf/examples/export_pdf_withdraw.php" target="_blank" method="post" class="navbar-form navbar-right">
+    <form action="../tcpdf/examples/export_pdf_transfer.php" target="_blank" method="post" class="navbar-form navbar-right">
         <input type="hidden" value="{{showdata.cr_pk}}" name="crd_cr_fk">
-        <input type="submit" class="btn btn-default" data-dismiss="modal" ng-hide="showdata.ce_status == 0 || showdata.ce_status == 2" value="พิมพ์ใบเสร็จ">
-        <input type="button" class="btn btn-default" value="ย้อนกลับ" ng-click="showcontent = 1"><br><br>
+        
+        <button type="button" class="btn btn-default"  ng-click="showcontent = 1"><i class="fa fa-chevron-left" aria-hidden="true"></i>&nbsp;ย้อนกลับ</button>
+        <button type="submit" class="btn btn-default" ng-hide="showdata.ce_status == 0 || showdata.ce_status == 2"><i class="fa fa-print" aria-hidden="true"></i>&nbsp;พิมพ์รายงาน</button>
+        
+<!--        <input type="submit" class="btn btn-default" data-dismiss="modal" ng-hide="showdata.ce_status == 0 || showdata.ce_status == 2" value="พิมพ์ใบเสร็จ">-->
+        
+        
     </form>
     เลขที่ใบเสร็จ : {{listReciept[index].ce_no}} <br>
 
