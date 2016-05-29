@@ -86,4 +86,22 @@
     <button type="button" class="btn btn-primary btn-xs" ng-click="addRecord()" value="next">next&nbsp;<i class="fa fa-forward"></i></button>
 </form>
 
+<table class= " table table-bordered" style="width:100%" ng-show="stu_tb == true">
+    <tr>
+        <th>ลำดับที่</th>
+        <th>รหัส</th>
+        <th>ชื่อ-นามสกุล</th>
+        <th>เบอร์ติดต่อ</th>
+    </tr>
+    <tr ng-repeat="showdata in listStudent ">
+<!--
+        <td>{{$index+1}}</td>
+        <td>{{showdata.cp_name}}</td>
+        <td>{{showdata.cp_eduLvl}}</td>
+        <td>{{showdata.cp_budget}}</td>
+        <td>{{showdata.cp_desc}}</td>
+-->
+    </tr>
+</table> 
+
 

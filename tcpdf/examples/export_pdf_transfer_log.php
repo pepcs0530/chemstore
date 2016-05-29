@@ -331,7 +331,6 @@
         $date_upd = date_create($row['ce_updDt']);
         $cr_no = $row['ce_no'];
         $name = $row['ca_tname']." ".$row['ca_fname']." ".$row['ca_lname'];
-//        $project = $row['cp_name'];
         
         
         $find = $row['ce_pk'];
@@ -346,9 +345,11 @@
            WHERE `ced_ce_fk` = ".$find;
         
         $query2 = mysql_query($sql2);
+        $data=array();
             
         while($row = mysql_fetch_array ($query2))
         {
+            array_push($data,$row);
             if($index==1){
                 $pdf->Cell(25, 0, date_format($date_crt,"d/m/Y"), 1, 0, 'L', 0, '', 0);
                 $pdf->Cell(25, 0, date_format($date_upd,"d/m/Y"), 1, 0, 'L', 0, '', 0);
@@ -359,6 +360,7 @@
                 $pdf->Cell(20, 0, $row['cc_grade'], 1, 0, 'L', 0, '', 0);
                 $pdf->Cell(15, 0, $row['ced_amt'], 1, 0, 'C', 0, '', 0);
                 $pdf->Cell(15, 0, $row['ced_unit'], 1, 0, 'C', 0, '', 0);
+                $pdf->Ln(); 
                 
             }else{
                 $pdf->Cell(25, 0, '', 1, 0, 'L', 0, '', 0);
@@ -370,9 +372,22 @@
                 $pdf->Cell(20, 0, $row['cc_grade'], 1, 0, 'L', 0, '', 0);
                 $pdf->Cell(15, 0, $row['ced_amt'], 1, 0, 'C', 0, '', 0);
                 $pdf->Cell(15, 0, $row['ced_unit'], 1, 0, 'C', 0, '', 0);
+                $pdf->Ln(); 
             }
 
             $index++;
+        }
+        
+        if(count($data) == 0){
+            $pdf->Cell(25, 0, date_format($date_crt,"d/m/Y"), 1, 0, 'L', 0, '', 0);
+            $pdf->Cell(25, 0, date_format($date_upd,"d/m/Y"), 1, 0, 'L', 0, '', 0);
+            $pdf->Cell(27, 0, $cr_no, 1, 0, 'C', 0, '', 0);
+            $pdf->Cell(45, 0, $name, 1, 0, 'L', 0, '', 0);
+            $pdf->Cell(50, 0, $row['cc_name'], 1, 0, 'L', 0, '', 0);
+            $pdf->Cell(40, 0, $row['cc_casNo'], 1, 0, 'L', 0, '', 0);
+            $pdf->Cell(20, 0, $row['cc_grade'], 1, 0, 'L', 0, '', 0);
+            $pdf->Cell(15, 0, $row['ced_amt'], 1, 0, 'C', 0, '', 0);
+            $pdf->Cell(15, 0, $row['ced_unit'], 1, 0, 'C', 0, '', 0);
             $pdf->Ln(); 
         }
         

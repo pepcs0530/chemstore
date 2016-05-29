@@ -63,7 +63,7 @@
     }
 
     if($loc != null){
-        $sql .= "AND cl_name = '".$loc."' ";    
+        $sql .= "AND cc_location_fk = '".$loc."' ";    
 //        print "LOC<br>";
     }
 
@@ -115,7 +115,10 @@
         $query = mysql_query($sql);
     }
     
-    
+    //print $sql;
+
+
+
     // Include the main TCPDF library (search for installation path).
     require_once('tcpdf_include.php');
 
@@ -212,5 +215,6 @@
     }
 
     $pdf->Output('export_pdf_inbound_log.pdf', 'I');
+
 
 ?>

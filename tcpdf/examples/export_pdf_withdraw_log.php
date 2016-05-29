@@ -273,9 +273,11 @@
            "ON cc_location_fk = cl_pk ".
            "WHERE `crd_cr_fk` = ".$find;
         $query2 = mysql_query($sql2);
+        $data=array();
             
         while($row = mysql_fetch_array ($query2))
         {
+            array_push($data,$row);
             if($index==1){
                 $pdf->Cell(25, 0, date_format($date_crt,"d/m/Y"), 1, 0, 'L', 0, '', 0);
                 $pdf->Cell(25, 0, date_format($date_upd,"d/m/Y"), 1, 0, 'L', 0, '', 0);
@@ -304,6 +306,19 @@
             
             $index++;
             $pdf->Ln(); 
+        }
+        
+        if(count($data) == 0){
+            $pdf->Cell(25, 0, '', 1, 0, 'L', 0, '', 0);
+            $pdf->Cell(25, 0, '', 1, 0, 'L', 0, '', 0);
+            $pdf->Cell(27, 0, '', 1, 0, 'C', 0, '', 0);
+            $pdf->Cell(45, 0, '', 1, 0, 'L', 0, '', 0);
+            $pdf->Cell(40, 0, '', 1, 0, 'L', 0, '', 0);
+            $pdf->Cell(50, 0, $row['cc_name'], 1, 0, 'L', 0, '', 0);
+            $pdf->Cell(15, 0, $row['crd_amt'], 1, 0, 'C', 0, '', 0);
+            $pdf->Cell(15, 0, $row['crd_unit'], 1, 0, 'C', 0, '', 0);
+            $pdf->Cell(10, 0, $row['cl_name_abb'], 1, 0, 'C', 0, '', 0);
+            $pdf->Cell(15, 0, $row['crd_price'], 1, 0, 'C', 0, '', 0);
         }
         
         $index=1;

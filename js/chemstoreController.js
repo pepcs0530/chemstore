@@ -1326,6 +1326,8 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
 // ดูรายการโปรเจคproject  ============================================================================================================
     .controller('viewProjectCtrl', function($scope,$http) {
     
+        $scope.stu_tb = false;
+    
         //  ปุ่ม prev
         $scope.deleteRecord = function () {
             if(parseInt($scope.begin) - parseInt($scope.searchRange.value) < 0)
@@ -1382,7 +1384,9 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
         };
     
         $scope.editContact = function (selectedData) {
+            $scope.stu_tb = true;
             $scope.editThisData = selectedData;
+            console.log("select",selectedData);
         };
     
         $scope.checkBudget = function () {
@@ -1458,6 +1462,7 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
         $scope.reset = function () {
                 
             $scope.editThisData = {};
+            $scope.stu_tb = false;
         };
     }) 
 
