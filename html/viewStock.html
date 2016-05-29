@@ -1,16 +1,21 @@
+<style>
+    th, td{
+        text-align: center;
+    }
+</style>
 <div ng-show="!showcontent">
-    <caption><center><h4><b><i class="fa fa-flask"></i>&nbsp;รายการสารเคมี</b></h4></center></caption><hr>
+    <caption><center><h4><b><i class="fa fa-flask"></i>&nbsp;รายการสารเคมี : {{selectData}}</b></h4></center></caption><hr>
     <form class="navbar-form navbar-left">
-        <div class="form-group">
-            ระบุคำที่ต้องการค้นหา : <input type="text" class="form-control" ng-model="searchThis" placeholder="ค้นหา">
-        </div>
-        <strong>เลือกคลัง :</strong>
-        <select   ng-model="selectData" ng-change="getdata()">
+        ระบุคำที่ต้องการค้นหา : <input type="text" class="form-control" ng-model="searchThis" placeholder="ค้นหา">
+        เลือกคลัง :
+        <select ng-model="selectData" ng-change="getdata()" class="form-control">
             <option ng-repeat="lu in listLocation" value="{{lu.cl_name}}" >{{lu.cl_name}}</option>
         </select>
+    </select>
     </form> 
     <form class="navbar-form navbar-right">
         จำนวนแถวที่แสดง : <select ng-init="searchRange = options[2]" 
+                class="form-control"
                 ng-model="searchRange" 
                 ng-options="option.name for option in options">
                 </select> 
@@ -36,12 +41,16 @@
             <td>{{showdata.cc_room}}</td>
             <td>{{showdata.cc_price}}/{{showdata.cu_name_abb}}</td>
             <td>{{showdata.cc_grade}}</td>
+<<<<<<< HEAD
 <!--            <td><input type="button" value="แสดงรายละเอียด" ng-click="showdetail($index)"</td>-->
             <td style="text-align: center"><button type="button" class="btn btn-default" value="แสดง" ng-click="showdetail($index)">แสดง</button></td>
+=======
+            <td><input type="button" value="แสดงรายละเอียด" ng-click="showdetail($index)" class="btn btn-info"</td>
+>>>>>>> origin/master
         </tr>
     </table>
 
-    <form class="navbar-form navbar-right">
+    <form class="navbar-form navbar-left">
         <button type="button" class="btn btn-primary btn-xs"  ng-click="deleteRecord()" value="previous"><i class="fa fa-backward"></i>&nbsp;previous</button>
         <button type="button" class="btn btn-primary btn-xs" ng-click="addRecord()" value="next">next&nbsp;<i class="fa fa-forward"></i></button>  
     </form>
@@ -49,7 +58,7 @@
 <div  ng-show="showcontent">
     <caption><center><h4><b><i class="fa fa-flask"></i>&nbsp;รายการสารเคมี</b></h4></center></caption><hr>
     <form class="navbar-form navbar-right">
-        <input type="button" value="ย้อนกลับ" ng-click="showcontent = false">
+        <input type="button" value="ย้อนกลับ" ng-click="showcontent = false" class="btn btn-default">
     </form>            
     <table class="table table-bordered" id="here">
         <tr>

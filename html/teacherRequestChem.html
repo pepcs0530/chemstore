@@ -3,11 +3,26 @@
         text-align: center;
     }
 </style>
-
-<form action="../tcpdf/examples/export_pdf_withdraw.php" target="_blank" method="post">
-    
 <div ng-show="!content">
-    <caption><center><h4><b><i class="fa fa-list-alt"></i>&nbsp;สถานะคำร้องขอ</b></h4></center></caption><hr>
+    <caption><center><h4><b><i class="fa fa-list-alt"></i>&nbsp;สถานะคำร้องขอเบิกสารเคมี</b></h4></center></caption><hr>
+    <form class="navbar-form navbar-left">
+        ระบุคำที่ต้องการค้นหา : <input type="text" class="form-control" ng-model="searchThis.$" placeholder="ค้นหา">&nbsp;
+        ประเภทสถานะคำร้อง : 
+        <select ng-model="searchThis.cr_status" class="form-control">
+            <option value="" selected>ดูทั้งหมด</option>
+            <option value="0">รอการยืนยัน</option>
+            <option value="1">อนุมัติได้รับสารครบแล้ว</option>
+            <option value="2">ไม่อนุมัติ</option>
+            <option value="3">อนุมัติดำเนินการรับสาร</option>
+        </select>
+    </form>
+    <form class="navbar-form navbar-right">
+        จำนวนแถวที่แสดง : <select ng-init="searchRange = options[2]"
+                class="form-control"
+                ng-model="searchRange" 
+                ng-options="option.name for option in options">
+                </select> 
+    </form> 
     <table class="table table-bordered">
         <tr>
             <th>ลำดับที่</th>
@@ -17,7 +32,7 @@
             <th>ราคารวมทั้งสิ้น</th>
             <th>รายละเอียด</th>
         </tr>
-        <tr ng-repeat="showdata in listReciept">
+        <tr ng-repeat="showdata in listReciept | filter : searchThis | limitTo : searchRange.value : begin">
             <td>
             {{$index+1}}
             </td>
@@ -27,20 +42,22 @@
             <td>
             {{showdata.cr_crtDt | Date}}
             </td>
-            <td ng-bind-html="showdata.cr_status | confirmFilter"></td>
+            <td><div ng-bind-html="showdata.cr_status | confirmFilter"></div></td>
             <td> 
             {{showdata.cr_cost | number:4}}
             </td>
             <td>
-<!--              <form action="../tcpdf/examples/export_pdf_withdraw.php" target="_blank" method="post">-->
-                  <input type="hidden" value="{{showdata.cr_pk}}" name="crd_cr_fk">
                   <input type="button" class="btn btn-default" value="แสดง" ng-click="showdetail(showdata.cr_pk,$index)">
-<!--              </form>-->
             </td>
     </tr>
     </table> 
+     <form class="navbar-form navbar-left">
+        <button type="button" class="btn btn-primary btn-xs"  ng-click="deleteRecord()" value="previous"><i class="fa fa-backward"></i>&nbsp;previous</button>
+        <button type="button" class="btn btn-primary btn-xs" ng-click="addRecord()" value="next">next&nbsp;<i class="fa fa-forward"></i></button>  
+    </form>
 </div> 
 <div ng-show="content">
+<<<<<<< HEAD
     <caption><center><h4><b><i class="fa fa-list-alt"></i>&nbsp;รายละเอียด</b></h4></center></caption><hr>
     
 <!--    <form class="navbar-form navbar-right">-->
@@ -53,11 +70,27 @@
         <input type="button" class="btn btn-default" value="ย้อนกลับ" ng-click="content = false">
 -->
 <!--    </form>-->
+=======
+    <caption><center><h4><b><i class="fa fa-list-alt"></i>&nbsp;รายละเอียดข้อมูลการเบิกสารเคมี</b></h4></center></caption><hr>
+        <form action="../tcpdf/examples/export_pdf_withdraw.php" target="_blank" method="post" class="navbar-form navbar-right">
+            <input type="hidden" value="{{listReciept[index].cr_pk}}" name="crd_cr_fk">
+            <input type="submit" class="btn btn-default" ng-hide="listReciept[index].cr_status != 3" value="พิมพ์ใบเสร็จ">
+            <input type="button" class="btn btn-default" value="ย้อนกลับ" ng-click="content = false">
+        </form>
+    <form class="navbar-form navbar-left">
+        ใบคำร้องที่ : {{listReciept[index].cr_no}} <br>
+        วันที่ร้องขอ : {{listReciept[index].cr_crtDt | Date}} <br>
+        สถานะคำร้องขอปัจจุบัน : <font ng-bind-html="listReciept[index].cr_status | confirmFilter"></font><br>
+        โปรเจคที่ร้องขอ : {{listReciept[index].cp_name}} <br>
+        ผู้เขียนคำร้องขอ : {{listReciept[index].ca_tname}}{{listReciept[index].ca_fname}}&nbsp;{{listReciept[index].ca_lname}}<br>
+    </form>
+>>>>>>> origin/master
     <table width="100%" class="table table-striped">
         <tr>
             <th>ชื่อสารเคมี</th>
             <th>จำนวน</th>
             <th>หน่วย</th>
+            <th>ราคารวม</th>
             <th>สถานที่</th>
             <th>สถานะ</th>
         </tr>
@@ -68,19 +101,18 @@
             <td>
                 {{showdata.crd_amt | number:4}}
             </td> 
-            <td>{{showdata.cl_name}}</td>
             <td>
                 {{showdata.crd_unit}}
-            </td>  
+            </td>
+            <td>{{showdata.crd_price}}</td>
+            <td>{{showdata.cl_name}}</td>
             <td ng-bind-html="showdata.crd_status | confirmFilter"></td>
         </tr>
       </table>
     
     <form class="navbar-form navbar-right">
-    <div class="well" style="width: 250px;">
-        ค่าใช้จ่ายรวม : {{listReciept[index].cr_cost | number:4}} บาท
-    </div>
-</form>
+        <div class="well" style="width: 250px;">
+            ค่าใช้จ่ายรวม : {{listReciept[index].cr_cost | number:4}} บาท
+        </div>
+    </form>
 </div>
-    
-</form>

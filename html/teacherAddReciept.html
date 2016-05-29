@@ -7,17 +7,19 @@
 <caption><center><h4><b><i class="fa fa-flask"></i>&nbsp;เบิกสารเคมี</b></h4></center></caption><hr>
 <div>
     <caption><h4><i class="fa fa-upload"></i>&nbsp;ข้อมูลโปรเจคนักศึกษา</h4></caption>
+    <form class="navbar-form navbar-left">
     กรุณาเลือกโปรเจค : 
-    <select  
+    <select class="form-control" 
             ng-model="selectedProject" 
             ng-options="option.cp_name for option in listProject">
     </select>
+    </form>
     <br>
     ยอดเงินคงเหลือ : {{selectedProject.cp_budget}}
 </div>
 <hr>
 <div class="navbar-header">
-    <caption><h4><i class="fa fa-upload"></i>&nbsp;สารเคมีที่เบิก</h4></caption>
+    <caption><h4><i class="fa fa-upload"></i>&nbsp;ตระกร้าเบิกสารเคมี</h4></caption>
 </div>
 <table  class= "table table-bordered">
     <tr>
@@ -42,21 +44,29 @@
                 <input type="number" class="form-control" ng-change="pricecal($index)" ng-model="cartlist[$index].volumeRequest" >&nbsp;&nbsp;
             </div>
         </td>
-        <td>
-            <select ng-model="cartlist[$index].unitRequest" ng-change="pricecal($index)">
-                <option value="kg">
+        <td>{{showdata.cu_name_abb == 'g'}}
+            <select ng-model="cartlist[$index].unitRequest" ng-change="pricecal($index)" class="form-control">
+                <option value="kg" ng-show="showdata.cu_name_abb == 'kg' 
+                                            || showdata.cu_name_abb == 'g' 
+                                            || showdata.cu_name_abb == 'mg'">
                     kg
                 </option>
-                <option value="g">
+                <option value="g" ng-show="showdata.cu_name_abb == 'kg' 
+                                            || showdata.cu_name_abb == 'g' 
+                                            || showdata.cu_name_abb == 'mg'">
                     g
                 </option>
-                 <option value="mg">
+                 <option value="mg" ng-show="showdata.cu_name_abb == 'kg' 
+                                            || showdata.cu_name_abb == 'g' 
+                                            || showdata.cu_name_abb == 'mg'">
                     mg
                 </option>
-                <option value="l">
+                <option value="l" ng-show="showdata.cu_name_abb == 'l' 
+                                           || showdata.cu_name_abb == 'ml'">
                     l
                 </option>
-                <option value="ml">
+                <option value="ml" ng-show="showdata.cu_name_abb == 'l' 
+                                           || showdata.cu_name_abb == 'ml'">
                     ml
                 </option>    
             </select>
@@ -65,16 +75,20 @@
         <td style="text-align: center;"><button class="btn btn-danger btn-sm" value="delete" ng-click="deleteCart($index)"><i class="fa fa-times-circle"></i>&nbsp;</button></td>
     </tr>
 </table>
+       <div ng-show="cartlist.length == 0"><font size="5"><center>ไม่มีสารเคมีในตระกร้าเบิกสาร</center></font></div>
 <hr>
-<div class="navbar-header">
-    <caption><h4><i class="fa fa-upload"></i>&nbsp;ค้นหาสารเคมีที่ต้องการ</h4></caption>
-</div>
+        <caption><h4><i class="fa fa-upload"></i>&nbsp;คลังสารเคมี</h4></caption>
+        <form class="navbar-form navbar-left">
+        ระบุคำที่ต้องการค้นหา : <input type="text" ng-model="searchThis.$" placeholder="ค้นหา" class="form-control">
+        &nbsp;เลือกคลัง :
+        <select   ng-model="selectData" ng-change="getdata()" class="form-control">
+            <option ng-repeat="lu in listLocation" value="{{lu.cl_name}}">{{lu.cl_name}}</option>
+        </select>
+        </form>
 
-<form class="navbar-form navbar-left">
-    <input class="form-control" type="text" ng-model="searchThis"  placeholder="ค้นหา">
-</form>
 <form class="navbar-form navbar-right">
-    <label>จำนวนแถวที่แสดง :&nbsp;</label><select ng-init="searchRange = options[0]" 
+    <label>จำนวนแถวที่แสดง :&nbsp;</label><select ng-init="searchRange = options[0]"
+            class="form-control"
             ng-model="searchRange" 
             ng-options="option.name for option in options">
     </select> 
@@ -92,7 +106,7 @@
         <th>ผู้ผลิต</th>
         <th style="text-align: center;">เลือก</th>
     </tr>
-    <tr ng-repeat="showdata in listChem | filter : searchThis | limitTo : searchRange.value : begin">
+    <tr ng-repeat="showdata in listChem | filter : searchThis | filter : selectData | limitTo : searchRange.value : begin">
         <td>{{showdata.cc_name}}</td>
         <td>{{showdata.cc_casNo}}</td>
         <td>{{showdata.cc_state}}</td>

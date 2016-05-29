@@ -10,8 +10,6 @@ $budget = $_POST['budget'];
 $desc = $_POST['desc'];
 $teacher_budget = $_POST['teacher_budget'];
 
-
-
 $sql = "INSERT INTO chem_project (
     cp_name,
     cp_eduLvl,
@@ -33,16 +31,4 @@ while($row = mysql_fetch_array ($query))
     array_push($data,$row);
 }
 echo json_encode($data[0]);
-
-//-------------------------------------------------------------
-//$result = mysql_query($sql);
-//
-//if($result){
-//    Print "\n Your information has been successfully added to the database."; 
-//}
-//else{
-//    die ("Error : ".mysql_error());
-//}
-
-
 ?>
