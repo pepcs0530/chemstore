@@ -251,6 +251,7 @@
             $pdf->Cell(10, 0, 'คลัง', 1, 0, 'C', 0, '', 0);
             $pdf->Cell(15, 0, 'ราคา', 1, 0, 'C', 0, '', 0);
             $first++;
+            $pdf->Ln();
         }
         
         $date_crt = date_create($row['cr_crtDt']);
@@ -259,7 +260,7 @@
         $name = $row['ca_tname']." ".$row['ca_fname']." ".$row['ca_lname'];
         $project = $row['cp_name'];
         
-        $pdf->Ln();
+        //$pdf->Ln();
         
         $find = $row['cr_pk'];
         
