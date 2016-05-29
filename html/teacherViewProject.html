@@ -9,16 +9,14 @@
 
 <caption><center><h4><b><i class="fa fa-folder-open"></i>&nbsp;โปรเจคนักศึกษา</b></h4></center></caption><hr>
 
-<ul class="nav navbar-nav">
-    <form class="navbar-form navbar-left">
-        <div class="form-group">
-            <input class="form-control" type="text" ng-model="searchThis.$" placeholder="ค้นหา">
-        </div>
-    </form> 
-</ul>
+<form class="navbar-form navbar-left">
+        ระบุคำที่ต้องการค้นหา : <input type="text" class="form-control" ng-model="searchThis" placeholder="ค้นหา">
+    </select>
+</form> 
 
 <form class="navbar-form navbar-right">
-    จำนวนแถวที่แสดง : <select ng-init="searchRange = options[2]" 
+    จำนวนแถวที่แสดง : <select ng-init="searchRange = options[2]"
+        class="form-control"
         ng-model="searchRange" 
         ng-options="option.name for option in options">
         </select> 
@@ -35,13 +33,6 @@
         <th>ลบ</th>
     </tr>
     <tr ng-repeat="showdata in listProject | filter : searchThis | limitTo : searchRange.value : begin" ng-include="getTemplate(showdata)">
-<!--
-        <td>{{$index+1}}</td>
-        <td>{{showdata.cp_name}}</td>
-        <td>{{showdata.cp_eduLvl}}</td>
-        <td>{{showdata.cp_budget}}</td>
-        <td>{{showdata.cp_desc}}</td>
--->
     </tr>
 </table> 
 
@@ -58,20 +49,20 @@
 <script type="text/ng-template" id="edit">
     <td>{{$index+1}}</td>
     <td>
-        <input type="text" ng-model="editThisData.cp_name" id="edit"/>
+        <input type="text" ng-model="editThisData.cp_name" id="edit"  class="form-control"/>
     </td>
     <td>
-        <select  ng-model="editThisData.cp_eduLvl" ng-change="checkBudget()">
+        <select  ng-model="editThisData.cp_eduLvl" ng-change="checkBudget()"  class="form-control">
             <option value="ปริญญาตรี" >ปริญญาตรี</option>
             <option value="ปริญญาโท">ปริญญาโท</option>
             <option value="ปริญญาเอก">ปริญญาเอก</option>
         </select>งบประมาณสูงสุด{{editThisData.maxBudget}}
     </td>
     <td>
-        <input type="text" ng-model="editThisData.cp_budget" id="edit"/>
+        <input type="number" ng-model="editThisData.cp_budget" id="edit"  class="form-control"/>
     </td>
     <td>
-        <input type="text" ng-model="editThisData.cp_desc" id="edit"/>
+        <input type="text" ng-model="editThisData.cp_desc" id="edit"  class="form-control"/>
     </td>
     
     <td align="center">
@@ -81,7 +72,7 @@
     <td align="center"><button type="button" class="btn btn-danger btn-sm"  ng-click="delectContact(showdata)" disabled><i class="fa fa-trash-o"></i></button></td>
 </script>
 
-<form class="navbar-form navbar-right">
+<form class="navbar-form navbar-left">
     <button type="button" class="btn btn-primary btn-xs"  ng-click="deleteRecord()" value="previous"><i class="fa fa-backward"></i>&nbsp;previous</button>
     <button type="button" class="btn btn-primary btn-xs" ng-click="addRecord()" value="next">next&nbsp;<i class="fa fa-forward"></i></button>
 </form>

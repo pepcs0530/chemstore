@@ -763,7 +763,6 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
                 }
                 }).then(function(response) {
                     $scope.listReciept = response.data;
-                    console.log($scope.listReciept);
                     $scope.showcontent = 2;
                 });   
             } 
@@ -779,7 +778,6 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
                 }
             }).then(function(response) {
                 $scope.listRecieptDetail = response.data;
-                console.log($scope.listRecieptDetail);
                 $scope.showcontent = 3;
             });
         }
@@ -910,49 +908,30 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
                 'lname' : $scope.listAcountData.ca_lname, 
                 'tel' : $scope.listAcountData.ca_tel, 
             }).success(function (data) {
-                alert("แก้ไขสมาชิกเรียบร้อย");
-                
-//                $http({
-//                    method  :   'POST',
-//                    url     :   '../php/refreshSession.php',
-//                    data : {
-//                        'pk' : $scope.key
-//                    }
-//                }).then(function(response) {
-//                    $scope.refresh = response.data;
-//                    console.log($scope.refresh);
-//                });
-                
-                location.reload();
-//                toastr.success('แก้ไขสมาชิกเรียบร้อย');
-//                $timeout(location.reload(), 5000);
+                toastr.success('แก้ไขสมาชิกเรียบร้อย');
+                $timeout(location.reload(), 5000);
             });
         }
-    
         //  ยืนยันแก้ไขรหัสผ่าน
         $scope.updatePassMember = function(){
             if($scope.pass != $scope.listAcountData.ca_pass){
-//                alert("รหัสผ่านไม่ถูกต้อง / ไม่ได้กรอกรหัสผ่าน");
                 toastr.error('รหัสผ่านไม่ถูกต้อง / ไม่ได้กรอกรหัสผ่าน');
+                $timeout(5000);
             }else{
                 if($scope.new_pass != $scope.re_new_pass){
-//                    alert("รหัสผ่านใหม่ไม่สอดคล้องกัน");
                     toastr.error('รหัสผ่านใหม่ไม่สอดคล้องกัน');
+                    $timeout(5000);
                 }else{
                     $http.post("../php/update_passMember.php",{
                         'pk' : $scope.listAcountData.ca_pk, 
                         'pass' : $scope.new_pass
                     }).success(function (data) {
-                        console.log(data);
-                        alert("แก้ไขรหัสผ่านเรียบร้อย");
-                        location.reload();
-//                        toastr.success('แก้ไขรหัสผ่านเรียบร้อย');
-//                        $timeout(location.reload(), 5000);
+                        toastr.success('แก้ไขสมาชิกเรียบร้อย');
+                        $timeout(location.reload(), 5000);
                     });  
                 }
             }             
         }
-        
     })
 
 //  สถานะคำร้องขอของอาจารย์  ============================================================================================================
@@ -1324,7 +1303,7 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
     })
     
 // ดูรายการโปรเจคproject  ============================================================================================================
-    .controller('viewProjectCtrl', function($scope,$http) {
+    .controller('viewProjectCtrl', function($scope,$http , $timeout, toastr) {
     
         $scope.stu_tb = false;
     
@@ -1362,12 +1341,7 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
             value: 100
         }];
     
-        $scope.editThisData = {
-            
-        }
-        
-        console.log($scope.key);
-    
+        $scope.editThisData = {  }
         $http({
         method  : 'POST',
         url     : '../php/select_chemProject.php',
@@ -1386,7 +1360,11 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
         $scope.editContact = function (selectedData) {
             $scope.stu_tb = true;
             $scope.editThisData = selectedData;
+<<<<<<< HEAD
             console.log("select",selectedData);
+=======
+            $scope.editThisData.cp_budget = parseInt(selectedData.cp_budget);
+>>>>>>> origin/master
         };
     
         $scope.checkBudget = function () {
@@ -1399,24 +1377,19 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
         }
     
         $scope.saveContact = function () {
-            
             if($scope.editThisData.cp_eduLvl == ''){
-                alert('กรุณาระบุระดับการศึกษา');
+                toastr.error('กรุณาระบุระดับการศึกษา');
+                $timeout(5000);
                 return;
             }
-            
-            if(angular.isString($scope.editThisData.cp_budget)){
-                alert('กรุณาระบุจำนวนเงินให้ถูกต้อง');
-                return;
-            }
-            
             if($scope.editThisData.cp_budget < 0 ){
-                alert('กรุณาระบุจำนวนเงินให้ถูกต้อง');
+                toastr.error('ท่านไม่สามารถระบุยอดเงินติดลบได้');
+                $timeout(5000);
                 return;
             }
-            
             if($scope.editThisData.cp_budget > $scope.editThisData.maxBudget) {
-                alert("ยอดเงินเกินโควต้าระดับ : "+$scope.editThisData.cp_eduLvl+" สามาถระบุได้สูงสุด "+$scope.editThisData.maxBudget);
+                toastr.error("ยอดเงินเกินโควต้าระดับ : "+$scope.editThisData.cp_eduLvl+" สามาถระบุได้สูงสุด "+$scope.editThisData.maxBudget);
+                $timeout(5000);
             }
             else{
                 console.log("Saving contact");
@@ -1429,15 +1402,11 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
 
                     }).success(function (data, status, headers, config) {
                         console.log(data);
-                        alert("แก้ไขข้อมูลเรียบร้อย");
-                        location.reload();
+                        toastr.success('ดำเนินการเรียบร้อย');
+                        $timeout(location.reload(),5000);
                     });
-                
                 $scope.reset();
             }
-            
-            
-            
         };
     
         $scope.delectContact = function(selectedData){
@@ -1448,15 +1417,12 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
                 'cp_pk' : selectedData.cp_pk
                 
                 }).success(function (data, status, headers, config) {
-                    console.log(data);
-                    alert("ลบข้อมูลเรียบร้อย");
-                    location.reload();
+                    toastr.succes('ดำเนินการเรียบร้อย');
+                    $timeout(location.reload(),5000);
                 });
             } else {
                 
             }
-            
-            
         }
     
         $scope.reset = function () {
@@ -1590,35 +1556,8 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
     }) 
 
 // สร้างข่าว ===============================================================================================
-    .controller('addNewsCtrl', function($scope, $http, $timeout, toastr){
-    
-//            $scope.uploadFileToUrl = function(file, uploadUrl){  
-//               alert("upload");
-//               var fd = new FormData();
-//               fd.append('file', file);
-//            
-//               $http.post(uploadUrl, fd, {
-//                  transformRequest: angular.identity,
-//                  headers: {'Content-Type': undefined}
-//               })
-//            
-//               .success(function(){
-//                   console.log("complete");
-//               })
-//            
-//               .error(function(){
-//                   console.log("error");
-//               });
-//            }
-        
+    .controller('addNewsCtrl', function($scope, $http, $timeout, toastr){        
             $scope.createNews = function(){
-                //alert("OK...");
-//                var file = $scope.myFile;               
-//                console.log('file is ' );
-//                console.dir(file.name);
-//
-//                var uploadUrl = "../img";
-//                $scope.uploadFileToUrl(file, uploadUrl);
 			 var addNewsForm = document.getElementById("addNewsForm");
 			//var file = fileInput;
 			var fd = new FormData(addNewsForm);
@@ -1646,7 +1585,7 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
     })
 
 //ย้ายสารเคมี ======================================================================================
-    .controller('seniorExchangeCtrl', function($scope, $http){
+    .controller('seniorExchangeCtrl', function($scope, $http, $timeout, toastr){
         $scope.cartlist = [];
         $scope.begin = 0;
         $scope.options = [{
@@ -1842,13 +1781,11 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
                      (new Date().getMonth()+1) + 
                       new Date().getFullYear(), 
                     ce_desc : $scope.cartlist.cr_desc,
-                    ce_fromstore : $scope.listAcountData[0].ca_responplace,
-                    ce_tostore : $scope.fromstore,
+                    ce_tostore : $scope.listAcountData[0].ca_responplace,
                     ce_ca_fk : $scope.key
                     },
                     headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
                     }).then(function(response) {
-                        console.log(response);
                     angular.forEach($scope.cartlist, function(value, key){            
                         $http({
                             method  : 'POST',
@@ -1857,6 +1794,7 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
                                         ced_cc_fk: value.cc_pk,
                                         ced_amt: value.exvolumeRequest,
                                         ced_unit: value.cu_name_abb,
+                                        ced_location_chem : value.cl_name,
                                         ced_status: '0'}, 
                             headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
                         }).then(function(response) {
