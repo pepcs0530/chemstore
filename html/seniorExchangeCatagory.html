@@ -69,9 +69,10 @@
 <caption><h4><i class="glyphicon glyphicon-tasks"></i>&nbsp;คลังสารเคมีต้นทาง</h4></caption>
 <ul class="nav navbar-nav">
     <form class="navbar-form navbar-left">
-        <strong>คลังต้นทาง :</strong>
+        ระบุคำที่ต้องการค้นหา : <input type="text" ng-model="searchThis.$" placeholder="ค้นหา" class="form-control">
+        คลังต้นทาง : 
         <select   ng-model="fromstore">
-            <option ng-repeat="lu in listLocation" value="{{lu.cl_name}}" >{{lu.cl_name}}</option>
+            <option ng-repeat="lu in listLocation | filter : '!'+listAcountData[0].ca_responplace" value="{{lu.cl_name}}" >{{lu.cl_name}}</option>
         </select>
     </form>
 </ul>
@@ -84,7 +85,6 @@
 </form>
         
 <br>
-{{}}
 <table class= "table table-bordered">
     <tr>
         <th>ชื่อสารเคมี</th>
@@ -98,7 +98,7 @@
         <th>ผู้ผลิต</th>
         <th style="text-align: center;">เลือก</th>
     </tr>
-    <tr ng-repeat="showdata in listChem | filter : fromstore | filter : searchThis | limitTo : searchRange.value : begin">
+    <tr ng-repeat="showdata in listChem | filter : '!'+listAcountData[0].ca_responplace | filter : fromstore | filter : searchThis | limitTo : searchRange.value : begin">
         <td>{{showdata.cc_name}}</td>
         <td>{{showdata.cc_casNo}}</td>
         <td>{{showdata.cc_state}}</td>

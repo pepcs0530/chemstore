@@ -1561,7 +1561,7 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
                                                   }, 
                                         headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
                                     }).then(function(response) {
-                                        console.log(response);
+                                        
                                     })    
                                 });
                                 toastr.success('ดำเนินการเรียบร้อย');
@@ -1634,7 +1634,7 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
             name: '100',
             value: 100
         }];
-        $scope.fromstore = "จุฬาภรณ์1";
+//        $scope.fromstore = "จุฬาภรณ์1";
          $http({
             method  :   'GET',
             url     :   '../php/select_chemLocation.php',
@@ -1692,7 +1692,8 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
             }
         }
         else {
-            alert("ปริมาณสาร "+ selectedData.cc_name+" หมด");
+            toastr.error("ปริมาณสาร "+ selectedData.cc_name+" หมด");
+            $timeout(5000);
         }          
     }
     
@@ -1755,42 +1756,42 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
         
         $scope.createRequest = function(){
         $scope.cantRequest = 0;
-        $scope.fromstore = "จุฬาภรณ์1";
         //ตรวจสอบความถูกต้อง
         
         if($scope.cartlist.length == 0){
-            alert("ไม่มีรายการสินค้า");
+            toastr.error("ไม่มีรายการสินค้า");
+            $timeout(5000);
             $scope.cantRequest = -1;
-        }
-        else if($scope.fromstore == $scope.tostore){
-            alert("ท่านไม่สามารถย้ายสารในคลังที่คุณรับผิดชอบได้");
-            $scope.cantRequest = -1;
-        }
-        else{
+        }else{
             angular.forEach($scope.cartlist, function(value, key){
                 if(isNaN(parseInt(value.volumeRequest))){
-                    alert("กรุณาระบุจำนวนสาร: "+value.cc_name+" ให้ถูกต้อง");
+                    toastr.error("กรุณาระบุจำนวนสาร: "+value.cc_name+" ให้ถูกต้อง");
+                    $timeout(5000);
                     $scope.cantRequest = -1;
                 }
                 else if(value.volumeRequest == 0){
-                    alert("สาร "+value.cc_name+" กรุณาระบุจำนวนที่ไม่ใช่ 0");
+                    toastr.error("สาร "+value.cc_name+" กรุณาระบุจำนวนที่ไม่ใช่ 0");
+                    $timeout(5000);
                     $scope.cantRequest = -1;
                 }
                 else if(value.cc_quantity < value.exvolumeRequest){
-                    alert("สาร "+value.cc_name+" มีปริมาณไม่เพียงพอ");
+                    toastr.error("สาร "+value.cc_name+" มีปริมาณไม่เพียงพอ");
+                    $timeout(5000);
                     $scope.cantRequest = -1;
                 }else {
                     //ตรวจสอบหน่วย
                     if(value.cu_name_abb == "kg" || value.cu_name_abb == "g" || value.cu_name_abb == "mg"){
                         if(value.unitRequest == "l" || value.unitRequest == "ml"){
-                            alert("หน่วยของสาร "+value.cc_name+" ที่ทำการยืมไม่ถูกต้อง");
+                            toastr.error("หน่วยของสาร "+value.cc_name+" ที่ทำการยืมไม่ถูกต้อง");
+                            $timeout(5000);
                             $scope.cantRequest = -1;
                         }
                     }
                     else
                     {
                         if(value.cu_name_abb == "kg" || value.cu_name_abb == "g" || value.cu_name_abb == "mg"){
-                            alert("หน่วยของสาร "+value.cc_name+" ที่ทำการยืมไม่ถูกต้อง");
+                            toastr.error("หน่วยของสาร "+value.cc_name+" ที่ทำการยืมไม่ถูกต้อง");
+                            $timeout(5000);
                             $scope.cantRequest = -1;
                         }
                     }
@@ -1799,7 +1800,8 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
         }
         
         if($scope.cantRequest == -1){
-            alert("ดำเนินการยืมไม่สำเร็จ");
+            toastr.error("ดำเนินการยืมไม่สำเร็จ");
+            $timeout(5000);
         }
         else{
             $http({
@@ -1831,8 +1833,8 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
                             console.log(response)
                         })    
                     }); 
-                alert("ดำเนินการเพิ่มรายการเรียบร้อย");
-                location.reload();
+                toastr.success("ดำเนินการสำเร็จ");
+                $timeout(location.reload(),5000);
             })
         }
     }  
