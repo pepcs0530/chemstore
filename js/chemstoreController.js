@@ -1307,6 +1307,13 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
     
         $scope.stu_tb = false;
     
+        $scope.listStudent = {};
+    
+        $scope.cp_pk = '';
+        $scope.cs_no = '';
+        $scope.cs_name = '';
+        $scope.cs_tel = '';
+    
         //  ปุ่ม prev
         $scope.deleteRecord = function () {
             if(parseInt($scope.begin) - parseInt($scope.searchRange.value) < 0)
@@ -1361,6 +1368,17 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
             $scope.stu_tb = true;
             $scope.editThisData = selectedData;
             $scope.editThisData.cp_budget = parseInt(selectedData.cp_budget);
+            
+            $http({
+                method  : 'POST',
+                url     : '../php/select_student.php',
+                data    : { 
+                    cp_pk : selectedData.cp_pk}, 
+                    headers : {'Content-Type': 'application/x-www-form-urlencoded'} 
+                }).then(function(response) {                
+                    $scope.listStudent = response.data;
+                    console.log($scope.listStudent);
+                })
 
         };
     
@@ -1372,8 +1390,9 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
             else 
                 $scope.editThisData.maxBudget = 0;
         }
-    
+        $scope.test=[];
         $scope.saveContact = function () {
+            
             if($scope.editThisData.cp_eduLvl == ''){
                 toastr.error('กรุณาระบุระดับการศึกษา');
                 $timeout(5000);
@@ -1398,10 +1417,24 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
                     'cp_desc' : $scope.editThisData.cp_desc
 
                     }).success(function (data, status, headers, config) {
+                    
                         console.log(data);
                         toastr.success('ดำเนินการเรียบร้อย');
-                        $timeout(location.reload(),5000);
+                        //$timeout(location.reload(),5000);
                     });
+                
+                angular.forEach($scope.listStudent, function(value, key){
+                        $http.post("../php/update_student.php",{         
+                            'cp_pk' : $scope.editThisData.cp_pk,
+                            'cs_no' : value.cs_no,
+                            'cs_name' : value.cs_name,
+                            'cs_tel' : value.cs_tel
+
+                        }).success(function (data, status, headers, config) {
+                            console.log(data);
+                        });
+                })
+                
                 $scope.reset();
             }
         };

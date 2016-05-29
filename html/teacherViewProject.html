@@ -85,13 +85,10 @@
         <th>เบอร์ติดต่อ</th>
     </tr>
     <tr ng-repeat="showdata in listStudent ">
-<!--
         <td>{{$index+1}}</td>
-        <td>{{showdata.cp_name}}</td>
-        <td>{{showdata.cp_eduLvl}}</td>
-        <td>{{showdata.cp_budget}}</td>
-        <td>{{showdata.cp_desc}}</td>
--->
+        <td><input type="text" ng-model="listStudent[$index].cs_no" ng-value="showdata.cs_no"></td>
+        <td><input type="text" ng-model="listStudent[$index].cs_name" ng-value="showdata.cs_name"></td>
+        <td><input type="text" ng-model="listStudent[$index].cs_tel" ng-value="showdata.cs_tel"></td>
     </tr>
 </table> 
 
