@@ -69,9 +69,130 @@
 
     $pdf->SetFont('freeserif','',12);
     $pdf->Ln(10);
-    $pdf->Cell(35, 0, 'ชื่อ-นามสกุล ผู้ขอย้าย', 1, 0, 'L', 0, '', 0);
-    $pdf->Cell(50, 0, '', 1, 0, 'L', 0, '', 0);
+
+    $findthis = $_POST['findthis'];
+    $ce_pk = $_POST['ce_pk'];
+
+    $findthis = 3;
+    $ce_pk = 31;
+
+    if($findthis == "all"){
+        $sql = "SELECT ce.*,ca_tname,ca_fname,ca_lname FROM `chem_exchange` AS ce
+        INNER JOIN `chem_account`
+        ON ce_ca_fk = ca_pk
+        ORDER BY ce_crtDt DESC";
+    }else{
+        $sql = "SELECT ce.*,ca_tname,ca_fname,ca_lname FROM `chem_exchange` AS ce
+        INNER JOIN `chem_account`
+        ON ce_ca_fk = ca_pk
+        WHERE ce_ca_fk = '".$findthis."' AND ce_pk = '".$ce_pk."'
+        ORDER BY ce_crtDt DESC";
+    }
+  
+
+
+    $query = mysql_query($sql);
+    $data=array();
+    while($row = mysql_fetch_array ($query)){
+        array_push($data,$row);
+        $ce_pk = $row['ce_pk'];
+        
+        $pdf->Cell(20, 0, 'เลขที่คำร้อง', 0, 0, 'L', 0, '', 0);
+        $pdf->Cell(50, 0, $row['ce_no'], 0, 0, 'L', 0, '', 0);
+        $pdf->Ln();
+        
+        $name = $row['ca_tname'].' '.$row['ca_fname'].' '.$row['ca_lname'];
+        $pdf->Cell(35, 0, 'ชื่อ-นามสกุล ผู้ขอย้าย', 0, 0, 'L', 0, '', 0);
+        $pdf->Cell(50, 0, $name, 0, 0, 'L', 0, '', 0);
+        $pdf->Ln();
+
+        $date=date_create($row['ce_crtDt']);
+        $pdf->Cell(25, 0, 'วันที่ร้องขอ', 0, 0, 'L', 0, '', 0);
+        $pdf->Cell(50, 0, date_format($date,"d/m/Y"), 0, 0, 'L', 0, '', 0);
+        $pdf->Ln();
+
+        $pdf->Cell(25, 0, 'คลังที่ย้ายเข้า', 0, 0, 'L', 0, '', 0);
+        $pdf->Cell(50, 0, $row['ce_tostore'], 0, 0, 'L', 0, '', 0);
+        $pdf->Ln();
+
+        $pdf->Cell(25, 0, 'หมายเหตุ', 0, 0, 'L', 0, '', 0);
+        $pdf->MultiCell(150,15,$row['ce_desc'],0); 
+    }
+
+    if(count($data) == 0){
+        $pdf->Cell(20, 0, 'เลขที่คำร้อง', 0, 0, 'L', 0, '', 0);
+        $pdf->Cell(50, 0, '', 0, 0, 'L', 0, '', 0);
+        $pdf->Ln();
+        $pdf->Cell(35, 0, 'ชื่อ-นามสกุล ผู้ขอย้าย', 0, 0, 'L', 0, '', 0);
+        $pdf->Cell(50, 0, '', 0, 0, 'L', 0, '', 0);
+        $pdf->Ln();
+
+        $pdf->Cell(25, 0, 'วันที่ร้องขอ', 0, 0, 'L', 0, '', 0);
+        $pdf->Cell(50, 0, '', 0, 0, 'L', 0, '', 0);
+        $pdf->Ln();
+
+        $pdf->Cell(25, 0, 'คลังที่ย้ายเข้า', 0, 0, 'L', 0, '', 0);
+        $pdf->Cell(50, 0, '', 0, 0, 'L', 0, '', 0);
+        $pdf->Ln();
+
+        $pdf->Cell(25, 0, 'หมายเหตุ', 0, 0, 'L', 0, '', 0);
+        $pdf->MultiCell(150,15,'',0);
+    }
+
+    //$findthis = $_POST['findthis'];
+    
+    $sql = "SELECT ced.*,cc_pk,ced_status,cc_quantity,`cc_name`,`cc_casNo`,`cc_grade`,`ced_amt`,`ced_unit`,`cl_name`
+           FROM `chem_exchange_detail` AS ced
+           INNER JOIN `chem_category`
+           ON `cc_pk` = `ced_cc_fk`
+           INNER JOIN `chem_location`
+           ON cc_location_fk = cl_pk
+           WHERE `ced_ce_fk` = '".$ce_pk."' ";
+
+    $query = mysql_query($sql);
+    $data=array();
+    $index = 1;
+
+    
+    
+    $pdf->Cell(15, 0, 'ลำดับที่', 1, 0, 'C', 0, '', 0);
+    $pdf->Cell(50, 0, 'สารเคมีที่ต้องการย้าย', 1, 0, 'C', 0, '', 0);
+    $pdf->Cell(25, 0, 'Cas no.', 1, 0, 'C', 0, '', 0);
+    $pdf->Cell(15, 0, 'เกรด', 1, 0, 'C', 0, '', 0);
+    $pdf->Cell(20, 0, 'คงเหลือ', 1, 0, 'C', 0, '', 0);
+    $pdf->Cell(20, 0, 'จำนวนที่ย้าย', 1, 0, 'C', 0, '', 0);
+    $pdf->Cell(15, 0, 'หน่วย', 1, 0, 'C', 0, '', 0);
+    $pdf->Cell(20, 0, 'คลัง', 1, 0, 'C', 0, '', 0);
     $pdf->Ln();
+
+    while($row = mysql_fetch_array ($query)){
+        array_push($data,$row);
+        $pdf->Cell(15, 0, $index, 1, 0, 'C', 0, '', 0);
+        $pdf->Cell(50, 0, $row['cc_name'], 1, 0, 'L', 0, '', 0);
+        $pdf->Cell(25, 0, $row['cc_casNo'], 1, 0, 'C', 0, '', 0);
+        $pdf->Cell(15, 0, $row['cc_grade'], 1, 0, 'C', 0, '', 0);
+        $pdf->Cell(20, 0, $row['cc_quantity'], 1, 0, 'C', 0, '', 0);
+        $pdf->Cell(20, 0, $row['ced_amt'], 1, 0, 'C', 0, '', 0);
+        $pdf->Cell(15, 0, $row['ced_unit'], 1, 0, 'C', 0, '', 0);
+        $pdf->Cell(20, 0, $row['cl_name'], 1, 0, 'C', 0, '', 0);
+        $pdf->Ln();
+        $index++;
+    }
+    
+    if(count($data) == 0){
+        $pdf->Cell(15, 0, '', 1, 0, 'C', 0, '', 0);
+        $pdf->Cell(50, 0, '', 1, 0, 'L', 0, '', 0);
+        $pdf->Cell(25, 0, '', 1, 0, 'C', 0, '', 0);
+        $pdf->Cell(15, 0, '', 1, 0, 'C', 0, '', 0);
+        $pdf->Cell(20, 0, '', 1, 0, 'C', 0, '', 0);
+        $pdf->Cell(20, 0, '', 1, 0, 'C', 0, '', 0);
+        $pdf->Cell(15, 0, '', 1, 0, 'C', 0, '', 0);
+        $pdf->Cell(20, 0, '', 1, 0, 'C', 0, '', 0);
+        $pdf->Ln();
+    }
+
+
+    
 
 
     $pdf->Ln();

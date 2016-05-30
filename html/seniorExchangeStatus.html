@@ -50,7 +50,9 @@
     
 <div ng-show="showcontent == 2">
     <form action="../tcpdf/examples/export_pdf_transfer.php" target="_blank" method="post" class="navbar-form navbar-right">
-        <input type="hidden" value="{{showdata.cr_pk}}" name="crd_cr_fk">
+        
+        <input type="hidden" value="{{listReciept[index].ce_ca_fk}}" name="findthis">
+        <input type="hidden" value="{{listReciept[index].ce_pk}}" name="ce_pk">
         
         <button type="button" class="btn btn-default"  ng-click="showcontent = 1"><i class="fa fa-chevron-left" aria-hidden="true"></i>&nbsp;ย้อนกลับ</button>
         <button type="submit" class="btn btn-default" ng-hide="listReciept[index].ce_status != '3'"><i class="fa fa-print" aria-hidden="true"></i>&nbsp;พิมพ์รายงาน</button>
@@ -66,6 +68,8 @@
     <table width="100%" class="table table-striped">
         <tr>
             <th>ชื่อสารเคมี</th>
+            <th>Cas no.</th>
+            <th>เกรด</th>
             <th>จำนวนคงเหลือปัจจุบัน</th>
             <th>จำนวนที่ต้องการเบิก</th>
             <th>หน่วย</th>
@@ -75,6 +79,12 @@
         <tr ng-repeat="showdata in chemdetail">
             <td>
                 {{showdata.cc_name}}
+            </td>
+            <td>
+                {{showdata.cc_casNo}}
+            </td>
+            <td>
+                {{showdata.cc_grade}}
             </td>
             <td>{{showdata.cc_quantity | number:4}}</td>
             <td>
