@@ -128,6 +128,11 @@
                 controller: 'viewBudgetCtrl'
             }   
           ).when(
+            '/viewChemRanking',{
+                templateUrl: '../html/viewChemRanking.html',
+                controller: 'viewChemRankingCtrl'
+            }   
+          ).when(
             '/seniorExchangeStatus',{
                 templateUrl: '../html/seniorExchangeStatus.html',
                 controller: 'seniorExchangeStatusCtrl'

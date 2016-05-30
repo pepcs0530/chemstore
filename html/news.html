@@ -1,9 +1,9 @@
 <caption><h4><b><i class="fa fa-newspaper-o" aria-hidden="true"></i>&nbsp;ข่าวประชาสัมพันธ์</b><h4><hr></caption>
-<div id="slides_control ">
-    <div>
+<div id="slides_control " ng-controller="showNewsCtrl">
+    <div ng-init="showNews()">
       <carousel interval="myInterval">
-        <slide ng-repeat="slide in slides" active="slide.active">
-          <img ng-src="{{slide.image}}">
+        <slide ng-repeat="slide in news" active="slide.active">
+          <img ng-src="{{slide.cpr_photo}}">
           <div class="carousel-caption">
           </div>
         </slide>

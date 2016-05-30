@@ -1615,32 +1615,59 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
     }) 
 
 // สร้างข่าว ===============================================================================================
-    .controller('addNewsCtrl', function($scope, $http, $timeout, toastr){        
-            $scope.createNews = function(){
-			 var addNewsForm = document.getElementById("addNewsForm");
-			//var file = fileInput;
-			var fd = new FormData(addNewsForm);
+    .controller('addNewsCtrl', function($scope, $http, $timeout, toastr){
+    
+            $scope.createNews = function() {
+            
+            var addNewsForm = document.getElementById("addNewsForm");
+            
+            var fd = new FormData(addNewsForm);
 
-			//fd.append("file", files[0]);
-			var xhr = new XMLHttpRequest();
-			xhr.open("POST", '../php/insert_news.php');
-			xhr.onreadystatechange = function() {
-				if (xhr.readyState == 4) {
-					alert('success');
-				} else if (uploadResult == 'success')
-					alert('error');
-			};
-			xhr.send(fd);
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", '../php/insert_news.php');
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4) {
+                    alert('success');
+                } else if (uploadResult == 'success')
+                    alert('error');
+            };
+                xhr.send(fd);
             }
 
-            $scope.clearNews = function(){
-                $scope.addNews ={
-                    title : '',
-                    desc : '',
-                    link : ''
+            $scope.clearNews = function() {
+                $scope.addNews = {
+                    title: '',
+                    desc: '',
+                    link: ''
                 }
             }
+
+            $scope.deleteNews = function(cpr_pk) {
+                $http({
+                    method: 'POST',
+                    url: '../php/delete_news.php',
+                    data: { cpr_pk: cpr_pk }
+                }).then(function(response) {
+                    alert(response);
+                });
+            }
             
+    })
+
+// แสดงข่าว ===============================================================================================
+    .controller('showNewsCtrl', function($scope, $http) {
+        $scope.showNews = function() {
+            // body...
+            $http({
+                method: 'GET',
+                url: '../php/select_news.php',
+            }).then(function(response) {
+
+                $scope.news = response.data;
+            });
+
+
+        }
     })
 
 //ย้ายสารเคมี ======================================================================================
@@ -2037,6 +2064,8 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
                 angular.forEach(response.data, function(value,key) {
                     $scope.datalist.push([value.cp_name,parseInt(value.sum)]);
                 });
+                
+                console.log('datalist',$scope.datalist)
 
                 jQuery('#container').highcharts({
                     chart: {
@@ -2092,6 +2121,87 @@ chemstore.controller('loginCtrl', function($rootScope,$scope,$http,$timeout,$loc
     
         
     
+    })
+
+// รายงานอันดับสารเคมีที่เบิก ========================================================================================================
+    .controller('viewChemRankingCtrl', function($scope, $http, $filter){
+    
+        $scope.reptChemRank = {stDt : new Date(new Date().getFullYear(),new Date().getMonth(),1),
+                           edDt : new Date(),
+                           cp_name : ''}
+        
+
+//        // Radialize the colors
+//        Highcharts.getOptions().colors = Highcharts.map(Highcharts.getOptions().colors, function (color) {
+//            return {
+//                radialGradient: {
+//                    cx: 0.5,
+//                    cy: 0.3,
+//                    r: 0.7
+//                },
+//                stops: [
+//                    [0, color],
+//                    [1, Highcharts.Color(color).brighten(-0.3).get('rgb')] // darken
+//                ]
+//            };
+//        });
+//
+//        $scope.init = false;
+
+        
+        $scope.datalist = [
+            { name: '4-Acetamidophenol ', y: 56.33 },
+            {
+                name: 'Benzoic Acid',
+                y: 24.03,
+                sliced: true,
+                selected: true
+            },
+            { name: 'Calcium nitrare', y: 10.38 },
+            { name: 'Ethyl Alcohol absolute', y: 4.77 }, { name: 'Opera', y: 0.91 },
+            { name: 'Proprietary or Undetectable', y: 0.2 }
+       ];
+        
+        $scope.search = function(){
+            
+                // Build the chart
+                jQuery('#container').highcharts({
+                    chart: {
+                        plotBackgroundColor: null,
+                        plotBorderWidth: null,
+                        plotShadow: false,
+                        type: 'pie'
+                    },
+                    title: {
+                        text: 'อันดับสารเคมีที่เบิกในช่วง '+$filter('date')($scope.reptChemRank.stDt, "dd-MM-yy")+' ถึง '+$filter('date')($scope.reptChemRank.edDt, "dd-MM-yy")
+                    },
+                    tooltip: {
+                        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                    },
+                    plotOptions: {
+                        pie: {
+                            allowPointSelect: true,
+                            cursor: 'pointer',
+                            dataLabels: {
+                                enabled: true,
+                                format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                                style: {
+                                    color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                                },
+                                connectorColor: 'silver'
+                            }
+                        }
+                    },
+                    series: [{
+                        name: 'ประมาณ',
+                        data: $scope.datalist
+                        
+                    }]
+                });
+            
+        }
+    
+        
     })
 
 // แก้ไขข้อมูลบัญชีผู้ใช้ ================F========================================================================================
