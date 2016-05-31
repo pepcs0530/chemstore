@@ -4,35 +4,6 @@
     white-space: nowrap;
 }
 </style>
-<div class="panel-heading">
-    <caption>
-        <center>
-            <h4><b><i class="fa fa-plus-circle fa-lg"></i>&nbsp;เแก้ไขข่าวประชาสัมพันธ์ใหม่</b></h4></center>
-    </caption>
-</div>
-<table id="newsTable" class="table table-bordered" ng-controller="showNewsCtrl">
-    <tr>
-        <th>หัวข้อ</th>
-        <th width="100px">ลิงค์</th>
-        <th class="absorbing-column">ลบ</th>
-    </tr>
-    <tbody ng-init="showNews()">
-        <script type="text/javascript">
-        </script>
-        <tr ng-repeat="showdata in news">
-            <td>
-                <h4> {{showdata.cpr_title}} </h4>
-                <br> {{showdata.cpr_desc}}
-            </td>
-            <td>
-                {{showdata.cpr_link}}
-            </td>
-            <td class="absorbing-column">
-                <button type="button" class="btn btn-danger btn-sm" ng-click="deleteNews(showdata.cpr_pk)"><i class="fa fa-trash-o"></i></button>
-            </td>
-        </tr>
-    </tbody>
-</table>
 <form class="form-horizontal" role="form" enctype="multipart/form-data" id='addNewsForm'>
     <!--    <input type="submit" name="save" value="upload">-->
     <div class="panel panel-default">
@@ -76,3 +47,33 @@
         </div>
     </div>
 </form>
+
+<div class="panel-heading">
+    <caption>
+        <center>
+            <h4><b><i class="fa fa-plus-circle fa-lg"></i>&nbsp;เแก้ไขข่าวประชาสัมพันธ์ใหม่</b></h4></center>
+    </caption>
+</div>
+<table id="newsTable" class="table table-bordered" ng-controller="showNewsCtrl">
+    <tr>
+        <th>หัวข้อ</th>
+        <th width="100px">ลิงค์</th>
+        <th class="absorbing-column">ลบ</th>
+    </tr>
+    <tbody ng-init="showNews()">
+        <script type="text/javascript">
+        </script>
+        <tr ng-repeat="showdata in news">
+            <td>
+                <h4> {{showdata.cpr_title}} </h4>
+                <br> {{showdata.cpr_desc}}
+            </td>
+            <td>
+                {{showdata.cpr_link}}
+            </td>
+            <td class="absorbing-column">
+                <button type="button" class="btn btn-danger btn-sm" ng-click="deleteNews(showdata.cpr_pk)"><i class="fa fa-trash-o"></i></button>
+            </td>
+        </tr>
+    </tbody>
+</table>
