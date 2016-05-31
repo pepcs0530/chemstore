@@ -3,9 +3,7 @@ $_POST = json_decode(file_get_contents("php://input"), true);
 include 'connect.php';
 
 $cc_pk = $_POST['cc_pk'];
-$cc_code = $_POST['cc_code'];
 $cc_name = $_POST['cc_name'];
-$cc_type = $_POST['cc_type'];
 $cc_casNo = $_POST['cc_casNo'];
 $cc_state = $_POST['cc_state'];
 $cc_volume = $_POST['cc_volume'];
@@ -21,9 +19,7 @@ $cc_producer = $_POST['cc_producer'];
 $cc_desc = $_POST['cc_desc'];
 
 $sql = "UPDATE chem_category SET 
-    cc_code = '".$cc_code."',
     cc_name = '".$cc_name."',
-    cc_type = '".$cc_type."',
     cc_casNo = '".$cc_casNo."',
     cc_state = '".$cc_state."',
     cc_volume = '".$cc_volume."',

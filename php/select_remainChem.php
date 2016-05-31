@@ -3,15 +3,6 @@
 
     include 'connect.php';
 
-//    $loc = $_POST['location'];
-//    $state = $_POST['state'];
-//    $stDt = $_POST['stDt'];
-//    $edDt = $_POST['edDt'];  
-//    $name = $_POST['name'];   
-//    $casNo = $_POST['casNo'];   
-//    $grade = $_POST['grade'];
-//    $selectAll = $_POST['selectAll'];
-
     isset($_POST['location']) ? $loc = $_POST['location'] : $loc = null;
     isset($_POST['state']) ? $state = $_POST['state'] : $state = null;
     isset($_POST['stDt']) ? $stDt = $_POST['stDt'] : $stDt = null;

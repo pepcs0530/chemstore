@@ -9,8 +9,8 @@
     <link rel="stylesheet" href="../fonts/thsarabunnew.css" />
     <script type="text/javascript" src="../js/lib/angular.min.js"></script>
     <script type="text/javascript" src="../js/lib/jquery-2.1.4.min.js"></script>
-    <script type="text/javascript" src="../js/lib/angular-route.min.js"></script>
-
+    <script type="text/javascript" src="../js/lib/angular-route.min.js"></script>    
+    
     <script type="text/javascript" src="../js/lib/bootstrap.min.js"></script>
     <link rel="stylesheet" href="../css/bootstrap.min.css">
     
@@ -24,12 +24,9 @@
     <script type="text/javascript" src="../js/lib/moment.min.js"></script>
     <link rel="stylesheet" href="../css/angular-simple-slideshow.css">
     <link rel="stylesheet" href="../css/app.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../css/font-awesome.min.css">
     <script type="text/javascript" src="../js/lib/ui-bootstrap-tpls.min.js"></script>
-<!--
-    <script src="https://code.highcharts.com/highcharts.js"></script>
-    <script src="https://code.highcharts.com/modules/exporting.js"></script>
--->
+    
     <script type="text/javascript" src="../js/lib/highcharts.js"></script>
     <script type="text/javascript" src="../js/lib/exporting.js"></script>
     
@@ -97,7 +94,7 @@
               <ul class="nav navbar-nav">
                   
                   <li class="active"><a href="#/news"><i class="fa fa-home" aria-hidden="true"></i>&nbsp;หน้าแรก</a></li>
-                  
+                  <li><a href="#/viewStock"><i class="fa fa-flask" aria-hidden="true"></i>&nbsp;คลังสารเคมี</a></li>
                   <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" ><i class="fa fa-cog" aria-hidden="true"></i>&nbsp;จัดการคำร้องขอ <span class="badge">{{sumNoti}}</span><span class="caret"></span></a>
                     <ul class="dropdown-menu" >
                       <li role="presentation"><a href="#/manageRequestChem">คำร้องขอสารเคมี <span class="badge">{{requestChemNoti}}</span></a></li>
@@ -106,14 +103,18 @@
                     </ul>
                   </li>
                   
-                  <li><a href="#/viewStock"><i class="fa fa-flask" aria-hidden="true"></i>&nbsp;คลังสารเคมี</a></li>
-
-                  <li><a href="#/manageInboundChem"><i class="fa fa-download" aria-hidden="true"></i>&nbsp;นำเข้าสารเคมี</a></li>
-
-                  <li><a href="#/manageEditChem"><i class="fa fa-pencil" aria-hidden="true"></i>&nbsp;แก้ไขข้อมูลสารเคมี</a></li>
+                <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" ><i class="fa fa-cog" aria-hidden="true"></i>&nbsp;จัดการคลังสารเคมี <span class="caret"></span></a>
+                    <ul class="dropdown-menu" >
+                       <li><a href="#/manageInboundChem"><i class="fa fa-download" aria-hidden="true"></i>&nbsp;นำเข้าสารเคมี</a></li>                          <li><a href="#/manageEditChem"><i class="fa fa-pencil" aria-hidden="true"></i>&nbsp;แก้ไขข้อมูลสารเคมี</a></li>
+                    </ul>
+                  </li>
                   
-                  <li><a href="#/manageEditAcoount"><i class="fa fa-pencil" aria-hidden="true"></i>&nbsp;แก้ไขข้อมูลบัญชีผู้ใช้</a></li>
-                  
+                   <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" ><i class="fa fa-cog" aria-hidden="true"></i>&nbsp;จัดการบัญชีผู้ใช้ระบบ <span class="caret"></span></a>
+                       <ul class="dropdown-menu" >
+                    <li ><a href="#/addMember" ><i class="fa fa-plus-circle" aria-hidden="true"></i>&nbsp;เพิ่มผู้ใช้งาน</a></li>
+                    <li><a href="#/manageEditAcoount"><i class="fa fa-pencil" aria-hidden="true"></i>&nbsp;แก้ไขข้อมูลบัญชีผู้ใช้</a></li>
+                       </ul>
+                  </li>
                   <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" ><i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;ประวัติรายการ<span class="caret"></span></a>
                       <ul class="dropdown-menu" >
                         <li><a href="#/importlog"  >ประวัติการนำเข้า</a></li>
@@ -136,8 +137,6 @@
                   
                   <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-user fa-lg" aria-hidden="true"></i>&nbsp;ยินดีต้อนรับคุณ {{session}} <span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                        
-                      <li ><a href="#/addMember" ><i class="fa fa-plus-circle" aria-hidden="true"></i>&nbsp;เพิ่มผู้ใช้งาน</a></li>
                         
                       <li><a href="#/editMember" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;แก้ไขข้อมูลส่วนตัว</a></li>
                         
@@ -177,7 +176,6 @@
                         
                         
                         <li><a href="#/addOtherCtrl">ส่งคำร้องขออื่นๆ</a></li>
-<!--                        <li><a href="#/sold">ขายคืน</a></li>-->
                     </ul>
                 </li>
                   
@@ -346,64 +344,7 @@
       <div class=".col-md-12" style="border: 2px solid #800000; padding: 20px; margin-top: 20px; margin-bottom: 20px; margin-left: 20px; margin-right: 20px; background-color:white;" >
             
         <div class="row" ng-view>
-                
-<!--
-                <div class="jumbotron" >
-                    <div ng-view></div>
-                </div>
--->
-                
-<!--
-                <div class="col-md-offset-1 col-md-8" >
-                    <div ng-view></div>
-                </div>
--->
-                
-<!--
-                <div class="col-md-2" >
-                  <br>
-                    <div ng-hide ="type != ''">
-                        <form role="search" method="post" >
-                            <div class="form-group">
-                              <label for="Username">ชื่อผู้ใช้งาน : </label>
-                              <input type="text" class="form-control" placeholder="Username" ng-model="login.username">
-                            </div>
-                            <div class="form-group">
-                              <label for="Password">รหัสผ่าน : </label>
-                              <input type="password" class="form-control" placeholder="Password" ng-model="login.password">
-                            </div>
-                                <input class="btn btn-default" type="submit" value="Log in" ng-click="createLogin()"/>
-                                <input class="btn btn-default" type="reset" value="Reset" />
-                        </form>
-                    </div>
-                    <div ng-hide ="type == ''">
-                      <h5  style= "text-align: center;"><b>ยินดีต้อนรับ</b></h5>
-                      <h5  style= "text-align: center;"><i class="fa fa-user fa-lg" aria-hidden="true" style="color:#00e600;"></i>&nbsp;คุณ{{session}}</h5>
-                      <hr style="height: 1px; background-color: #e0e0d1">
-                        <ul  class="nav nav-pills nav-stacked" role="tablist">
-                          <li ng-show ="type == '1'"><a href="#/addMember" ><i class="fa fa-plus-circle" aria-hidden="true"></i>&nbsp;เพิ่มผู้ใช้งาน</a></li>
-                          <li><a href="#/editMember" ><i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp;แก้ไขข้อมูลผู้ใช้งาน</a></li>
-                          <li ng-hide ="type != '1'"><a href="#/addNews"><i class="fa fa-plus-circle" aria-hidden="true"></i>&nbsp;เพิ่มข่าว</a></li>
-                          <li ng-hide ="type != '1'"><a href="#/viewBudget"><i class="glyphicon glyphicon-stats" aria-hidden="true"></i>&nbsp;งบประมาณ</a></li>
-                          <li ng-hide ="type != '1'"><a href="#/viewRemainChem"><i class="glyphicon glyphicon-list-alt" aria-hidden="true"></i>&nbsp;รายงานสถานะสารเคมีล่าสุด</a></li>
-                          <li role="separator" class="divider"></li>
-                          <li><a href="../php/logout.php" ><i class="fa fa-sign-out" aria-hidden="true"></i>&nbsp;ออกจากระบบ</a></li>
-                        </ul>
-                    </div>
-                        <hr>
-                       <div class='span2 sidebar'>
-                        <h5><b>ลิงค์ที่เกี่ยวข้อง</b></h5>
-                        <ul class="nav nav-pills nav-stacked" role="tablist">
-                          <li><a href='http://www.science.kmitl.ac.th/links/department/chem/'>เว็บไซต์ภาควิชาเคมี</a></li>
-                          <li><a href='http://www.science.kmitl.ac.th/'>เว็บคณะวิทยาศาสตร์</a></li>
-                          <li><a href='http://www.kmitl.ac.th/'>เว็บไซต์สถาบัน</a></li>
-
-                        </ul>
-                        <br><br><br>
-                      </div>
-                  
-            </div>
--->
+            
         </div>
       </div>
         

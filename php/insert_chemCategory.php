@@ -2,9 +2,7 @@
 $_POST = json_decode(file_get_contents("php://input"), true);
 include 'connect.php';
 
-    $code = $_POST['code'];
     $name = $_POST['name'];
-    $type = $_POST['type'];
     $casNo = $_POST['casNo'];
     $state = $_POST['state'];
     $packing = $_POST['packing'];
@@ -21,9 +19,7 @@ include 'connect.php';
     $expDt = date ("Y-m-d", strtotime($expDt));
 
     $sql = "INSERT INTO chem_category (
-        cc_code,
         cc_name,
-        cc_type,
         cc_casNo,
         cc_state,
         cc_packing,
@@ -39,9 +35,8 @@ include 'connect.php';
         cc_producer,
         cc_useflg,
         cc_crtDt
-        ) VALUES ('".$code."',
+        ) VALUES (
         '".$name."',
-        '".$type."',
         '".$casNo."',
         '".$state."',
         '".$packing."',
@@ -75,6 +70,6 @@ include 'connect.php';
     {
         array_push($data,$row);
     }
-    $sql = "INSERT INTO `chem_import_log` (cil_cc_fk,cil_crtDt) VALUE('".$data[0]['cc_pk']."',CURRENT_TIMESTAMP)";
+    $sql = "INSERT INTO `chem_import_log` (cil_cc_fk,cil_crtDt,cil_amt) VALUE('".$data[0]['cc_pk']."',CURRENT_TIMESTAMP,'".$volume."')";
     $query = mysql_query($sql);
 ?>

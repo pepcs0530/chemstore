@@ -7,6 +7,8 @@ $cp_name = $_POST['cp_name'] ;
 $cp_eduLvl = $_POST['cp_eduLvl'] ;
 $cp_budget = $_POST['cp_budget'] ;
 $cp_desc = $_POST['cp_desc'] ;
+$cp_current_budget = $_POST['cp_current_budget'];
+$cp_reasonyear = $_POST['cp_reasonyear'];
 
 
 $sql = "UPDATE chem_project SET 
@@ -14,9 +16,10 @@ $sql = "UPDATE chem_project SET
     cp_eduLvl = '".$cp_eduLvl."',
     cp_budget = '".$cp_budget."',
     cp_desc = '".$cp_desc."',
-    cp_updDt = CURRENT_TIMESTAMP
+    cp_updDt = CURRENT_TIMESTAMP,
+    cp_current_budget = '".$cp_current_budget."',
+    cp_reasonyear = '".$cp_reasonyear."'
     WHERE cp_pk = '".$cp_pk."'";
-
 print $sql;
 
     $result = mysql_query($sql);

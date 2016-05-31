@@ -27,7 +27,9 @@
         <th>ลำดับที่</th>
         <th>ชื่อโปรเจค</th>
         <th>ระดับการศึกษา</th>
-        <th>งบประมาณ</th>
+        <th>ปีการศึกษา</th>
+        <th>งบประมาณเริ่มต้น</th>
+        <th>งบประมาณคงเหลือปัจจุบัน</th>
         <th>หมายเหตุ</th>
         <th>แก้ไข</th>
         <th>ลบ</th>
@@ -40,7 +42,9 @@
     <td>{{$index+1}}</td>
     <td>{{showdata.cp_name}}</td>
     <td>{{showdata.cp_eduLvl}}</td>
+    <td>{{showdata.cp_reasonyear}}</td>
     <td>{{showdata.cp_budget}}</td>
+    <td>{{showdata.cp_current_budget}}</td>
     <td>{{showdata.cp_desc}}</td>
     <td align="center"><button type="button" class="btn btn-primary btn-sm"  ng-click="editContact(showdata)" ><i class="fa fa-check-square"></i></button></td>
     <td align="center"><button type="button" class="btn btn-danger btn-sm"  ng-click="delectContact(showdata)" ><i class="fa fa-trash-o"></i></button></td>
@@ -59,7 +63,15 @@
         </select>งบประมาณสูงสุด{{editThisData.maxBudget}}
     </td>
     <td>
+        <select ng-model="editThisData.cp_reasonyear" class="form-control">
+            <option ng-repeat="list in yearrange" value="{{list.value}}">{{list.name}}</option>{{addProject.cp_reasonyear}}
+        </select>
+    </td>
+    <td>
         <input type="number" ng-model="editThisData.cp_budget" id="edit"  class="form-control"/>
+    </td>
+    <td>
+        <input type="text" ng-model="editThisData.cp_current_budget" id="edit"  class="form-control"/>
     </td>
     <td>
         <input type="text" ng-model="editThisData.cp_desc" id="edit"  class="form-control"/>
@@ -71,12 +83,17 @@
     </td>
     <td align="center"><button type="button" class="btn btn-danger btn-sm"  ng-click="delectContact(showdata)" disabled><i class="fa fa-trash-o"></i></button></td>
 </script>
-
 <form class="navbar-form navbar-left">
     <button type="button" class="btn btn-primary btn-xs"  ng-click="deleteRecord()" value="previous"><i class="fa fa-backward"></i>&nbsp;previous</button>
     <button type="button" class="btn btn-primary btn-xs" ng-click="addRecord()" value="next">next&nbsp;<i class="fa fa-forward"></i></button>
 </form>
-
+<form class="navbar-form navbar-right">
+    <div class="well" >
+        งบประมานทั้งหมดที่ใช้ไป : {{totalProjectBudget}} <br>
+        จำนวนโคต้าโปรเจคปริญญาตรี : {{projectcout.bachelor}} <br>
+        จำนวนโคต้าโปรเจคปริญญาตรีโทและเอก : {{projectcout.master}}
+    </div>
+</form>
 <table class= " table table-bordered" style="width:100%" ng-show="stu_tb == true">
     <tr>
         <th>ลำดับที่</th>

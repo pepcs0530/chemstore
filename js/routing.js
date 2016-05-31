@@ -33,11 +33,6 @@
                 controller: 'teacherAddReciept'
             }
           ).when(
-            '/sold',{
-                templateUrl: '../html/sold.html',
-                controller: 'soldCtrl'
-            }
-          ).when(
             '/viewProject',{
                 templateUrl: '../html/teacherViewProject.html',
                 controller: 'viewProjectCtrl'

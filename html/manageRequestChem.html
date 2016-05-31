@@ -104,22 +104,22 @@
         </tr>
         <tr>
             <td style="text-align:right">ยอดเงินคงเหลือของผู้เบิก</td>
-            <td style="text-align:right">{{listReciept[index].ca_credit}}</td>
+            <td style="text-align:right">{{listReciept[index].cr_teacherbudget}}</td>
             <td>บาท</td>
         </tr>
         <tr>
             <td style="text-align:right">คงเหลือ</td>
-            <td style="text-align:right">{{listReciept[index].ca_credit-listReciept[index].cr_totalprice}}</td>
+            <td style="text-align:right">{{listReciept[index].cr_teacherbudget-listReciept[index].cr_cost}}</td>
             <td>บาท</td>
         </tr>
         <tr>
             <td style="text-align:right">ยอดเงินคงเหลือของโปรเจค</td>
-            <td style="text-align:right">{{listReciept[index].cp_budget}}</td>
+            <td style="text-align:right">{{listReciept[index].cr_projectbudget}}</td>
             <td>บาท</td>
         </tr>
         <tr>
             <td style="text-align:right">คงเหลือ</td>
-            <td style="text-align:right">{{listReciept[index].cp_budget-listReciept[index].cr_totalprice}}</td>
+            <td style="text-align:right">{{listReciept[index].cr_projectbudget-listReciept[index].cr_cost}}</td>
             <td>บาท</td>
         </tr>
     </table>
@@ -127,8 +127,8 @@
             ng-disabled="listReciept[index].cr_status == '3' ||
                          listReciept[index].cr_status == '2'">ไม่อนุมัติ</button>
     <button type="button" class="btn btn-success" ng-click="submitRequest()" 
-            ng-disabled="listReciept[index].cp_budget-listReciept[index].cr_totalprice < 0 ||
-                         listReciept[index].cp_budget-listReciept[index].cp_budget||
-                         listReciept[index].cr_status == '3'||
+            ng-disabled="listReciept[index].cr_projectbudget-listReciept[index].cr_cost < 0 ||
+                         listReciept[index].cr_teacherbudget-listReciept[index].cr_cost < 0 ||
+                         listReciept[index].cr_status == '3' ||
                          listReciept[index].cr_status == '2'">อนุมัติ</button>
 </div>

@@ -11,7 +11,6 @@
         <select ng-model="selectData" ng-change="getdata()" class="form-control">
             <option ng-repeat="lu in listLocation" value="{{lu.cl_name}}" >{{lu.cl_name}}</option>
         </select>
-    </select>
     </form> 
     <form class="navbar-form navbar-right">
         จำนวนแถวที่แสดง : <select ng-init="searchRange = options[2]" 

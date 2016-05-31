@@ -68,11 +68,21 @@
                 <div class="form-group">
                     <label for="acctyp" class="col-sm-4 control-label" >ประเภท :</label>
                     <div class="col-sm-2">
-                        <select class="form-control" ng-model="addMember.acctyp" >
+                        <select class="form-control" ng-model="addMember.acctyp" ng-change="clearResponPlace()">
                             <option ng-repeat="lu in listAcountType" value="{{lu.cat_pk}}" >{{lu.cat_name}}</option>
                         </select>
                     </div>
                 </div>
+                <div class="form-group" ng-show="addMember.acctyp == 3 || addMember.acctyp == 4">
+                    <label for="acctyp" class="col-sm-4 control-label" >เลือกคลังที่รับผิดชอบเฉพาะนักวิทย์เท่านั้น</label>
+                    <div class="col-sm-2">
+                        <select ng-model="addMember.responPlace" class="form-control">
+                            <option ng-repeat="lu in listloc " value="{{lu.cl_name}}" >{{lu.cl_name}}</option>
+                         </select>
+                    </div>
+                </div>
+                
+
             </form>
         </div>
             

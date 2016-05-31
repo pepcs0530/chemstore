@@ -8,7 +8,8 @@ $name = $_POST['name'];
 $cp_eduLvl = $_POST['cp_eduLvl'];
 $budget = $_POST['budget'];
 $desc = $_POST['desc'];
-$teacher_budget = $_POST['teacher_budget'];
+$cp_current_budget = $_POST['cp_current_budget'];
+$cp_reasonyear = $_POST['cp_reasonyear'];
 
 $sql = "INSERT INTO chem_project (
     cp_name,
@@ -17,8 +18,10 @@ $sql = "INSERT INTO chem_project (
     cp_desc,
     cp_useflg,
     cp_crtDt,
-    cp_teach_fk
-    ) VALUES ('".$name."', '".$cp_eduLvl."', '".$budget."', '".$desc."', '1', CURRENT_TIMESTAMP , '".$teacher_fk."')";
+    cp_teach_fk,
+    cp_current_budget,
+    cp_reasonyear
+    ) VALUES ('".$name."', '".$cp_eduLvl."', '".$budget."', '".$desc."', '1', CURRENT_TIMESTAMP , '".$teacher_fk."','".$cp_current_budget."','".$cp_reasonyear."')";
 
 
 $result = mysql_query($sql);

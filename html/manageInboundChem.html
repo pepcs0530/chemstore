@@ -9,18 +9,6 @@
                     <input class="form-control" ng-model="addChem.cc_name" type="text" class="" />
                 </div>
             </div>
-            <div class="form-group">
-                <label for="cc_type" class="col-sm-4 control-label">ประเภทสารเคมี :</label>
-                <div class="col-sm-4">
-                    <input class="form-control" ng-model="addChem.cc_type" type="text" class="" />
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="cc_code" class="col-sm-4 control-label">รหัสสารเคมี :</label>
-                <div class="col-sm-4">
-                    <input class="form-control" ng-model="addChem.cc_code" type="text" class="" />
-                </div>
-            </div>
             <div class="form-group">  
                 <label for="cc_casNo" class="col-sm-4 control-label">เลขอ้างอิงเฉพาะ (Cas no.) :</label>
                 <div class="col-sm-4">
@@ -41,19 +29,22 @@
                 <label for="cc_volume" class="col-sm-4 control-label">ขนาดบรรจุ :</label>
                 <div class="col-sm-4 form-inline">
                     <input class="form-control" style="width:50%" ng-model="addChem.cc_volume" type="text" class="" />
-                    <select  ng-model="addChem.cu_pk" >
-                        <option ng-repeat="lu in listUnit" value="{{lu.cu_pk}}" >{{lu.cu_name_abb}}</option>
+                    <select  ng-model="addChem.cu_nameforvolume" >
+                        <option ng-repeat="lu in listUnit" value="{{lu.cu_name_abb}}" >{{lu.cu_name_abb}}</option>
                     </select> 
                 </div> 
             </div>
             <div class="form-group">
                 <label for="cc_quantity" class="col-sm-4 control-label">จำนวน :</label>
-                <div class="col-sm-4">
+                <div class="col-sm-4 form-inline">
                     <input class="form-control" style="width:50%" ng-model="addChem.cc_quantity" type="text" class="" />
+                    <select  ng-model="addChem.cu_pk" >
+                        <option ng-repeat="lu in listUnit" value="{{lu.cu_pk}}" >{{lu.cu_name_abb}}</option>
+                    </select> 
                 </div>
             </div>
             <div class="form-group">
-                <label for="cc_packing" class="col-sm-4 control-label">จำนวนแพ็ค :</label>
+                <label for="cc_packing" class="col-sm-4 control-label">จำนวนขวด :</label>
                 <div class="col-sm-4">
                     <input class="form-control" style="width:50%" ng-model="addChem.cc_packing" type="text" class="" />
                 </div>    

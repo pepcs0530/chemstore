@@ -65,22 +65,13 @@
                     <th>คลัง</th>
                     <th>ห้อง</th>
                 </tr>
-<!--
-                <tr ng-repeat="showdata in listImport | 
-                       filter : logImpt.location | 
-                       filter : {cc_state : logImpt.state} |
-                       filter : {cc_name : logImpt.name} |
-                       filter : {cc_casNo : logImpt.casNo} |
-                       filter : {cc_grade : logImpt.grade} 
-                       ">
--->
                 <tr ng-repeat="showdata in listImport">
 
                     <td>{{showdata.cil_crtDt | Date}}</td>
                     <td>{{showdata.cc_name}}</td>
                     <td>{{showdata.cc_casNo}}</td>
                     <td>{{showdata.cc_state}}</td>
-                    <td>{{showdata.cc_quantity}}</td>
+                    <td>{{showdata.cil_cc_fk}}</td>
                     <td>{{showdata.cu_name_abb}}</td>
                     <td>{{showdata.cc_grade}}</td>
                     <td>{{showdata.cl_name}}</td>

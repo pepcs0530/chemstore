@@ -14,8 +14,8 @@
     
 
     if($selectAll == true){
-        $sql = "SELECT * 
-            FROM `chem_import_log`
+        $sql = "SELECT cil.*,cu_name_abb,cc_casNo,cc_name,cc_state,cc_grade,cc_room,cl_name
+            FROM `chem_import_log` AS cil
             INNER JOIN `chem_category`
             ON `cil_cc_fk`=`cc_pk`
             INNER JOIN `chem_unit`
@@ -24,8 +24,8 @@
             ON `cc_location_fk`=`cl_pk`
             ORDER BY `cil_pk` DESC";
     }else{
-        $sql = "SELECT * 
-            FROM `chem_import_log`
+        $sql = "SELECT cil.*,cu_name_abb,cc_casNo,cc_name,cc_state,cc_grade,cc_room,cl_name
+            FROM `chem_import_log` AS cil
             INNER JOIN `chem_category`
             ON `cil_cc_fk`=`cc_pk`
             INNER JOIN `chem_unit`

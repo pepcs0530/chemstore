@@ -10,6 +10,7 @@ $fname = $_POST['fname'];
 $lname = $_POST['lname'];
 $tel = $_POST['tel'];
 $acctyp = $_POST['acctyp'];
+$responPlace = $_POST['responPlace'];
 
 $sql = "INSERT INTO chem_account (
     ca_code,
@@ -21,8 +22,9 @@ $sql = "INSERT INTO chem_account (
     ca_tel,
     ca_useflg,
     ca_crtDt,
-    ca_cat_fk
-    ) VALUES ('".$code."', '".$user."', '".$pass."', '".$tname."', '".$fname."', '".$lname."', '".$tel."', '1', CURRENT_TIMESTAMP , '".$acctyp."')";
+    ca_cat_fk,
+    ca_responplace
+    ) VALUES ('".$code."', '".$user."', '".$pass."', '".$tname."', '".$fname."', '".$lname."', '".$tel."', '1', CURRENT_TIMESTAMP , '".$acctyp."','".$responPlace."')";
 
 $result = mysql_query($sql);
 
