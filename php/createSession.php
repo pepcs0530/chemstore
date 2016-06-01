@@ -9,7 +9,7 @@
     $username = (isset($_POST['ca_user'])) ? $_POST['ca_user'] : '';
     $password = (isset($_POST['ca_pass'])) ? $_POST['ca_pass'] : '';
 
-    $sql = "SELECT ca_pk,ca_pass,ca_fname,ca_lname,ca_cat_fk FROM `chem_account` WHERE `ca_user` = '".$username."' AND `ca_pass` = '".$password."'";
+    $sql = "SELECT ca_pk,ca_pass,ca_fname,ca_lname,ca_cat_fk FROM `chem_account` WHERE `ca_user` = '".$username."' AND `ca_pass` = '".$password."' AND ca_useflg = '1'";
     $query = mysql_query($sql);
     $data=array();
     while($row = mysql_fetch_array ($query))
