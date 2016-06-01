@@ -1734,7 +1734,7 @@ chemstore.controller('loginCtrl', function($rootScope, $scope, $http, $timeout, 
         }).then(function(response) {
             console.log(response);
             toastr.success('ดำเนินการเรียบร้อย');
-            $timeout(location.reload(), 5000);
+            $timeout(location.reload(), 5000);//
         });
     }
 
