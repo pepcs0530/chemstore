@@ -2,9 +2,6 @@
     $_POST = json_decode(file_get_contents('php://input'), true);
     include 'connect.php';
     session_start();   
-
-    //$username = $_POST['ca_user'];
-    //$password = $_POST['ca_pass'];
     
     $username = (isset($_POST['ca_user'])) ? $_POST['ca_user'] : '';
     $password = (isset($_POST['ca_pass'])) ? $_POST['ca_pass'] : '';
