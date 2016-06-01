@@ -1710,8 +1710,9 @@ chemstore.controller('loginCtrl', function($rootScope, $scope, $http, $timeout, 
                 alert('error');
         };*/
         xhr.onreadystatechange = function() {
-            if (xhttp.readyState == 4 && xhttp.status == 200) {
-                alert('success');
+            if (xhr.readyState == 4 && xhr.status == 200) {
+                toastr.success('ดำเนินการเรียบร้อย');
+                $timeout(location.reload(), 5000);
             }
         };
         xhr.send(fd);
@@ -1732,6 +1733,8 @@ chemstore.controller('loginCtrl', function($rootScope, $scope, $http, $timeout, 
             data: { cpr_pk: cpr_pk }
         }).then(function(response) {
             console.log(response);
+            toastr.success('ดำเนินการเรียบร้อย');
+            $timeout(location.reload(), 5000);
         });
     }
 
