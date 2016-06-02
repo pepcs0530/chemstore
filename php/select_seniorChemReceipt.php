@@ -3,15 +3,17 @@
     include 'connect.php';
     
     $findthis = $_POST['findthis'];
+
     
     if($findthis == 'all'){
-    $sql = "SELECT `cr_pk`,`cr_no`,`cr_crtDt`,`cr_updDt`,cr_desc,`cr_status`,`cr_cost`,`ca_pk`,`ca_tname`,`ca_fname`,`ca_lname`
+    $sql = "SELECT `cr_pk`,`cr_no`,`cr_crtDt`,`cr_updDt`,cr_desc,`cr_status`,`cr_cost`,`ca_pk`,ca_credit,`ca_tname`,`ca_fname`,`ca_lname`,ca_cat_fk
         FROM chem_receipt
         INNER JOIN chem_account
-        ON cp_teach_fk = ca_pk 
+        ON ca_pk =  SUBSTR(cr_no,4,1)
+        WHERE cr_cp_fk IS NULL
         ORDER BY cr_crtDt DESC";
     }else{
-        $sql = "SELECT `cr_pk`,`cr_no`,`cr_crtDt`,`cr_updDt`,cr_desc,`cr_status`,`cr_cost`,`ca_pk`,`ca_tname`,`ca_fname`,`ca_lname`
+        $sql = "SELECT `cr_pk`,`cr_no`,`cr_crtDt`,`cr_updDt`,cr_desc,`cr_status`,`cr_cost`,`ca_pk`,`ca_tname`,`ca_fname`,`ca_lname`,ca_cat_fk
         FROM chem_receipt
         INNER JOIN chem_account
         ON ca_pk = '".$findthis."' 

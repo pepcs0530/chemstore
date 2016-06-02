@@ -13,9 +13,13 @@
             ng-model="selectedProject" 
             ng-options="option.cp_name for option in listProject">
     </select>
+
     </form>
     <br>
     ยอดเงินคงเหลือ : {{selectedProject.cp_current_budget}}
+    <br><br>
+    เหตุผลประกอบการพิจารณาการย้ายสารเคมี <br>
+    <textarea ng-model="cr_desc" id="form-cp_desc" rows="5" cols="100%"></textarea>
 </div>
 <hr>
 <div class="navbar-header">

@@ -187,8 +187,21 @@ chemstore.controller('loginCtrl', function($rootScope, $scope, $http, $timeout, 
         data: { findthis: 'all' }
     }).then(function(response) {
         $scope.listReciept = response.data;
-        console.log($scope.listReciept);
+        $http({
+            method: 'POST',
+            url: '../php/select_seniorChemReceipt.php',
+            data: { findthis: 'all' }
+        }).then(function(response) {
+            angular.forEach(response.data,function(value,key){
+                value.cr_cost = 0;
+                value.cp_name = "เบิกโดย "+value.ca_tname+value.ca_fname+" "+value.ca_lname;
+                $scope.listReciept.push(value);
+            })
+            console.log($scope.listReciept);
+        });
     });
+    
+    
     $scope.showdetail = function(getdata, index) {
         $scope.showcontent = true;
         console.log(getdata, index);
@@ -260,6 +273,7 @@ chemstore.controller('loginCtrl', function($rootScope, $scope, $http, $timeout, 
                 status: 3
             }
         }).then(function(data) {
+            console.log(data);
             $http({
                 method: 'POST',
                 url: '../php/update_receiptDetail.php',
@@ -1280,6 +1294,7 @@ chemstore.controller('loginCtrl', function($rootScope, $scope, $http, $timeout, 
                         new Date().getFullYear(),
                     cr_cp_fk: $scope.selectedProject.cp_pk,
                     cr_cost: $scope.total,
+                    cr_desc: $scope.cr_desc
                 },
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
             }).then(function(response) {
@@ -2502,8 +2517,20 @@ chemstore.controller('loginCtrl', function($rootScope, $scope, $http, $timeout, 
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
         }).then(function(response) {
             $scope.listReciept = response.data;
+            $http({
+                method: 'POST',
+                url: '../php/select_recieptForseniorNoProject.php',
+                data: { findthis: $scope.listAcountData.ca_responplace }
+            }).then(function(response) {
+                angular.forEach(response.data,function(value,key){
+                    value.cr_cost = 0;
+                    value.cp_name = "เบิกโดย "+value.ca_tname+value.ca_fname+" "+value.ca_lname;
+                    $scope.listReciept.push(value);
+                })
+            });
         });
     });
+    console.log("5555");
     $scope.showdetail = function(getdata, index) {
         $scope.showcontent = true;
         console.log(getdata, index);
@@ -3034,11 +3061,10 @@ chemstore.controller('loginCtrl', function($rootScope, $scope, $http, $timeout, 
 
     $http({
         method: 'POST',
-        url: '../php/seletc_seniorChemReceipt.php',
+        url: '../php/select_seniorChemReceipt.php',
         data: { findthis: $scope.key }
     }).then(function(response) {
         $scope.listReciept = response.data;
-        console.log($scope.listReciept);
     });
 
     $scope.showdetail = function(getdata, index) {

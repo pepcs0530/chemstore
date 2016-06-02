@@ -3,22 +3,38 @@
     date_default_timezone_set('Asia/Bangkok');
 
     $fk = $_POST["crd_cr_fk"];
+    if(!isset($_POST['type'])){
+        $type = '';    
+    } 
+    else{
+        $type = $_POST['type'];
+    }
+    
 
     $sql = "SELECT * FROM `chem_receipt_detail`
-        INNER JOIN `chem_category`
-        ON `crd_cc_fk` = `cc_pk`
-        INNER JOIN `chem_location`
-        ON `cc_location_fk` = `cl_pk`
-        WHERE `crd_cr_fk` = ".$fk." AND crd_status = 4
-        ORDER BY `crd_pk` ASC";
+            INNER JOIN `chem_category`
+            ON `crd_cc_fk` = `cc_pk`
+            INNER JOIN `chem_location`
+            ON `cc_location_fk` = `cl_pk`
+            WHERE `crd_cr_fk` = ".$fk." AND crd_status = 4
+            ORDER BY `crd_pk` ASC";
     $query = mysql_query($sql);
+    
 
-    $sql2 = "SELECT * FROM `chem_receipt`
-            INNER JOIN `chem_project`
-            ON `cr_cp_fk` = `cp_pk`
-            INNER JOIN `chem_account`
-            ON `cp_teach_fk` = `ca_pk`
-            WHERE `cr_pk` = ".$fk."";
+    if($type == '3' || $type == '4'){
+        $sql2 = "SELECT * FROM `chem_receipt`
+                INNER JOIN `chem_account`
+                ON ".$type." = `ca_pk`
+                WHERE `cr_pk` = ".$fk."";
+    }
+    else{
+        $sql2 = "SELECT * FROM `chem_receipt`
+                INNER JOIN `chem_project`
+                ON `cr_cp_fk` = `cp_pk`
+                INNER JOIN `chem_account`
+                ON `cp_teach_fk` = `ca_pk`
+                WHERE `cr_pk` = ".$fk."";
+    }
     $query2 = mysql_query($sql2);
 
     //-------------------------------------------------------------
@@ -100,65 +116,77 @@
         $pdf->Cell(20, 0, 'เลขที่ใบเบิก', 0, 0, 'L', 0, '', 0);
         $pdf->Cell(30, 0, $cr_no, 0, 0, 'L', 0, '', 0);
         $pdf->Ln();
+        
+        if($type != '3' && $type != '4'){
+            $pdf->Cell(28, 0, 'อาจารย์ที่ปรึกษา', 0, 0, 'L', 0, '', 0);
+            $pdf->Cell(100, 0, $row['ca_tname']." ".$row['ca_fname']." ".$row['ca_lname'], 0, 0, 'L', 0, '', 0);
+            $pdf->Ln();
 
-        $pdf->Cell(28, 0, 'อาจารย์ที่ปรึกษา', 0, 0, 'L', 0, '', 0);
-        $pdf->Cell(100, 0, $row['ca_tname']." ".$row['ca_fname']." ".$row['ca_lname'], 0, 0, 'L', 0, '', 0);
-        $pdf->Ln();
-        
-        $sqlStu = "SELECT * FROM `chem_student`
-                    WHERE `cs_cp_fk` = ".$row['cr_cp_fk']." ";
-        $queryStu = mysql_query($sqlStu);
-        $first = 1;
-        $data=array();
-        
-        
-        while($row = mysql_fetch_array ($queryStu)){
-            array_push($data,$row);
-            if($first == 1){
-                $pdf->Cell(35, 0, 'ชื่อ-นามสกุล ผู้ขอเบิก', 0, 0, 'L', 0, '', 0);
-                $pdf->Cell(100, 0, ''.$first.'.  '.$row['cs_no'].'   '.$row['cs_name'].' ', 0, 0, 'L', 0, '', 0);
+            $sqlStu = "SELECT * FROM `chem_student`
+                        WHERE `cs_cp_fk` = ".$row['cr_cp_fk']." ";
+            $queryStu = mysql_query($sqlStu);
+            $first = 1;
+            $data=array();
+
+
+            while($row = mysql_fetch_array ($queryStu)){
+                array_push($data,$row);
+                if($first == 1){
+                    $pdf->Cell(35, 0, 'ชื่อ-นามสกุล ผู้ขอเบิก', 0, 0, 'L', 0, '', 0);
+                    $pdf->Cell(100, 0, ''.$first.'.  '.$row['cs_no'].'   '.$row['cs_name'].' ', 0, 0, 'L', 0, '', 0);
+                    $pdf->Ln();
+                }else{
+                   $pdf->Cell(35, 0, '', 0, 0, 'L', 0, '', 0);
+                    $pdf->Cell(100, 0, ''.$first.'.  '.$row['cs_no'].'   '.$row['cs_name'].' ', 0, 0, 'L', 0, '', 0);
+                    $pdf->Ln(); 
+                }
+                $first ++;
+            }
+
+            if(count($data) == 0){
+
+                $pdf->Cell(20, 0, 'เลขที่ใบเบิก', 0, 0, 'L', 0, '', 0);
+                $pdf->Cell(30, 0, $cr_no, 0, 0, 'L', 0, '', 0);
                 $pdf->Ln();
-            }else{
-               $pdf->Cell(35, 0, '', 0, 0, 'L', 0, '', 0);
-                $pdf->Cell(100, 0, ''.$first.'.  '.$row['cs_no'].'   '.$row['cs_name'].' ', 0, 0, 'L', 0, '', 0);
+                $pdf->Cell(35, 0, 'ชื่อ-นามสกุล ผู้ขอเบิก', 0, 0, 'L', 0, '', 0);
+                $pdf->Cell(100, 0, '1......................................................................................', 0, 0, 'L', 0, '', 0);
+                $pdf->Ln(); 
+                $pdf->Cell(35, 0, '', 0, 0, 'L', 0, '', 0);
+                $pdf->Cell(100, 0, '2......................................................................................', 0, 0, 'L', 0, '', 0);
+                $pdf->Ln(); 
+                $pdf->Cell(35, 0, '', 0, 0, 'L', 0, '', 0);
+                $pdf->Cell(100, 0, '3......................................................................................', 0, 0, 'L', 0, '', 0);
                 $pdf->Ln(); 
             }
-            $first ++;
-        }
-        
-        if(count($data) == 0){
-            $pdf->Cell(10, 0, 'วันที่', 0, 0, 'L', 0, '', 0);
-            $pdf->Cell(30, 0, date('d/m/Y'), 0, 0, 'L', 0, '', 0);
+            $pdf->Cell(53, 0, 'โครงงานพิเศษ/วิทยานิพนธ์ เรื่อง', 0, 0, 'L', 0, '', 0);
+            $pdf->Cell(100, 0, $row['cp_name'], 0, 0, 'L', 0, '', 0);
             $pdf->Ln();
-            $pdf->Cell(20, 0, 'เลขที่ใบเบิก', 0, 0, 'L', 0, '', 0);
-            $pdf->Cell(30, 0, $cr_no, 0, 0, 'L', 0, '', 0);
+            $pdf->Cell(10, 0, 'สาขา', 0, 0, 'L', 0, '', 0);
+            $pdf->Cell(42, 0, '[ ] ป.ตรี เคมีอุตสาหกรรม', 0, 0, 'L', 0, '', 0);
+            $pdf->Cell(40, 0, '[ ] ป.ตรี เคมีสิ่งแวดล้อม', 0, 0, 'L', 0, '', 0);
+            $pdf->Cell(50, 0, '[ ] ป.ตรี เคมีเครื่องมือวิเคราะห์', 0, 0, 'L', 0, '', 0);
+            $pdf->Cell(45, 0, '[ ] ปิโตรเคมี(นานาชาติ)', 0, 0, 'L', 0, '', 0);
             $pdf->Ln();
-            $pdf->Cell(35, 0, 'ชื่อ-นามสกุล ผู้ขอเบิก', 0, 0, 'L', 0, '', 0);
-            $pdf->Cell(100, 0, '1......................................................................................', 0, 0, 'L', 0, '', 0);
-            $pdf->Ln(); 
-            $pdf->Cell(35, 0, '', 0, 0, 'L', 0, '', 0);
-            $pdf->Cell(100, 0, '2......................................................................................', 0, 0, 'L', 0, '', 0);
-            $pdf->Ln(); 
-            $pdf->Cell(35, 0, '', 0, 0, 'L', 0, '', 0);
-            $pdf->Cell(100, 0, '3......................................................................................', 0, 0, 'L', 0, '', 0);
-            $pdf->Ln(); 
+            $pdf->Cell(10, 0, '', 0, 0, 'L', 0, '', 0);
+            $pdf->Cell(80, 0, '[ ] ป.โท สาขา...................................................', 0, 0, 'L', 0, '', 0);
+            $pdf->Cell(80, 0, '[ ] ป.เอก สาขา...................................................', 0, 0, 'L', 0, '', 0);
+        }else{
+            $pdf->Cell(10, 0, 'สาขา', 0, 0, 'L', 0, '', 0);
+            $pdf->Cell(42, 0, '[ ] ป.ตรี เคมีอุตสาหกรรม', 0, 0, 'L', 0, '', 0);
+            $pdf->Cell(40, 0, '[ ] ป.ตรี เคมีสิ่งแวดล้อม', 0, 0, 'L', 0, '', 0);
+            $pdf->Cell(50, 0, '[ ] ป.ตรี เคมีเครื่องมือวิเคราะห์', 0, 0, 'L', 0, '', 0);
+            $pdf->Cell(45, 0, '[ ] ปิโตรเคมี(นานาชาติ)', 0, 0, 'L', 0, '', 0);
+            $pdf->Ln();
+            $pdf->Cell(10, 0, '', 0, 0, 'L', 0, '', 0);
+            $pdf->Cell(80, 0, '[ ] ป.โท สาขา...................................................', 0, 0, 'L', 0, '', 0);
+            $pdf->Cell(80, 0, '[ ] ป.เอก สาขา...................................................', 0, 0, 'L', 0, '', 0);
+            $pdf->Ln();
+            $pdf->Cell(35, 0, 'ชื่อ-นามสกุล ผู้ขอเบิก 1. '.$row['ca_tname']." ".$row['ca_fname']." ".$row['ca_lname'], 0, 0, 'L', 0, '', 0);
+            $pdf->Ln();
+            $pdf->Cell(53, 0, 'เหตุผลประกอบการเบิก', 0, 0, 'L', 0, '', 0);     
+            $pdf->Ln();
+            $pdf->Cell(53, 0, $row['cr_desc'], 0, 0, 'L', 0, '', 0);  
         }
-        
-
-        
-        $pdf->Cell(53, 0, 'โครงงานพิเศษ/วิทยานิพนธ์ เรื่อง', 0, 0, 'L', 0, '', 0);
-        $pdf->Cell(100, 0, $row['cp_name'], 0, 0, 'L', 0, '', 0);
-
-        $pdf->Ln();
-        $pdf->Cell(10, 0, 'สาขา', 0, 0, 'L', 0, '', 0);
-        $pdf->Cell(42, 0, '[ ] ป.ตรี เคมีอุตสาหกรรม', 0, 0, 'L', 0, '', 0);
-        $pdf->Cell(40, 0, '[ ] ป.ตรี เคมีสิ่งแวดล้อม', 0, 0, 'L', 0, '', 0);
-        $pdf->Cell(50, 0, '[ ] ป.ตรี เคมีเครื่องมือวิเคราะห์', 0, 0, 'L', 0, '', 0);
-        $pdf->Cell(45, 0, '[ ] ปิโตรเคมี(นานาชาติ)', 0, 0, 'L', 0, '', 0);
-        $pdf->Ln();
-        $pdf->Cell(10, 0, '', 0, 0, 'L', 0, '', 0);
-        $pdf->Cell(80, 0, '[ ] ป.โท สาขา...................................................', 0, 0, 'L', 0, '', 0);
-        $pdf->Cell(80, 0, '[ ] ป.เอก สาขา...................................................', 0, 0, 'L', 0, '', 0);
     }
 
     $pdf->Ln(10);
@@ -199,6 +227,6 @@
     $pdf->Cell(90, 0, '(เจ้าหน้าที่ผู้จ่ายของ)', 0, 0, 'C', 0, '', 0);
 
     $pdf->Output('export_pdf_withdraw.pdf', 'I');
-
+//
 
 ?>

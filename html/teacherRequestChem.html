@@ -69,6 +69,8 @@
         สถานะคำร้องขอปัจจุบัน : <font ng-bind-html="listReciept[index].cr_status | confirmFilter"></font><br>
         โปรเจคที่ร้องขอ : {{listReciept[index].cp_name}} <br>
         ผู้เขียนคำร้องขอ : {{listReciept[index].ca_tname}}{{listReciept[index].ca_fname}}&nbsp;{{listReciept[index].ca_lname}}<br>
+        เหตุผลประกอบคำร้องขอ : 
+        <p style="width:100%;">{{listReciept[index].cr_desc}}</p>
     </form>
     <table width="100%" class="table table-striped">
         <tr>

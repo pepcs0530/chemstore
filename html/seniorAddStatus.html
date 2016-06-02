@@ -56,6 +56,7 @@
     <caption><center><h4><b><i class="fa fa-list-alt"></i>&nbsp;รายละเอียดข้อมูลการเบิกสารเคมี</b></h4></center></caption><hr>
         <form action="../tcpdf/examples/export_pdf_withdraw.php" target="_blank" method="post" class="navbar-form navbar-right">
             <input type="hidden" value="{{listReciept[index].cr_pk}}" name="crd_cr_fk">
+            <input type="hidden" value="{{listReciept[index].ca_cat_fk}}" name="type">
             <input type="submit" class="btn btn-default" ng-hide="listReciept[index].cr_status != 3" value="พิมพ์ใบเสร็จ">
             <input type="button" class="btn btn-default" value="ย้อนกลับ" ng-click="content = false">
         </form>
