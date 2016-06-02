@@ -2,16 +2,16 @@
     $_POST = json_decode(file_get_contents("php://input"), true);
     include 'connect.php';
 
-    $crd_pk = $_POST['crd_pk'];
+    $ced_pk = $_POST['ced_pk'];
     $status = $_POST['status'];
-    $crd_desc = $_POST['crd_desc'];
+    $ced_desc = $_POST['ced_desc'];
     
 
-    $sql = "UPDATE `chem_receipt_detail` 
-            SET `crd_status` = '".$status."',
-                `crd_updDt` = CURRENT_TIMESTAMP, 
-                `crd_desc` = '".$crd_desc."'
-            WHERE `crd_pk` = '".$crd_pk."'";
+    $sql = "UPDATE `chem_exchange_detail` 
+            SET `ced_status` = '".$status."',
+                `ced_updDt` = CURRENT_TIMESTAMP, 
+                `ced_desc` = '".$ced_desc."'
+            WHERE `ced_pk` = '".$ced_pk."'";
     $result = mysql_query($sql);
 
      if($result){

@@ -8,7 +8,7 @@
     <form class="navbar-form navbar-left">
         ระบุคำที่ต้องการค้นหา : <input type="text" class="form-control" ng-model="searchThis.$" placeholder="ค้นหา">&nbsp;
         ประเภทสถานะคำร้อง : 
-        <select ng-model="searchThis.cr_status" class="form-control">
+        <select ng-model="searchThis.ce_status" class="form-control">
             <option value="" selected>ดูทั้งหมด</option>
             <option value="0">รอการยืนยัน</option>
             <option value="1">อนุมัติได้รับสารครบแล้ว</option>
@@ -28,24 +28,24 @@
             <th>ลำดับที่</th>
             <th>เลขที่ใบเสร็จ</th>
             <th>วัน-เวลาที่ร้องขอ</th>
+            <th>คลังสารเคมีที่ย้ายเข้า</th>
             <th>สถานะการร้องขอ</th>
-            <th>ยอดรวม</th>
             <th>รายละเอียด</th>
         </tr>
-        <tr ng-repeat="showdata in listReciept | filter : searchThis | limitTo : searchRange.value : begin">
+        <tr ng-repeat="showdata in listExchange | filter : searchThis | limitTo : searchRange.value : begin">
             <td>
             {{$index+1}}
             </td>
             <td>
-            {{showdata.cr_no}}
+            {{showdata.ce_no}}
             </td>
             <td>
-            {{showdata.cr_crtDt | Datetime}}
+            {{showdata.ce_crtDt | Datetime}}
             </td>
-            <td ng-bind-html="showdata.cr_status | confirmFilter"></td>
-            <td>{{showdata.cr_cost}}</td>
+            <td>{{showdata.ce_tostore}}</td>
+            <td ng-bind-html="showdata.ce_status | confirmFilter"></td>
             <td>
-                <button type="button" class="btn btn-info" value="แสดง" ng-click="showdetail(showdata.cr_pk,$index)">แสดง</button>
+                <button type="button" class="btn btn-info" ng-click="showdetail(showdata.ce_pk,$index)">แสดงรายละเอียด</button>
             </td>
         </tr>
     </table> 
@@ -56,11 +56,13 @@
         <input type="button" class="btn btn-default" value="ย้อนกลับ" ng-click="showcontent = false">
     </form> 
     <form class="navbar-form navbar-left">
-        ใบคำร้องที่ : {{listReciept[index].cr_no}} <br>
-        วันที่ร้องขอ : {{listReciept[index].cr_crtDt | Date}} <br>
+        ใบคำร้องที่ : {{listExchange[index].ce_no}} <br>
+        วันที่ร้องขอ : {{listExchange[index].ce_crtDt | Date}} <br>
         สถานะคำร้องขอปัจจุบัน : <font ng-bind-html="listReciept[index].cr_status | confirmFilter"></font><br>
-        โปรเจคที่ร้องขอ : {{listReciept[index].cp_name}} <br>
-        ผู้เขียนคำร้องขอ : {{listReciept[index].ca_tname}}{{listReciept[index].ca_fname}}&nbsp;{{listReciept[index].ca_lname}}<br>
+        คลังที่ย้ายสารเข้า : {{listExchange[index].ce_tostore}} <br>
+        ผู้เขียนคำร้องขอ : {{listExchange[index].ca_tname}}{{listExchange[index].ca_fname}}&nbsp;{{listExchange[index].ca_lname}}<br>
+        เหตุผลประกอบคำร้องขอ : 
+        <p style="width:100%;">{{listExchange[index].ce_desc}}</p>
     </form>
     <table class="table table-striped" width="100%">
     <tr>
@@ -69,7 +71,6 @@
         <th>จำนวนที่ต้องการเบิก</th>
         <th>หน่วย</th>
         <th>คลัง</th>
-        <th>ราคา</th>
         <th>สถานะ</th>
         <th>ดำเนินการ</th>
     </tr>
@@ -81,27 +82,24 @@
             {{showdata.cc_quantity | number:4}}
         </td> 
         <td>
-            {{showdata.crd_amt | number:4}}
-        </td> 
+            {{showdata.ced_amt | number:4}}
+        </td>  
         <td>
-            {{showdata.crd_unit}}
+            {{showdata.ced_unit}}
         </td>
         <td>
             {{showdata.cl_name}}
-        </td>
-        <td>
-            {{showdata.crd_price}}
-        </td>  
-        <td ng-bind-html="showdata.crd_status | confirmFilter"></td>
+        </td> 
+        <td ng-bind-html="showdata.ced_status | confirmFilter"></td>
         <td><input type="checkbox" 
                    ng-model="chemdetail[$index].checkthis" 
                    ng-change="checkselect($index)" 
-                   ng-show="showdata.cl_name == listAcountData.ca_responplace && showdata.crd_status != 2 && showdata.crd_status != 5"></td>
+                   ng-show="showdata.cl_name == listAcountData.ca_responplace && showdata.ced_status != 2 && showdata.ced_status != 5"></td>
     </tr>
     </table>
         <div align="right">
             หมายเหตุ :
-            <input type="text" ng-model="crd_desc" rows="1" style="width:20%;">
+            <input type="text" ng-model="ced_desc" rows="1" style="width:20%;">
         </div>
         <form class="navbar-form navbar-right">
             <br>

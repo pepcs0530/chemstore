@@ -6,6 +6,7 @@ $cp_pk = $_POST['cp_pk'] ;
 $cs_no = $_POST['cs_no'] ;
 $cs_name = $_POST['cs_name'] ;
 $cs_tel = $_POST['cs_tel'] ;
+$cs_eduLv = $_POST['cs_eduLv'];
 
 print $cp_pk;
 print $cs_no;
@@ -15,7 +16,8 @@ print $cs_tel;
 $sql = "UPDATE chem_student SET 
     cs_no = '".$cs_no."',
     cs_name = '".$cs_name."',
-    cs_tel = '".$cs_tel."'
+    cs_tel = '".$cs_tel."',
+    cs_eduLv = '".$cs_eduLv."'
     WHERE cs_cp_fk = ".$cp_pk."";
 
 print $sql;

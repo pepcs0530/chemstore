@@ -41,7 +41,7 @@
   <body ng-controller ="loginCtrl" ng-init="checkSession(); checked=true; dis=true; btng1=true; btng2=true; btng3=true; fix=true">
     <div class="masthead">
         
-        <a href="https://www.facebook.com/chemistryKMITL/?fref=ts" style="position: absolute; top: 20px; right:40px; color:#fff;"><i class="fa fa-facebook-square  fa-lg" aria-hidden="true"></i></a>
+        <a href="https://www.facebook.com/chemistryKMITL/?fref=ts" style="position: absolute; top: 20px; right:40px; color:#fff;"><i class="fa fa-facebook-square  fa-lg" ></i></a>
         
         <img src="../img/head3.jpg" style=" margin-bottom:1px" >
     </div>      
@@ -82,7 +82,6 @@
                     </li>
                 </ul>
               </li>
-
             </ul>
           </div>
         </nav>
@@ -98,7 +97,7 @@
                   <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" ><i class="fa fa-cog" aria-hidden="true"></i>&nbsp;จัดการคำร้องขอ <span class="badge">{{sumNoti}}</span><span class="caret"></span></a>
                     <ul class="dropdown-menu" >
                       <li role="presentation"><a href="#/manageRequestChem">คำร้องขอสารเคมี <span class="badge">{{requestChemNoti}}</span></a></li>
-                      <li role="presentation"><a href="#/manageExchangeChem">คำร้องขอย้ายสารเคมี <span class="badge">{{requestChemNoti}}</span></a></li>
+                      <li role="presentation"><a href="#/manageExchangeChem">คำร้องขอย้ายสารเคมี <span class="badge">{{requestExchangeNoti}}</span></a></li>
                       <li role="presentation"><a href="#/manageRequestOther">คำร้องขออื่นๆ <span class="badge">{{requestOtherNoti}}</span></a></li>
                     </ul>
                   </li>
@@ -229,8 +228,10 @@
                   
                   <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-check-square-o" aria-hidden="true"></i>&nbsp;สถานะคำร้องขอ<span class="caret"></span></a>
                     <ul class="dropdown-menu" >
+                        <li><a href="#/seniorAddRequestsStatus">สถานะคำร้องขอเบิกสารเคมี</a></li>
                       <li><a href="#/seniorExchangeStatus">สถานะคำร้องขอย้ายคลัง</a></li>
-                        <li><a href="#/seniorSubmitRequest">อนุมัติการให้เบิกสารเคมี</a></li>
+                        <li><a href="#/seniorSubmitRequest">อนุมัติการเบิกสารเคมี</a></li>
+                        <li><a href="#/seniorSubmitExchange">อนุมัติการย้ายสารเคมี</a></li>
                     </ul>
                   </li>
                   
@@ -238,6 +239,7 @@
                   
                   <li class="dropdown" ><a class="dropdown-toggle" data-toggle="dropdown" ><i class="fa fa-reply" aria-hidden="true"></i>&nbsp;ส่งคำร้องขอ<span class="caret"></span></a>
                     <ul class="dropdown-menu" >
+                        <li><a href="#/seniorAddRequest">เบิกสารเคมี</a></li>
                         <li><a href="#/seniorExchangeCatagory">ย้ายคลังสารเคมี</a></li>
                         <li><a href="#/addOtherCtrl">ส่งคำร้องอื่นๆ</a></li>
                     </ul>
@@ -350,11 +352,11 @@
         
       
         <footer class="container-fluid text-center">
-          © 2016 Chemisty, Faculty of Science, King Mongkut's Institute of Technology Ladkrabang
+          © 2016 Chemistry, Faculty of Science, King Mongkut's Institute of Technology Ladkrabang
             <br>ภาควิชาเคมี ตึกจุฬาภรณ์วลัยลักษณ์ 1 ชั้น 5 คณะวิทยาศาสตร์ สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง 
             <br>ถนนฉลองกรุง เขตลาดกระบัง กรุงเทพ 10520
             <br>โทร 0-2329-8400 ถึง 8411 ต่อ 290, 0-2329-8000 ถึง 8099 ต่อ 6234, 6235 
-            Fax 0-2329-8415
+            Fax 0-2329-8412
 
           
         </footer>

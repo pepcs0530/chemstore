@@ -10,8 +10,12 @@
     $row = mysql_fetch_array ($query);
     $data[0]=$row[0];
 
-    //  คำร้องขอสารเคมีเพิ่ม
-    $data[1]=0;
+    //  คำร้องขอย้ายคลัง
+    $sql2 = "SELECT COUNT(*) FROM `chem_exchange`
+            WHERE `ce_status`= '0' ";
+    $query2 = mysql_query($sql2);
+    $row2 = mysql_fetch_array ($query2);
+    $data[1]=$row2[0];
 
     //  คำร้องขออื่นๆ
     $sql3 = "SELECT COUNT(*) FROM `chem_request_other`

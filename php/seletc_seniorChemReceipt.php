@@ -5,20 +5,16 @@
     $findthis = $_POST['findthis'];
     
     if($findthis == 'all'){
-        $sql = "SELECT `cr_pk`,`cr_no`,`cr_crtDt`,`cr_updDt`,`cr_status`,`cr_cost`,`cp_pk`,`cp_name`,`cp_desc`,`ca_pk`,`ca_tname`,`ca_fname`,`ca_lname`,cp_current_budget,ca_credit
+    $sql = "SELECT `cr_pk`,`cr_no`,`cr_crtDt`,`cr_updDt`,cr_desc,`cr_status`,`cr_cost`,`ca_pk`,`ca_tname`,`ca_fname`,`ca_lname`
         FROM chem_receipt
-        INNER JOIN chem_project
-        ON cp_pk = cr_cp_fk 
         INNER JOIN chem_account
         ON cp_teach_fk = ca_pk 
         ORDER BY cr_crtDt DESC";
     }else{
-        $sql = "SELECT `cr_pk`,`cr_no`,`cr_crtDt`,`cr_updDt`,`cr_status`,`cr_cost`,`cp_pk`,`cp_name`,`cp_desc`,`ca_pk`,`ca_tname`,`ca_fname`,`ca_lname`,cp_budget,ca_credit
+        $sql = "SELECT `cr_pk`,`cr_no`,`cr_crtDt`,`cr_updDt`,cr_desc,`cr_status`,`cr_cost`,`ca_pk`,`ca_tname`,`ca_fname`,`ca_lname`
         FROM chem_receipt
-        INNER JOIN chem_project
-        ON cp_pk = cr_cp_fk 
         INNER JOIN chem_account
-        ON cp_teach_fk = ca_pk 
+        ON ca_pk = '".$findthis."' 
         WHERE cr_no LIKE 'NO.".$findthis."%'
         ORDER BY cr_crtDt DESC";
     }

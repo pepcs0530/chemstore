@@ -17,6 +17,13 @@
             <option value="3">อนุมัติดำเนินการรับสาร</option>
         </select>
     </form>
+    <form class="navbar-form navbar-right">
+        จำนวนแถวที่แสดง : <select ng-init="searchRange = options[2]"
+                class="form-control"
+                ng-model="searchRange" 
+                ng-options="option.name for option in options">
+                </select> 
+    </form> 
     <table class="table table-bordered">
         <tr>
             <th>ลำดับที่</th>
@@ -26,7 +33,7 @@
             <th>สถานะการร้องขอ</th>
             <th>รายละเอียด</th> 
         </tr>
-        <tr ng-repeat="showdata in listReciept | filter: searchThis" >
+        <tr ng-repeat="showdata in listReciept | filter: searchThis | limitTo : searchRange.value : begin">
             <td>
             {{$index+1}}
             </td>

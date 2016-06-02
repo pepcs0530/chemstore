@@ -59,9 +59,8 @@
     <caption><center><b><h4><i class="fa fa-file" aria-hidden="true"></i>&nbsp;<b>รายละเอียดคำร้องขอสารเคมี</b></h4></center></caption><hr>
         <form class="navbar-form navbar-right">
             <input type="button" class="btn btn-default" value="ย้อนกลับ" ng-click="showcontent = false">
-        </form>
-        
-          <form class="navbar-form navbar-left">
+        </form> 
+    <form class="navbar-form navbar-left">
         ใบคำร้องที่ : {{listReciept[index].cr_no}} <br>
         วันที่ร้องขอ : {{listReciept[index].cr_crtDt | Date}} <br>
         สถานะคำร้องขอปัจจุบัน : <font ng-bind-html="listReciept[index].cr_status | confirmFilter"></font><br>
@@ -104,31 +103,37 @@
         </tr>
         <tr>
             <td style="text-align:right">ยอดเงินคงเหลือของผู้เบิก</td>
-            <td style="text-align:right">{{listReciept[index].cr_teacherbudget}}</td>
+            <td style="text-align:right">{{listReciept[index].ca_credit}}</td>
             <td>บาท</td>
         </tr>
         <tr>
             <td style="text-align:right">คงเหลือ</td>
-            <td style="text-align:right">{{listReciept[index].cr_teacherbudget-listReciept[index].cr_cost}}</td>
+            <td style="text-align:right">{{listReciept[index].ca_credit-listReciept[index].cr_cost}}</td>
             <td>บาท</td>
         </tr>
         <tr>
             <td style="text-align:right">ยอดเงินคงเหลือของโปรเจค</td>
-            <td style="text-align:right">{{listReciept[index].cr_projectbudget}}</td>
+            <td style="text-align:right">{{listReciept[index].cp_current_budget}}</td>
             <td>บาท</td>
         </tr>
         <tr>
             <td style="text-align:right">คงเหลือ</td>
-            <td style="text-align:right">{{listReciept[index].cr_projectbudget-listReciept[index].cr_cost}}</td>
+            <td style="text-align:right">{{listReciept[index].cp_current_budget-listReciept[index].cr_cost}}</td>
             <td>บาท</td>
         </tr>
     </table>
+    <form class="navbar-form navbar-right">
     <button type="button" class="btn btn-danger" ng-click="cancelRequest()"
             ng-disabled="listReciept[index].cr_status == '3' ||
-                         listReciept[index].cr_status == '2'">ไม่อนุมัติ</button>
+                         listReciept[index].cr_status == '2' ||
+                         listReciept[index].cr_status == '1'">ไม่อนุมัติ</button>
     <button type="button" class="btn btn-success" ng-click="submitRequest()" 
-            ng-disabled="listReciept[index].cr_projectbudget-listReciept[index].cr_cost < 0 ||
-                         listReciept[index].cr_teacherbudget-listReciept[index].cr_cost < 0 ||
+            ng-disabled="listReciept[index].cp_current_budget-listReciept[index].cr_cost < 0 ||
+                         listReciept[index].ca_credit-listReciept[index].cr_cost < 0 ||
                          listReciept[index].cr_status == '3' ||
-                         listReciept[index].cr_status == '2'">อนุมัติ</button>
+                         listReciept[index].cr_status == '2' ||
+                         listReciept[index].cr_status == '1'">อนุมัติ</button>
+    <button type="button" class="btn btn-success" ng-click="finishRequest()" 
+            ng-disabled="alwayCheckdone || listReciept[index].cr_status == '2' || listReciept[index].cr_status == '1'">เสร็จสิ้นกระบวนการเบิกสารเคมี</button>
+    </form>
 </div>

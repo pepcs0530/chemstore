@@ -22,7 +22,6 @@
         <th>Cas no.</th>
         <th>สถานะ</th>
         <th>ปริมาณ</th>
-        <th>ราคา/หน่วย</th>
         <th>จำนวนที่ต้องการ</th>
         <th>หน่วย</th>
         <th>แปลงหน่วยเทียบฐานข้อมูล</th>
@@ -33,7 +32,6 @@
         <td>{{showdata.cc_casNo}}</td>
         <td>{{showdata.cc_state}}</td>
         <td>{{showdata.cc_quantity | number :4}}&nbsp;{{showdata.cu_name_abb}}</td>
-        <td>{{showdata.cc_price}}/{{showdata.cu_name_abb}}</td>
         <td>
             <div class="col-sm-9">
                 <input type="number" class="form-control" ng-change="volumecal($index)" ng-model="cartlist[$index].volumeRequest" >&nbsp;&nbsp;

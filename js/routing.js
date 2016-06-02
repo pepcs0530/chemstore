@@ -174,5 +174,23 @@
             }   
           ).otherwise({
                 redirectTo: '/news'
-      	  }); 
+      	  })
+          .when(
+            '/seniorSubmitExchange',{
+                templateUrl: '../html/seniorSubmitExchange.html',
+                controller: 'seniorSubmitExchangetCtrl'
+            }   
+          ).when(
+            '/seniorAddRequest',{
+                templateUrl: '../html/seniorAddReciept.html',
+                controller: 'seniorAddRequestCtrl'
+            }   
+          ).when(
+            '/seniorAddRequestsStatus',{
+                templateUrl: '../html/seniorAddStatus.html',
+                controller: 'seniorAddRequestsStatusCtrl'
+            }   
+          ).otherwise({
+                redirectTo: '/news'
+      	  })  
 }]);

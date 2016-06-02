@@ -44,8 +44,8 @@
     }else{
         $cr_no = "NO.".($cr_no.$data[0]['cr_pk']+1);
     }
-    $sql = "INSERT INTO `chem_receipt` (cr_no, cr_cost, cr_cp_fk, cr_crtDt,cr_desc)".
-            " VALUE('".$cr_no."','".$cr_cost ."','".$cr_cp_fk."', CURRENT_TIMESTAMP,'".$cr_desc."')";
+    $sql = "INSERT INTO `chem_receipt` (cr_no, cr_crtDt,cr_desc)".
+            " VALUE('".$cr_no."',CURRENT_TIMESTAMP,'".$cr_desc."')";
     
     $query = mysql_query($sql);
     

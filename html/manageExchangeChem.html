@@ -88,10 +88,12 @@
             <td ng-bind-html="showdata.ced_status | confirmFilter"></td>
         </tr>
       </table>
+    <form class="navbar-form navbar-right">
         <button type="button" class="btn btn-danger" ng-click="cancelRequest()"
             ng-disabled="listExchange[index].ce_status == '3' ||
                          listExchange[index].ce_status == '2'">ไม่อนุมัติ</button>
         <button type="button" class="btn btn-success" ng-click="submitRequest()" 
             ng-disabled="listExchange[index].ce_status == '3'||
                          listExchange[index].ce_status == '2'">อนุมัติ</button>
+    </form>
 </div>

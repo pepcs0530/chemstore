@@ -29,7 +29,6 @@
             <th>เลขที่ใบเสร็จ</th>
             <th>วันที่ร้องขอ</th>
             <th>สถานะการร้องขอ</th>
-            <th>ราคารวมทั้งสิ้น</th>
             <th>รายละเอียด</th>
         </tr>
         <tr ng-repeat="showdata in listReciept | filter : searchThis | limitTo : searchRange.value : begin">
@@ -43,11 +42,8 @@
             {{showdata.cr_crtDt | Date}}
             </td>
             <td><div ng-bind-html="showdata.cr_status | confirmFilter"></div></td>
-            <td> 
-            {{showdata.cr_cost | number:4}}
-            </td>
             <td>
-                  <input type="button" class="btn btn-default" value="แสดง" ng-click="showdetail(showdata.cr_pk,$index)">
+                  <input type="button" class="btn btn-info" value="แสดง" ng-click="showdetail(showdata.cr_pk,$index)">
             </td>
     </tr>
     </table> 
@@ -67,8 +63,9 @@
         ใบคำร้องที่ : {{listReciept[index].cr_no}} <br>
         วันที่ร้องขอ : {{listReciept[index].cr_crtDt | Date}} <br>
         สถานะคำร้องขอปัจจุบัน : <font ng-bind-html="listReciept[index].cr_status | confirmFilter"></font><br>
-        โปรเจคที่ร้องขอ : {{listReciept[index].cp_name}} <br>
         ผู้เขียนคำร้องขอ : {{listReciept[index].ca_tname}}{{listReciept[index].ca_fname}}&nbsp;{{listReciept[index].ca_lname}}<br>
+        เหตุผลประกอบคำร้องขอ : 
+        <p style="width:100%;">{{listReciept[index].cr_desc}}</p>
     </form>
     <table width="100%" class="table table-striped">
         <tr>
@@ -76,7 +73,6 @@
             <th>จำนวนคงเหลือปัจจุบัน</th>
             <th>จำนวนที่ต้องการเบิก</th>
             <th>หน่วย</th>
-            <th>ราคารวม</th>
             <th>สถานที่</th>
             <th>สถานะ</th>
             <th>หมายเหตุ</th>
@@ -92,16 +88,9 @@
             <td>
                 {{showdata.crd_unit}}
             </td>
-            <td>{{showdata.crd_price}}</td>
             <td>{{showdata.cl_name}}</td>
             <td ng-bind-html="showdata.crd_status | confirmFilter"></td>
             <td>{{showdata.crd_desc}}</td>
         </tr>
       </table>
-    
-    <form class="navbar-form navbar-right">
-        <div class="well" style="width: 250px;">
-            ค่าใช้จ่ายรวม : {{listReciept[index].cr_cost | number:4}} บาท
-        </div>
-    </form>
 </div>

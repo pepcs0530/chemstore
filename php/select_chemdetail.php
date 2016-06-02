@@ -3,7 +3,7 @@
     $_POST = json_decode(file_get_contents('php://input'), true);
     $findthis = $_POST['crd_cr_fk'];
     
-$sql = "SELECT crd_pk,cc_pk,crd_status,cc_quantity,`cc_name`,`cc_casNo`,`cc_grade`,`crd_amt`,`crd_price`,`crd_unit`,`cl_name`".
+$sql = "SELECT crd_desc,crd_pk,cc_pk,crd_status,cc_quantity,`cc_name`,`cc_casNo`,`cc_grade`,`crd_amt`,`crd_price`,`crd_unit`,`cl_name`".
            "FROM `chem_receipt_detail`".
            "INNER JOIN `chem_category`".
            "ON `cc_pk` = `crd_cc_fk`".
