@@ -13,7 +13,7 @@
     isset($_POST['selectAll']) ? $selectAll = $_POST['selectAll'] : $selectAll = null;
 
     if($selectAll == true){
-        $sql = "SELECT cc_updDt, cc_pk, cc_code, cc_volume, cc_packing, cc_desc, cu_pk, cl_pk,cc_expDt, cc_name, cc_type, cc_casNo, cc_state, cc_quantity, cl_name, cl_name_abb, cc_room, cc_price, cu_name_abb, cc_grade, cc_producer ".
+        $sql = "SELECT cc_updDt, cc_pk, cc_volume, cc_packing, cc_desc, cu_pk, cl_pk,cc_expDt, cc_name, cc_casNo, cc_state, cc_quantity, cl_name, cl_name_abb, cc_room, cc_price, cu_name_abb, cc_grade, cc_producer ".
                            "FROM chem_category ".
                            "INNER JOIN chem_unit ".
                            "ON cc_unit_fk = cu_pk ".
@@ -21,7 +21,7 @@
                            "ON cc_location_fk = cl_pk ".
                            "ORDER BY cc_name";
     }else{
-        $sql = "SELECT cc_updDt, cc_pk, cc_code, cc_volume, cc_packing, cc_desc, cu_pk, cl_pk,cc_expDt, cc_name, cc_type, cc_casNo, cc_state, cc_quantity, cl_name, cl_name_abb, cc_room, cc_price, cu_name_abb, cc_grade, cc_producer ".
+        $sql = "SELECT cc_updDt, cc_pk, cc_volume, cc_packing, cc_desc, cu_pk, cl_pk,cc_expDt, cc_name, cc_casNo, cc_state, cc_quantity, cl_name, cl_name_abb, cc_room, cc_price, cu_name_abb, cc_grade, cc_producer ".
                            "FROM chem_category ".
                            "INNER JOIN chem_unit ".
                            "ON cc_unit_fk = cu_pk ".
@@ -55,7 +55,7 @@
         $sql .= "ORDER BY cc_name";
     }
     
-//    print "<h1>$sql<h1/>";
+//    print $sql;
     
     $query = mysql_query($sql);
     $data=array();

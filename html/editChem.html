@@ -46,7 +46,7 @@
         <tr>
             <td>ปริมาณ</td>
             <td>
-                <input type="text" ng-model="editThisData.cc_quantity" id="edit"/>
+                <input type="text" ng-model="editThisData.cc_quantity | number : 4" id="edit"/>
             </td>
             <td>หน่วย</td>
             <td>
@@ -133,11 +133,11 @@
     <td>{{showdata.cc_state}}</td>
     <td>{{showdata.cc_quantity | number:4}}</td>
     <td>{{showdata.cc_volume}}</td>
-    <td>{{showdata.cu_name_abb}}</td>
+    <td>{{showdata.cu_name_abb  | uppercase }}</td>
     <td>{{showdata.cc_packing}}</td>
     <td>{{showdata.cl_name}}</td>
     <td>{{showdata.cc_room}}</td>
-    <td>{{showdata.cc_price}}/{{showdata.cu_name_abb}}</td>
+    <td>{{showdata.cc_price}} บาทต่อ 1 {{showdata.cu_name_abb | uppercase }}</td>
     <td>{{showdata.cc_grade}}</td>
     <td>{{showdata.cc_producer}}</td>
     <td>{{showdata.cc_desc}}</td>

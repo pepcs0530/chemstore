@@ -5,8 +5,7 @@
     $findthis = $_POST['findthis'];
     $findtypethis = $_POST['findtypethis'];
 
-    $selectAll = $_POST['selectAll'];
-
+    isset($_POST['selectAll']) ? $selectAll = $_POST['selectAll'] : $selectAll = null;
     isset($_POST['stDt']) ? $stDt = date("Y-m-d", strtotime($_POST['stDt'])) : $stDt = null;
     isset($_POST['edDt']) ? $edDt =  date("Y-m-d", strtotime($_POST['edDt'] .'+1 day' )) : $edDt = null;
     isset($_POST['no']) ? $no = $_POST['no'] : $no = null;
@@ -106,6 +105,16 @@
 
     $pdf->SetFont('freeserif','B',16);
     $pdf->Text(120,30,"ประวัติการเบิกสารเคมี");
+    $pdf->SetFont('freeserif','',12);
+    if($selectAll){
+        $pdf->Text(210,40,"ประเภทการค้นหา : ดูข้อมูลทั้งหมด");
+    }else{
+     $pdf->Text(210,40,"ประเภทการค้นหา : ดูข้อมูลตามตัวกรอง");
+        $pdf->Text(18,40,"ตั้งแต่วันที่ : ".
+                   date("d-m-Y", strtotime($stDt)));
+        $pdf->Text(60,40,"ถึงวันที่ : ".
+                   date("d-m-Y", strtotime($edDt)));
+    }
     $pdf->Ln(10);
 
     $pdf->SetFont('freeserif','',12);
@@ -173,7 +182,7 @@
                 $pdf->Cell(40, 0, $project, 1, 0, 'L', 0, '', 0);
                 $pdf->Cell(50, 0, $row['cc_name'], 1, 0, 'L', 0, '', 0);
                 $pdf->Cell(15, 0, $row['crd_amt'], 1, 0, 'C', 0, '', 0);
-                $pdf->Cell(15, 0, $row['crd_unit'], 1, 0, 'C', 0, '', 0);
+                $pdf->Cell(15, 0, strtoupper ($row['crd_unit']), 1, 0, 'C', 0, '', 0);
                 $pdf->Cell(10, 0, $row['cl_name_abb'], 1, 0, 'C', 0, '', 0);
                 $pdf->Cell(15, 0, $row['crd_price'], 1, 0, 'C', 0, '', 0);
                 
@@ -185,7 +194,7 @@
                 $pdf->Cell(40, 0, '', 1, 0, 'L', 0, '', 0);
                 $pdf->Cell(50, 0, $row['cc_name'], 1, 0, 'L', 0, '', 0);
                 $pdf->Cell(15, 0, $row['crd_amt'], 1, 0, 'C', 0, '', 0);
-                $pdf->Cell(15, 0, $row['crd_unit'], 1, 0, 'C', 0, '', 0);
+                $pdf->Cell(15, 0, strtoupper ($row['crd_unit']), 1, 0, 'C', 0, '', 0);
                 $pdf->Cell(10, 0, $row['cl_name_abb'], 1, 0, 'C', 0, '', 0);
                 $pdf->Cell(15, 0, $row['crd_price'], 1, 0, 'C', 0, '', 0);
             }

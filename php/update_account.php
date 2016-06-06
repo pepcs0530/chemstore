@@ -19,7 +19,7 @@ $ca_tname = $_POST['ca_tname'] ;
 $ca_fname = $_POST['ca_fname'] ;
 $ca_lname = $_POST['ca_lname'] ;
 $ca_tel = $_POST['ca_tel'] ;
-
+$ca_credit = $_POST['ca_credit'] ;
 
 $sql = "UPDATE chem_account SET 
     ca_code = '".$ca_code."',
@@ -29,6 +29,7 @@ $sql = "UPDATE chem_account SET
     ca_fname = '".$ca_fname."',
     ca_lname = '".$ca_lname."',
     ca_tel = '".$ca_tel."',
+    ca_credit = '".$ca_credit."',
     ca_updDt = CURRENT_TIMESTAMP
     WHERE ca_pk = '".$ca_pk."'";
 

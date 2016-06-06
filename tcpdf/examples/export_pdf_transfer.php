@@ -1,7 +1,7 @@
 <?php
     include '../../php/connect.php';
     date_default_timezone_set('Asia/Bangkok');
-    $_POST = json_decode(file_get_contents('php://input'), true);
+    $ce_pk = $_POST['ce_pk'];
 
     // Include the main TCPDF library (search for installation path).
     require_once('tcpdf_include.php');
@@ -70,26 +70,14 @@
     $pdf->SetFont('freeserif','',12);
     $pdf->Ln(10);
 
-    $findthis = $_POST['findthis'];
-    $ce_pk = $_POST['ce_pk'];
+ 
 
-    $findthis = 3;
-    $ce_pk = 31;
-
-    if($findthis == "all"){
         $sql = "SELECT ce.*,ca_tname,ca_fname,ca_lname FROM `chem_exchange` AS ce
         INNER JOIN `chem_account`
         ON ce_ca_fk = ca_pk
+        WHERE ce_pk = '".$ce_pk."'
         ORDER BY ce_crtDt DESC";
-    }else{
-        $sql = "SELECT ce.*,ca_tname,ca_fname,ca_lname FROM `chem_exchange` AS ce
-        INNER JOIN `chem_account`
-        ON ce_ca_fk = ca_pk
-        WHERE ce_ca_fk = '".$findthis."' AND ce_pk = '".$ce_pk."'
-        ORDER BY ce_crtDt DESC";
-    }
-  
-
+    
 
     $query = mysql_query($sql);
     $data=array();
@@ -139,17 +127,16 @@
         $pdf->MultiCell(150,15,'',0);
     }
 
-    //$findthis = $_POST['findthis'];
     
-    $sql = "SELECT ced.*,cc_pk,ced_status,cc_quantity,`cc_name`,`cc_casNo`,`cc_grade`,`ced_amt`,`ced_unit`,`cl_name`
-           FROM `chem_exchange_detail` AS ced
-           INNER JOIN `chem_category`
-           ON `cc_pk` = `ced_cc_fk`
-           INNER JOIN `chem_location`
-           ON cc_location_fk = cl_pk
-           WHERE `ced_ce_fk` = '".$ce_pk."' ";
+    $sql2 = "SELECT ced.*,cc_pk,ced_status,cc_quantity,`cc_name`,`cc_casNo`,`cc_grade`,`ced_amt`,`ced_unit`,`cl_name` 
+            FROM `chem_exchange_detail` AS ced 
+            INNER JOIN `chem_category` 
+            ON `cc_pk` = `ced_cc_fk` 
+            INNER JOIN `chem_location` 
+            ON cc_location_fk = cl_pk 
+            WHERE `ced_ce_fk` = '".$ce_pk."' AND ced_status = '4'";
 
-    $query = mysql_query($sql);
+    $query = mysql_query($sql2);
     $data=array();
     $index = 1;
 
@@ -159,10 +146,9 @@
     $pdf->Cell(50, 0, 'สารเคมีที่ต้องการย้าย', 1, 0, 'C', 0, '', 0);
     $pdf->Cell(25, 0, 'Cas no.', 1, 0, 'C', 0, '', 0);
     $pdf->Cell(15, 0, 'เกรด', 1, 0, 'C', 0, '', 0);
-    $pdf->Cell(20, 0, 'คงเหลือ', 1, 0, 'C', 0, '', 0);
     $pdf->Cell(20, 0, 'จำนวนที่ย้าย', 1, 0, 'C', 0, '', 0);
     $pdf->Cell(15, 0, 'หน่วย', 1, 0, 'C', 0, '', 0);
-    $pdf->Cell(20, 0, 'คลัง', 1, 0, 'C', 0, '', 0);
+    $pdf->Cell(40, 0, 'คลัง', 1, 0, 'C', 0, '', 0);
     $pdf->Ln();
 
     while($row = mysql_fetch_array ($query)){
@@ -171,10 +157,9 @@
         $pdf->Cell(50, 0, $row['cc_name'], 1, 0, 'L', 0, '', 0);
         $pdf->Cell(25, 0, $row['cc_casNo'], 1, 0, 'C', 0, '', 0);
         $pdf->Cell(15, 0, $row['cc_grade'], 1, 0, 'C', 0, '', 0);
-        $pdf->Cell(20, 0, $row['cc_quantity'], 1, 0, 'C', 0, '', 0);
         $pdf->Cell(20, 0, $row['ced_amt'], 1, 0, 'C', 0, '', 0);
-        $pdf->Cell(15, 0, $row['ced_unit'], 1, 0, 'C', 0, '', 0);
-        $pdf->Cell(20, 0, $row['cl_name'], 1, 0, 'C', 0, '', 0);
+        $pdf->Cell(15, 0, strtoupper ($row['ced_unit']), 1, 0, 'C', 0, '', 0);
+        $pdf->Cell(40, 0, $row['cl_name'], 1, 0, 'C', 0, '', 0);
         $pdf->Ln();
         $index++;
     }

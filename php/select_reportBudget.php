@@ -6,11 +6,6 @@
     isset($_POST['edDt']) ? $edDt =  date("Y-m-d", strtotime($_POST['edDt'])) : $edDt = null;
     isset($_POST['cp_name']) ? $cp_name = $_POST['cp_name'] : $cp_name = null;
 
-//    $sql = "SELECT cp_name,SUM(cr_cost) AS sum FROM chem_receipt 
-//            INNER JOIN chem_project 
-//            ON cr_cp_fk = cp_pk
-//            GROUP BY cr_cp_fk";
-
     $sql = "SELECT cp_name,SUM(cr_cost) AS sum FROM chem_receipt 
             INNER JOIN chem_project 
             ON cr_cp_fk = cp_pk

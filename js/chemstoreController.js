@@ -730,10 +730,8 @@ chemstore.controller('loginCtrl', function($rootScope, $scope, $http, $timeout, 
         stDt: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
         edDt: new Date(),
         no: '',
-        locationF: '1',
-        locationT: '2'
+        selectAll : false
     }
-
     $scope.search = function() {
 
         if ($scope.logExchg.stDt == null || $scope.logExchg.edDt == null) {
@@ -745,23 +743,21 @@ chemstore.controller('loginCtrl', function($rootScope, $scope, $http, $timeout, 
             alert("ท่านระบุวันเริ่มต้นเกินวันที่สิ้นสุด");
             return;
         }
-
-        console.log($scope.showcontent);
         $http({
             method: 'POST',
             url: '../php/select_logExchange.php',
             data: {
                 type: 'all',
-                locationF: $scope.logExchg.locationF,
-                locationT: $scope.logExchg.locationT,
+                selectAll : $scope.logExchg.selectAll,
                 stDt: $scope.logExchg.stDt,
                 edDt: new Date($scope.logExchg.edDt.getFullYear(), $scope.logExchg.edDt.getMonth(), $scope.logExchg.edDt.getDate() + 1),
-                no: $scope.logExchg.no
+                no: $scope.logExchg.no,
+                tostore : $scope.selectData
             }
         }).then(function(response) {
             $scope.listReciept = response.data
             $scope.showcontent = 2;
-            console.log(response);
+            console.log(response.data);
         });
     }
 
@@ -770,7 +766,6 @@ chemstore.controller('loginCtrl', function($rootScope, $scope, $http, $timeout, 
         url: '../php/select_chemLocation.php',
     }).then(function(response) {
         $scope.listLocation = response.data;
-        console.log($scope.listLocation);
     });
 
     $scope.showdetail = function(index) {
@@ -899,6 +894,7 @@ chemstore.controller('loginCtrl', function($rootScope, $scope, $http, $timeout, 
             fname:'',
             lname:'',
             tel:'',
+            credit:0
         }
         //     ล้างค่า
     $scope.clearMember = function() {
@@ -923,6 +919,7 @@ chemstore.controller('loginCtrl', function($rootScope, $scope, $http, $timeout, 
                 'lname': $scope.addMember.lname,
                 'tel': $scope.addMember.tel,
                 'acctyp': $scope.addMember.acctyp,
+                'credit':$scope.addMember.credit,
                 responPlace: $scope.addMember.responPlace
             }).success(function(data) {
                 console.log(data);
@@ -2087,8 +2084,8 @@ chemstore.controller('loginCtrl', function($rootScope, $scope, $http, $timeout, 
     $scope.remain = {
         location: '',
         state: '',
-        stDt: '',
-        edDt: '',
+        stDt: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
+        edDt: new Date(),
         name: '',
         casNo: '',
         grade: '',
@@ -2102,14 +2099,6 @@ chemstore.controller('loginCtrl', function($rootScope, $scope, $http, $timeout, 
     $scope.search = function(select) {
 
         $scope.page = false;
-        console.log(select.location);
-        console.log(select.state);
-        console.log(select.stDt);
-        console.log(select.edDt);
-        console.log(select.name);
-        console.log(select.casNo);
-        console.log(select.grade);
-        console.log(select.selectAll);
 
         $http({
             method: 'POST',
@@ -2294,38 +2283,48 @@ chemstore.controller('loginCtrl', function($rootScope, $scope, $http, $timeout, 
         cp_name: ''
     }
 
-
-    //        // Radialize the colors
-    //        Highcharts.getOptions().colors = Highcharts.map(Highcharts.getOptions().colors, function (color) {
-    //            return {
-    //                radialGradient: {
-    //                    cx: 0.5,
-    //                    cy: 0.3,
-    //                    r: 0.7
-    //                },
-    //                stops: [
-    //                    [0, color],
-    //                    [1, Highcharts.Color(color).brighten(-0.3).get('rgb')] // darken
-    //                ]
-    //            };
-    //        });
-    //
-    //        $scope.init = false;
-
-
-    $scope.datalist = [
-        { name: '4-Acetamidophenol ', y: 56.33 }, {
-            name: 'Benzoic Acid',
-            y: 24.03,
-            sliced: true,
-            selected: true
-        },
-        { name: 'Calcium nitrare', y: 10.38 },
-        { name: 'Ethyl Alcohol absolute', y: 4.77 }, { name: 'Opera', y: 0.91 },
-        { name: 'Proprietary or Undetectable', y: 0.2 }
-    ];
-
+    $scope.datalist = [];
     $scope.search = function() {
+        $scope.datalist = [];
+        $http({
+        method: 'POST',
+        url: '../php/select_graphCategory.php',
+        data: {
+            stDt: $scope.reptChemRank.stDt,
+            edDt: new Date($scope.reptChemRank.edDt.getFullYear(),
+                           $scope.reptChemRank.edDt.getMonth(),       
+                           $scope.reptChemRank.edDt.getDate() + 1),
+        }
+        
+        }).then(function(response) {
+            $scope.mainlist = response.data;
+            console.log("1:",response.data);
+            $http({
+                method: 'POST',
+                url: '../php/select_graphCategoryEx.php',
+                data: {
+                stDt: $scope.reptChemRank.stDt,
+                edDt: new Date($scope.reptChemRank.edDt.getFullYear(),
+                               $scope.reptChemRank.edDt.getMonth(),       
+                               $scope.reptChemRank.edDt.getDate() + 1),
+                }
+            }).then(function(response) {
+                console.log("2:",response.data);
+                $scope.exlist = response.data;
+                for(var i = 0 ;i< $scope.mainlist.length;i++){
+                    for(var j = 0 ;j< $scope.exlist.length;j++){
+                        if($scope.exlist[j].cc_pk == $scope.mainlist[i].cc_pk){
+                            $scope.mainlist[i].sum = parseInt($scope.exlist[j].sum) + parseInt($scope.mainlist[i].sum);
+                            $scope.exlist.splice(j);
+                        }
+                    }
+                }
+                angular.forEach($scope.exlist,function(value,key){
+                    $scope.datalist.push({ name: value.cc_name, y: parseInt(value.sum) });
+                });
+                angular.forEach($scope.mainlist,function(value,key){
+                    $scope.datalist.push({ name: value.cc_name,y: parseInt(value.sum) });
+                });
 
         // Build the chart
         jQuery('#container').highcharts({
@@ -2361,7 +2360,9 @@ chemstore.controller('loginCtrl', function($rootScope, $scope, $http, $timeout, 
 
             }]
         });
-
+            });
+        });
+        
     }
 
 
@@ -2436,7 +2437,8 @@ chemstore.controller('loginCtrl', function($rootScope, $scope, $http, $timeout, 
             'ca_tname': $scope.editThisData.ca_tname,
             'ca_fname': $scope.editThisData.ca_fname,
             'ca_lname': $scope.editThisData.ca_lname,
-            'ca_tel': $scope.editThisData.ca_tel
+            'ca_tel': $scope.editThisData.ca_tel,
+            'ca_credit': $scope.editThisData.ca_credit
 
         }).success(function(data, status, headers, config) {
             console.log(data);
@@ -2697,6 +2699,7 @@ chemstore.controller('loginCtrl', function($rootScope, $scope, $http, $timeout, 
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
     }).then(function(response) {
         $scope.listAcountData = response.data[0];
+        console.log($scope.listAcountData);
         $http({
             method: 'POST',
             url: '../php/select_exchangeForsenior.php',
@@ -2709,6 +2712,14 @@ chemstore.controller('loginCtrl', function($rootScope, $scope, $http, $timeout, 
     
     $scope.showdetail = function(getdata, index) {
         $scope.index = index;
+        $http({
+            method: 'POST',
+            url: '../php/select_pkChemlocation.php',
+            data: { findthis: $scope.listExchange[$scope.index].ce_tostore },
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+        }).then(function(response) {
+            $scope.tostorePK = response.data[0].cl_pk;
+        });
         $http({
             method: 'POST',
             url: '../php/select_exchangeDetail.php',
@@ -2771,7 +2782,28 @@ chemstore.controller('loginCtrl', function($rootScope, $scope, $http, $timeout, 
                     }).then(function(response) {
                         console.log(response);
                     })  
-                    
+                    $http({
+                        method: 'POST',
+                        url: '../php/insert_chemCategory.php',
+                        data: {
+                            name: value.cc_name,
+                            casNo: value.cc_casNo,
+                            state: value.cc_state,
+                            packing: '',
+                            volume: '',
+                            unit_fk: value.cc_unit_fk,
+                            qty: value.ced_amt,
+                            loc_fk: $scope.tostorePK,
+                            room: '',
+                            price: value.cc_price,
+                            grade: value.cc_grade,
+                            expDt: value.cc_expDt,
+                            desc: $scope.listExchange[$scope.index].ce_desc,
+                            producer: value.cc_producer
+                        }
+                    }).then(function(data) {
+                        console.log(data);
+                    });
                     $http({
                         method: 'POST',
                         url: '../php/update_oneExchangeDetail.php',

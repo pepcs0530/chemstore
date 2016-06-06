@@ -30,7 +30,7 @@
                 <div class="col-sm-4 form-inline">
                     <input class="form-control" style="width:50%" ng-model="addChem.cc_volume" type="text" class="" />
                     <select  ng-model="addChem.cu_nameforvolume" >
-                        <option ng-repeat="lu in listUnit" value="{{lu.cu_name_abb}}" >{{lu.cu_name_abb}}</option>
+                        <option ng-repeat="lu in listUnit" value="{{lu.cu_name_abb}}" >{{lu.cu_name_abb | uppercase}}</option>
                     </select> 
                 </div> 
             </div>
@@ -39,7 +39,7 @@
                 <div class="col-sm-4 form-inline">
                     <input class="form-control" style="width:50%" ng-model="addChem.cc_quantity" type="text" class="" />
                     <select  ng-model="addChem.cu_pk" >
-                        <option ng-repeat="lu in listUnit" value="{{lu.cu_pk}}" >{{lu.cu_name_abb}}</option>
+                        <option ng-repeat="lu in listUnit" value="{{lu.cu_pk}}" >{{lu.cu_name_abb | uppercase}}</option>
                     </select> 
                 </div>
             </div>

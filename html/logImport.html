@@ -8,7 +8,7 @@
 
 <div class="navbar-header" style="width:100% ">
     
-    <form method="post" action="../tcpdf/examples/export_pdf_inbound_log.php" target="_blank">
+    <form method="post" action="../tcpdf/examples/export_pdf_inbound_log.php"  target="_blank">
         
         <div ng-show="page == true" >
             <strong>คลัง :</strong>
@@ -46,13 +46,14 @@
               
             <input type="checkbox" ng-model="logImpt.selectAll" name="selectAll" value="true">เลือกทั้งหมด
             <button type="button" class="btn btn-default" ng-click="search()" ><i class="fa fa-search" aria-hidden="true"></i>&nbsp;ค้นหา</button>   
-            
         </div> 
         
         <div ng-show="page == false">
             <caption><center><h5><b><i class="fa fa-search"></i>&nbsp;รายการข้อมูลที่ค้นหา</b></h5></center></caption>
-            <button type="button" class="btn btn-default"  ng-click="back()"><i class="fa fa-chevron-left" aria-hidden="true"></i>&nbsp;ย้อนกลับ</button>
-            <button type="submit" class="btn btn-default" ><i class="fa fa-print" aria-hidden="true"></i>&nbsp;พิมพ์รายงาน</button>
+       
+
+            <button type="submit" class="btn btn-default" style="float: right;"><i class="fa fa-print" aria-hidden="true"></i>&nbsp;พิมพ์รายงาน</button>
+            <button type="button" class="btn btn-default"  ng-click="back()" style="float: right;"><i class="fa fa-chevron-left" aria-hidden="true" ></i>&nbsp;ย้อนกลับ</button>
             <table class= "table table-bordered" >
                 <tr>
                     <th>วันที่</th>
@@ -79,109 +80,4 @@
                 </tr>
             </table> 
         </div>
-<!--
-        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-          รายละเอียดการค้นหา
-        </button>
--->
-        
-<!--
-        <div class="collapse" id="collapseExample">
-          <div class="well">
--->
-              
-<!--            <strong>คลัง :</strong>-->
-<!--
-            <select ng-model="logImpt.location" name="location">
-                <option value="" >---เลือก---</option>
-                <option ng-repeat="lu in listLocation" value="{{lu.cl_pk}}" >{{lu.cl_name}}</option>
-            </select>
--->
-              
-<!--
-            <strong>สถานะ :</strong>
-            <select ng-model="logImpt.state" name="state">
-                <option value="" >---เลือก---</option>
-                <option value="S" >Solid</option>
-                <option value="L" >Liquid</option>
-                <option value="G" >Gas</option>
-            </select>
-            <br>
-            <br>
-              
-            <strong>ตั้งแต่ :</strong>
-            <input ng-model="logImpt.stDt" name="stDt" type="date" />
-              
-            <strong>ถึง :</strong>
-            <input ng-model="logImpt.edDt" name="edDt" type="date" />
-            <br>
-            <br>
-              
-            <strong>ชื่อสาร :</strong>
-            <input type="text" ng-model="logImpt.name" name="name" />
-              
-            <strong>Cas no. :</strong>
-            <input type="text" ng-model="logImpt.casNo" name="casNo" />
-            
-            <strong>เกรด :</strong>
-            <input type="text" ng-model="logImpt.grade" name="grade" />
-              
-            <br><br>
-            <input type="checkbox" ng-model="logImpt.selectAll" name="selectAll" value="true">เลือกทั้งหมด
-            <br><br>   
-            <input type="submit" class="btn btn-default" value="พิมพ์รายงาน" >
--->
-<!--
-          </div>
-        </div>
--->
-        
     </form>
-    
-</div>
-
-<!--
-<table class= " table table-bordered" >
-    <tr>
-        <th>วันที่</th>
-        <th>ชื่อสารเคมี</th>
-        <th>Cas no.</th>
-        <th>สถานะ</th>
-        <th>จำนวนที่นำเข้า</th>
-        <th>หน่วย</th>
-        <th>เกรด</th>
-        <th>คลัง</th>
-        <th>ห้อง</th>
-    </tr>
--->
-<!--
-    <tr ng-repeat="showdata in listImport | 
-                   filter : logImpt.location | 
-                   filter : {cc_state : logImpt.state} |
-                   filter: dateRangeFilter('cil_crtDt', logImpt.stDt, logImpt.edDt) | 
-                   filter : {cc_name : logImpt.name} |
-                   filter : {cc_casNo : logImpt.casNo} |
-                   filter : {cc_grade : logImpt.grade} 
-                   ">
--->
-        
-<!--
-    <tr ng-repeat="showdata in listImport | 
-               filter : logImpt.location | 
-               filter : {cc_state : logImpt.state} |
-               filter : {cc_name : logImpt.name} |
-               filter : {cc_casNo : logImpt.casNo} |
-               filter : {cc_grade : logImpt.grade} 
-               ">
-        
-        <td>{{showdata.cil_crtDt | Date}}</td>
-        <td>{{showdata.cc_name}}</td>
-        <td>{{showdata.cc_casNo}}</td>
-        <td>{{showdata.cc_state}}</td>
-        <td>{{showdata.cc_quantity}}</td>
-        <td>{{showdata.cu_name_abb}}</td>
-        <td>{{showdata.cc_grade}}</td>
-        <td>{{showdata.cl_name}}</td>
-        <td>{{showdata.cc_room}}</td>
-    </tr>
-</table> -->

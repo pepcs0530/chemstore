@@ -44,7 +44,7 @@
             {{showdata.cr_crtDt | Datetime}}
             </td>
             <td ng-bind-html="showdata.cr_status | confirmFilter"></td>
-            <td>{{showdata.cr_cost}}</td>
+            <td>{{showdata.cr_cost | number:4}}</td>
             <td>
                 <button type="button" class="btn btn-default" value="แสดง" ng-click="showdetail(showdata.cr_pk,$index)">แสดง</button>
             </td>
@@ -90,9 +90,9 @@
                 {{showdata.crd_amt | number:4}}
             </td> 
             <td>
-                {{showdata.crd_unit}}
+                {{showdata.crd_unit | uppercase}}
             </td>
-            <td>{{showdata.crd_price}}</td>
+            <td>{{showdata.crd_price | number:4}}</td>
             <td>{{showdata.cl_name}}</td>
             <td ng-bind-html="showdata.crd_status | confirmFilter"></td>
         </tr>

@@ -1,16 +1,6 @@
 <?php
     include '../../php/connect.php';
     date_default_timezone_set('Asia/Bangkok');
-    //$_POST = json_decode(file_get_contents('php://input'), true);
-
-//    $sql = "SELECT * FROM `chem_import_log`
-//            INNER JOIN `chem_category`
-//            ON `cil_cc_fk` = `cc_pk`
-//            INNER JOIN `chem_location`
-//            ON `cc_location_fk` = `cl_pk`
-//            INNER JOIN `chem_unit`
-//            ON `cc_unit_fk` = `cu_pk`
-//            ORDER BY `cil_pk` ASC";
 
     $loc = $_POST['location'];
     $state = $_POST['state'];
@@ -25,29 +15,6 @@
 
     isset($_POST['selectAll']) ? $selectAll = $_POST['selectAll'] : $selectAll = '';
     
-//    print "คลัง : ".$loc."<br>";
-//    print "สถานะ : ".$state."<br>";
-//    print "จาก : ".$stDt."<br>";
-//    print "ถึง : ".$edDt."<br>";
-//    print "ชื่อสาร : ".$name."<br>";
-//    print "Cas no. : ".$casNo."<br>";
-//    print "เกรด : ".$grade."<br>";
-
-//    $sql = "SELECT * FROM `chem_import_log`
-//    INNER JOIN `chem_category`
-//    ON `cil_cc_fk` = `cc_pk`
-//    INNER JOIN `chem_location`
-//    ON `cc_location_fk` = `cl_pk`
-//    INNER JOIN `chem_unit`
-//    ON `cc_unit_fk` = `cu_pk`
-//    WHERE 
-//    cil_crtDt BETWEEN '".$stDt."' AND '".$edDt."' 
-//    AND cl_name = '".$loc."'
-//    AND cc_state = '".$state."'
-//    AND cc_name = '".$name."'
-//    AND cc_casNo = '".$casNo."'
-//    AND cc_grade = '".$grade."'
-//    ORDER BY `cil_pk` ASC";
 
     $sql = "SELECT * FROM `chem_import_log`
     INNER JOIN `chem_category`
@@ -59,48 +26,36 @@
 
     if($loc != null || $state != null || $stDt != null || $edDt != null || $name != null || $casNo != null || $grade != null){
         $sql .= "WHERE cil_useflg = '1' ";  
-//        print "WHERE<br>";
     }
 
     if($loc != null){
         $sql .= "AND cc_location_fk = '".$loc."' ";    
-//        print "LOC<br>";
+
     }
 
     if($state != null){
         $sql .= "AND cc_state = '".$state."' ";  
-//        print "STATE<br>";
+
     }
 
     if($stDt != null && $edDt != null ){
-//        $stDt = date_format($stDt,"d-m-Y");
-//        $edDt = date_format($edDt,"d-m-Y");
-//        
-//        $stDt = date('m-d-Y',strtotime(str_replace('-', '/', $stDt) . "+2 days"));
-//        $edDt = date('m-d-Y',strtotime(str_replace('-', '/', $edDt) . "+1 days"));
-        
         $sql .= "AND cil_crtDt BETWEEN '".$stDt."' AND '".$edDt."' ";   
-//        print "DATE<br>";
     }
 
     if($name != null){
         $sql .= "AND cc_name LIKE '%".$name."%' ";   
-//        print "NAME<br>";
     }
 
     if($casNo != null){
         $sql .= "AND cc_casNo LIKE '%".$casNo."%' "; 
-//        print "CAS<br>";
     }
 
     if($grade != null){
         $sql .= "AND cc_grade LIKE '%".$grade."%' "; 
-//        print "GRADE<br>";
     }
 
     $sql .= "ORDER BY `cil_pk` ASC"; 
 
-    //print "SQL : ".$sql."<br> : ".$selectAll;
     
     if($selectAll == true){
         $sql = "SELECT * FROM `chem_import_log`
@@ -114,10 +69,6 @@
     }else{
         $query = mysql_query($sql);
     }
-    
-    //print $sql;
-
-
 
     // Include the main TCPDF library (search for installation path).
     require_once('tcpdf_include.php');
@@ -184,7 +135,16 @@
     //Title
     $pdf->SetFont('freeserif','B',16);
     $pdf->Text(120,30,"ประวัติการนำเข้าสารเคมี");
-
+    $pdf->SetFont('freeserif','',12);
+    if($selectAll){
+        $pdf->Text(210,40,"ประเภทการค้นหา : ดูข้อมูลทั้งหมด");
+    }else{
+     $pdf->Text(210,40,"ประเภทการค้นหา : ดูข้อมูลตามตัวกรอง");
+        $pdf->Text(18,40,"ตั้งแต่วันที่ : ".
+                   date("d-m-Y", strtotime($stDt)));
+        $pdf->Text(60,40,"ถึงวันที่ : ".
+                   date("d-m-Y", strtotime($edDt)));
+    }
     $pdf->SetFont('freeserif','',12);
     //$pdf->SetXY(10,30);
     $pdf->Ln(10);
@@ -208,7 +168,7 @@
         $pdf->Cell(40, 0, $row['cc_casNo'], 1, 0, 'C', 0, '', 0);
         $pdf->Cell(20, 0, $row['cc_state'], 1, 0, 'C', 0, '', 0);
         $pdf->Cell(30, 0, $row['cc_quantity'], 1, 0, 'C', 0, '', 0);
-        $pdf->Cell(20, 0, $row['cu_name_abb'], 1, 0, 'C', 0, '', 0);
+        $pdf->Cell(20, 0, strtoupper ($row['cu_name_abb']), 1, 0, 'C', 0, '', 0);
         $pdf->Cell(40, 0, $row['cl_name'], 1, 0, 'C', 0, '', 0);
         $pdf->Cell(20, 0, $row['cc_room'], 1, 0, 'C', 0, '', 0);
         $pdf->Ln();

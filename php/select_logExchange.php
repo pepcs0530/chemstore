@@ -4,8 +4,7 @@
     $type = $_POST['type'];
     $selectAll = $_POST['selectAll'];
 
-    isset($_POST['locationF']) ? $locF = $_POST['locationF'] : $locF = null;
-    isset($_POST['locationT']) ? $locT = $_POST['locationT'] : $locT = null;
+    isset($_POST['tostore']) ? $tostore = $_POST['tostore'] : $tostore = null;
     isset($_POST['stDt']) ? $stDt = date("Y-m-d", strtotime($_POST['stDt'])) : $stDt = null;
     isset($_POST['edDt']) ? $edDt =  date("Y-m-d", strtotime($_POST['edDt'])) : $edDt = null;
     isset($_POST['no']) ? $no = $_POST['no'] : $no = null;
@@ -13,7 +12,6 @@
     if($type == "all"){
         $sql = "SELECT ce.*,ca_tname,ca_fname,ca_lname FROM `chem_exchange` AS ce ";
         $sql .= "INNER JOIN chem_account ON ce_ca_fk = ca_pk ";
-        $sql .= "WHERE `ce_crtDt` BETWEEN '".$stDt."' AND '".$edDt."' ";
     }
     else{
         $sql = "SELECT ce.*,ca_tname,ca_fname,ca_lname FROM `chem_exchange` AS ce ";
@@ -28,8 +26,13 @@
     if($no != null && !$selectAll){
         $sql .= " AND ce_no LIKE '%".$no."%' ";
     }
+
+    if($tostore != null && !$selectAll){
+        $sql .= " AND ce_tostore LIKE '%".$tostore."%' ";
+    }
     
     $sql .= "ORDER BY ce_crtDt DESC";
+
     $query = mysql_query($sql);
     $data=array();
     while($row = mysql_fetch_array ($query))

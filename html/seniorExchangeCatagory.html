@@ -30,8 +30,8 @@
     <tr ng-repeat="showdata in cartlist">
         <td>{{showdata.cc_name}}</td>
         <td>{{showdata.cc_casNo}}</td>
-        <td>{{showdata.cc_state}}</td>
-        <td>{{showdata.cc_quantity | number :4}}&nbsp;{{showdata.cu_name_abb}}</td>
+        <td>{{showdata.cc_state | uppercase}}</td>
+        <td>{{showdata.cc_quantity | number :4}} {{showdata.cu_name_abb | uppercase}}</td>
         <td>
             <div class="col-sm-9">
                 <input type="number" class="form-control" ng-change="volumecal($index)" ng-model="cartlist[$index].volumeRequest" >&nbsp;&nbsp;
@@ -40,23 +40,23 @@
         <td>
             <select ng-model="cartlist[$index].unitRequest" ng-change="volumecal($index)">
                 <option value="kg">
-                    kg
+                    KG
                 </option>
                 <option value="mg">
-                    mg
+                    MG
                 </option>
                 <option value="g">
-                    g
+                    G
                 </option>
                 <option value="l">
-                    l
+                    L
                 </option>
                 <option value="ml">
-                    ml
+                    ML
                 </option>    
             </select>
         </td>
-        <td>{{showdata.exvolumeRequest}}&nbsp;{{showdata.cu_name_abb}}</td>
+        <td>{{showdata.exvolumeRequest}} บาทต่อ 1 {{showdata.cu_name_abb | uppercase}}</td>
         <td style="text-align: center;"><button class="btn btn-danger btn-sm" value="delete" ng-click="deleteCart($index)"><i class="fa fa-times-circle"></i>&nbsp;</button></td>
     </tr>
 </table>
@@ -91,7 +91,6 @@
         <th>ปริมาณ</th>
         <th>อาคาร</th>
         <th>ห้อง</th>
-        <th>ราคา/หน่วย</th>
         <th>เกรด</th>
         <th>ผู้ผลิต</th>
         <th style="text-align: center;">เลือก</th>
@@ -99,11 +98,10 @@
     <tr ng-repeat="showdata in listChem | filter : '!'+listAcountData[0].ca_responplace | filter : fromstore | filter : searchThis | limitTo : searchRange.value : begin">
         <td>{{showdata.cc_name}}</td>
         <td>{{showdata.cc_casNo}}</td>
-        <td>{{showdata.cc_state}}</td>
-        <td>{{showdata.cc_quantity | number :4}}&nbsp;{{showdata.cu_name_abb}}</td>
+        <td>{{showdata.cc_state | uppercase}}</td>
+        <td>{{showdata.cc_quantity | number :4}} {{showdata.cu_name_abb | uppercase}}</td>
         <td>{{showdata.cl_name}}</td>
         <td>{{showdata.cc_room}}</td>
-        <td>{{showdata.cc_price}}/{{showdata.cu_name_abb}}</td>
         <td>{{showdata.cc_grade}}</td>
         <td>{{showdata.cc_producer}}</td>
         <td style="text-align: center;"><button type="button" class="btn btn-success btn-sm" value="add" ng-click="addtCart(showdata)"><i class="fa fa-check-square"></i></button></td>

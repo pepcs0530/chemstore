@@ -84,13 +84,13 @@
             {{showdata.crd_amt | number:4}}
         </td> 
         <td>
-            {{showdata.crd_unit}}
+            {{showdata.crd_unit | uppercase}}
         </td>
         <td>
             {{showdata.cl_name}}
         </td>
         <td>
-            {{showdata.crd_price}}
+            {{showdata.crd_price | uppercase}}
         </td>  
         <td ng-bind-html="showdata.crd_status | confirmFilter"></td>
         <td><input type="checkbox" 

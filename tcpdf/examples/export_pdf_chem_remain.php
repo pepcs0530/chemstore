@@ -1,34 +1,7 @@
 <?php
     include '../../php/connect.php';
     date_default_timezone_set('Asia/Bangkok');
-    //$_POST = json_decode(file_get_contents('php://input'), true);
 
-//    $pk = $_POST['select'];
-//
-//    if($pk == 0){
-//        $sql = "SELECT * FROM `chem_category`
-//            INNER JOIN `chem_unit`
-//            ON `cc_unit_fk` = `cu_pk`
-//            INNER JOIN `chem_location`
-//            ON `cc_location_fk` = `cl_pk`
-//            ORDER BY cc_name";
-//    }else{
-//        $sql = "SELECT * FROM `chem_category`
-//            INNER JOIN `chem_unit`
-//            ON `cc_unit_fk` = `cu_pk`
-//            INNER JOIN `chem_location`
-//            ON `cc_location_fk` = `cl_pk`
-//            WHERE cc_location_fk = ".$pk." ORDER BY cc_name";
-//    }
-
-//    $loc = $_POST['location'];
-//    $state = $_POST['state'];
-//    $stDt = $_POST['stDt'];
-//    $edDt = $_POST['edDt'];  
-//    $name = $_POST['name'];   
-//    $casNo = $_POST['casNo'];   
-//    $grade = $_POST['grade'];
-    
     isset($_POST['location']) ? $loc = $_POST['location'] : $loc = null;
     isset($_POST['state']) ? $state = $_POST['state'] : $state = null;
     isset($_POST['stDt']) ? $stDt = $_POST['stDt'] : $stDt = null;
@@ -39,7 +12,7 @@
     isset($_POST['selectAll']) ? $selectAll = $_POST['selectAll'] : $selectAll = null;
 
     if($selectAll == true){
-        $sql = "SELECT cc_updDt, cc_pk, cc_code, cc_volume, cc_packing, cc_desc, cu_pk, cl_pk,cc_expDt, cc_name, cc_type, cc_casNo, cc_state, cc_quantity, cl_name, cl_name_abb, cc_room, cc_price, cu_name_abb, cc_grade, cc_producer ".
+        $sql = "SELECT cc_updDt, cc_pk, cc_volume, cc_packing, cc_desc, cu_pk, cl_pk,cc_expDt, cc_name, cc_casNo, cc_state, cc_quantity, cl_name, cl_name_abb, cc_room, cc_price, cu_name_abb, cc_grade, cc_producer ".
                            "FROM chem_category ".
                            "INNER JOIN chem_unit ".
                            "ON cc_unit_fk = cu_pk ".
@@ -47,7 +20,7 @@
                            "ON cc_location_fk = cl_pk ".
                            "ORDER BY cc_name";
     }else{
-        $sql = "SELECT cc_updDt, cc_pk, cc_code, cc_volume, cc_packing, cc_desc, cu_pk, cl_pk,cc_expDt, cc_name, cc_type, cc_casNo, cc_state, cc_quantity, cl_name, cl_name_abb, cc_room, cc_price, cu_name_abb, cc_grade, cc_producer ".
+        $sql = "SELECT cc_updDt, cc_pk, cc_volume, cc_packing, cc_desc, cu_pk, cl_pk,cc_expDt, cc_name, cc_casNo, cc_state, cc_quantity, cl_name, cl_name_abb, cc_room, cc_price, cu_name_abb, cc_grade, cc_producer ".
                            "FROM chem_category ".
                            "INNER JOIN chem_unit ".
                            "ON cc_unit_fk = cu_pk ".
@@ -81,7 +54,6 @@
         $sql .= "ORDER BY cc_name";
     }
 
-    
 
     $query = mysql_query($sql);
 
@@ -152,29 +124,48 @@
     $pdf->SetFont('freeserif','',12);
     //$pdf->SetXY(10,30);
     $pdf->Ln(10);
-    $pdf->Cell(60, 0, 'ชื่อสารเคมี', 1, 0, 'C', 0, '', 0);
+    $pdf->Cell(65, 0, 'ชื่อสารเคมี', 1, 0, 'C', 0, '', 0);
     $pdf->Cell(30, 0, 'Cas no.', 1, 0, 'C', 0, '', 0);
-    $pdf->Cell(20, 0, 'สถานะ', 1, 0, 'C', 0, '', 0);
-    $pdf->Cell(20, 0, 'แพ็ค', 1, 0, 'C', 0, '', 0);
+    $pdf->Cell(15, 0, 'สถานะ', 1, 0, 'C', 0, '', 0);
+    $pdf->Cell(15, 0, 'แพ็ค', 1, 0, 'C', 0, '', 0);
     $pdf->Cell(20, 0, 'ปริมาตร', 1, 0, 'C', 0, '', 0);
-    $pdf->Cell(25, 0, 'จำนวน', 1, 0, 'C', 0, '', 0);
-    $pdf->Cell(20, 0, 'สถานที่', 1, 0, 'C', 0, '', 0);
-    $pdf->Cell(20, 0, 'ห้อง', 1, 0, 'C', 0, '', 0);
-    $pdf->Cell(30, 0, 'ราคาต่อหน่วย', 1, 0, 'C', 0, '', 0);
-    $pdf->Cell(20, 0, 'เกรด', 1, 0, 'C', 0, '', 0); 
+    $pdf->Cell(30, 0, 'จำนวน', 1, 0, 'C', 0, '', 0);
+    $pdf->Cell(15, 0, 'สถานที่', 1, 0, 'C', 0, '', 0);
+    $pdf->Cell(15, 0, 'ห้อง', 1, 0, 'C', 0, '', 0);
+    $pdf->Cell(20, 0, 'ราคา', 1, 0, 'C', 0, '', 0);
+    $pdf->Cell(15, 0, 'เกรด', 1, 0, 'C', 0, '', 0); 
+    $pdf->Cell(25, 0, 'ผู้ผลิต', 1, 0, 'C', 0, '', 0); 
     $pdf->Ln();
+    $countlist = 25;
     while($row = mysql_fetch_array ($query)){
-        $pdf->Cell(60, 0, $row['cc_name'], 1, 0, 'L', 0, '', 0);
-        $pdf->Cell(30, 0, $row['cc_casNo'], 1, 0, 'C', 0, '', 0);
-        $pdf->Cell(20, 0, $row['cc_state'], 1, 0, 'C', 0, '', 0);
-        $pdf->Cell(20, 0, $row['cc_packing'], 1, 0, 'C', 0, '', 0);
-        $pdf->Cell(20, 0, $row['cc_volume']." ".$row['cu_name_abb'], 1, 0, 'C', 0, '', 0);
-        $pdf->Cell(25, 0, number_format ($row['cc_quantity'] , 4, ".", ",") ." ".$row['cu_name_abb'], 1, 0, 'C', 0, '', 0);
-        $pdf->Cell(20, 0, $row['cl_name_abb'], 1, 0, 'C', 0, '', 0);
-        $pdf->Cell(20, 0, $row['cc_room'], 1, 0, 'C', 0, '', 0);
-        $pdf->Cell(30, 0, $row['cc_price'], 1, 0, 'C', 0, '', 0);
-        $pdf->Cell(20, 0, $row['cc_grade'], 1, 0, 'C', 0, '', 0); 
+        if($countlist % 25 == 0 && $countlist > 25){
+            $pdf->Ln(10);
+            $pdf->Cell(65, 0, 'ชื่อสารเคมี', 1, 0, 'C', 0, '', 0);
+            $pdf->Cell(30, 0, 'Cas no.', 1, 0, 'C', 0, '', 0);
+            $pdf->Cell(15, 0, 'สถานะ', 1, 0, 'C', 0, '', 0);
+            $pdf->Cell(15, 0, 'แพ็ค', 1, 0, 'C', 0, '', 0);
+            $pdf->Cell(20, 0, 'ปริมาตร', 1, 0, 'C', 0, '', 0);
+            $pdf->Cell(30, 0, 'จำนวน', 1, 0, 'C', 0, '', 0);
+            $pdf->Cell(15, 0, 'สถานที่', 1, 0, 'C', 0, '', 0);
+            $pdf->Cell(15, 0, 'ห้อง', 1, 0, 'C', 0, '', 0);
+            $pdf->Cell(20, 0, 'ราคา', 1, 0, 'C', 0, '', 0);
+            $pdf->Cell(15, 0, 'เกรด', 1, 0, 'C', 0, '', 0); 
+            $pdf->Cell(25, 0, 'ผู้ผลิต', 1, 0, 'C', 0, '', 0); 
+            $pdf->Ln();
+        }
+        $pdf->Cell(65, 0, $row['cc_name'], 1, 0, 'L', 0, '', 0);
+        $pdf->Cell(30, 0, $row['cc_casNo'], 1, 0, 'L', 0, '', 0);
+        $pdf->Cell(15, 0, $row['cc_state'], 1, 0, 'L', 0, '', 0);
+        $pdf->Cell(15, 0, $row['cc_packing'], 1, 0, 'L', 0, '', 0);
+        $pdf->Cell(20, 0, $row['cc_volume'], 1, 0, 'L', 0, '', 0);
+        $pdf->Cell(30, 0, number_format ($row['cc_quantity'] , 4, ".", ",") ." ".strtoupper ($row['cu_name_abb']), 1, 0, 'L', 0, '', 0);
+        $pdf->Cell(15, 0, $row['cl_name_abb'], 1, 0, 'L', 0, '', 0);
+        $pdf->Cell(15, 0, $row['cc_room'], 1, 0, 'L', 0, '', 0);
+        $pdf->Cell(20, 0, $row['cc_price'], 1, 0, 'L', 0, '', 0);
+        $pdf->Cell(15, 0, $row['cc_grade'], 1, 0, 'L    ', 0, '', 0); 
+        $pdf->Cell(25, 0, $row['cc_producer'], 1, 0, 'L', 0, '', 0); 
         $pdf->Ln();
+        $countlist++;
     }
 
 

@@ -1,179 +1,32 @@
 <?php
     include '../../php/connect.php';
     date_default_timezone_set('Asia/Bangkok');
-    //$_POST = json_decode(file_get_contents('php://input'), true);
-/*
-    isset($_POST['locationF']) ? $locF = $_POST['locationF'] : $locF = null;
-    isset($_POST['locationT']) ? $locT = $_POST['locationT'] : $locT = null;
-    isset($_POST['state']) ? $state = $_POST['state'] : $state = null;
-    isset($_POST['stDt']) ? $stDt = $_POST['stDt'] : $stDt = null;
-    isset($_POST['edDt']) ? $edDt = $_POST['edDt'] : $edDt = null;
-    isset($_POST['name']) ? $name = $_POST['name'] : $name = null;
-    isset($_POST['casNo']) ? $casNo = $_POST['casNo'] : $casNo = null;
-    isset($_POST['grade']) ? $grade = $_POST['grade'] : $grade = null;
+
+    isset($_POST['no']) ? $no = $_POST['no'] : $no = '';
+    isset($_POST['tostore']) ? $tostore = $_POST['tostore'] : $tostore = '';
     isset($_POST['selectAll']) ? $selectAll = $_POST['selectAll'] : $selectAll = null;
+    $stDt= $_POST['stDt'];
+    $edDt= $_POST['edDt'];
 
-    if($selectAll == true){
-            $sql = "SELECT `cr_pk`,`cr_no`,`cr_crtDt`,`cr_updDt`,`cr_desc`,`cr_status`,`cr_fromstore`,`cr_tostore`,`ca_tname`,`ca_fname`,`ca_lname`
-                FROM `chem_receipt`
-                INNER JOIN `chem_account` 
-                ON `ca_pk` = SUBSTRING(cr_no, 4, 1)
-                WHERE cr_type = 'exchangechem'
-                ORDER BY cr_crtDt DESC";
-        }else{
-            $sql = "SELECT `cr_pk`,`cr_no`,`cr_crtDt`,`cr_updDt`,`cr_desc`,`cr_status`,`cr_fromstore`,`cr_tostore`,`ca_tname`,`ca_fname`,`ca_lname`
-                FROM `chem_receipt`
-                INNER JOIN `chem_account` 
-                ON `ca_pk` = SUBSTRING(cr_no, 4, 1)
-                WHERE cr_type = 'exchangechem' ";
-            
-            if($locF != null){
-                $sql .= "AND cr_fromstore = ".$locF." ";
-            }
-            
-            if($locT != null){
-                $sql .= "AND cr_tostore = ".$locT." ";
-            }
+    $sql = "SELECT ce.*,ca_tname,ca_fname,ca_lname FROM `chem_exchange` AS ce ";
+    $sql .= "INNER JOIN chem_account ON ce_ca_fk = ca_pk";
 
-//            if($state != null){
-//                $sql .= "AND cc_state = '".$state."' ";
-//            }
-
-            if($stDt != null && $edDt != null ){
-                $sql .= "AND cr_updDt BETWEEN '".$stDt."' AND '".$edDt."' ";
-            }
-
-//            if($name != null){
-//                $sql .= "AND cc_name LIKE '%".$name."%' ";
-//            }
-
-//            if($casNo != null){
-//                $sql .= "AND cc_casNo LIKE '%".$casNo."%' ";
-//            }
-
-//            if($grade != null){
-//                $sql .= "AND cc_grade LIKE '%".$grade."%' ";
-//            }
-
-            $sql .= "ORDER BY `cr_crtDt` DESC";
-        }
-*/
-    $findthis = $_POST['findthis'];
-    $findtypethis = $_POST['findtypethis'];
-    //$type = $_POST['type'];
-
-    isset($_POST['locationF']) ? $locF = $_POST['locationF'] : $locF = null;
-    isset($_POST['locationT']) ? $locT = $_POST['locationT'] : $locT = null;
-
-    isset($_POST['stDt']) ? $stDt = date("Y-m-d", strtotime($_POST['stDt'])) : $stDt = null;
-    isset($_POST['edDt']) ? $edDt =  date("Y-m-d", strtotime($_POST['edDt'] .'+1 day' )) : $edDt = null;
-
-    isset($_POST['no']) ? $no = $_POST['no'] : $no = null;
-    isset($_POST['selectAll']) ? $selectAll = $_POST['selectAll'] : $selectAll = null;
-
-//    if($type == '1'){
-//        $type = "all";
-//    }
-//    
-//    if($type == "all") {
-//        
-//        
-//        if($selectAll == true){
-//            $sql = "SELECT `cr_pk`,`cr_no`,`cr_crtDt`,`cr_updDt`,`cr_desc`,`cr_status`,`cr_fromstore`,`cr_tostore`,`ca_tname`,`ca_fname`,`ca_lname`
-//                FROM `chem_receipt`
-//                INNER JOIN `chem_account` 
-//                ON `ca_pk` = SUBSTRING(cr_no, 4, 1)
-//                WHERE cr_type = 'exchangechem'
-//                ORDER BY cr_crtDt DESC";
-//        }else{
-//            $sql = "SELECT `cr_pk`,`cr_no`,`cr_crtDt`,`cr_updDt`,`cr_desc`,`cr_status`,`cr_fromstore`,`cr_tostore`,`ca_tname`,`ca_fname`,`ca_lname`
-//                FROM `chem_receipt`
-//                INNER JOIN `chem_account` 
-//                ON `ca_pk` = SUBSTRING(cr_no, 4, 1)
-//                WHERE cr_type = 'exchangechem' ";
-//            
-//            if($locF != null){
-//                $sql .= "AND cr_fromstore = ".$locF." ";
-//            }
-//            
-//            if($locT != null){
-//                $sql .= "AND cr_tostore = ".$locT." ";
-//            }
-//
-//
-//            if($stDt != null && $edDt != null ){
-//                $sql .= "AND cr_updDt BETWEEN '".$stDt."' AND '".$edDt."' ";
-//            }
-//            
-//            if($no != null){
-//                $sql .= "AND cr_no LIKE '%".$no."%' ";
-//            }
-//
-//
-//            $sql .= "ORDER BY `cr_crtDt` DESC";
-//        }
-//        
-//    }else{
-//                
-//        if($selectAll == true){
-//            $sql = "SELECT `cr_pk`,`cr_no`,`cr_crtDt`,`cr_updDt`,`cr_desc`,`cr_status`,`cr_fromstore`,`cr_tostore`,`ca_tname`,`ca_fname`,`ca_lname`
-//                FROM `chem_receipt`
-//                INNER JOIN `chem_account` 
-//                ON `ca_pk` = '".$type."'
-//                WHERE cr_no LIKE 'NO.".$type."%' AND cr_type = 'exchangechem'
-//                ORDER BY cr_crtDt DESC";
-//        }else{
-//            $sql = "SELECT `cr_pk`,`cr_no`,`cr_crtDt`,`cr_updDt`,`cr_desc`,`cr_status`,`cr_fromstore`,`cr_tostore`,`ca_tname`,`ca_fname`,`ca_lname`
-//                FROM `chem_receipt`
-//                INNER JOIN `chem_account` 
-//                ON `ca_pk` = '".$type."'
-//                WHERE cr_no LIKE 'NO.".$type."%' AND cr_type = 'exchangechem' ";
-//            
-//            if($locF != null){
-//                $sql .= "AND cr_fromstore = ".$locF." ";
-//            }
-//            
-//            if($locT != null){
-//                $sql .= "AND cr_tostore = ".$locT." ";
-//            }
-//
-//
-//            if($stDt != null && $edDt != null ){
-//                $sql .= "AND cr_updDt BETWEEN '".$stDt."' AND '".$edDt."' ";
-//            }
-//            
-//            if($no != null){
-//                $sql .= "AND cr_no LIKE '%".$no."%' ";
-//            }
-//
-//
-//            $sql .= "ORDER BY `cr_crtDt` DESC";
-//        }
-//    }
-
-    if($findtypethis == 1){
-        $sql = "SELECT ce.*,ca_tname,ca_fname,ca_lname FROM `chem_exchange` AS ce ";
-        $sql .= "INNER JOIN chem_account ON ce_ca_fk = ca_pk ";
-        $sql .= "WHERE `ce_crtDt` BETWEEN '".$stDt."' AND '".$edDt."' ";
+    if($selectAll != 'true'){
+        $sql .= " WHERE `ce_crtDt` BETWEEN '".substr($stDt,1,strlen($stDt)-2)."' AND '".substr($edDt,1,strlen($edDt)-2)."' ";
     }
-    else{
-        $sql = "SELECT ce.*,ca_tname,ca_fname,ca_lname FROM `chem_exchange` AS ce ";
-        $sql .= "INNER JOIN chem_account ON ce_ca_fk = ca_pk ";
-        $sql .= "WHERE `ce_crtDt` BETWEEN '".$stDt."' AND '".$edDt."' ";
-        $sql .= "AND ce_no LIKE 'NO.".$findthis."%' ";
-    }
-    
-    if($no != null){
+
+    if($no != '' && $selectAll != 'true'){
         $sql .= " AND ce_no LIKE '%".$no."%' ";
     }
     
-    $query = mysql_query($sql);
+    if($tostore != '' && $selectAll != 'true'){
+        $sql .= " AND ce_tostore LIKE '%".$tostore."%' ";
+    }
 
-    //print $sql;
-    
+    $sql .= " ORDER BY ce_crtDt DESC";
 
-
-    // Include the main TCPDF library (search for installation path).
+    $query = mysql_query($sql); 
+     //Include the main TCPDF library (search for installation path).
     require_once('tcpdf_include.php');
 
     // create new PDF document
@@ -237,64 +90,27 @@
 
     $pdf->SetFont('freeserif','B',16);
     $pdf->Text(120,30,"ประวัติการย้ายคลังสารเคมี");
+    $pdf->SetFont('freeserif','',12);
+
+    if($selectAll == 'true'){
+        $pdf->Text(210,40,"ประเภทการค้นหา : ดูข้อมูลทั้งหมด");
+    }
+    else{
+        $pdf->Text(18,40,"ตั้งแต่วันที่ : ".
+               date("d-m-Y", strtotime(substr($stDt,1,strlen($stDt)-2)))  );
+        $pdf->Text(60,40,"ถึงวันที่ : ".
+               date("d-m-Y", strtotime(substr($edDt,1,strlen($edDt)-2)))  );
+        $pdf->Text(210,40,"ประเภทการค้นหา : ดูข้อมูลตามตัวกรอง");
+        if($no != '' && $selectAll != 'true'){
+            $pdf->Text(100,40,"เลขที่ใบเสร็จ : ".$no);
+        }
+        if($tostore != '' && $selectAll != 'true'){
+            $pdf->Text(18,50,"คลังที่ย้ายสารเข้า : ".$tostore);
+        }
+    }
     $pdf->Ln(10);
 
     $pdf->SetFont('freeserif','',12);
-
-//    while($row = mysql_fetch_array ($query))
-//    {
-//        $date_crt = date_create($row['cr_crtDt']);
-//        $date_upd = date_create($row['cr_updDt']);
-//        
-//        
-//        
-//        $pdf->Cell(50, 0, 'วันที่เขียนคำร้อง :', 0, 0, 'R', 0, '', 0);
-//        $pdf->Cell(50, 0, date_format($date_crt,"d/m/Y"), 0, 0, 'L', 0, '', 0);
-//        $pdf->Ln();
-//        $pdf->Cell(50, 0, 'วันที่ได้รับอนุมัติ :', 0, 0, 'R', 0, '', 0);
-//        $pdf->Cell(50, 0, date_format($date_upd,"d/m/Y"), 0, 0, 'L', 0, '', 0);
-//        $pdf->Ln();
-//        $pdf->Cell(50, 0, 'เลขที่ใบเบิก :', 0, 0, 'R', 0, '', 0);
-//        $pdf->Cell(50, 0, $row['cr_no'], 0, 0, 'L', 0, '', 0);
-//        $pdf->Ln();
-//        $pdf->Cell(50, 0, 'อาจารย์ที่ปรึกษา :', 0, 0, 'R', 0, '', 0);
-//        $pdf->Cell(50, 0, $row['ca_tname']." ".$row['ca_fname']." ".$row['ca_lname'], 0, 0, 'L', 0, '', 0);
-//        $pdf->Ln();
-//        $pdf->Cell(50, 0, 'โครงงานพิเศษ/วิทยานิพนธ์ :', 0, 0, 'R', 0, '', 0);
-//        $pdf->Cell(50, 0, $row['cp_name'], 0, 0, 'L', 0, '', 0);
-//        $pdf->Ln();
-//        
-//        
-//        $find = $row['cr_pk'];
-//        
-//        $sql2 = "SELECT `cc_name`,`crd_amt`,`crd_price`,`crd_unit`,`cl_name`".
-//           "FROM `chem_receipt_detail`".
-//           "INNER JOIN `chem_category`".
-//           "ON `cc_pk` = `crd_cc_fk`".
-//           "INNER JOIN chem_location ".
-//           "ON cc_location_fk = cl_pk ".
-//           "WHERE `crd_cr_fk` = ".$find;
-//        $query2 = mysql_query($sql2);
-//        
-//        $pdf->Cell(50, 0, 'ชื่อสารเคมี', 1, 0, 'C', 0, '', 0);
-//        $pdf->Cell(15, 0, 'จำนวน', 1, 0, 'C', 0, '', 0);
-//        $pdf->Cell(15, 0, 'หน่วย', 1, 0, 'C', 0, '', 0);
-//        $pdf->Cell(30, 0, 'คลัง', 1, 0, 'C', 0, '', 0);
-//        $pdf->Cell(20, 0, 'ราคา', 1, 0, 'C', 0, '', 0);
-//        $pdf->Ln();
-//        
-//        while($row = mysql_fetch_array ($query2))
-//        {
-//            $pdf->Cell(50, 0, $row['cc_name'], 1, 0, 'C', 0, '', 0);
-//            $pdf->Cell(15, 0, $row['crd_amt'], 1, 0, 'C', 0, '', 0);
-//            $pdf->Cell(15, 0, $row['crd_unit'], 1, 0, 'C', 0, '', 0);
-//            $pdf->Cell(30, 0, $row['cl_name'], 1, 0, 'C', 0, '', 0);
-//            $pdf->Cell(20, 0, $row['crd_price'], 1, 0, 'C', 0, '', 0);
-//            $pdf->Ln();
-//        }
-//        
-//        $pdf->Ln();
-//    }
 
     $pdf->SetFont('freeserif','',10);
     $first = 1;
@@ -303,20 +119,13 @@
     while($row = mysql_fetch_array ($query))
     {
         if($first==1){
-//            $date_crt = date_create($row['cr_crtDt']);
-//            $date_upd = date_create($row['cr_updDt']);
 
             $pdf->Cell(25, 0, 'วันที่เขียนคำร้อง', 1, 0, 'C', 0, '', 0);
             $pdf->Cell(25, 0, 'วันที่ได้รับอนุมัติ', 1, 0, 'C', 0, '', 0);
 
             $pdf->Cell(27, 0, 'เลขที่ใบเบิก', 1, 0, 'C', 0, '', 0);
-//            $cr_no = $row['cr_no'];
 
             $pdf->Cell(45, 0, 'อาจารย์ที่ปรึกษา', 1, 0, 'C', 0, '', 0);
-//            $name = $row['ca_tname']." ".$row['ca_fname']." ".$row['ca_lname'];
-
-//            $pdf->Cell(40, 0, 'โครงงานพิเศษ/วิทยานิพนธ์', 1, 0, 'C', 0, '', 0);
-//            $project = $row['cp_name'];
 
             $pdf->Cell(50, 0, 'ชื่อสารเคมี', 1, 0, 'C', 0, '', 0);
             $pdf->Cell(40, 0, 'Cas no.', 1, 0, 'C', 0, '', 0);
@@ -359,7 +168,7 @@
                 $pdf->Cell(40, 0, $row['cc_casNo'], 1, 0, 'L', 0, '', 0);
                 $pdf->Cell(20, 0, $row['cc_grade'], 1, 0, 'L', 0, '', 0);
                 $pdf->Cell(15, 0, $row['ced_amt'], 1, 0, 'C', 0, '', 0);
-                $pdf->Cell(15, 0, $row['ced_unit'], 1, 0, 'C', 0, '', 0);
+                $pdf->Cell(15, 0, strtoupper ($row['ced_unit']), 1, 0, 'C', 0, '', 0);
                 $pdf->Ln(); 
                 
             }else{
@@ -371,10 +180,9 @@
                 $pdf->Cell(40, 0, $row['cc_casNo'], 1, 0, 'L', 0, '', 0);
                 $pdf->Cell(20, 0, $row['cc_grade'], 1, 0, 'L', 0, '', 0);
                 $pdf->Cell(15, 0, $row['ced_amt'], 1, 0, 'C', 0, '', 0);
-                $pdf->Cell(15, 0, $row['ced_unit'], 1, 0, 'C', 0, '', 0);
+                $pdf->Cell(15, 0,   strtoupper ($row['ced_unit']), 1, 0, 'C', 0, '', 0);
                 $pdf->Ln(); 
             }
-
             $index++;
         }
         
@@ -396,6 +204,4 @@
     }
 
     $pdf->Output('export_pdf_transfer_log.pdf', 'I');
-    
-
 ?>

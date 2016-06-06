@@ -3,7 +3,9 @@
         text-align: center;
     }
 </style>  
+<form method="post" action="../tcpdf/examples/export_pdf_withdraw_log.php" target="_blank">
 <div ng-show="showcontent == 1">
+    
     <caption><center><h4><b><i class="fa fa-file-text-o"></i>&nbsp;ประวัติการเบิกสารเคมี </b></h4></center></caption><hr>
     <strong>ตั้งแต่ :</strong>
     <input ng-model="logRecpt.stDt" name="stDt" type="date" />
@@ -20,27 +22,25 @@
     <input type="text" ng-model="logRecpt.project" name="project" /><br><br>
 
     <strong>ดูข้อมูลทั้งหมด :</strong>
-    <input type="checkbox" ng-model="logRecpt.selectAll" name="project" /><br><br>{{logRecpt.selectAll}}
-    <button type="button" class="btn btn-default" ng-click="search()" ><i class="fa fa-search" aria-hidden="true"></i>&nbsp;ค้นหา</button> 
+    <input type="checkbox" ng-model="logRecpt.selectAll" name="selectAll" /><br><br>
+    <button type="button" class="btn btn-info" ng-click="search()" ><i class="fa fa-search" aria-hidden="true"></i>&nbsp;ค้นหา</button> 
 </div>
 
 <div ng-show="showcontent == 2">
     <caption><center><h4><b><i class="fa fa-file-text-o"></i>&nbsp;ประวัติเบิกสารเคมีที่ค้นพบ</b></h4></center></caption><hr>
-    <form class="navbar-form navbar-right" method="post" action="../tcpdf/examples/export_pdf_withdraw_log.php" target="_blank">
-        <input type="hidden" value="{{logRecpt.selectAll}}" name="selectAll">
+    
         <input type="hidden" value="{{key}}" name="findthis">
         <input type="hidden" value="{{type}}" name="findtypethis">
-        <button type="button" class="btn btn-default"  ng-click="showcontent = 1"><i class="fa fa-chevron-left" aria-hidden="true"></i>&nbsp;ย้อนกลับ</button>
-        <button type="submit" class="btn btn-default" ><i class="fa fa-print" aria-hidden="true"></i>&nbsp;พิมพ์รายงาน</button>
-    </form>
+
+        <button type="submit" class="btn btn-default" style="float: right;"><i class="fa fa-print" aria-hidden="true"></i>&nbsp;พิมพ์รายงาน</button>
+        <button type="button" class="btn btn-default"  ng-click="showcontent = 1" style="float: right;"><i class="fa fa-chevron-left" aria-hidden="true"></i>&nbsp;ย้อนกลับ</button>    
     <table class="table table-bordered">
         <tr>
             <th>ลำดับที่</th>
             <th>เลขที่ใบเสร็จ</th>
             <th>วันที่ร้องขอ</th>
             <th>สถานะการร้องขอ</th>
-            <th>ราคารวมทั้งสิ้น</th>
-            <th>โปรเจคที่ยืม</th>
+            <th>ยอดรวม</th>
             <th>รายละเอียด</th>
         </tr>
         <tr ng-repeat="showdata in listReciept | filter : searchThis | limitTo : searchRange.value : begin">
@@ -57,7 +57,6 @@
             <td> 
             {{showdata.cr_cost | number:4}}
             </td>
-            <td>{{showdata.cp_name}}</td>
             <td>
                   <input type="button" class="btn btn-default" value="แสดง" ng-click="showdetail(showdata.cr_pk,$index)">
             </td>
@@ -66,16 +65,16 @@
 </div>
 <div ng-show="showcontent == 3">
     <caption><center><h4><b><i class="fa fa-file-text-o"></i>&nbsp;รายละข้อมูลการเบิกสารเคมี</b></h4></center></caption><hr>
-    <form class="navbar-form navbar-right">
-        <input type="button" class="btn btn-default" value="ย้อนกลับ" ng-click="showcontent = 2">
-    </form>
-    <form class="navbar-form navbar-left">
+
+        <input type="button" class="btn btn-default" value="ย้อนกลับ" ng-click="showcontent = 2"  style="float: right;">
+
+
         ใบคำร้องที่ : {{listReciept[index].cr_no}} <br>
         วันที่ร้องขอ : {{listReciept[index].cr_crtDt | Date}} <br>
         สถานะคำร้องขอปัจจุบัน : <font ng-bind-html="listReciept[index].cr_status | confirmFilter"></font><br>
         โปรเจคที่ร้องขอ : {{listReciept[index].cp_name}} <br>
         ผู้เขียนคำร้องขอ : {{listReciept[index].ca_tname}}{{listReciept[index].ca_fname}}&nbsp;{{listReciept[index].ca_lname}}<br>
-    </form>
+
     
 
     <table width="100%" class="table table-striped">
@@ -102,12 +101,11 @@
             <td ng-bind-html="showdata.crd_status | confirmFilter"></td>
         </tr>
       </table>
-    <form class="navbar-form navbar-right">
-        <div class="well" style="width: 250px;">
+        <div class="well" style="width: 250px;float: right;" >
             ค่าใช้จ่ายรวม : {{listReciept[index].cr_cost | number:4}} บาท
         </div>
-    </form>
 </div>
+</form>
         
 
 

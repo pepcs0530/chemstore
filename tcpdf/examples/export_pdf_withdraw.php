@@ -211,7 +211,7 @@
         $pdf->Cell(15, 0, $row['crd_amt']." ".$row['crd_unit'], 1, 0, 'C', 0, '', 0);
         $pdf->Cell(20, 0, $row['crd_price']." บาท", 1, 0, 'C', 0, '', 0);
         $pdf->Cell(25, 0, $row['crd_price']." บาท", 1, 0, 'C', 0, '', 0);
-        $pdf->Cell(20, 0, $row['cl_name_abb']." ".$row['cc_room'], 1, 0, 'C', 0, '', 0);
+        $pdf->Cell(20, 0,  strtoupper ($row['cl_name_abb'])." ".$row['cc_room'], 1, 0, 'C', 0, '', 0);
         $pdf->Cell(20, 0, '', 1, 0, 'C', 0, '', 0);
         $pdf->Ln();
         $index++;

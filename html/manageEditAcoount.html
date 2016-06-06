@@ -40,6 +40,7 @@
         <th>ชื่อ</th>
         <th>นามสกุล</th>
         <th>เบอร์โทร</th>
+        <th>เงินในระบบ(บาท)</th>
         <th>แก้ไข</th>
         <th>ลบ</th>
     </tr>
@@ -57,6 +58,7 @@
     <td>{{showdata.ca_fname}}</td>
     <td>{{showdata.ca_lname}}</td>
     <td>{{showdata.ca_tel}}</td>
+    <td>{{showdata.ca_credit}}</td>
     <td align="center"><button type="button" class="btn btn-primary btn-sm"  ng-click="editContact(showdata)" ><i class="fa fa-check-square"></i></button></td>
     <td align="center"><button type="button" class="btn btn-danger btn-sm"  ng-click="delectContact(showdata)" ><i class="fa fa-trash-o"></i></button></td>
 </script>
@@ -83,6 +85,9 @@
     </td>
     <td>
         <input type="text" ng-model="editThisData.ca_tel" id="edit"/>
+    </td>
+    <td>
+        <input type="text" ng-model="editThisData.ca_credit" id="edit"/>
     </td>
     <td align="center">
             <button class="btn btn-success btn-sm" ng-click="saveContact()"><i class="fa fa-floppy-o" aria-hidden="true"></i></button>
