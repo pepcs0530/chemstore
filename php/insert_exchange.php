@@ -52,7 +52,7 @@
         " VALUE('".$ce_no."', CURRENT_TIMESTAMP,'".$ce_desc."','".$ce_tostore."','".$ce_ca_fk."')";
     
     $query = mysql_query($sql);
-//
+
     $sql = "SELECT ce_pk FROM `chem_exchange` ORDER BY ce_pk DESC LIMIT 1";
     $query = mysql_query($sql);
     $data=array();
