@@ -4,8 +4,7 @@
     white-space: nowrap;
 }
 </style>
-<form class="form-horizontal" role="form" enctype="multipart/form-data" id='addNewsForm'>
-    <!--    <input type="submit" name="save" value="upload">-->
+<form action="../php/insert_news.php" method="post" enctype="multipart/form-data" class="form-horizontal" target="_blank">
     <div class="panel panel-default">
         <div class="panel-heading">
             <caption>
@@ -35,18 +34,19 @@
             <div class="form-group">
                 <label for="tname" class="col-sm-4 control-label">รูปภาพ :</label>
                 <div class="col-sm-4">
-                    <input type="file" fileread="file" name="file" />
+                    <input type="file" name="fileToUpload" id="fileToUpload"
                 </div>
             </div>
         </div>
         <div class="panel-footer">
-            <div class="col-sm-offset-10 " align="right">
-                <button class="btn btn-success" type="button" name="save" ng-click="createNews()" name="createNews" value="เพิ่ม">เพิ่ม</button>
-                <button class="btn btn-danger" type="reset" ng-click="clearNews()" name="clearNews" value="ยกเลิก">ยกเลิก</button>
+            <div class="col-sm-offset-10 " align="right">       
+                <input type="submit" value="อัพโหลดข่าวสาร" name="submit" ng-click="clearNews()" class="btn btn-success">
+                <button class="btn btn-danger" type="reset" value="ยกเลิก">ยกเลิก</button>
             </div>
         </div>
     </div>
 </form>
+
 
 <div class="panel-heading">
     <caption>
@@ -54,26 +54,22 @@
             <h4><b><i class="fa fa-plus-circle fa-lg"></i>&nbsp;เแก้ไขข่าวประชาสัมพันธ์ใหม่</b></h4></center>
     </caption>
 </div>
-<table id="newsTable" class="table table-bordered" ng-controller="showNewsCtrl">
+<table id="newsTable" class="table table-bordered">
     <tr>
         <th>หัวข้อ</th>
         <th width="100px">ลิงค์</th>
         <th class="absorbing-column">ลบ</th>
     </tr>
-    <tbody ng-init="showNews()">
-        <script type="text/javascript">
-        </script>
-        <tr ng-repeat="showdata in news">
-            <td>
-                <h4> {{showdata.cpr_title}} </h4>
-                <br> {{showdata.cpr_desc}}
-            </td>
-            <td>
-                {{showdata.cpr_link}}
-            </td>
-            <td class="absorbing-column">
-                <button type="button" class="btn btn-danger btn-sm" ng-click="deleteNews(showdata.cpr_pk)"><i class="fa fa-trash-o"></i></button>
-            </td>
-        </tr>
-    </tbody>
+    <tr ng-repeat="showdata in news">
+        <td>
+            <h4> {{showdata.cpr_title}} </h4>
+            <br> {{showdata.cpr_desc}}
+        </td>
+        <td>
+            {{showdata.cpr_link}}
+        </td>
+        <td class="absorbing-column">
+            <button type="button" class="btn btn-danger btn-sm" ng-click="deleteNews(showdata.cpr_pk)"><i class="fa fa-trash-o"></i></button>
+        </td>
+    </tr>
 </table>

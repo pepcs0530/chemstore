@@ -5,7 +5,7 @@
           .when(
             '/news',{
                 templateUrl: '../html/news.html',
-                controller: 'loginCtrl'
+                controller: 'newsCtrl'
           }
           ).when(
             '/logout',{

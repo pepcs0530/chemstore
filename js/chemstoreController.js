@@ -56,17 +56,7 @@ chemstore.controller('loginCtrl', function($rootScope, $scope, $http, $timeout, 
         });
 
     }
-    $scope.myInterval = 3000;
 
-    $scope.slides = [{
-        image: '../img/slide1.jpg'
-    }, {
-        image: '../img/slide2.jpg'
-    }, {
-        image: '../img/slide3.jpg'
-    }, {
-        image: '../img/slide4.jpg'
-    }];
     //  Notifications
     $scope.startTimer = function() {
         $scope.noti();
@@ -96,6 +86,15 @@ chemstore.controller('loginCtrl', function($rootScope, $scope, $http, $timeout, 
     toastr.success('ออกจากระบบ');
     $timeout(location.reload(), 5000);
     window.location.href = "../php/logout.php";
+})
+//แสดงข่าว
+.controller('newsCtrl', function($scope, $http) {
+   $http({
+        method: 'GET',
+        url: '../php/select_news.php'
+    }).then(function(response) {
+        $scope.news = response.data;
+    });
 })
 
 //  คลังสินค้า  ============================================================================================================
@@ -1688,58 +1687,31 @@ chemstore.controller('loginCtrl', function($rootScope, $scope, $http, $timeout, 
 
 // สร้างข่าว ===============================================================================================
 .controller('addNewsCtrl', function($scope, $http, $timeout, toastr) {
-
-    $scope.createNews = function() {
-
-        var addNewsForm = document.getElementById("addNewsForm");
-
-        var fd = new FormData(addNewsForm);
-
-        var xhr = new XMLHttpRequest();
-
-        xhr.open("POST", '../php/insert_news.php');
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState == 4 && xhr.status == 200) {
-                toastr.success('ดำเนินการเรียบร้อย');
-                $timeout(location.reload(), 5000);
-            }
-        };
-        xhr.send(fd);
-    }
-
+    $http({
+        method: 'GET',
+        url: '../php/select_news.php'
+    }).then(function(response) {
+        $scope.news = response.data;
+        console.log($scope.news);
+    });
     $scope.clearNews = function() {
+        toastr.success('เพิ่มข่าวเรียบร้อย');
+        $timeout(location.reload(), 5000);//
         $scope.addNews = {
             title: '',
             desc: '',
             link: ''
         }
     }
-
     $scope.deleteNews = function(cpr_pk) {
         $http({
             method: 'POST',
             url: '../php/delete_news.php',
             data: { cpr_pk: cpr_pk }
         }).then(function(response) {
-            toastr.success('ดำเนินการเรียบร้อย');
+            toastr.success('ดำเนินการลบเรียบร้อย');
             $timeout(location.reload(), 5000);//
         });
-    }
-
-})
-
-// แสดงข่าว ===============================================================================================
-.controller('showNewsCtrl', function($scope, $http) {
-    $scope.showNews = function() {
-        // body...
-        $http({
-            method: 'GET',
-            url: '../php/select_news.php',
-        }).then(function(response) {
-            $scope.news = response.data;
-        });
-
-
     }
 })
 
