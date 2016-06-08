@@ -1,28 +1,24 @@
 <style>
-    th, td{
+    th,td{
         text-align: center;
     }
 </style>
-<div ng-show="!content">
-    <caption><center><h4><b><i class="fa fa-list-alt"></i>&nbsp;สถานะคำร้องขอเบิกสารเคมี</b></h4></center></caption><hr>
-    <form class="navbar-form navbar-left">
-        ระบุคำที่ต้องการค้นหา : <input type="text" class="form-control" ng-model="searchThis.$" placeholder="ค้นหา">&nbsp;
-        ประเภทสถานะคำร้อง : 
-        <select ng-model="searchThis.cr_status" class="form-control">
-            <option value="" selected>ดูทั้งหมด</option>
-            <option value="0">รอการยืนยัน</option>
-            <option value="1">อนุมัติได้รับสารครบแล้ว</option>
-            <option value="2">ไม่อนุมัติ</option>
-            <option value="3">อนุมัติดำเนินการรับสาร</option>
-        </select>
+<div  ng-show="page == 1">
+        <caption><center><h4><b><i class="fa fa-folder-open"></i>&nbsp;ค้นหาสถานะใบเสร็จ</b></h4></center></caption><hr>
+    <form class="form-horizontal" role="form" >
+        <div class="form-group">
+            <label for="code" class="col-sm-4 control-label" >เลขที่ใบเสร็จ :</label>
+            <div class="col-sm-4">
+                <input class="form-control" ng-model="recieptPk" type="text" class="" id="form-code" />
+            </div>
+            <input type="button" value="ค้นหา" class="btn btn-info" ng-click="findReciept()">
+        </div>
     </form>
-    <form class="navbar-form navbar-right">
-        จำนวนแถวที่แสดง : <select ng-init="searchRange = options[2]"
-                class="form-control"
-                ng-model="searchRange" 
-                ng-options="option.name for option in options">
-                </select> 
-    </form> 
+</div>
+
+<div ng-show="page == 2">
+    <caption><center><h4><b><i class="fa fa-list-alt"></i>&nbsp;สถานะคำร้องขอเบิกสารเคมี</b></h4></center></caption><hr>
+    <input type="button" class="btn btn-default" value="ย้อนกลับ" ng-click="page = 1" style="float:right;">
     <table class="table table-bordered">
         <tr>
             <th>ลำดับที่</th>
@@ -32,7 +28,7 @@
             <th>ราคารวมทั้งสิ้น</th>
             <th>รายละเอียด</th>
         </tr>
-        <tr ng-repeat="showdata in listReciept | filter : searchThis | limitTo : searchRange.value : begin">
+        <tr ng-repeat="showdata in listReciept">
             <td>
             {{$index+1}}
             </td>
@@ -51,17 +47,14 @@
             </td>
     </tr>
     </table> 
-     <form class="navbar-form navbar-left">
-        <button type="button" class="btn btn-primary btn-xs"  ng-click="deleteRecord()" value="previous"><i class="fa fa-backward"></i>&nbsp;previous</button>
-        <button type="button" class="btn btn-primary btn-xs" ng-click="addRecord()" value="next">next&nbsp;<i class="fa fa-forward"></i></button>  
-    </form>
 </div> 
-<div ng-show="content">
+
+<div ng-show="page == 3">
     <caption><center><h4><b><i class="fa fa-list-alt"></i>&nbsp;รายละเอียดข้อมูลการเบิกสารเคมี</b></h4></center></caption><hr>
         <form action="../tcpdf/examples/export_pdf_withdraw.php" target="_blank" method="post" class="navbar-form navbar-right">
             <input type="hidden" value="{{listReciept[index].cr_pk}}" name="crd_cr_fk">
             <input type="submit" class="btn btn-default" ng-hide="listReciept[index].cr_status != 3" value="พิมพ์ใบเสร็จ">
-            <input type="button" class="btn btn-default" value="ย้อนกลับ" ng-click="content = false">
+            <input type="button" class="btn btn-default" value="ย้อนกลับ" ng-click="page = 2" style="float:right;">
         </form>
     <form class="navbar-form navbar-left">
         ใบคำร้องที่ : {{listReciept[index].cr_no}} <br>

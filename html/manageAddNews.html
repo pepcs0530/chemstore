@@ -57,14 +57,14 @@
 <table id="newsTable" class="table table-bordered">
     <tr>
         <th>หัวข้อ</th>
+        <th>รายละเอียด</th>
         <th width="100px">ลิงค์</th>
         <th class="absorbing-column">ลบ</th>
     </tr>
     <tr ng-repeat="showdata in news">
-        <td>
-            <h4> {{showdata.cpr_title}} </h4>
-            <br> {{showdata.cpr_desc}}
+        <td>{{showdata.cpr_title}}
         </td>
+        <td>{{showdata.cpr_desc}}</td>
         <td>
             {{showdata.cpr_link}}
         </td>

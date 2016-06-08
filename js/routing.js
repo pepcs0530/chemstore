@@ -194,6 +194,12 @@
                 controller: 'seniorReceiptlogCtrl'
             }   
           )
+          .when(
+            '/guestSearch',{
+                templateUrl: '../html/guestSearch.html',
+                controller: 'guestSearchCtrl'
+            }   
+          )
           .otherwise({
                 redirectTo: '/news'
       	  })  

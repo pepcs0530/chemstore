@@ -1502,8 +1502,10 @@ chemstore.controller('loginCtrl', function($rootScope, $scope, $http, $timeout, 
         teacher_pk: $scope.key,
         cp_eduLvl: "ปริญญาตรี",
         maxBudget: 7000,
-        cp_reasonyear : new Date().getFullYear()+543+''
-    }        
+        cp_reasonyear : new Date().getFullYear()+543+'',
+        cp_budget:'',
+        cp_desc:''
+    } 
     $scope.yearrange = [];
     for(var i = new Date().getFullYear()-10+543;i<new Date().getFullYear()+543;i++){
         $scope.yearrange.push({name:i,value:i});
@@ -1604,7 +1606,6 @@ chemstore.controller('loginCtrl', function($rootScope, $scope, $http, $timeout, 
     }).then(function(response) {
         $scope.listAcountData = response.data;
     });
-
     $scope.createProject = function() {
             //////set up โควตร้าประจำโปรเจคได้ตรงนี้
             if($scope.countProject[0].edu_count >= 4){
@@ -1658,7 +1659,7 @@ chemstore.controller('loginCtrl', function($rootScope, $scope, $http, $timeout, 
                                                 },
                                                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
                                             }).then(function(response) {
-
+                                                console.log(response.data);
                                             })
                                         });
                                         toastr.success('ดำเนินการเรียบร้อย');
@@ -3067,6 +3068,34 @@ chemstore.controller('loginCtrl', function($rootScope, $scope, $http, $timeout, 
         }).then(function(response) {
             $scope.listRecieptDetail = response.data;
             $scope.showcontent = 3;
+        });
+    }
+})
+//ค้นหาเลขที่ใบเสร็จ
+.controller('guestSearchCtrl',function($scope,$http){
+    $scope.page = 1;
+    $scope.recieptPk = '';
+    $scope.findReciept = function(){
+        $http({
+            method: 'POST',
+            url: '../php/Find_reciept.php',
+            data: {
+                findthis: $scope.recieptPk
+            }
+        }).then(function(response) {
+            $scope.listReciept = response.data;
+            $scope.page = 2;
+        });
+    }
+    $scope.showdetail = function(getdata, index) {
+        $scope.index = index;
+        $http({
+            method: 'POST',
+            url: '../php/select_chemdetail.php',
+            data: { crd_cr_fk: getdata }
+        }).then(function(response) {
+            $scope.chemdetail = response.data;
+            $scope.page = 3;
         });
     }
 });

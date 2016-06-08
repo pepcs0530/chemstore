@@ -9,7 +9,6 @@
     else{
         $type = $_POST['type'];
     }
-    
 
     $sql = "SELECT * FROM `chem_receipt_detail`
             INNER JOIN `chem_category`
