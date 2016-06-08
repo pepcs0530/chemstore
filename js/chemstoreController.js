@@ -20,6 +20,17 @@ chemstore.controller('loginCtrl', function($rootScope, $scope, $http, $timeout, 
             }
         });
     }
+    
+    $scope.guestLogin = function(){
+        $http({
+            method: 'GET',
+            url: '../php/guestLogin.php'
+        }).then(function(response) {
+            toastr.success('ยินดีต้อนรับเข้าสู่ระบบ');
+            $timeout(location.reload(), 5000);
+            $location.path('/news')
+        });
+    }
 
     $scope.checkSession = function() {
         //-------------------------------------------------------------
@@ -660,7 +671,7 @@ chemstore.controller('loginCtrl', function($rootScope, $scope, $http, $timeout, 
         project: '',
         selectAll: ''
     }
-
+    
     $scope.search = function() {
         if ($scope.logRecpt.stDt == null || $scope.logRecpt.edDt == null) {
             toastr.error("กรุณากรอกวันเริ่มต้น-สิ้นสุด");
@@ -683,6 +694,26 @@ chemstore.controller('loginCtrl', function($rootScope, $scope, $http, $timeout, 
             }).then(function(response) {
                 $scope.listReciept = response.data;
                 $scope.showcontent = 2;
+            
+                ///สำหรับใบเสร็จไม่มีโปรเจค
+                $http({
+                    method: 'POST',
+                    url: '../php/select_logRecieptEx.php',
+                    data: {
+                        type: 'all',
+                        stDt: $scope.logRecpt.stDt,
+                        edDt: new Date($scope.logRecpt.edDt.getFullYear(), $scope.logRecpt.edDt.getMonth(), $scope.logRecpt.edDt.getDate() + 1),
+                        no: $scope.logRecpt.no,
+                        project: $scope.logRecpt.project,
+                        selectAll: $scope.logRecpt.selectAll
+                    }
+                }).then(function(response) {
+                    $scope.listRecieptEx = response.data;
+                    angular.forEach($scope.listRecieptEx,function(value,key){
+                        $scope.listReciept.push(value);
+                    });
+                    $scope.showcontent = 2;
+                });
             });
         }
     }
@@ -757,58 +788,6 @@ chemstore.controller('loginCtrl', function($rootScope, $scope, $http, $timeout, 
         }).then(function(response) {
             $scope.chemdetail = response.data;
 
-            $scope.showcontent = 3;
-        });
-    }
-})
-
-//  ประวัติการเบิกสารอาจารย์  ============================================================================================================
-.controller('teacherReceiptlogCtrl', function($scope, $http,timeout,toastr) {
-    $scope.showcontent = 1;
-    $scope.logRecpt = {
-        stDt: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
-        edDt: new Date(),
-        no: '',
-        project: '',
-        selectAll: ''
-    }
-
-    $scope.search = function() {
-        if ($scope.logRecpt.stDt == null || $scope.logRecpt.edDt == null) {
-            toastr.error("กรุณากรอกวันเริ่มต้น-สิ้นสุด");
-            $timeout(5000);
-        } else if ($scope.logRecpt.stDt > $scope.logRecpt.edDt) {
-            toastr.error("ท่านระบุวันเริ่มต้นเกินวันที่สิ้นสุด");
-            $timeout(5000);
-        } else {
-            $http({
-                method: 'POST',
-                url: '../php/select_logReciept.php',
-                data: {
-                    type: $scope.key,
-                    stDt: $scope.logRecpt.stDt,
-                    edDt: new Date($scope.logRecpt.edDt.getFullYear(), $scope.logRecpt.edDt.getMonth(), $scope.logRecpt.edDt.getDate() + 1),
-                    no: $scope.logRecpt.no,
-                    project: $scope.logRecpt.project,
-                    selectAll: $scope.logRecpt.selectAll
-                }
-            }).then(function(response) {
-                $scope.listReciept = response.data;
-                $scope.showcontent = 2;
-            });
-        }
-    }
-
-    $scope.showdetail = function(selectedData, index) {
-        $scope.index = index;
-        $http({
-            method: 'POST',
-            url: '../php/select_chemdetail.php',
-            data: {
-                'crd_cr_fk': selectedData
-            }
-        }).then(function(response) {
-            $scope.listRecieptDetail = response.data;
             $scope.showcontent = 3;
         });
     }
@@ -1312,7 +1291,7 @@ chemstore.controller('loginCtrl', function($rootScope, $scope, $http, $timeout, 
                 },
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
             }).then(function(data) {
-                toastr.success('ยินดีต้อนรับเข้าสู่ระบบ');
+                toastr.success('ส่งข้อความเรียบร้อย');
                 $timeout(location.reload(), 5000);
                 $scope.cro_desc = "";
             });
@@ -2026,8 +2005,6 @@ chemstore.controller('loginCtrl', function($rootScope, $scope, $http, $timeout, 
 
 // reportรายงานสถานะสารล่าสุด ========================================================================================================
 .controller('viewRemainChemCtrl', function($scope, $http) {
-
-
     $scope.page = true;
     $scope.remain = {
         location: '',
@@ -3016,6 +2993,108 @@ chemstore.controller('loginCtrl', function($rootScope, $scope, $http, $timeout, 
         }).then(function(response) {
             $scope.chemdetail = response.data;
             $scope.content = true;
+        });
+    }
+})
+//  ประวัติการเบิกสารนักวิท ============================================================================================================
+.controller('seniorReceiptlogCtrl', function($scope, $http) {
+        $scope.showcontent = 1;
+    $scope.logRecpt = {
+        stDt: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
+        edDt: new Date(),
+        no: '',
+        project: '',
+        selectAll: ''
+    }
+
+    $scope.search = function() {
+        if ($scope.logRecpt.stDt == null || $scope.logRecpt.edDt == null) {
+            toastr.error("กรุณากรอกวันเริ่มต้น-สิ้นสุด");
+            $timeout(5000);
+        } else if ($scope.logRecpt.stDt > $scope.logRecpt.edDt) {
+            toastr.error("ท่านระบุวันเริ่มต้นเกินวันที่สิ้นสุด");
+            $timeout(5000);
+        } else {
+            $http({
+                method: 'POST',
+                url: '../php/select_logRecieptEx.php',
+                data: {
+                    type: $scope.key,
+                    stDt: $scope.logRecpt.stDt,
+                    edDt: new Date($scope.logRecpt.edDt.getFullYear(), $scope.logRecpt.edDt.getMonth(), $scope.logRecpt.edDt.getDate() + 1),
+                    no: $scope.logRecpt.no,
+                    selectAll: $scope.logRecpt.selectAll
+                }
+            }).then(function(response) {
+                $scope.listReciept = response.data;
+                $scope.showcontent = 2;
+            });
+        }
+    }
+
+    $scope.showdetail = function(selectedData, index) {
+        $scope.index = index;
+        $http({
+            method: 'POST',
+            url: '../php/select_chemdetail.php',
+            data: {
+                'crd_cr_fk': selectedData
+            }
+        }).then(function(response) {
+            $scope.listRecieptDetail = response.data;
+            $scope.showcontent = 3;
+        });
+    }
+    
+})
+//  ประวัติการเบิกสารอาจารย์  ============================================================================================================
+.controller('teacherReceiptlogCtrl', function($scope, $http) {
+    $scope.showcontent = 1;
+    $scope.logRecpt = {
+        stDt: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
+        edDt: new Date(),
+        no: '',
+        project: '',
+        selectAll: ''
+    }
+
+    $scope.search = function() {
+        if ($scope.logRecpt.stDt == null || $scope.logRecpt.edDt == null) {
+            toastr.error("กรุณากรอกวันเริ่มต้น-สิ้นสุด");
+            $timeout(5000);
+        } else if ($scope.logRecpt.stDt > $scope.logRecpt.edDt) {
+            toastr.error("ท่านระบุวันเริ่มต้นเกินวันที่สิ้นสุด");
+            $timeout(5000);
+        } else {
+            $http({
+                method: 'POST',
+                url: '../php/select_logReciept.php',
+                data: {
+                    type: $scope.key,
+                    stDt: $scope.logRecpt.stDt,
+                    edDt: new Date($scope.logRecpt.edDt.getFullYear(), $scope.logRecpt.edDt.getMonth(), $scope.logRecpt.edDt.getDate() + 1),
+                    no: $scope.logRecpt.no,
+                    project: $scope.logRecpt.project,
+                    selectAll: $scope.logRecpt.selectAll
+                }
+            }).then(function(response) {
+                $scope.listReciept = response.data;
+                $scope.showcontent = 2;
+            });
+        }
+    }
+
+    $scope.showdetail = function(selectedData, index) {
+        $scope.index = index;
+        $http({
+            method: 'POST',
+            url: '../php/select_chemdetail.php',
+            data: {
+                'crd_cr_fk': selectedData
+            }
+        }).then(function(response) {
+            $scope.listRecieptDetail = response.data;
+            $scope.showcontent = 3;
         });
     }
 });

@@ -172,10 +172,7 @@
                 templateUrl: '../html/seniorSubmitRequest.html',
                 controller: 'seniorSubmitRequestCtrl'
             }   
-          ).otherwise({
-                redirectTo: '/news'
-      	  })
-          .when(
+          ).when(
             '/seniorSubmitExchange',{
                 templateUrl: '../html/seniorSubmitExchange.html',
                 controller: 'seniorSubmitExchangetCtrl'
@@ -190,7 +187,14 @@
                 templateUrl: '../html/seniorAddStatus.html',
                 controller: 'seniorAddRequestsStatusCtrl'
             }   
-          ).otherwise({
+          )
+          .when(
+            '/seniorlogRec',{
+                templateUrl: '../html/logRecieptEx.html',
+                controller: 'seniorReceiptlogCtrl'
+            }   
+          )
+          .otherwise({
                 redirectTo: '/news'
       	  })  
 }]);

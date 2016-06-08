@@ -33,7 +33,7 @@
             <th>ยอดรวม</th>
             <th>รายละเอียด</th>
         </tr>
-        <tr ng-repeat="showdata in listReciept | filter : searchThis | limitTo : searchRange.value : begin">
+        <tr ng-repeat="showdata in listReciept | orderBy : 'cr_crtDt' : true | filter : searchThis | limitTo : searchRange.value : begin">
             <td>
             {{$index+1}}
             </td>

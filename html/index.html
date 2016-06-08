@@ -75,8 +75,11 @@
                                   <label for="Password">รหัสผ่าน : </label>
                                   <input type="password" class="form-control" placeholder="Password" ng-model="login.password">
                                 </div>
+                                    <a  ng-click="guestLogin()">เข้าใช้โหมดเยี่ยมชม</a><br>
                                     <input class="btn btn-default" type="submit" value="Log in" ng-click="createLogin()"/>
                                     <input class="btn btn-default" type="reset" value="Reset" />
+                                
+                                
                             </form>
                         </div>
                     </li>
@@ -184,7 +187,6 @@
                     <ul class="dropdown-menu" >
                         <li><a href="#/addProject">เพิ่มโปรเจค</a></li>
                         <li><a href="#/viewProject">แก้ไข/ลบโปรเจค</a></li>
-                        
                     </ul>
                 </li>
                   
@@ -192,7 +194,6 @@
                     <ul class="dropdown-menu" >
                         <li><a href="#/teacherReceiptlog">ประวัติการเบิกสาร</a></li>
                         <li><a href="#/teacherOtherlog">ประวัติคำร้องอื่นๆ</a></li>
-<!--                        <li><a href="#/salelog">ประวัติการขายคืน</a></li>-->
                     </ul>
                 </li>
                   
@@ -247,6 +248,7 @@
                   
                   <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" ><i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;ประวัติรายการ<span class="caret"></span></a>
                     <ul class="dropdown-menu" >
+                        <li><a href="#/seniorlogRec">ประวัติการเบิกสาร</a></li>
                         <li><a href="#/seniorExchangeLog">ประวัติการย้ายคลัง</a></li>
                         <li><a href="#/seniorOtherlog">ประวัติคำร้องอื่นๆ</a></li>
                     </ul>
@@ -283,7 +285,29 @@
                   
                   <li class="active"><a href="#/news"><i class="fa fa-home" aria-hidden="true"></i>&nbsp;หน้าแรก</a></li>
                   
+                  <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-check-square-o" aria-hidden="true"></i>&nbsp;สถานะคำร้องขอ<span class="caret"></span></a>
+                    <ul class="dropdown-menu" >
+                        <li><a href="#/seniorAddRequestsStatus">สถานะคำร้องขอเบิกสารเคมี</a></li>
+                        <li><a href="#/seniorSubmitRequest">อนุมัติการเบิกสารเคมี</a></li>
+                        <li><a href="#/seniorSubmitExchange">อนุมัติการย้ายสารเคมี</a></li>
+                    </ul>
+                  </li>
+                  
+                  <li class="dropdown" ><a class="dropdown-toggle" data-toggle="dropdown" ><i class="fa fa-reply" aria-hidden="true"></i>&nbsp;ส่งคำร้องขอ<span class="caret"></span></a>
+                    <ul class="dropdown-menu" >
+                        <li><a href="#/seniorAddRequest">เบิกสารเคมี</a></li>
+                        <li><a href="#/addOtherCtrl">ส่งคำร้องอื่นๆ</a></li>
+                    </ul>
+                  </li>
+                  
                   <li><a href="#/viewStock" ><i class="fa fa-flask" aria-hidden="true"></i>&nbsp;คลังสารเคมี</a></li>
+                  
+                    <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" ><i class="fa fa-file-text-o" aria-hidden="true"></i>&nbsp;ประวัติรายการ<span class="caret"></span></a>
+                    <ul class="dropdown-menu" >
+                        <li><a href="#/seniorlogRec">ประวัติการเบิกสาร</a></li>
+                        <li><a href="#/seniorOtherlog">ประวัติคำร้องอื่นๆ</a></li>
+                    </ul>
+                  </li>
                   
                   <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="glyphicon glyphicon-link" aria-hidden="true"></i>&nbsp;ลิงค์ที่เกี่ยวข้อง <span class="caret"></span></a>
                     <ul class="dropdown-menu">
@@ -349,16 +373,12 @@
             
         </div>
       </div>
-        
-      
         <footer class="container-fluid text-center">
           © 2016 Chemistry, Faculty of Science, King Mongkut's Institute of Technology Ladkrabang
             <br>ภาควิชาเคมี ตึกจุฬาภรณ์วลัยลักษณ์ 1 ชั้น 5 คณะวิทยาศาสตร์ สถาบันเทคโนโลยีพระจอมเกล้าเจ้าคุณทหารลาดกระบัง 
             <br>ถนนฉลองกรุง เขตลาดกระบัง กรุงเทพ 10520
             <br>โทร 0-2329-8400 ถึง 8411 ต่อ 290, 0-2329-8000 ถึง 8099 ต่อ 6234, 6235 
             Fax 0-2329-8412
-
-          
         </footer>
     </body>
 </html>

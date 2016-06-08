@@ -7,7 +7,7 @@
     isset($_POST['edDt']) ? $edDt =  date("Y-m-d", strtotime($_POST['edDt'])) : $edDt = null;
     isset($_POST['no']) ? $no = $_POST['no'] : $no = null;
     isset($_POST['project']) ? $project = $_POST['project'] : $project = null;
-    
+
     if($type == "all"){
         $sql = "SELECT cr.*,cp_pk,cp_name,cp_eduLvl,ca_tname,ca_fname,ca_lname FROM `chem_receipt` AS cr ";
         $sql .= "INNER JOIN chem_project ON cp_pk = cr_cp_fk ";  

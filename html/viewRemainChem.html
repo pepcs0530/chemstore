@@ -47,11 +47,10 @@
         <button type="button" class="btn btn-default" ng-click="search(remain)" >ค้นหา</button>
     </div>
 
-
-
     <div ng-show="page == false">
-        <button type="button" class="btn btn-default" ng-click="back()" >ย้อนกลับ</button>
-        <input type="submit" class="btn btn-default" value="พิมพ์รายงาน" >
+        <input type="submit" class="btn btn-default" value="พิมพ์รายงาน" style="float:right;">
+        <button type="button" class="btn btn-default" ng-click="back()" style="float:right;">ย้อนกลับ</button>
+        
         <table class= " table table-bordered" style="width:100%">
             <tr>
                 <th>ลำดับที่</th>
@@ -82,7 +81,7 @@
                 <td>{{showdata.cc_grade}}</td>
             </tr>
         </table>
-    </div>
+</div>
 
 </form>
 

@@ -4,73 +4,38 @@
 
     $findthis = $_POST['findthis'];
     $findtypethis = $_POST['findtypethis'];
-    isset($_POST['type']) ? $type = $_POST['type'] : $type = null;
     isset($_POST['selectAll']) ? $selectAll = $_POST['selectAll'] : $selectAll = null;
     isset($_POST['stDt']) ? $stDt = date("Y-m-d", strtotime($_POST['stDt'])) : $stDt = null;
     isset($_POST['edDt']) ? $edDt =  date("Y-m-d", strtotime($_POST['edDt'] .'+1 day' )) : $edDt = null;
     isset($_POST['no']) ? $no = $_POST['no'] : $no = null;
-    isset($_POST['project']) ? $project = $_POST['project'] : $project = null;
     isset($_POST['selectAll']) ? $selectAll = $_POST['selectAll'] : $selectAll = null;
 
-    if($findtypethis == 1){
-        $sql = "SELECT cr.*,cp_pk,cp_name,cp_eduLvl,ca_tname,ca_fname,ca_lname FROM `chem_receipt` AS cr ";
-        $sql .= "INNER JOIN chem_project ON cp_pk = cr_cp_fk ";
-        $sql .= "INNER JOIN chem_account ON cp_teach_fk = ca_pk ";
-        $sql .= "WHERE `cr_crtDt` BETWEEN '".$stDt."' AND '".$edDt."'";
-    }else if($selectAll){
-        $sql = "SELECT cr.*,cp_pk,cp_name,cp_eduLvl,ca_tname,ca_fname,ca_lname FROM `chem_receipt` AS cr ";
-        $sql .= "INNER JOIN chem_project ON cp_pk = cr_cp_fk ";
-        $sql .= "INNER JOIN chem_account ON cp_teach_fk = ca_pk ";
-        $sql .= "AND cr_no LIKE 'NO.".$findthis."%' ";
-    }else{
-        $sql = "SELECT cr.*,cp_pk,cp_name,cp_eduLvl,ca_tname,ca_fname,ca_lname FROM `chem_receipt` AS cr ";
-        $sql .= "INNER JOIN chem_project ON cp_pk = cr_cp_fk ";
-        $sql .= "INNER JOIN chem_account ON cp_teach_fk = ca_pk ";
-        $sql .= "WHERE `cr_crtDt` BETWEEN '".$stDt."' AND '".$edDt."' ";
+    if($findthis == "all"){
+        $sql = "SELECT cr.*,ca_tname,ca_fname,ca_lname FROM `chem_receipt` AS cr ";  
+        $sql .= "INNER JOIN chem_account 
+                 ON ca_pk =  SUBSTR(cr_no,4,1) 
+                 WHERE cr_cp_fk IS NULL ";
+    }
+    else{
+        $sql = "SELECT cr.*,ca_tname,ca_fname,ca_lname FROM `chem_receipt` AS cr ";
+        $sql .= "INNER JOIN chem_account ON ca_pk = SUBSTR(cr_no,4,1) 
+                 WHERE cr_cp_fk IS NULL ";
         $sql .= "AND cr_no LIKE 'NO.".$findthis."%' ";
     }
 
-    if($no != null && !$selectAll){
+    if($stDt != null && $edDt != null && !$selectAll){
+        $sql .= "AND (`cr_crtDt` BETWEEN '".$stDt."' AND '".$edDt."') ";
+    }
+
+    if($no != null  && !$selectAll){
         $sql .= " AND cr_no LIKE '%".$no."%' ";
     }
-    if($project != null && !$selectAll){
-        $sql .= " AND cp_name LIKE '%".$project."%' ";
-    }
-    
-    if($project == null  && !$selectAll){
-        if($type == "all"){
-            $sql3 = "SELECT cr.*,ca_tname,ca_fname,ca_lname FROM `chem_receipt` AS cr ";  
-            $sql3 .= "INNER JOIN chem_account 
-                     ON ca_pk =  SUBSTR(cr_no,4,1) 
-                     WHERE cr_cp_fk IS NULL ";
-        }
-        else{
-            $sql3 = "SELECT cr.*,ca_tname,ca_fname,ca_lname FROM `chem_receipt` AS cr ";
-            $sql3 .= "INNER JOIN chem_account ON ca_pk = SUBSTR(cr_no,4,1) 
-                     WHERE cr_cp_fk IS NULL ";
-            $sql3 .= "AND cr_no LIKE 'NO.".$type."%' ";
-        }
 
-        if($stDt != null && $edDt != null && !$selectAll){
-            $sql3 .= "AND (`cr_crtDt` BETWEEN '".$stDt."' AND '".$edDt."') ";
-        }
+    $sql .= " ORDER BY cr_crtDt DESC";
 
-        if($no != null  && !$selectAll){
-            $sql3 .= " AND cr_no LIKE '%".$no."%' ";
-        }
-
-        $sql3 .= " ORDER BY cr_crtDt DESC";
-    
-        $query3 = mysql_query($sql3);
-    }
-    
-    $sql .= "ORDER BY cr_crtDt DESC";
-
-    
     $query = mysql_query($sql);
-
     
-    // Include the main TCPDF library (search for installation path).
+//     Include the main TCPDF library (search for installation path).
     require_once('tcpdf_include.php');
 
     // create new PDF document
@@ -174,76 +139,6 @@
         $date_upd = date_create($row['cr_updDt']);
         $cr_no = $row['cr_no'];
         $name = $row['ca_tname']." ".$row['ca_fname']." ".$row['ca_lname'];
-        $project = $row['cp_name'];
-        
-        $find = $row['cr_pk'];
-        
-        $sql2 = "SELECT `cc_name`,`crd_amt`,`crd_price`,`crd_unit`,`cl_name`,`cl_name_abb`".
-           "FROM `chem_receipt_detail`".
-           "INNER JOIN `chem_category`".
-           "ON `cc_pk` = `crd_cc_fk`".
-           "INNER JOIN chem_location ".
-           "ON cc_location_fk = cl_pk ".
-           "WHERE `crd_cr_fk` = ".$find;
-        $query2 = mysql_query($sql2);
-        $data=array();
-            
-        while($row = mysql_fetch_array ($query2))
-        {
-            array_push($data,$row);
-            if($index==1){
-                $pdf->Cell(25, 0, date_format($date_crt,"d/m/Y"), 1, 0, 'L', 0, '', 0);
-                $pdf->Cell(25, 0, date_format($date_upd,"d/m/Y"), 1, 0, 'L', 0, '', 0);
-                $pdf->Cell(27, 0, $cr_no, 1, 0, 'L', 0, '', 0);
-                $pdf->Cell(45, 0, $name, 1, 0, 'L', 0, '', 0);
-                $pdf->Cell(40, 0, $project, 1, 0, 'L', 0, '', 0);
-                $pdf->Cell(50, 0, $row['cc_name'], 1, 0, 'L', 0, '', 0);
-                $pdf->Cell(15, 0, $row['crd_amt'], 1, 0, 'C', 0, '', 0);
-                $pdf->Cell(15, 0, strtoupper ($row['crd_unit']), 1, 0, 'C', 0, '', 0);
-                $pdf->Cell(10, 0, $row['cl_name_abb'], 1, 0, 'C', 0, '', 0);
-                $pdf->Cell(15, 0, $row['crd_price'], 1, 0, 'C', 0, '', 0);
-                
-            }else{
-                $pdf->Cell(25, 0, '', 1, 0, 'L', 0, '', 0);
-                $pdf->Cell(25, 0, '', 1, 0, 'L', 0, '', 0);
-                $pdf->Cell(27, 0, '', 1, 0, 'C', 0, '', 0);
-                $pdf->Cell(45, 0, '', 1, 0, 'L', 0, '', 0);
-                $pdf->Cell(40, 0, '', 1, 0, 'L', 0, '', 0);
-                $pdf->Cell(50, 0, $row['cc_name'], 1, 0, 'L', 0, '', 0);
-                $pdf->Cell(15, 0, $row['crd_amt'], 1, 0, 'C', 0, '', 0);
-                $pdf->Cell(15, 0, strtoupper ($row['crd_unit']), 1, 0, 'C', 0, '', 0);
-                $pdf->Cell(10, 0, $row['cl_name_abb'], 1, 0, 'C', 0, '', 0);
-                $pdf->Cell(15, 0, $row['crd_price'], 1, 0, 'C', 0, '', 0);
-            }
-            
-            
-            $index++;
-            $pdf->Ln(); 
-        }
-        
-        if(count($data) == 0){
-            $pdf->Cell(25, 0, '', 1, 0, 'L', 0, '', 0);
-            $pdf->Cell(25, 0, '', 1, 0, 'L', 0, '', 0);
-            $pdf->Cell(27, 0, '', 1, 0, 'C', 0, '', 0);
-            $pdf->Cell(45, 0, '', 1, 0, 'L', 0, '', 0);
-            $pdf->Cell(40, 0, '', 1, 0, 'L', 0, '', 0);
-            $pdf->Cell(50, 0, $row['cc_name'], 1, 0, 'L', 0, '', 0);
-            $pdf->Cell(15, 0, $row['crd_amt'], 1, 0, 'C', 0, '', 0);
-            $pdf->Cell(15, 0, $row['crd_unit'], 1, 0, 'C', 0, '', 0);
-            $pdf->Cell(10, 0, $row['cl_name_abb'], 1, 0, 'C', 0, '', 0);
-            $pdf->Cell(15, 0, $row['crd_price'], 1, 0, 'C', 0, '', 0);
-        }
-        
-        $index=1;
-        //$pdf->Ln();
-    }
-if($project == null  && !$selectAll){
-     while($row = mysql_fetch_array ($query3))
-    {
-        $date_crt = date_create($row['cr_crtDt']);
-        $date_upd = date_create($row['cr_updDt']);
-        $cr_no = $row['cr_no'];
-        $name = $row['ca_tname']." ".$row['ca_fname']." ".$row['ca_lname'];
         
         $find = $row['cr_pk'];
         
@@ -306,8 +201,5 @@ if($project == null  && !$selectAll){
         $index=1;
         //$pdf->Ln();
     }
-}
-    $pdf->Output('export_pdf_withdraw_log.pdf', 'I');
-    
-    
+    $pdf->Output('export_pdf_withdraw_logEX.pdf', 'I');
 ?>
